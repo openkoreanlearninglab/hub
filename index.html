@@ -22,6 +22,8 @@
   .gate-header{ display:flex; flex-direction:column; align-items:center; gap:16px; margin-bottom:56px; }
   .gate-brand{ font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:13px; color:#3f3f46; letter-spacing:.04em; }
   .gate h1{ font-family:'Noto Serif KR',serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-.02em; color:var(--ink); line-height:1.2; }
+  .gate [data-enter]{ cursor:pointer; transition:opacity .2s; }
+  .gate [data-enter]:hover{ opacity:.6; }
   .gate .sub-en{ font-family:'Noto Serif KR',serif; font-style:italic; color:#52525b; font-size:clamp(15px,2vw,19px); font-weight:400; }
   .gate .sub-instruction{ font-family:'Noto Sans KR',sans-serif; color:#5f5f63; font-size:13px; font-weight:400; letter-spacing:.02em; margin-top:12px; border-top:1px solid var(--line); padding-top:24px; width:120px; line-height:1.6; }
   .bands{ display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:14px; width:100%; max-width:1040px; margin-top:20px; }
@@ -536,8 +538,7 @@
   }
   function recentItems(){
     var q = state.q.trim().toLowerCase();
-    var pool = MATERIALS.filter(function(m){
-      if(state.level !== 'all' && m.level !== state.level) return false;
+    var pool = scopeItems().filter(function(m){
       if(q && (m.title+' '+(m.en||'')+' '+m.tags.join(' ')).toLowerCase().indexOf(q)<0) return false;
       return true;
     });
@@ -638,8 +639,8 @@
     }).join('');
     return '<div class="gate"><div class="wrap">'
       + '<div class="gate-header">'
-      + '<div class="gate-brand">OpenKoreanLearningLab</div>'
-      + '<h1>한국어 학습 자료</h1>'
+      + '<div class="gate-brand" data-enter="all">OpenKoreanLearningLab</div>'
+      + '<h1 data-enter="all">한국어 학습 자료</h1>'
       + '<div class="sub-en">Korean Learning Materials</div>'
       + '<div class="sub-instruction">레벨을 선택하세요<br>Choose your level</div>'
       + '</div>'
@@ -716,6 +717,8 @@
     if(band){ var bd=band.getAttribute('data-band'); state.entryBand=bd; state.group=bd; state.view='app'; state.level='all'; state.tag='전체'; state.q=''; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
     var home = e.target.closest('[data-home]');
     if(home){ state.view='gate'; window.scrollTo(0,0); render(); return; }
+    var ent = e.target.closest('[data-enter]');
+    if(ent){ state.view='app'; state.group='all'; state.level='all'; state.tag='최신'; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
     var setlang = e.target.closest('[data-setlang]');
     if(setlang){ state.lang = setlang.getAttribute('data-setlang'); state.langOpen=false; render(); return; }
     var langbtn = e.target.closest('#lang-btn');
