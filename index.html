@@ -7,7 +7,9 @@
 <meta name="description" content="초급부터 고급까지(A1–C2) 한국어 학습 자료. 동영상과 읽기 자료로 한국어를 배워 보세요. Korean learning materials from A1 to C2." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" media="print" id="gfonts" />
+<script>(function(){var l=document.getElementById("gfonts");if(!l)return;function a(){l.media="all";}if(l.sheet)a();else l.addEventListener("load",a);})();</script>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" /></noscript>
 <style>
   :root{ --ink:#18181b; --gray:#71717a; --line:#e4e4e7; --light-gray:#a1a1aa; --bg-subtle:#fafafa; }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -18,24 +20,24 @@
   @keyframes fadeIn { from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
   .gate{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 24px; background:#fff; animation:fadeIn .7s cubic-bezier(.16,1,.3,1) forwards; }
   .gate-header{ display:flex; flex-direction:column; align-items:center; gap:16px; margin-bottom:56px; }
-  .gate-brand{ font-family:'Noto Sans KR',sans-serif; font-weight:500; font-size:13px; color:var(--gray); letter-spacing:.04em; }
-  .gate h1{ font-family:'Noto Serif KR',serif; font-size:clamp(32px,5vw,44px); font-weight:500; letter-spacing:-.02em; color:var(--ink); line-height:1.2; }
-  .gate .sub-en{ font-family:'Noto Serif KR',serif; font-style:italic; color:var(--gray); font-size:clamp(15px,2vw,19px); font-weight:400; }
+  .gate-brand{ font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:13px; color:#3f3f46; letter-spacing:.04em; }
+  .gate h1{ font-family:'Noto Serif KR',serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-.02em; color:var(--ink); line-height:1.2; }
+  .gate .sub-en{ font-family:'Noto Serif KR',serif; font-style:italic; color:#52525b; font-size:clamp(15px,2vw,19px); font-weight:400; }
   .gate .sub-instruction{ font-family:'Noto Sans KR',sans-serif; color:#5f5f63; font-size:13px; font-weight:400; letter-spacing:.02em; margin-top:12px; border-top:1px solid var(--line); padding-top:24px; width:120px; line-height:1.6; }
-  .bands{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; width:100%; max-width:1040px; margin-top:20px; }
+  .bands{ display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:14px; width:100%; max-width:1040px; margin-top:20px; }
   .band{ flex:0 0 calc(20% - 12px); }
   @media(max-width:1024px){ .bands{ gap:16px; } .band{ flex:0 0 calc(33.333% - 12px); } }
   @media(max-width:768px){ .band{ flex:0 0 100%; } }
-  .band{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:28px 20px; cursor:pointer; transition:all .3s cubic-bezier(.16,1,.3,1); text-align:left; display:flex; flex-direction:column; height:100%; }
+  .band{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:28px 20px; cursor:pointer; transition:all .3s cubic-bezier(.16,1,.3,1); text-align:left; display:flex; flex-direction:column; }
   .band:hover{ border-color:var(--ink); background:var(--bg-subtle); }
-  .band .code{ font-size:11px; font-weight:500; letter-spacing:.1em; color:var(--light-gray); text-transform:uppercase; }
-  .band .ko{ font-family:'Noto Serif KR',serif; font-size:21px; font-weight:500; margin-top:14px; color:var(--ink); }
-  .band .en{ color:var(--gray); font-size:13.5px; margin-top:2px; }
+  .band .code{ font-size:11px; font-weight:500; letter-spacing:.1em; color:#5f5f63; text-transform:uppercase; }
+  .band .ko{ font-family:'Noto Serif KR',serif; font-size:21px; font-weight:700; margin-top:14px; color:var(--ink); }
+  .band .en{ color:#52525b; font-size:13.5px; margin-top:2px; }
   .band .go{ margin-top:auto; padding-top:24px; font-size:11.5px; font-weight:700; letter-spacing:.02em; color:var(--ink); line-height:1.8; transition:transform .2s ease; }
-  .band .go .go-en{ font-weight:500; color:var(--gray); }
+  .band .go .go-en{ font-weight:500; color:#52525b; }
   .band:hover .go{ transform:translateX(4px); }
   .gate-cta{ margin-top:64px; }
-  .gate-foot{ color:var(--light-gray); font-size:11.5px; margin-top:40px; letter-spacing:.02em; }
+  .gate-foot{ color:#71717a; font-size:11.5px; margin-top:40px; letter-spacing:.02em; }
   .topbar{
  position:sticky; top:0; z-index:20; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
   .topbar .row{ display:flex; align-items:center; justify-content:space-between; height:60px; }
