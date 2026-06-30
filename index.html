@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>[파일럿 1] 게이트 + 콘텐츠(3안) · OpenKoreanLearningLab</title>
-<meta name="description" content="초급/중급/고급 그룹탭 + 레벨 연동 자동 KO/EN + 검색·태그 필터 추천안" />
+<title>OpenKoreanLearningLab · 한국어 학습 자료</title>
+<meta name="description" content="초급부터 고급까지(A1–C2) 한국어 학습 자료. 동영상과 읽기 자료로 한국어를 배워 보세요. Korean learning materials from A1 to C2." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
 <style>
   :root{ --ink:#18181b; --gray:#71717a; --line:#e4e4e7; --light-gray:#a1a1aa; --bg-subtle:#fafafa; }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -21,7 +21,7 @@
   .gate-brand{ font-family:'Noto Sans KR',sans-serif; font-weight:500; font-size:13px; color:var(--gray); letter-spacing:.04em; }
   .gate h1{ font-family:'Noto Serif KR',serif; font-size:clamp(32px,5vw,44px); font-weight:500; letter-spacing:-.02em; color:var(--ink); line-height:1.2; }
   .gate .sub-en{ font-family:'Noto Serif KR',serif; font-style:italic; color:var(--gray); font-size:clamp(15px,2vw,19px); font-weight:400; }
-  .gate .sub-instruction{ font-family:'Noto Sans KR',sans-serif; color:var(--light-gray); font-size:13px; font-weight:400; letter-spacing:.02em; margin-top:12px; border-top:1px solid var(--line); padding-top:24px; width:120px; line-height:1.6; }
+  .gate .sub-instruction{ font-family:'Noto Sans KR',sans-serif; color:#5f5f63; font-size:13px; font-weight:400; letter-spacing:.02em; margin-top:12px; border-top:1px solid var(--line); padding-top:24px; width:120px; line-height:1.6; }
   .bands{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; width:100%; max-width:1040px; margin-top:20px; }
   .band{ flex:0 0 calc(20% - 12px); }
   @media(max-width:1024px){ .bands{ gap:16px; } .band{ flex:0 0 calc(33.333% - 12px); } }
@@ -151,7 +151,7 @@
 </style>
 </head>
 <body>
-<div id="app">
+<div id="app" role="main">
   <noscript style="display:block;text-align:center;padding:40px">JavaScript가 필요합니다. / Please enable JavaScript.</noscript>
 </div>
 
@@ -161,35 +161,35 @@
   var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
 
   var MATERIALS = [
-    {level: "C1", tags: ["사회","문화"], title: "〈한국이 싫어서〉 - 한국이 싫은 이유가 무엇이며, 한국을 떠나면 그 문제가 사라질까?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c1-because-i-hate-korea.jpg", link: "https://docs.google.com/document/d/1EK_vwqYMgvhb7dB9zFlKQprhjN8ZmvqecJU-rgBudOY/edit?usp=sharing"},
-    {level: "C2", tags: ["사회","교육"], title: "21세기, 대학은 존재론적 위기를 맞이했을까?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c2-university-existential-crisis.jpg", link: "https://docs.google.com/document/d/1qVqh4boOn621kY1Es3yQtSwgVPOI3nr7SfIFA9mb8bY/edit?usp=sharing"},
-    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c스무드\u003e를 통해 살펴보는 정체성의 경계", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c2-novel-smooth-identity.jpg", link: "https://docs.google.com/document/d/1ReWCwk4xRRqJBSwqsGKI6CPStYR5ABy5bEPuPjq6HPk/edit?usp=sharing"},
-    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c혼모노\u003e를 통해 살펴보는 진짜와 가짜의 경계", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c2-novel-honmono-real-fake.jpg", link: "https://docs.google.com/document/d/1ji7VWgB-8yvApxyYLt7H34MYg-lcX0iI6kAb5ZPXTS8/edit?usp=sharing"},
-    {level: "C1", tags: ["사회","철학","과학"], title: "뒷담화에 대해서 - 뒷담화는 자제할 수 없는 인간 본성인가?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c1-gossip-human-nature.jpg", link: "https://docs.google.com/document/d/1hWysNw_TrVlrWHhLyvLaIprazQWejXJsqZrfaTXRO2E/edit?usp=sharing"},
-    {level: "C1", tags: ["문화","사회"], title: "‘번호 따기’ 성지가 된 서점", thumb: "https://www.heavenraven.com/wp-content/uploads/2024/05/TELEMMGLPICT000181622487_trans_NvBQzQNjv4BqGLLAPY3LddE1Qiv-bsIMYN_NrT6kNvN6YRSyUisEf90.jpg", link: "c1-bookstore-pickup.html"},
-    {level: "B2+", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "b2plus-bookstore-pickup.html"},
-    {level: "B2", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "b2-bookstore-pickup.html"},
-    {level: "B2", tags: ["스케치 코미디","일상"], title: "서스펜스의 거장, 알프레드 히치콕은 말했다", type: "video", thumb: "https://i.ytimg.com/vi/CsJdnlpBPgE/hqdefault.jpg", link: "b2-alfred-hitchcock.html"},
-    {level: "B2", tags: ["스케치 코미디","일상"], title: "인스타의 현실: 인스타 vs 현실", type: "video", thumb: "https://i.ytimg.com/vi/fERBaXD9sI4/hqdefault.jpg", link: "b2-instagram-vs-reality.html"},
-    {level: "B1+", tags: ["스케치 코미디","일상"], title: "인스타의 현실: 인스타 vs 현실", type: "video", thumb: "https://i.ytimg.com/vi/fERBaXD9sI4/hqdefault.jpg", link: "b1plus-instagram-vs-reality.html"},
-    {level: "B1+", tags: ["스케치 코미디","일상"], title: "내 월급이 사라졌다: 월급은 통장을 스칠 뿐", type: "video", thumb: "https://i.ytimg.com/vi/l35ok1jy3_0/hqdefault.jpg", link: "b1plus-my-salary-is-gone.html"},
-    {level: "B2", tags: ["스케치 코미디","일상"], title: "내 월급이 사라졌다: 월급은 통장을 스칠 뿐", type: "video", thumb: "https://i.ytimg.com/vi/l35ok1jy3_0/hqdefault.jpg", link: "b2-my-salary-is-gone.html"},
-    {level: "B2", tags: ["스케치 코미디","일상"], title: "누가 날 싫어할 때: 20대 vs 30대", type: "video", thumb: "https://i.ytimg.com/vi/HC6x8j5V4B4/hqdefault.jpg", link: "b2-when-someone-hates-me.html"},
-    {level: "B1+", tags: ["스케치 코미디","일상"], title: "누가 날 싫어할 때: 20대 vs 30대", type: "video", thumb: "https://i.ytimg.com/vi/HC6x8j5V4B4/hqdefault.jpg", link: "b1plus-when-someone-hates-me.html"},
-    {level: "B2+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "b2plus-art-and-design.html"},
-    {level: "B1+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "b1plus-art-and-design.html"},
-    {level: "B1+", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "b1plus-reels-addiction.html"},
-    {level: "B2", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "b2-reels-addiction.html"},
-    {level: "C1", tags: ["문화","사회"], title: "“회귀, 빙의, 환생” 이야기가 인기 있는 이유", type: "video", thumb: "https://i.ytimg.com/vi/5QM5yCwCxDQ/hqdefault.jpg", link: "c1-regression-possession-reincarnation.html"},
-    {level: "C2", tags: ["경제","정치"], title: "코스피 5000 시대, 앞으로 어떤 길을 가야 하는가?", link: "c2-kospi-5000-era.html"},
-    {level: "C1", tags: ["경제","정치"], title: "'코스피 5000'의 의미와 전망", type: "video", thumb: "https://i.ytimg.com/vi/Ehz6n9RxMsc/hqdefault.jpg", link: "c1-kospi-5000-meaning.html"},
-    {level: "C1", tags: ["과학","음식"], title: "두바이 쫀득 쿠키가 맛있는 과학적인 이유", type: "video", thumb: "https://i.ytimg.com/vi/htzfNwDM7II/hqdefault.jpg", link: "c1-dubai-cookie-science.html"},
-    {level: "B2+", tags: ["문화","음악"], title: "팝송에서 '페이드 아웃'이 사라진 이유", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/Number%20of%20songs%20that%20fade%20out%20in%20the%20top%2010%20-%20by%20Vox%20%22Why%20more%20pop%20songs%20should%20end%20with%20a%20fade%20out%22.png", link: "b2plus-fade-out-in-pop-songs.html"},
-    {level: "B2+", tags: ["문화","음식"], title: "한국인은 쫀득한 식감을 왜 좋아할까요?", type: "video", thumb: "https://i.ytimg.com/vi/Q3xPFQgDG4E/hqdefault.jpg", link: "b2plus-why-koreans-like-chewy-texture.html"},
-    {level: "B2+", tags: ["언어","문화"], title: "우리는 왜 \"같아요\"라고 할까?", type: "video", thumb: "https://i.ytimg.com/vi/nb-L3S8AFh8/hqdefault.jpg", link: "b2plus-why-we-say-gata-yo.html"},
-    {level: "C1+", tags: ["문화","역사"], title: "한국의 크리스마스 케익의 기원", type: "video", thumb: "https://i.ytimg.com/vi/YoIbPhMETD8/hqdefault.jpg", link: "c1plus-korean-christmas-cake-origin.html"},
-    {level: "B2+", tags: ["문화"], title: "한국 박물관 및 미술관 입장료 이야기", type: "video", thumb: "https://i.ytimg.com/vi/ljr7gKBXpKA/hqdefault.jpg", link: "b2plus-museum-admission.html"},
-    {level: "B2+", tags: ["사회","문화"], title: "천원의 재능마켓", link: "b2plus-1000won-talent-market.html"},
+    {level: "C1", tags: ["사회","문화"], title: "〈한국이 싫어서〉 - 한국이 싫은 이유가 무엇이며, 한국을 떠나면 그 문제가 사라질까?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnails/c1-because-i-hate-korea.jpg", link: "https://docs.google.com/document/d/1EK_vwqYMgvhb7dB9zFlKQprhjN8ZmvqecJU-rgBudOY/edit?usp=sharing"},
+    {level: "C2", tags: ["사회","교육"], title: "21세기, 대학은 존재론적 위기를 맞이했을까?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnails/c2-university-existential-crisis.jpg", link: "https://docs.google.com/document/d/1qVqh4boOn621kY1Es3yQtSwgVPOI3nr7SfIFA9mb8bY/edit?usp=sharing"},
+    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c스무드\u003e를 통해 살펴보는 정체성의 경계", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnails/c2-novel-smooth-identity.jpg", link: "https://docs.google.com/document/d/1ReWCwk4xRRqJBSwqsGKI6CPStYR5ABy5bEPuPjq6HPk/edit?usp=sharing"},
+    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c혼모노\u003e를 통해 살펴보는 진짜와 가짜의 경계", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnails/c2-novel-honmono-real-fake.jpg", link: "https://docs.google.com/document/d/1ji7VWgB-8yvApxyYLt7H34MYg-lcX0iI6kAb5ZPXTS8/edit?usp=sharing"},
+    {level: "C1", tags: ["사회","철학","과학"], title: "뒷담화에 대해서 - 뒷담화는 자제할 수 없는 인간 본성인가?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnails/c1-gossip-human-nature.jpg", link: "https://docs.google.com/document/d/1hWysNw_TrVlrWHhLyvLaIprazQWejXJsqZrfaTXRO2E/edit?usp=sharing"},
+    {level: "C1", tags: ["문화","사회"], title: "‘번호 따기’ 성지가 된 서점", thumb: "https://www.heavenraven.com/wp-content/uploads/2024/05/TELEMMGLPICT000181622487_trans_NvBQzQNjv4BqGLLAPY3LddE1Qiv-bsIMYN_NrT6kNvN6YRSyUisEf90.jpg", link: "content/c1-bookstore-pickup.html"},
+    {level: "B2+", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "content/b2plus-bookstore-pickup.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "content/b2-bookstore-pickup.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "서스펜스의 거장, 알프레드 히치콕은 말했다", type: "video", thumb: "https://i.ytimg.com/vi/CsJdnlpBPgE/hqdefault.jpg", link: "content/b2-alfred-hitchcock.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "인스타의 현실: 인스타 vs 현실", type: "video", thumb: "https://i.ytimg.com/vi/fERBaXD9sI4/hqdefault.jpg", link: "content/b2-instagram-vs-reality.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "인스타의 현실: 인스타 vs 현실", type: "video", thumb: "https://i.ytimg.com/vi/fERBaXD9sI4/hqdefault.jpg", link: "content/b1plus-instagram-vs-reality.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "내 월급이 사라졌다: 월급은 통장을 스칠 뿐", type: "video", thumb: "https://i.ytimg.com/vi/l35ok1jy3_0/hqdefault.jpg", link: "content/b1plus-my-salary-is-gone.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "내 월급이 사라졌다: 월급은 통장을 스칠 뿐", type: "video", thumb: "https://i.ytimg.com/vi/l35ok1jy3_0/hqdefault.jpg", link: "content/b2-my-salary-is-gone.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "누가 날 싫어할 때: 20대 vs 30대", type: "video", thumb: "https://i.ytimg.com/vi/HC6x8j5V4B4/hqdefault.jpg", link: "content/b2-when-someone-hates-me.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "누가 날 싫어할 때: 20대 vs 30대", type: "video", thumb: "https://i.ytimg.com/vi/HC6x8j5V4B4/hqdefault.jpg", link: "content/b1plus-when-someone-hates-me.html"},
+    {level: "B2+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "content/b2plus-art-and-design.html"},
+    {level: "B1+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "content/b1plus-art-and-design.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "content/b1plus-reels-addiction.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "content/b2-reels-addiction.html"},
+    {level: "C1", tags: ["문화","사회"], title: "“회귀, 빙의, 환생” 이야기가 인기 있는 이유", type: "video", thumb: "https://i.ytimg.com/vi/5QM5yCwCxDQ/hqdefault.jpg", link: "content/c1-regression-possession-reincarnation.html"},
+    {level: "C2", tags: ["경제","정치"], title: "코스피 5000 시대, 앞으로 어떤 길을 가야 하는가?", link: "content/c2-kospi-5000-era.html"},
+    {level: "C1", tags: ["경제","정치"], title: "'코스피 5000'의 의미와 전망", type: "video", thumb: "https://i.ytimg.com/vi/Ehz6n9RxMsc/hqdefault.jpg", link: "content/c1-kospi-5000-meaning.html"},
+    {level: "C1", tags: ["과학","음식"], title: "두바이 쫀득 쿠키가 맛있는 과학적인 이유", type: "video", thumb: "https://i.ytimg.com/vi/htzfNwDM7II/hqdefault.jpg", link: "content/c1-dubai-cookie-science.html"},
+    {level: "B2+", tags: ["문화","음악"], title: "팝송에서 '페이드 아웃'이 사라진 이유", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/assets/images/b2plus-fade-out-in-pop-songs.png", link: "content/b2plus-fade-out-in-pop-songs.html"},
+    {level: "B2+", tags: ["문화","음식"], title: "한국인은 쫀득한 식감을 왜 좋아할까요?", type: "video", thumb: "https://i.ytimg.com/vi/Q3xPFQgDG4E/hqdefault.jpg", link: "content/b2plus-why-koreans-like-chewy-texture.html"},
+    {level: "B2+", tags: ["언어","문화"], title: "우리는 왜 \"같아요\"라고 할까?", type: "video", thumb: "https://i.ytimg.com/vi/nb-L3S8AFh8/hqdefault.jpg", link: "content/b2plus-why-we-say-gata-yo.html"},
+    {level: "C1+", tags: ["문화","역사"], title: "한국의 크리스마스 케익의 기원", type: "video", thumb: "https://i.ytimg.com/vi/YoIbPhMETD8/hqdefault.jpg", link: "content/c1plus-korean-christmas-cake-origin.html"},
+    {level: "B2+", tags: ["문화"], title: "한국 박물관 및 미술관 입장료 이야기", type: "video", thumb: "https://i.ytimg.com/vi/ljr7gKBXpKA/hqdefault.jpg", link: "content/b2plus-museum-admission.html"},
+    {level: "B2+", tags: ["사회","문화"], title: "천원의 재능마켓", link: "content/b2plus-1000won-talent-market.html"},
     {level: "B2", tags: ["경제","사회"], title: "전 세계는 ‘집값’과 전쟁 중…원인과 전망은?", thumb: "https://drive.google.com/thumbnail?id=1EEHwfv46-Ic0A1FwNHz446_jjsdVPoWYBm3GFcuMiY0&sz=w400", link: "https://drive.google.com/open?id=1EEHwfv46-Ic0A1FwNHz446_jjsdVPoWYBm3GFcuMiY0&usp=drive_copy"},
     {level: "B2", tags: ["과학"], title: "소행성 충돌 실험 - 지구 방어 실험 성공?", thumb: "https://drive.google.com/thumbnail?id=1qn61B4kJviMEF_-bhY8OKhNSEt-z28NrYR_R3-2hZPQ&sz=w400", link: "https://drive.google.com/open?id=1qn61B4kJviMEF_-bhY8OKhNSEt-z28NrYR_R3-2hZPQ&usp=drive_copy"},
     {level: "B2", tags: ["과학"], title: "잠을 자야 하는 이유 - 잠을 자지 않았을 때, 우리의 몸에 어떤 일들이 발생할까요?", thumb: "https://drive.google.com/thumbnail?id=1zK-w8iIu2jYFAHOjnOHjWtazv25s2BEeaSDRdFiMgdE&sz=w400", link: "https://drive.google.com/open?id=1zK-w8iIu2jYFAHOjnOHjWtazv25s2BEeaSDRdFiMgdE&usp=drive_copy"},
@@ -417,30 +417,30 @@
     {level: "C2", tags: ["철학","언어"], title: "말할 수 없는 것은 침묵해야 한다 : 언어와 삶", thumb: "https://drive.google.com/thumbnail?id=14rzpxQAEauYPqTUUD91io6gqhxgMpYedlrdBcD7xJx0&sz=w400", link: "https://drive.google.com/open?id=14rzpxQAEauYPqTUUD91io6gqhxgMpYedlrdBcD7xJx0&usp=drive_copy"},
     {level: "C2", tags: ["철학","언어"], title: "표상과 현상은 무엇일까요?", thumb: "https://drive.google.com/thumbnail?id=1e2mKtmrd3gN2EIVVQ4oWjC3c4PHYJHZqyY5DAHKkAOU&sz=w400", link: "https://drive.google.com/open?id=1e2mKtmrd3gN2EIVVQ4oWjC3c4PHYJHZqyY5DAHKkAOU&usp=drive_copy"},
     {level: "C2", tags: ["철학","언어","역사"], title: "\u003c역사를 읽는 방법\u003e - 1장 서론：그들의 방식으로 바라보기", thumb: "https://drive.google.com/thumbnail?id=1bWysDNo3szA9MIWAv0Ud-oPGGG3ovkop6YMa4pnTLLU&sz=w400", link: "https://drive.google.com/open?id=1bWysDNo3szA9MIWAv0Ud-oPGGG3ovkop6YMa4pnTLLU&usp=drive_copy"},
-    {level: "A2+", tags: ["일상"], title: "영화를 어떻게 봐요? — 결말 먼저 보기 vs 처음부터 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/l6bdY6ZsbJM/hqdefault.jpg", link: "a2plus-watch-ending-first.html"},
-    {level: "B1", tags: ["일상","문화"], title: "SNS를 어떤 목적으로 써요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Qjfa0oxuHmA/hqdefault.jpg", link: "b1-sns-purpose.html"},
-    {level: "B1", tags: ["일상","문화"], title: "감칠맛과 MSG - 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/emo3pCumqmo/hqdefault.jpg", link: "b1-umami-and-msg.html"},
-    {level: "B1+", tags: ["일상","문화"], title: "뒷담화는 나쁠까요? 괜찮을까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZJxoxoACBCU/hqdefault.jpg", link: "b1plus-is-gossip-bad.html"},
-    {level: "B2", tags: ["과학"], title: "조상 찾기 DNA 검사", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/yG728zOrtl0/hqdefault.jpg", link: "b2-ancestry-dna-test.html"},
-    {level: "B1", tags: ["일상"], title: "보통 어떤 음악을 들어요? - 잔잔한 음악 vs 신나는 음악", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/vWwWShQVcGc/hqdefault.jpg", link: "b1-what-music-do-you-listen-to.html"},
-    {level: "B1+", tags: ["문화","음식"], title: "한국의 크리스마스 케이크", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/bZufTDKqQ8g/hqdefault.jpg", link: "b1plus-korean-christmas-cake.html"},
-    {level: "A2+", tags: ["일상"], title: "마음에 들지 않는 선물", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/6wPteSottlc/hqdefault.jpg", link: "a2plus-gift-not-liked.html"},
-    {level: "A2+", tags: ["일상"], title: "드라마 시청 습관: 몰아 보기 vs 매주 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/61SqgIZeXRc/hqdefault.jpg", link: "a2plus-drama-watching-habits.html"},
-    {level: "B1", tags: ["일상","문화"], title: "왼손잡이에 대한 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/YTVDuOi6L1c/hqdefault.jpg", link: "b1-left-handed.html"},
-    {level: "A2+", tags: ["일상"], title: "말차 라떼", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/do5Rs4A-P58/hqdefault.jpg", link: "a2plus-matcha-latte.html"},
-    {level: "B1", tags: ["일상"], title: "뇌 이야기: 기억력과 집중력", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/fkDwuqGLdvI/hqdefault.jpg", link: "b1-brain.html"},
-    {level: "B1", tags: ["일상"], title: "체크리스트가 사람들을 멍청하게 만들까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/KXXFd4y57xY/hqdefault.jpg", link: "b1-checklists-stupid.html"},
-    {level: "A2+", tags: ["일상"], title: "오늘 일을 다 못했어요: 늦게까지 일할 거예요 vs 내일 일할 거예요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/jbfUEVOCSds/hqdefault.jpg", link: "a2plus-overtime.html"},
-    {level: "A2+", tags: ["일상"], title: "잘못 나온 음식", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/klxx6ChKQFg/hqdefault.jpg", link: "a2plus-wrong-food.html"},
-    {level: "A2+", tags: ["일상"], title: "여름 에어컨 고장 VS 겨울 보일러 고장", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/_5dwoII2L_M/hqdefault.jpg", link: "a2plus-summer-winter.html"},
-    {level: "A2+", tags: ["일상"], title: "선크림이 피부를 지켜줘요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Q2j3xlxzlxU/hqdefault.jpg", link: "a2plus-sunscreen.html"},
-    {level: "A2", tags: ["일상"], title: "주말에 보통 뭐 해요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/5ONz3--hTRM/hqdefault.jpg", link: "a2-weekend.html"},
-    {level: "A1+", tags: ["일상"], title: "어디가 아파요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/IENdLlBwNe8/hqdefault.jpg", en: "Where does it hurt?", link: "a1plus-where-does-it-hurt.html"},
-    {level: "A1+", tags: ["일상"], title: "책을 몇 권 읽어요? (How Many Books Do You Read?)", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/xEF1OHf2dI0/hqdefault.jpg", link: "a1plus-how-many-books.html"},
-    {level: "A1", tags: ["일상"], title: "오늘 뭐 해요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/dvs7VQb-b3U/hqdefault.jpg", en: "What are you up to today?", link: "a1-easy-today-what-doing.html"},
-    {level: "A1", tags: ["일상"], title: "하루에 커피를 몇 잔 마셔요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZjnRIXjJU7Y/hqdefault.jpg", en: "How many cups of coffee a day?", link: "a1-how-many-cups-of-coffee.html"},
-    {level: "B1", tags: ["문화","일상"], title: "인생 첫 사우나 - 나는 마루", type: "video", thumb: "https://i.ytimg.com/vi/E8ZHFRY1reU/hqdefault.jpg", link: "b1-first-sauna-maru.html"},
-    {level: "A1+", tags: ["일상"], title: "무슨 요일이야?", type: "video", thumb: "https://i.ytimg.com/vi/AOylqCIDuHc/hqdefault.jpg", en: "What day is it?", link: "a1plus-what-day.html"}
+    {level: "A2+", tags: ["일상"], title: "영화를 어떻게 봐요? — 결말 먼저 보기 vs 처음부터 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/l6bdY6ZsbJM/hqdefault.jpg", link: "content/a2plus-watch-ending-first.html"},
+    {level: "B1", tags: ["일상","문화"], title: "SNS를 어떤 목적으로 써요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Qjfa0oxuHmA/hqdefault.jpg", link: "content/b1-sns-purpose.html"},
+    {level: "B1", tags: ["일상","문화"], title: "감칠맛과 MSG - 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/emo3pCumqmo/hqdefault.jpg", link: "content/b1-umami-and-msg.html"},
+    {level: "B1+", tags: ["일상","문화"], title: "뒷담화는 나쁠까요? 괜찮을까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZJxoxoACBCU/hqdefault.jpg", link: "content/b1plus-is-gossip-bad.html"},
+    {level: "B2", tags: ["과학"], title: "조상 찾기 DNA 검사", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/yG728zOrtl0/hqdefault.jpg", link: "content/b2-ancestry-dna-test.html"},
+    {level: "B1", tags: ["일상"], title: "보통 어떤 음악을 들어요? - 잔잔한 음악 vs 신나는 음악", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/vWwWShQVcGc/hqdefault.jpg", link: "content/b1-what-music-do-you-listen-to.html"},
+    {level: "B1+", tags: ["문화","음식"], title: "한국의 크리스마스 케이크", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/bZufTDKqQ8g/hqdefault.jpg", link: "content/b1plus-korean-christmas-cake.html"},
+    {level: "A2+", tags: ["일상"], title: "마음에 들지 않는 선물", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/6wPteSottlc/hqdefault.jpg", link: "content/a2plus-gift-not-liked.html"},
+    {level: "A2+", tags: ["일상"], title: "드라마 시청 습관: 몰아 보기 vs 매주 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/61SqgIZeXRc/hqdefault.jpg", link: "content/a2plus-drama-watching-habits.html"},
+    {level: "B1", tags: ["일상","문화"], title: "왼손잡이에 대한 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/YTVDuOi6L1c/hqdefault.jpg", link: "content/b1-left-handed.html"},
+    {level: "A2+", tags: ["일상"], title: "말차 라떼", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/do5Rs4A-P58/hqdefault.jpg", link: "content/a2plus-matcha-latte.html"},
+    {level: "B1", tags: ["일상"], title: "뇌 이야기: 기억력과 집중력", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/fkDwuqGLdvI/hqdefault.jpg", link: "content/b1-brain.html"},
+    {level: "B1", tags: ["일상"], title: "체크리스트가 사람들을 멍청하게 만들까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/KXXFd4y57xY/hqdefault.jpg", link: "content/b1-checklists-stupid.html"},
+    {level: "A2+", tags: ["일상"], title: "오늘 일을 다 못했어요: 늦게까지 일할 거예요 vs 내일 일할 거예요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/jbfUEVOCSds/hqdefault.jpg", link: "content/a2plus-overtime.html"},
+    {level: "A2+", tags: ["일상"], title: "잘못 나온 음식", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/klxx6ChKQFg/hqdefault.jpg", link: "content/a2plus-wrong-food.html"},
+    {level: "A2+", tags: ["일상"], title: "여름 에어컨 고장 VS 겨울 보일러 고장", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/_5dwoII2L_M/hqdefault.jpg", link: "content/a2plus-summer-winter.html"},
+    {level: "A2+", tags: ["일상"], title: "선크림이 피부를 지켜줘요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Q2j3xlxzlxU/hqdefault.jpg", link: "content/a2plus-sunscreen.html"},
+    {level: "A2", tags: ["일상"], title: "주말에 보통 뭐 해요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/5ONz3--hTRM/hqdefault.jpg", link: "content/a2-weekend.html"},
+    {level: "A1+", tags: ["일상"], title: "어디가 아파요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/IENdLlBwNe8/hqdefault.jpg", en: "Where does it hurt?", link: "content/a1plus-where-does-it-hurt.html"},
+    {level: "A1+", tags: ["일상"], title: "책을 몇 권 읽어요? (How Many Books Do You Read?)", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/xEF1OHf2dI0/hqdefault.jpg", link: "content/a1plus-how-many-books.html"},
+    {level: "A1", tags: ["일상"], title: "오늘 뭐 해요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/dvs7VQb-b3U/hqdefault.jpg", en: "What are you up to today?", link: "content/a1-easy-today-what-doing.html"},
+    {level: "A1", tags: ["일상"], title: "하루에 커피를 몇 잔 마셔요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZjnRIXjJU7Y/hqdefault.jpg", en: "How many cups of coffee a day?", link: "content/a1-how-many-cups-of-coffee.html"},
+    {level: "B1", tags: ["문화","일상"], title: "인생 첫 사우나 - 나는 마루", type: "video", thumb: "https://i.ytimg.com/vi/E8ZHFRY1reU/hqdefault.jpg", link: "content/b1-first-sauna-maru.html"},
+    {level: "A1+", tags: ["일상"], title: "무슨 요일이야?", type: "video", thumb: "https://i.ytimg.com/vi/AOylqCIDuHc/hqdefault.jpg", en: "What day is it?", link: "content/a1plus-what-day.html"}
   ];
   var LEVELS = ['A1','A1+','A2','A2+','B1','B1+','B2','B2+','C1','C1+','C2'];
   var LV_NAME = {'A1':'Novice','A1+':'Pre-Beginner','A2':'Beginner','A2+':'Upper Beginner','B1':'Pre-Intermediate','B1+':'Lower Intermediate','B2':'Intermediate','B2+':'Upper Intermediate','C1':'Advanced','C1+':'Upper Advanced','C2':'Proficient'};
