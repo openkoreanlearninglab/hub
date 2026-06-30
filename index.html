@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>[파일럿 1] 게이트 + 콘텐츠(3안) · OpenKoreanLearningLab</title>
+<meta name="description" content="초급/중급/고급 그룹탭 + 레벨 연동 자동 KO/EN + 검색·태그 필터 추천안" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{ --ink:#18181b; --gray:#71717a; --line:#e4e4e7; --light-gray:#a1a1aa; --bg-subtle:#fafafa; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 20px; }
+  a{ color:inherit; text-decoration:none; }
+  /* ---- Gate (Centered Minimal Editorial) ---- */
+  @keyframes fadeIn { from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
+  .gate{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 24px; background:#fff; animation:fadeIn .7s cubic-bezier(.16,1,.3,1) forwards; }
+  .gate-header{ display:flex; flex-direction:column; align-items:center; gap:16px; margin-bottom:56px; }
+  .gate-brand{ font-family:'Noto Sans KR',sans-serif; font-weight:500; font-size:13px; color:var(--gray); letter-spacing:.04em; }
+  .gate h1{ font-family:'Noto Serif KR',serif; font-size:clamp(32px,5vw,44px); font-weight:500; letter-spacing:-.02em; color:var(--ink); line-height:1.2; }
+  .gate .sub-en{ font-family:'Noto Serif KR',serif; font-style:italic; color:var(--gray); font-size:clamp(15px,2vw,19px); font-weight:400; }
+  .gate .sub-instruction{ font-family:'Noto Sans KR',sans-serif; color:var(--light-gray); font-size:13px; font-weight:400; letter-spacing:.02em; margin-top:12px; border-top:1px solid var(--line); padding-top:24px; width:120px; line-height:1.6; }
+  .bands{ display:flex; flex-wrap:wrap; justify-content:center; gap:14px; width:100%; max-width:1040px; margin-top:20px; }
+  .band{ flex:0 0 calc(20% - 12px); }
+  @media(max-width:1024px){ .bands{ gap:16px; } .band{ flex:0 0 calc(33.333% - 12px); } }
+  @media(max-width:768px){ .band{ flex:0 0 100%; } }
+  .band{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:28px 20px; cursor:pointer; transition:all .3s cubic-bezier(.16,1,.3,1); text-align:left; display:flex; flex-direction:column; height:100%; }
+  .band:hover{ border-color:var(--ink); background:var(--bg-subtle); }
+  .band .code{ font-size:11px; font-weight:500; letter-spacing:.1em; color:var(--light-gray); text-transform:uppercase; }
+  .band .ko{ font-family:'Noto Serif KR',serif; font-size:21px; font-weight:500; margin-top:14px; color:var(--ink); }
+  .band .en{ color:var(--gray); font-size:13.5px; margin-top:2px; }
+  .band .go{ margin-top:auto; padding-top:24px; font-size:11.5px; font-weight:700; letter-spacing:.02em; color:var(--ink); line-height:1.8; transition:transform .2s ease; }
+  .band .go .go-en{ font-weight:500; color:var(--gray); }
+  .band:hover .go{ transform:translateX(4px); }
+  .gate-cta{ margin-top:64px; }
+  .gate-foot{ color:var(--light-gray); font-size:11.5px; margin-top:40px; letter-spacing:.02em; }
+  .topbar{
+ position:sticky; top:0; z-index:20; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .topbar .row{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand{ font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:17px; color:#111; letter-spacing:-.01em; }
+  .hero-desc{ max-width:660px; font-size:14px; line-height:1.7; color:#374151; margin-top:14px; }
+  .hero-desc em{ display:block; font-style:italic; color:#9ca3af; font-size:13px; margin-top:6px; }
+  .detail{ max-width:680px; margin-top:18px; }
+  .detail .d-ko{ font-size:14px; line-height:1.75; color:#374151; margin:0; }
+  .detail .d-en{ font-size:13px; line-height:1.7; color:#9ca3af; font-style:italic; margin:8px 0 0; }
+  .toggle{ display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; }
+  .toggle button{ border:0; background:#fff; font-family:inherit; font-size:11.5px; font-weight:700; letter-spacing:.04em; padding:6px 12px; cursor:pointer; color:var(--gray); }
+  .toggle button.on{ background:#111; color:#fff; }
+  .hero{ padding:44px 0 16px; }
+  .hero .badge{ display:inline-flex; align-items:center; gap:8px; border:1px solid #111; padding:5px 11px; font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; margin-bottom:14px; }
+  .hero h1{ font-family:'Noto Serif KR',serif; font-size:clamp(28px,4.6vw,48px); font-weight:900; letter-spacing:-.02em; }
+  .hero .sub{ font-family:'Noto Serif KR',serif; font-style:italic; color:var(--gray); margin-top:8px; font-size:clamp(14px,2vw,18px); }
+  .groups{ display:flex; gap:6px; margin-top:20px; border-bottom:1px solid var(--line); overflow-x:auto; }
+  .groups button{ border:0; background:transparent; font-family:inherit; font-size:14px; font-weight:500; color:var(--gray); padding:13px 16px; cursor:pointer; white-space:nowrap; position:relative; }
+  .groups button .en{ font-size:10px; letter-spacing:.06em; opacity:.7; margin-left:5px; text-transform:uppercase; }
+  .groups button.on{ color:#111; font-weight:800; }
+  .groups button.on::after{ content:''; position:absolute; left:16px; right:16px; bottom:-1px; height:2px; background:#111; }
+  /* controls */
+  .controls{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:20px 0 4px; }
+  .search{ position:relative; flex:1; min-width:220px; }
+  .search input{ width:100%; font-family:inherit; font-size:14px; padding:10px 14px 10px 38px; border:1px solid var(--line); border-radius:10px; outline:none; transition:.15s; }
+  .search input:focus{ border-color:#111; }
+  .search svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); width:17px; height:17px; color:#9ca3af; }
+  .chips{ display:flex; gap:7px; flex-wrap:wrap; }
+  .chip{ padding:6px 13px; font-size:12px; font-weight:700; letter-spacing:.04em; border:1px solid var(--line); background:#fff; border-radius:999px; cursor:pointer; transition:.15s; }
+  .chip:hover{ border-color:#111; }
+  .chip.on{ background:#111; color:#fff; border-color:#111; }
+  .tags{ display:flex; gap:7px; flex-wrap:wrap; margin:14px 0 4px; }
+  .tag-btn{ padding:5px 11px; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--line); background:#fff; color:var(--gray); border-radius:4px; cursor:pointer; transition:.15s; }
+  .tag-btn:hover{ border-color:#111; color:#111; }
+  .tag-btn.on{ background:#111; color:#fff; border-color:#111; }
+  .tag-btn.bi{ display:inline-flex; flex-direction:column; align-items:flex-start; line-height:1.15; }
+  .tag-btn .ten{ font-size:8.5px; opacity:.65; letter-spacing:.06em; margin-top:1px; }
+  .divider{ display:flex; align-items:center; gap:12px; margin:30px 0 14px; }
+  .divider .lvcode{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:15px; letter-spacing:.05em; }
+  .divider .lvname{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); font-weight:700; }
+  .divider .ln{ flex:1; height:1px; background:var(--line); }
+  .cards{ display:flex; flex-direction:column; gap:14px; }
+  .card{ display:flex; background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; transition:.2s; }
+  .card:hover{ border-color:#111; }
+  .tile{ position:relative; width:120px; flex-shrink:0; background:#111; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Noto Serif KR',serif; font-weight:900; font-size:20px; letter-spacing:.04em; }
+  @media(max-width:520px){ .tile{ width:78px; font-size:15px; } }
+  .ptype{ position:absolute; top:8px; right:8px; display:inline-flex; align-items:center; gap:3px; font-family:'Noto Sans KR',sans-serif; font-size:8px; font-weight:700; letter-spacing:.08em; padding:2px 5px; border-radius:999px; background:rgba(255,255,255,.16); }
+  .ptype svg{ width:8px; height:8px; }
+  .cbody{ padding:18px 20px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+  .meta{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:8px; }
+  .lv{ font-size:10px; font-weight:700; letter-spacing:.1em; border:1px solid #111; padding:2px 6px; }
+  .ctag{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:#f3f4f6; color:#4b5563; padding:2px 6px; }
+  .card h3{ font-family:'Noto Serif KR',serif; font-size:17px; font-weight:700; line-height:1.4; }
+  .card .en{ color:var(--gray); font-size:12.5px; margin-top:4px; }
+  .empty{ padding:50px; text-align:center; color:#9ca3af; font-size:14px; border:1px dashed var(--line); border-radius:12px; }
+  .pad{ padding-bottom:30px; min-height:200px; }
+  footer{ text-align:center; border-top:1px solid var(--line); margin-top:30px; padding:34px 0 50px; }
+  .italki{ display:inline-flex; align-items:center; gap:7px; padding:9px 18px; background:#f9fafb; border:1px solid var(--line); border-radius:999px; font-size:13px; font-weight:600; color:#374151; transition:.15s; }
+  .italki:hover{ border-color:#111; color:#111; }
+  .italki svg{ width:14px; height:14px; }
+  .copy{ color:#9ca3af; font-size:12.5px; margin-top:16px; }
+
+  /* thumbnails + pagination */
+  .thumb{ position:relative; width:148px; flex-shrink:0; background:var(--bg-subtle); overflow:hidden; border-right:1px solid var(--line); min-height:88px; }
+  @media(max-width:520px){ .thumb{ width:104px; min-height:74px; } }
+  .thumb-img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb-fallback{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; background:var(--bg-subtle); padding:8px; text-align:center; }
+  .thumb.noimg .thumb-fallback{ display:flex; }
+  .fb-lv{ font-family:'Noto Serif KR',serif; font-weight:700; font-size:18px; color:var(--ink); letter-spacing:.02em; }
+  .play{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.5); color:#fff; display:flex; align-items:center; justify-content:center; }
+  .play svg{ width:13px; height:13px; margin-left:2px; }
+  .more-wrap{ text-align:center; margin-top:26px; }
+  .more-btn{ font-family:inherit; font-size:13px; font-weight:600; color:var(--gray); background:#fff; border:1px solid var(--line); border-radius:9px; padding:11px 24px; cursor:pointer; transition:.15s; }
+  .more-btn:hover{ border-color:var(--ink); color:var(--ink); }
+  .more-btn span{ color:var(--light-gray); margin-left:4px; }
+  .series-badge{ display:inline-flex; align-items:center; font-size:9.5px; font-weight:700; letter-spacing:.02em; background:var(--bg-subtle); color:var(--gray); border:1px solid var(--line); padding:2px 8px; border-radius:3px; }
+  .series-badge em{ font-style:normal; opacity:.7; font-weight:500; margin-left:5px; }
+  .lang-wrap{ display:inline-flex; align-items:center; gap:7px; }
+  .lang-label{ font-size:11px; font-weight:600; letter-spacing:.04em; color:var(--gray); text-transform:uppercase; }
+  .lang-select{ font-family:inherit; font-size:12px; font-weight:600; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer; outline:none; }
+  .lang-select:hover{ border-color:var(--ink); }
+  .lang{ position:relative; }
+  .lang-btn{ font-family:inherit; font-size:12px; font-weight:600; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:999px; padding:6px 13px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:.15s; }
+  .lang-btn:hover{ border-color:var(--ink); }
+  .lang-btn .chev{ font-size:9px; color:var(--gray); }
+  .lang-menu{ position:absolute; right:0; top:calc(100% + 6px); background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:0 10px 26px -12px rgba(0,0,0,.25); padding:5px; min-width:150px; z-index:40; display:flex; flex-direction:column; }
+  .lang-menu button{ font-family:inherit; font-size:12.5px; text-align:left; background:transparent; border:0; padding:8px 11px; border-radius:7px; cursor:pointer; color:var(--ink); white-space:nowrap; }
+  .lang-menu button:hover{ background:var(--bg-subtle); }
+  .lang-menu button.on{ font-weight:700; }
+  .lang-menu button.on::after{ content:'✓'; float:right; color:var(--gray); margin-left:14px; }
+  .pager{ display:flex; align-items:center; justify-content:center; gap:5px; margin-top:30px; flex-wrap:wrap; }
+  .pager button{ font-family:inherit; font-size:12.5px; min-width:34px; height:34px; padding:0 9px; border:1px solid var(--line); background:#fff; color:var(--gray); border-radius:8px; cursor:pointer; transition:.15s; }
+  .pager button:hover:not([disabled]){ border-color:var(--ink); color:var(--ink); }
+  .pager button.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pager button[disabled]{ opacity:.4; cursor:default; }
+  .pager .pg-gap{ color:var(--light-gray); padding:0 3px; }
+  .nav-sel{ display:none; }
+  .nav-select{ width:100%; max-width:340px; font-family:inherit; font-size:13px; padding:9px 12px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); outline:none; }
+  .nav-sel-group{ margin-top:18px; } .nav-sel-tag{ margin-top:10px; }
+  @media(max-width:1024px){ .groups{ display:none; } .nav-sel-group{ display:block; } }
+  @media(max-width:640px){
+    .chips{ display:none; } .tags{ display:none; }
+    .nav-sel-level{ display:block; } .nav-sel-tag{ display:block; }
+    .card h3{ font-size:14.5px; }
+    .card .en{ font-size:11px; }
+    .hero h1{ font-size:25px; }
+    .hero .sub{ font-size:13px; }
+    .detail .d-ko{ font-size:13px; } .detail .d-en{ font-size:12px; }
+    .divider .lvcode{ font-size:14px; }
+    .cbody{ padding:14px 16px; }
+    .thumb{ width:108px; min-height:78px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <noscript style="display:block;text-align:center;padding:40px">JavaScript가 필요합니다. / Please enable JavaScript.</noscript>
+</div>
+
+<script>
+'use strict';
+(function(){
+  var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
+
+  var MATERIALS = [
+    {level: "C1", tags: ["사회","문화"], title: "〈한국이 싫어서〉 - 한국이 싫은 이유가 무엇이며, 한국을 떠나면 그 문제가 사라질까?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c1-because-i-hate-korea.jpg", link: "https://docs.google.com/document/d/1EK_vwqYMgvhb7dB9zFlKQprhjN8ZmvqecJU-rgBudOY/edit?usp=sharing"},
+    {level: "C2", tags: ["사회","교육"], title: "21세기, 대학은 존재론적 위기를 맞이했을까?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c2-university-existential-crisis.jpg", link: "https://docs.google.com/document/d/1qVqh4boOn621kY1Es3yQtSwgVPOI3nr7SfIFA9mb8bY/edit?usp=sharing"},
+    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c스무드\u003e를 통해 살펴보는 정체성의 경계", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c2-novel-smooth-identity.jpg", link: "https://docs.google.com/document/d/1ReWCwk4xRRqJBSwqsGKI6CPStYR5ABy5bEPuPjq6HPk/edit?usp=sharing"},
+    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c혼모노\u003e를 통해 살펴보는 진짜와 가짜의 경계", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c2-novel-honmono-real-fake.jpg", link: "https://docs.google.com/document/d/1ji7VWgB-8yvApxyYLt7H34MYg-lcX0iI6kAb5ZPXTS8/edit?usp=sharing"},
+    {level: "C1", tags: ["사회","철학","과학"], title: "뒷담화에 대해서 - 뒷담화는 자제할 수 없는 인간 본성인가?", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/main/thumbnail/c1-gossip-human-nature.jpg", link: "https://docs.google.com/document/d/1hWysNw_TrVlrWHhLyvLaIprazQWejXJsqZrfaTXRO2E/edit?usp=sharing"},
+    {level: "C1", tags: ["문화","사회"], title: "‘번호 따기’ 성지가 된 서점", thumb: "https://www.heavenraven.com/wp-content/uploads/2024/05/TELEMMGLPICT000181622487_trans_NvBQzQNjv4BqGLLAPY3LddE1Qiv-bsIMYN_NrT6kNvN6YRSyUisEf90.jpg", link: "c1-bookstore-pickup.html"},
+    {level: "B2+", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "b2plus-bookstore-pickup.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "b2-bookstore-pickup.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "서스펜스의 거장, 알프레드 히치콕은 말했다", type: "video", thumb: "https://i.ytimg.com/vi/CsJdnlpBPgE/hqdefault.jpg", link: "b2-alfred-hitchcock.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "인스타의 현실: 인스타 vs 현실", type: "video", thumb: "https://i.ytimg.com/vi/fERBaXD9sI4/hqdefault.jpg", link: "b2-instagram-vs-reality.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "인스타의 현실: 인스타 vs 현실", type: "video", thumb: "https://i.ytimg.com/vi/fERBaXD9sI4/hqdefault.jpg", link: "b1plus-instagram-vs-reality.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "내 월급이 사라졌다: 월급은 통장을 스칠 뿐", type: "video", thumb: "https://i.ytimg.com/vi/l35ok1jy3_0/hqdefault.jpg", link: "b1plus-my-salary-is-gone.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "내 월급이 사라졌다: 월급은 통장을 스칠 뿐", type: "video", thumb: "https://i.ytimg.com/vi/l35ok1jy3_0/hqdefault.jpg", link: "b2-my-salary-is-gone.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "누가 날 싫어할 때: 20대 vs 30대", type: "video", thumb: "https://i.ytimg.com/vi/HC6x8j5V4B4/hqdefault.jpg", link: "b2-when-someone-hates-me.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "누가 날 싫어할 때: 20대 vs 30대", type: "video", thumb: "https://i.ytimg.com/vi/HC6x8j5V4B4/hqdefault.jpg", link: "b1plus-when-someone-hates-me.html"},
+    {level: "B2+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "b2plus-art-and-design.html"},
+    {level: "B1+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "b1plus-art-and-design.html"},
+    {level: "B1+", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "b1plus-reels-addiction.html"},
+    {level: "B2", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "b2-reels-addiction.html"},
+    {level: "C1", tags: ["문화","사회"], title: "“회귀, 빙의, 환생” 이야기가 인기 있는 이유", type: "video", thumb: "https://i.ytimg.com/vi/5QM5yCwCxDQ/hqdefault.jpg", link: "c1-regression-possession-reincarnation.html"},
+    {level: "C2", tags: ["경제","정치"], title: "코스피 5000 시대, 앞으로 어떤 길을 가야 하는가?", link: "c2-kospi-5000-era.html"},
+    {level: "C1", tags: ["경제","정치"], title: "'코스피 5000'의 의미와 전망", type: "video", thumb: "https://i.ytimg.com/vi/Ehz6n9RxMsc/hqdefault.jpg", link: "c1-kospi-5000-meaning.html"},
+    {level: "C1", tags: ["과학","음식"], title: "두바이 쫀득 쿠키가 맛있는 과학적인 이유", type: "video", thumb: "https://i.ytimg.com/vi/htzfNwDM7II/hqdefault.jpg", link: "c1-dubai-cookie-science.html"},
+    {level: "B2+", tags: ["문화","음악"], title: "팝송에서 '페이드 아웃'이 사라진 이유", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/Number%20of%20songs%20that%20fade%20out%20in%20the%20top%2010%20-%20by%20Vox%20%22Why%20more%20pop%20songs%20should%20end%20with%20a%20fade%20out%22.png", link: "b2plus-fade-out-in-pop-songs.html"},
+    {level: "B2+", tags: ["문화","음식"], title: "한국인은 쫀득한 식감을 왜 좋아할까요?", type: "video", thumb: "https://i.ytimg.com/vi/Q3xPFQgDG4E/hqdefault.jpg", link: "b2plus-why-koreans-like-chewy-texture.html"},
+    {level: "B2+", tags: ["언어","문화"], title: "우리는 왜 \"같아요\"라고 할까?", type: "video", thumb: "https://i.ytimg.com/vi/nb-L3S8AFh8/hqdefault.jpg", link: "b2plus-why-we-say-gata-yo.html"},
+    {level: "C1+", tags: ["문화","역사"], title: "한국의 크리스마스 케익의 기원", type: "video", thumb: "https://i.ytimg.com/vi/YoIbPhMETD8/hqdefault.jpg", link: "c1plus-korean-christmas-cake-origin.html"},
+    {level: "B2+", tags: ["문화"], title: "한국 박물관 및 미술관 입장료 이야기", type: "video", thumb: "https://i.ytimg.com/vi/ljr7gKBXpKA/hqdefault.jpg", link: "b2plus-museum-admission.html"},
+    {level: "B2+", tags: ["사회","문화"], title: "천원의 재능마켓", link: "b2plus-1000won-talent-market.html"},
+    {level: "B2", tags: ["경제","사회"], title: "전 세계는 ‘집값’과 전쟁 중…원인과 전망은?", thumb: "https://drive.google.com/thumbnail?id=1EEHwfv46-Ic0A1FwNHz446_jjsdVPoWYBm3GFcuMiY0&sz=w400", link: "https://drive.google.com/open?id=1EEHwfv46-Ic0A1FwNHz446_jjsdVPoWYBm3GFcuMiY0&usp=drive_copy"},
+    {level: "B2", tags: ["과학"], title: "소행성 충돌 실험 - 지구 방어 실험 성공?", thumb: "https://drive.google.com/thumbnail?id=1qn61B4kJviMEF_-bhY8OKhNSEt-z28NrYR_R3-2hZPQ&sz=w400", link: "https://drive.google.com/open?id=1qn61B4kJviMEF_-bhY8OKhNSEt-z28NrYR_R3-2hZPQ&usp=drive_copy"},
+    {level: "B2", tags: ["과학"], title: "잠을 자야 하는 이유 - 잠을 자지 않았을 때, 우리의 몸에 어떤 일들이 발생할까요?", thumb: "https://drive.google.com/thumbnail?id=1zK-w8iIu2jYFAHOjnOHjWtazv25s2BEeaSDRdFiMgdE&sz=w400", link: "https://drive.google.com/open?id=1zK-w8iIu2jYFAHOjnOHjWtazv25s2BEeaSDRdFiMgdE&usp=drive_copy"},
+    {level: "B2", tags: ["과학"], title: "mRNA 백신으로 세상을 구하다 - 2023년 노벨 생리의학상 수장자 카탈린 카리코", thumb: "https://drive.google.com/thumbnail?id=1lhLsqB7cklUOW2_vp_p7QFrJ4C5oKwmAvuEpnSC47rM&sz=w400", link: "https://drive.google.com/open?id=1lhLsqB7cklUOW2_vp_p7QFrJ4C5oKwmAvuEpnSC47rM&usp=drive_copy"},
+    {level: "B2", tags: ["과학","건강"], title: "마법의 다이어트 약 - 다이어트 대신 병원?", thumb: "https://drive.google.com/thumbnail?id=1nWLGGDlN-zx_VFbONR8Nsx9YsFgi7Rbf20M5oJnlJac&sz=w400", link: "https://drive.google.com/open?id=1nWLGGDlN-zx_VFbONR8Nsx9YsFgi7Rbf20M5oJnlJac&usp=drive_copy"},
+    {level: "B2", tags: ["과학","사회"], title: "나에게 가장 신기했던 기술은 무엇인가요?", thumb: "https://drive.google.com/thumbnail?id=1qYuICuV2N6VlIAQMGt_y6dc82NLTHmkYVQqE7A4_9BM&sz=w400", link: "https://drive.google.com/open?id=1qYuICuV2N6VlIAQMGt_y6dc82NLTHmkYVQqE7A4_9BM&usp=drive_copy"},
+    {level: "B2", tags: ["기술"], title: "스마트폰으로 사진 잘 찍는꿀팁! - 똥손 친구에서 알려주세요.", thumb: "https://drive.google.com/thumbnail?id=1F-3HQa5OdoIYBdYJHfJ6UsfQhEf6EmzdacVZ7cmLaD0&sz=w400", link: "https://drive.google.com/open?id=1F-3HQa5OdoIYBdYJHfJ6UsfQhEf6EmzdacVZ7cmLaD0&usp=drive_copy"},
+    {level: "B2", tags: ["문학"], title: "📓 소설 \u003c저주 토끼\u003e - \"저주에 쓰이는 물건일수록 예쁘게 만들어야 한단다\"", thumb: "https://drive.google.com/thumbnail?id=1P7v1hkGsXBo49sNLIpDOZ_z85si2JW9A8Iq24d2mYD4&sz=w400", link: "https://drive.google.com/open?id=1P7v1hkGsXBo49sNLIpDOZ_z85si2JW9A8Iq24d2mYD4&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "'오마카세!' 대체 어떤 요리일까요. - 오늘 뭐 먹지?", thumb: "https://drive.google.com/thumbnail?id=1hmjy_rnpcPB8pJRDnZbx0ShkZAp_NSmzh-comgWR9fM&sz=w400", link: "https://drive.google.com/open?id=1hmjy_rnpcPB8pJRDnZbx0ShkZAp_NSmzh-comgWR9fM&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "\"가을 타다\", 무슨 의미일까요？", thumb: "https://drive.google.com/thumbnail?id=1-tIHi_wPCfWF-WYm2DWqublcX5AXIfTly_8zLMESygk&sz=w400", link: "https://drive.google.com/open?id=1-tIHi_wPCfWF-WYm2DWqublcX5AXIfTly_8zLMESygk&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "\"따로 또 함께\" - 코리빙 하우스", thumb: "https://drive.google.com/thumbnail?id=1lTUpHqfXoX6_b5l7I2e9tF2eFM0dzn_Ax1cyKQ20X4M&sz=w400", link: "https://drive.google.com/open?id=1lTUpHqfXoX6_b5l7I2e9tF2eFM0dzn_Ax1cyKQ20X4M&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "\u003c솔로지옥\u003e 리뷰 - 과몰입 리액션 모음", thumb: "https://drive.google.com/thumbnail?id=1Cuw8a1OifvFCw1nEdRFKwurphvKWOQRjbwWjXpYoHPQ&sz=w400", link: "https://drive.google.com/open?id=1Cuw8a1OifvFCw1nEdRFKwurphvKWOQRjbwWjXpYoHPQ&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "100만 원 짜리 VVIP 한식당 과연 진짜일까?", thumb: "https://drive.google.com/thumbnail?id=1vVERuR7XQw13Nav7sXjq7zBt08KWYrO23KXlX75YzCE&sz=w400", link: "https://drive.google.com/open?id=1vVERuR7XQw13Nav7sXjq7zBt08KWYrO23KXlX75YzCE&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "가을이 독서의 계절이 된 이유", thumb: "https://drive.google.com/thumbnail?id=1CB6S7naeK3usRCNS7dhn_YDyGBLJU0q3zGByccVdBtQ&sz=w400", link: "https://drive.google.com/open?id=1CB6S7naeK3usRCNS7dhn_YDyGBLJU0q3zGByccVdBtQ&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "나만 알고 싶은 꼭 사야할 가성비 와인 #조세호의 와인바🍷", thumb: "https://drive.google.com/thumbnail?id=1T6nKCQYhcVzDbJzUS_l2BA0iBS8W4XPGu_0pZJzYUOQ&sz=w400", link: "https://drive.google.com/open?id=1T6nKCQYhcVzDbJzUS_l2BA0iBS8W4XPGu_0pZJzYUOQ&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "나의 퍼스널 컬러는 무엇인가요? - 퍼스널컬러 자가진단", thumb: "https://drive.google.com/thumbnail?id=13d5MroJdOamJYpi-EmB2XQRAbkuXNNji0ocydA6sNYs&sz=w400", link: "https://drive.google.com/open?id=13d5MroJdOamJYpi-EmB2XQRAbkuXNNji0ocydA6sNYs&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "남녀 사이 친구 - 깻잎 논쟁 & 카풀 논쟁", thumb: "https://drive.google.com/thumbnail?id=1qfamWbJgkoNt5VOFl9H9Ysxaw33IGIg4mU0LsQsiZQg&sz=w400", link: "https://drive.google.com/open?id=1qfamWbJgkoNt5VOFl9H9Ysxaw33IGIg4mU0LsQsiZQg&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "등산할 때 필요한 아이템은 무엇일까요? - 배우 이시영이 소개해주는 그녀의 찐템.", thumb: "https://drive.google.com/thumbnail?id=1H5N4qDWaM5hfScYOmEdWMXxlF9r9l5-ucfu0ZUT4m54&sz=w400", link: "https://drive.google.com/open?id=1H5N4qDWaM5hfScYOmEdWMXxlF9r9l5-ucfu0ZUT4m54&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "명품 브랜드에서 카페, 레스토랑을 만드는 이유는 무엇일까요? - 밥 먹으러 구찌, 커피 마시러 디올", thumb: "https://drive.google.com/thumbnail?id=1h_V-di-6XKNvN8lvWHi0w14LSdV7gAn-JO4COBXAmDs&sz=w400", link: "https://drive.google.com/open?id=1h_V-di-6XKNvN8lvWHi0w14LSdV7gAn-JO4COBXAmDs&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "명품이란 무엇일까요? - 프랑스 명품 브랜드 스토리", thumb: "https://drive.google.com/thumbnail?id=11iG2ILkX_gk6Avjj-GrXPluhTXl2CC31ZlXAsMe2aTk&sz=w400", link: "https://drive.google.com/open?id=11iG2ILkX_gk6Avjj-GrXPluhTXl2CC31ZlXAsMe2aTk&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "알콜 0.5% 술이 잘 팔리는 이유는? - Z세대가 바꾸고 있는 음주 문화", thumb: "https://drive.google.com/thumbnail?id=1cMCsKSumtAsXxqDMZ5pPT3AHOhlJKQ1hJ-iS2BcHh7g&sz=w400", link: "https://drive.google.com/open?id=1cMCsKSumtAsXxqDMZ5pPT3AHOhlJKQ1hJ-iS2BcHh7g&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "어떻게 하면 부자가 될 수 있을까요? #유퀴즈온더블럭", thumb: "https://drive.google.com/thumbnail?id=146SOl3QjTIdx3PBAI7v3IECHpStiGw3z6ScSAZy1uN0&sz=w400", link: "https://drive.google.com/open?id=146SOl3QjTIdx3PBAI7v3IECHpStiGw3z6ScSAZy1uN0&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "영화 〈중경삼림〉을 통해 볼 수 있는 90년대 홍콩의 모습", thumb: "https://drive.google.com/thumbnail?id=1DuG1fo92F4r7x4PUX__9e0bLDQGPSO8KW7uZToUgAqM&sz=w400", link: "https://drive.google.com/open?id=1DuG1fo92F4r7x4PUX__9e0bLDQGPSO8KW7uZToUgAqM&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "영화 속 고정관념: ‘영화 속 여성은 수동적이다?’ (Gender Stereotype in movies: Women are passive?)", thumb: "https://drive.google.com/thumbnail?id=1sZ2gaA0bjURWU0q8F9AckHTW5jmDa75mZ0pzgSvHb8o&sz=w400", link: "https://drive.google.com/open?id=1sZ2gaA0bjURWU0q8F9AckHTW5jmDa75mZ0pzgSvHb8o&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "영화, 어떻게 볼까? - 기생충", thumb: "https://drive.google.com/thumbnail?id=1ir83IzilrVKlJCk5qcEML4ac5MmvjjCDPXlcdww1t4A&sz=w400", link: "https://drive.google.com/open?id=1ir83IzilrVKlJCk5qcEML4ac5MmvjjCDPXlcdww1t4A&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "영화, 어떻게 볼까? - 영화 평론가 이동진이 알려주는 영화 보는 방법", thumb: "https://drive.google.com/thumbnail?id=1bn5anP-m6sb3MioeuNBHtR6ceEr5IP55m_ra7KQpWgI&sz=w400", link: "https://drive.google.com/open?id=1bn5anP-m6sb3MioeuNBHtR6ceEr5IP55m_ra7KQpWgI&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "영화, 어떻게 볼까? - 영화에서 캐릭터들의 옷이 중요할까요?", thumb: "https://drive.google.com/thumbnail?id=1KHuSKpL8lAvhACNjoHNmoGkzB7AG_9EnhJOq_uSu__A&sz=w400", link: "https://drive.google.com/open?id=1KHuSKpL8lAvhACNjoHNmoGkzB7AG_9EnhJOq_uSu__A&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "왜 반말하세요：학교 선생님한테 반말하면 어떻게 될까?", thumb: "https://drive.google.com/thumbnail?id=1Zc8sfCYWVN87312ETlcF0HkSFCw4NrEAzmFWUHgK_iI&sz=w400", link: "https://drive.google.com/open?id=1Zc8sfCYWVN87312ETlcF0HkSFCw4NrEAzmFWUHgK_iI&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "이 시대 최대의 난제 '강아지 파 VS 고양이 파'", thumb: "https://drive.google.com/thumbnail?id=1IbezoeRcl5itP7Od6UODkBjLxZoDO3j-FfR1Sa3Sqrw&sz=w400", link: "https://drive.google.com/open?id=1IbezoeRcl5itP7Od6UODkBjLxZoDO3j-FfR1Sa3Sqrw&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "집에서 반려식물을 키우는 방법 플랜테리어planterior", thumb: "https://drive.google.com/thumbnail?id=1_lEnNTtYnLPFG8KZOJeVhxsry39IM2rT1XeKXwcpEYg&sz=w400", link: "https://drive.google.com/open?id=1_lEnNTtYnLPFG8KZOJeVhxsry39IM2rT1XeKXwcpEYg&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "찐친 연애상담 해준 적이 있나요? - 전소민 박성훈의 '찐친' 연애 상담소.", thumb: "https://drive.google.com/thumbnail?id=1G0h94FSHYcrRwfugeFZplJHKhYETX4evi61Ng_CD0RU&sz=w400", link: "https://drive.google.com/open?id=1G0h94FSHYcrRwfugeFZplJHKhYETX4evi61Ng_CD0RU&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "친구와 밥먹다 '꼭' 싸우게 되는 피할 수 없는 '음식 취향' 논쟁 - “부먹 vs 찍먹”", thumb: "https://drive.google.com/thumbnail?id=1H4sX-PBfDQY9MVPzbgAzSxCDkeFjHPnojjm3tuA8MwU&sz=w400", link: "https://drive.google.com/open?id=1H4sX-PBfDQY9MVPzbgAzSxCDkeFjHPnojjm3tuA8MwU&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "커피 이야기 - 사실적 읽기 연습", thumb: "https://drive.google.com/thumbnail?id=1OHh1oA3DiSc08biO_815U1Fjo7Xq1Wr7yhogL6C8rUo&sz=w400", link: "https://drive.google.com/open?id=1OHh1oA3DiSc08biO_815U1Fjo7Xq1Wr7yhogL6C8rUo&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "한국 관객, 영화 ‘바비’ 외면한 이유?", thumb: "https://drive.google.com/thumbnail?id=1DvHwxSaX62T06s9o5hjUuh_C4j7bAVa7Rd-NpvUM8CQ&sz=w400", link: "https://drive.google.com/open?id=1DvHwxSaX62T06s9o5hjUuh_C4j7bAVa7Rd-NpvUM8CQ&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "한국에서 농담하면 안 되는 주제 - 가족, \"가족은 건드리지 마\"", thumb: "https://drive.google.com/thumbnail?id=1kDzLaawlKQjTjtf4RD7mAtpQA36rSARFtBAuzViGb74&sz=w400", link: "https://drive.google.com/open?id=1kDzLaawlKQjTjtf4RD7mAtpQA36rSARFtBAuzViGb74&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "한국에서 MZ세대는 왜 90년대 홍콩영화를 좋아할까요? -\u003c중경삼림 重慶森林 Chungking Express \u003e", thumb: "https://drive.google.com/thumbnail?id=1sAHbDhVOqfCL1HDnoOeHhXHgTA4Itb1BsFYcCPzBI9U&sz=w400", link: "https://drive.google.com/open?id=1sAHbDhVOqfCL1HDnoOeHhXHgTA4Itb1BsFYcCPzBI9U&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "한국인 먹는 마늘 양을 보고 외국사람들이 놀라는 이유", thumb: "https://drive.google.com/thumbnail?id=1gk91BpRyRXZzdrLHkBNsuWERuj9EbNlLo1Z95hcnCJs&sz=w400", link: "https://drive.google.com/open?id=1gk91BpRyRXZzdrLHkBNsuWERuj9EbNlLo1Z95hcnCJs&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "MZ세대의 식물 키우기 - 반려식물을 위한 호텔도 있다구요?", thumb: "https://drive.google.com/thumbnail?id=1TpgDRn4WnEbOGtuExNYd2WrqnpDLIP31rBpqmmH-Wb8&sz=w400", link: "https://drive.google.com/open?id=1TpgDRn4WnEbOGtuExNYd2WrqnpDLIP31rBpqmmH-Wb8&usp=drive_copy"},
+    {level: "B2", tags: ["문화","과학"], title: "만족감을 얻는 방법: 맛있는 음식 먼저 먹는다 VS 나중에 먹는다", thumb: "https://drive.google.com/thumbnail?id=1zoNMHfll9EjR_PVPBvHwOprA-556Dd6nC6TeSVIT7ec&sz=w400", link: "https://drive.google.com/open?id=1zoNMHfll9EjR_PVPBvHwOprA-556Dd6nC6TeSVIT7ec&usp=drive_copy"},
+    {level: "B2", tags: ["문화","기술"], title: "보정 없는 ‘셀카’ 올릴 용기가 있어요? - “비리얼 할 시간(Time to BeReal)”", thumb: "https://drive.google.com/thumbnail?id=10yxrURkokfH1cytC1wE6hVXL-P217tToK96h5Zsg3qY&sz=w400", link: "https://drive.google.com/open?id=10yxrURkokfH1cytC1wE6hVXL-P217tToK96h5Zsg3qY&usp=drive_copy"},
+    {level: "B2", tags: ["문화","언어"], title: "심심한 사과? 난 하나도 안 심심한데?", thumb: "https://drive.google.com/thumbnail?id=1DB_4DzJCXsEZX9xeFinUxo67EJLO2bbMf41DZ41EbPk&sz=w400", link: "https://drive.google.com/open?id=1DB_4DzJCXsEZX9xeFinUxo67EJLO2bbMf41DZ41EbPk&usp=drive_copy"},
+    {level: "B2", tags: ["문화","에세이"], title: "\u003c여행의 이유\u003e - 상처를 몽땅 흡수한 물건들로부터 달아나기", thumb: "https://drive.google.com/thumbnail?id=1b746v40QNju0R58gcF6l64_kJTA2mgh0hftW_CtmMR8&sz=w400", link: "https://drive.google.com/open?id=1b746v40QNju0R58gcF6l64_kJTA2mgh0hftW_CtmMR8&usp=drive_copy"},
+    {level: "B2", tags: ["문화","여행"], title: "여행의 기억을 오래도록 간직하는 방법? - 경험을 언어화하는 “글그림”", thumb: "https://drive.google.com/thumbnail?id=1pePryvzdbfj5fMO_q7bHf-klsSO5pREE3UjkmFp03BM&sz=w400", link: "https://drive.google.com/open?id=1pePryvzdbfj5fMO_q7bHf-klsSO5pREE3UjkmFp03BM&usp=drive_copy"},
+    {level: "B2", tags: ["문화","여행"], title: "한국에서 여행하기 좋은곳 Best 3 - 여름에 여행하는 것을 좋아해요? 겨울에 여행하는 것을 좋아해요?", thumb: "https://drive.google.com/thumbnail?id=1agkCD2qbmTGqAXZ1Boo_k079vx2-0QGbDsgSaAr_NE4&sz=w400", link: "https://drive.google.com/open?id=1agkCD2qbmTGqAXZ1Boo_k079vx2-0QGbDsgSaAr_NE4&usp=drive_copy"},
+    {level: "B2", tags: ["문화","일상"], title: "스케치 코미디 - “부먹 vs 찍먹”", thumb: "https://drive.google.com/thumbnail?id=1b3KXDjmecUpggu_vKY_ScLG8EEZL5TCdrYPRrovHRMw&sz=w400", link: "https://drive.google.com/open?id=1b3KXDjmecUpggu_vKY_ScLG8EEZL5TCdrYPRrovHRMw&usp=drive_copy"},
+    {level: "B2", tags: ["문화","일상"], title: "어떤 여행을 좋아하나요? 자유여행 vs.패키지 여행", thumb: "https://drive.google.com/thumbnail?id=1ldNt9WC-MYIYZPYpxTzzxsmDbMjdyMOI-tI-Cg1r_HI&sz=w400", link: "https://drive.google.com/open?id=1ldNt9WC-MYIYZPYpxTzzxsmDbMjdyMOI-tI-Cg1r_HI&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "“콜 포비아\" & “토크 포비아\" - 말보다 글… 대화 피하는 이유", thumb: "https://drive.google.com/thumbnail?id=10rw0JY2W_cdtRwKSrDeMRvdy-61HKBQWPo2jrcN-nzo&sz=w400", link: "https://drive.google.com/open?id=10rw0JY2W_cdtRwKSrDeMRvdy-61HKBQWPo2jrcN-nzo&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "매일 새벽 4시 30분에 하루를 시작하는 변호사 - #미라클 모닝 #자기관리 끝판왕", thumb: "https://drive.google.com/thumbnail?id=11j8FVOjBSu1NgQWuIdMCl647Qn-764vVAHmwJxBbWyM&sz=w400", link: "https://drive.google.com/open?id=11j8FVOjBSu1NgQWuIdMCl647Qn-764vVAHmwJxBbWyM&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "옛날 서른은 요즘 마흔, 나이에 0.8 곱하는 게 요즘 나이계산법", thumb: "https://drive.google.com/thumbnail?id=1Yr5xRQJJmPtVZ9iGLzw4UUS9hEK1mN-ylOJVJnUJuMg&sz=w400", link: "https://drive.google.com/open?id=1Yr5xRQJJmPtVZ9iGLzw4UUS9hEK1mN-ylOJVJnUJuMg&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "오늘은 짠순이/짠돌이, 내일은 플렉스 - 무지출 챌린지", thumb: "https://drive.google.com/thumbnail?id=15xTQPGAuy9Nx7gpEOOVr-oFAdCFQPudFTEE1BRShvrk&sz=w400", link: "https://drive.google.com/open?id=15xTQPGAuy9Nx7gpEOOVr-oFAdCFQPudFTEE1BRShvrk&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "점심메뉴 고르기도 어려운 우유부단한 사람들 - 결정장애, 선택장애, 햄릿 증후군(Hamlet Syndrome)", thumb: "https://drive.google.com/thumbnail?id=1npUYTrdLH4e2Z21_XiZ7NNDJpmeKghBeVQQO-rjmjY8&sz=w400", link: "https://drive.google.com/open?id=1npUYTrdLH4e2Z21_XiZ7NNDJpmeKghBeVQQO-rjmjY8&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "한국인이 귀화 시험 보면 벌어지는 일", thumb: "https://drive.google.com/thumbnail?id=18SlstqqnqjlHm41OVcpantXV8EC88fDbSoze_XjMLnw&sz=w400", link: "https://drive.google.com/open?id=18SlstqqnqjlHm41OVcpantXV8EC88fDbSoze_XjMLnw&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "MBTI 결과 믿을 수 있을까요? 16Personalities 모두 가짜?", thumb: "https://drive.google.com/thumbnail?id=1aGPOp72XIQsqmFq3HbSYkVJ9gdePNKm2LEF9EyAGfvE&sz=w400", link: "https://drive.google.com/open?id=1aGPOp72XIQsqmFq3HbSYkVJ9gdePNKm2LEF9EyAGfvE&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "카카오 톡이 멈추자 일상이 멈췄다", thumb: "https://drive.google.com/thumbnail?id=1HXpsJHJquR6fY03Rns52trsEJ7PWYCXHx5i8JLaoVN8&sz=w400", link: "https://drive.google.com/open?id=1HXpsJHJquR6fY03Rns52trsEJ7PWYCXHx5i8JLaoVN8&usp=drive_copy"},
+    {level: "B2", tags: ["사회","심리"], title: "정체성의 심리학, 영화 \u003c뷰티 인사이드\u003e 나를 나로 결정하는 것은 무엇일까요?", thumb: "https://drive.google.com/thumbnail?id=11vD6bod3HpCuQz7MCzJj3GMJZdfUTX8_eYTXKJ51gkc&sz=w400", link: "https://drive.google.com/open?id=11vD6bod3HpCuQz7MCzJj3GMJZdfUTX8_eYTXKJ51gkc&usp=drive_copy"},
+    {level: "B2", tags: ["사회","심리"], title: "MBTI 16가지 유형 한눈에 보기 (SP, SJ, NT, NF)", thumb: "https://drive.google.com/thumbnail?id=1eYYONg9Rw_r40ZU9ZJXAqnNpzsXRVxlNVv6-svgmVH4&sz=w400", link: "https://drive.google.com/open?id=1eYYONg9Rw_r40ZU9ZJXAqnNpzsXRVxlNVv6-svgmVH4&usp=drive_copy"},
+    {level: "B2", tags: ["사회","환경"], title: "업사이클링 - 패션도 관심 있고 환경에도 관심 있으면 이건 어때?", thumb: "https://drive.google.com/thumbnail?id=1_Uw6b3rXzGmv4kgA6y9HQmECMaXMHpgDP3xCstg9oxI&sz=w400", link: "https://drive.google.com/open?id=1_Uw6b3rXzGmv4kgA6y9HQmECMaXMHpgDP3xCstg9oxI&usp=drive_copy"},
+    {level: "B2", tags: ["사회","환경"], title: "패스트패션의 두 얼굴 (Two Faces of Fast Fashion) - 환경 파괴하는 패스트 패션", thumb: "https://drive.google.com/thumbnail?id=19Ow8pXD4Z6aNFEEHQh1ubjz2fECZp9WSDnvZ0Sjqp9Q&sz=w400", link: "https://drive.google.com/open?id=19Ow8pXD4Z6aNFEEHQh1ubjz2fECZp9WSDnvZ0Sjqp9Q&usp=drive_copy"},
+    {level: "B2", tags: ["사회"], title: "우리나라…없어질 수도? - 출산율 역대 최저! 인구절벽 가속화", thumb: "https://drive.google.com/thumbnail?id=1v8KCO3IaN3C0-zx9wdRKf9M8cxBRK8h0fss0AlQztiQ&sz=w400", link: "https://drive.google.com/open?id=1v8KCO3IaN3C0-zx9wdRKf9M8cxBRK8h0fss0AlQztiQ&usp=drive_copy"},
+    {level: "B2", tags: ["생활","건강"], title: "\u003c저속노화 식사법\u003e: \"밥만 바꿔도 느리게 나이들 수 있습니다\"", thumb: "https://drive.google.com/thumbnail?id=1ykdppVDRYV3Y-d4WKnGlOHKG33dZ7VccwLiPjIWd6ag&sz=w400", link: "https://drive.google.com/open?id=1ykdppVDRYV3Y-d4WKnGlOHKG33dZ7VccwLiPjIWd6ag&usp=drive_copy"},
+    {level: "B2", tags: ["스포츠"], title: "1년 테니스 해보니 알겠다 — 사람들이 왜 빠지는지, 아니 왜 미치는지.", thumb: "https://drive.google.com/thumbnail?id=10pupctsR_kZRSIKrPZ-kEQzqivi_aNQUA0Baql88_lM&sz=w400", link: "https://drive.google.com/open?id=10pupctsR_kZRSIKrPZ-kEQzqivi_aNQUA0Baql88_lM&usp=drive_copy"},
+    {level: "B2", tags: ["스포츠"], title: "노박 코비치가 테니스 고트(G.O.A.T)가 될 수 없는 이유 - 테니스 실력도 중요하지만 선수의 인성도 중요하기 때문에.", thumb: "https://drive.google.com/thumbnail?id=12fxAky--foFeB156fc30NXNwIidJbw4JYh7xSU7dLSE&sz=w400", link: "https://drive.google.com/open?id=12fxAky--foFeB156fc30NXNwIidJbw4JYh7xSU7dLSE&usp=drive_copy"},
+    {level: "B2", tags: ["언어"], title: "표준어는 바른 말, 사투리는 틀린 말? - 서울 사투리가 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1oHehxb1raIxaGHyv278cRm8YiO47fnbT0gvdjxfIBYc&sz=w400", link: "https://drive.google.com/open?id=1oHehxb1raIxaGHyv278cRm8YiO47fnbT0gvdjxfIBYc&usp=drive_copy"},
+    {level: "B2", tags: ["언어"], title: "받아쓰기 - 한국 13년차 외국인 vs 13살 초등학생 한국어, 누가 이길까요?", thumb: "https://drive.google.com/thumbnail?id=1_jA-VmL3_VK964UlfiqupImQJPAYn3R5b5uvSD9Kx4Q&sz=w400", link: "https://drive.google.com/open?id=1_jA-VmL3_VK964UlfiqupImQJPAYn3R5b5uvSD9Kx4Q&usp=drive_copy"},
+    {level: "B2", tags: ["언어"], title: "외국어 공부 어떻게 해야 할까요? - 한국어 실력을 키우는 방법", thumb: "https://drive.google.com/thumbnail?id=1PMowmYqd2nWu5kF4Gl1SwXhsUcu4eCN8r90CKRpRU50&sz=w400", link: "https://drive.google.com/open?id=1PMowmYqd2nWu5kF4Gl1SwXhsUcu4eCN8r90CKRpRU50&usp=drive_copy"},
+    {level: "B2", tags: ["언어"], title: "외래어 없이 순수한 한국어만 사용해야 할까요?", thumb: "https://drive.google.com/thumbnail?id=1CBQ2rbFbkon_sDIdvrD1jip1vIdHRmO1K-uASPw0IBU&sz=w400", link: "https://drive.google.com/open?id=1CBQ2rbFbkon_sDIdvrD1jip1vIdHRmO1K-uASPw0IBU&usp=drive_copy"},
+    {level: "B2", tags: ["언어","과학"], title: "글자에 오류가 있어도 읽을 수 있을까요? - EBS다큐멘터리 \"책맹인류\"", thumb: "https://drive.google.com/thumbnail?id=16WnH6gRDEdNKQSoox8YjnHact_eh2xrv_bElzK2Y394&sz=w400", link: "https://drive.google.com/open?id=16WnH6gRDEdNKQSoox8YjnHact_eh2xrv_bElzK2Y394&usp=drive_copy"},
+    {level: "B2", tags: ["예능"], title: "[더 지니어스] 5:5로 해당하는 명제를 만들어라!", thumb: "https://drive.google.com/thumbnail?id=1h9Yw5uKgOl3XoqotfkeG24dZthPNBhsUeorwvXEu_l0&sz=w400", link: "https://drive.google.com/open?id=1h9Yw5uKgOl3XoqotfkeG24dZthPNBhsUeorwvXEu_l0&usp=drive_copy"},
+    {level: "B2", tags: ["인문"], title: "평범한 우리가 만들어갔던 일상의 기적 - 기념일과 선물", thumb: "https://drive.google.com/thumbnail?id=1OJnZmwQiYxALzkeVyNBGt8wKzvCLcpI-X2b0zy6N_4s&sz=w400", link: "https://drive.google.com/open?id=1OJnZmwQiYxALzkeVyNBGt8wKzvCLcpI-X2b0zy6N_4s&usp=drive_copy"},
+    {level: "B2", tags: ["정치"], title: "팔레스타인과 이스라엘의 갈등", thumb: "https://drive.google.com/thumbnail?id=1W_e-DnI9Dxi6LFWjKES_zfOz7yoJeK2J5tWOUy2gLV8&sz=w400", link: "https://drive.google.com/open?id=1W_e-DnI9Dxi6LFWjKES_zfOz7yoJeK2J5tWOUy2gLV8&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "원하는 대로 살고 싶다면 '박스'를 탈출하라", thumb: "https://drive.google.com/thumbnail?id=1xUsP-VYV8SghuZ4dFzrs31H1vKpvGoIhRqvpYLYa4qA&sz=w400", link: "https://drive.google.com/open?id=1xUsP-VYV8SghuZ4dFzrs31H1vKpvGoIhRqvpYLYa4qA&usp=drive_copy"},
+    {level: "B2", tags: ["문화"], title: "종이책의 미래(종이책 vs. 전자책?)_by_Sangbin", thumb: "https://drive.google.com/thumbnail?id=1_iPuhA_6qU21Z9jmbcFgcH-RNFgzKNx8Oa8lZ2nI5B8&sz=w400", link: "https://drive.google.com/open?id=1_iPuhA_6qU21Z9jmbcFgcH-RNFgzKNx8Oa8lZ2nI5B8&usp=drive_copy"},
+    {level: "B2", tags: ["역사"], title: "창작물의 재미를 위해서 역사 왜곡 이해할 수 있다 vs 없다_by_Sangbin", thumb: "https://drive.google.com/thumbnail?id=1x8DgWWRCMP72dLq2mPN45K6VAYGI7XXwSj73YjUmzSA&sz=w400", link: "https://drive.google.com/open?id=1x8DgWWRCMP72dLq2mPN45K6VAYGI7XXwSj73YjUmzSA&usp=drive_copy"},
+    {level: "B2+", tags: ["사회"], title: "🎬인생 드라마 〈나의 아저씨〉: 좋은 어른이란?", thumb: "https://drive.google.com/thumbnail?id=10GPixD8jk4Nse27Ag9tmhvR_TDlzQFxGYs5dArVgBh4&sz=w400", link: "https://drive.google.com/open?id=10GPixD8jk4Nse27Ag9tmhvR_TDlzQFxGYs5dArVgBh4&usp=drive_copy"},
+    {level: "B2+", tags: ["경영"], title: "무제한 휴가, 득인가 실인가 - 넷플릭스가 무제한으로 주는 이유", thumb: "https://drive.google.com/thumbnail?id=1j_DTXl39q0Kq7W3yQ0FxN-wTOtGt2TYoWbF5qvJy4Ac&sz=w400", link: "https://drive.google.com/open?id=1j_DTXl39q0Kq7W3yQ0FxN-wTOtGt2TYoWbF5qvJy4Ac&usp=drive_copy"},
+    {level: "B2+", tags: ["경제"], title: "돈, 드라마를 만나다 - \u003c오징어 게임\u003e 상우, 어쩌다 60억 빚이 생겼나", thumb: "https://drive.google.com/thumbnail?id=1WeKztVW7tRayzBGTnR-9XgxzxNyJ8_f54TsqzdQBn18&sz=w400", link: "https://drive.google.com/open?id=1WeKztVW7tRayzBGTnR-9XgxzxNyJ8_f54TsqzdQBn18&usp=drive_copy"},
+    {level: "B2+", tags: ["경제"], title: "아시아의 빌 게이츠? 워렌 버핏?: 미래를 내다보는 투자자 손정의", thumb: "https://drive.google.com/thumbnail?id=1ykzmgWgKgmeN_n1Imx1quv9KMWlxVal5nj4xuQknZLc&sz=w400", link: "https://drive.google.com/open?id=1ykzmgWgKgmeN_n1Imx1quv9KMWlxVal5nj4xuQknZLc&usp=drive_copy"},
+    {level: "B2+", tags: ["경제","사회"], title: "'임차인 천국' 비엔나의 비결...“고품질 반값 사회주택”", thumb: "https://drive.google.com/thumbnail?id=1GLoxUvSLYNnzic0TRS2TcDtcm3cm9Jb6wa9glGy6E5I&sz=w400", link: "https://drive.google.com/open?id=1GLoxUvSLYNnzic0TRS2TcDtcm3cm9Jb6wa9glGy6E5I&usp=drive_copy"},
+    {level: "B2+", tags: ["경제","사회"], title: "높은 집값을 해결하기 위한 방법은 무엇일까요? - 베를린 시의 “도이치보넨 몰수 운동”", thumb: "https://drive.google.com/thumbnail?id=1rP-rskLwr9Xmb16pfCQ6sKmOR6w-eH4FC5iCH2BT7GI&sz=w400", link: "https://drive.google.com/open?id=1rP-rskLwr9Xmb16pfCQ6sKmOR6w-eH4FC5iCH2BT7GI&usp=drive_copy"},
+    {level: "B2+", tags: ["과학"], title: "인간의 뇌는 쉽게 조종당하도록 설계되어 있다? - 일상 속 뇌 조종을 피하는 방법! (뇌과학, 가스라이팅, 가짜뉴스)", thumb: "https://drive.google.com/thumbnail?id=1UsCXIyrkivIf8r0aMVtpMGdIeTT8zFRVI1KDBqjXGh0&sz=w400", link: "https://drive.google.com/open?id=1UsCXIyrkivIf8r0aMVtpMGdIeTT8zFRVI1KDBqjXGh0&usp=drive_copy"},
+    {level: "B2+", tags: ["과학","기술"], title: "인공지능 챗봇, ChatGPT - 사람보다 시험을 잘 볼 수 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1eiVxVsac80FK4UoGK45tCQzqtzEi7WJ0HFP9hP3ULn0&sz=w400", link: "https://drive.google.com/open?id=1eiVxVsac80FK4UoGK45tCQzqtzEi7WJ0HFP9hP3ULn0&usp=drive_copy"},
+    {level: "B2+", tags: ["국제","정치"], title: "중동에서 영향력 커지는 중국", thumb: "https://drive.google.com/thumbnail?id=1MrQVoPnaFmmyU3-OwMuAznUWBsaBvR7ZalxzCsmro5o&sz=w400", link: "https://drive.google.com/open?id=1MrQVoPnaFmmyU3-OwMuAznUWBsaBvR7ZalxzCsmro5o&usp=drive_copy"},
+    {level: "B2+", tags: ["국제","정치"], title: "팔레스타인과 이스라엘의 갈등", thumb: "https://drive.google.com/thumbnail?id=1yK0AVJjSwCk2cRHPSVX0cNgnrFOIfyA6rovJkcWLk7s&sz=w400", link: "https://drive.google.com/open?id=1yK0AVJjSwCk2cRHPSVX0cNgnrFOIfyA6rovJkcWLk7s&usp=drive_copy"},
+    {level: "B2+", tags: ["기술"], title: "메타버스에서 땅을 사고 싶어요? - 가상부동산 투자", thumb: "https://drive.google.com/thumbnail?id=1xDn1-M1xreId045XKoruXPPjIDRXO66L8rCVmKXLpis&sz=w400", link: "https://drive.google.com/open?id=1xDn1-M1xreId045XKoruXPPjIDRXO66L8rCVmKXLpis&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "\"가을 탄다\", 무슨 의미일까요？", thumb: "https://drive.google.com/thumbnail?id=1JpM7kQHlbxTcAhUDltBHkbGt_c78BAg9Jp_sCwj7QrY&sz=w400", link: "https://drive.google.com/open?id=1JpM7kQHlbxTcAhUDltBHkbGt_c78BAg9Jp_sCwj7QrY&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "꼰대 VS MZ, 세대 갈등 극복 가능해? - 회식부터 출근 시간까지 서로 힘든 젋은 꼰대와 요즘 MZ!", thumb: "https://drive.google.com/thumbnail?id=1OXA5gH8RUOYwZYNi9ZVeddoJMcB1pwNC32ElSUQkvQs&sz=w400", link: "https://drive.google.com/open?id=1OXA5gH8RUOYwZYNi9ZVeddoJMcB1pwNC32ElSUQkvQs&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "새해목표, 작심삼일로 실패하는 이유와 해결책은!?", thumb: "https://drive.google.com/thumbnail?id=1DfurGU7rYFunLQppdKOzs5oR1vlKuzOvx6yeynYMmz0&sz=w400", link: "https://drive.google.com/open?id=1DfurGU7rYFunLQppdKOzs5oR1vlKuzOvx6yeynYMmz0&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "스타벅스는 왜 한국에서 인기가 많을까? - 한국에만 있는 스타벅스 문화", thumb: "https://drive.google.com/thumbnail?id=1rYGYmtMvQyFrrWVl3_IH0wXnupLNNMLRy0QKqz8XOew&sz=w400", link: "https://drive.google.com/open?id=1rYGYmtMvQyFrrWVl3_IH0wXnupLNNMLRy0QKqz8XOew&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "왜 가을을 독서의 계절이라고 하는 걸까", thumb: "https://drive.google.com/thumbnail?id=1ZK9pwB5cuKJPEIy6i3Jy9P5wPOdVBPWTABGAoiy_-_c&sz=w400", link: "https://drive.google.com/open?id=1ZK9pwB5cuKJPEIy6i3Jy9P5wPOdVBPWTABGAoiy_-_c&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "쿨병은 무엇일까요? - 쿨한 척하며 막말하는 사람 대처법", thumb: "https://drive.google.com/thumbnail?id=1GZLPgmc4gwCjfNYM2XLE5R5QBN0uDjttvdkHTG8qdSA&sz=w400", link: "https://drive.google.com/open?id=1GZLPgmc4gwCjfNYM2XLE5R5QBN0uDjttvdkHTG8qdSA&usp=drive_copy"},
+    {level: "B2+", tags: ["문화"], title: "현직 변호사가 말하는 \u003c이상한 변호사 우영우\u003e와 실제 재판의 차이점", thumb: "https://drive.google.com/thumbnail?id=1iMFAtLIC8k8sxU_7yUHuOi6dH2k_CxYwCYJQsDbAQQI&sz=w400", link: "https://drive.google.com/open?id=1iMFAtLIC8k8sxU_7yUHuOi6dH2k_CxYwCYJQsDbAQQI&usp=drive_copy"},
+    {level: "B2+", tags: ["사회"], title: "미국에선 '틱톡'이 아마존보다 책을 더 잘 판다?", thumb: "https://drive.google.com/thumbnail?id=1JInMjJgyFXkNfzMTlwlpu57OhqAsNMJ7z-LIi0QBAZ8&sz=w400", link: "https://drive.google.com/open?id=1JInMjJgyFXkNfzMTlwlpu57OhqAsNMJ7z-LIi0QBAZ8&usp=drive_copy"},
+    {level: "B2+", tags: ["사회"], title: "오늘만 사는 욜로족 VS 아끼고 아끼는 파이어족!", thumb: "https://drive.google.com/thumbnail?id=1_veanWiIrmp2Bss2FtSkNwECquNWWLUrFkEmtwrLCV4&sz=w400", link: "https://drive.google.com/open?id=1_veanWiIrmp2Bss2FtSkNwECquNWWLUrFkEmtwrLCV4&usp=drive_copy"},
+    {level: "B2+", tags: ["사회"], title: "왜 한국에서 젊은 사람들이 결혼을 하지 않으려고 할까요? - 결혼을 반드시 해야할까요?", thumb: "https://drive.google.com/thumbnail?id=1xV1erhTG_XYXN823MOW0nBxjWV93Cpqfm8x9cQEE3Ck&sz=w400", link: "https://drive.google.com/open?id=1xV1erhTG_XYXN823MOW0nBxjWV93Cpqfm8x9cQEE3Ck&usp=drive_copy"},
+    {level: "B2+", tags: ["사회"], title: "혹시 전화 통화가 두려워요? 직접 음식 주문이 어려워요? - “콜 포비아\" & “토크 포비아\"", thumb: "https://drive.google.com/thumbnail?id=16amZ3rzuQPPEjCzkgfXz3vkYd6g_jSuWEWirHfm9YX0&sz=w400", link: "https://drive.google.com/open?id=16amZ3rzuQPPEjCzkgfXz3vkYd6g_jSuWEWirHfm9YX0&usp=drive_copy"},
+    {level: "B2+", tags: ["사회"], title: "NEW 핫플의 공식 (제트리피케이션) - 한국의 브루클린 ‘성수동’", thumb: "https://drive.google.com/thumbnail?id=1uRy0Peo9L-Wc7Fcqh8ALcZ1hGihgYmWmIFJmINmbN5w&sz=w400", link: "https://drive.google.com/open?id=1uRy0Peo9L-Wc7Fcqh8ALcZ1hGihgYmWmIFJmINmbN5w&usp=drive_copy"},
+    {level: "B2+", tags: ["심리"], title: "취미는 꼭 있어야만 할까요", thumb: "https://drive.google.com/thumbnail?id=1W0ASaowFN7bItG0QXxp-tGMiq847fBDO&sz=w400", link: "https://drive.google.com/open?id=1W0ASaowFN7bItG0QXxp-tGMiq847fBDO"},
+    {level: "B2+", tags: ["심리"], title: "취미는 꼭 있어야만 할까요?", thumb: "https://drive.google.com/thumbnail?id=1YRPh0xmrUsNcyq33aPlOE3v-SeTkTtgRad1EzRsCi4s&sz=w400", link: "https://drive.google.com/open?id=1YRPh0xmrUsNcyq33aPlOE3v-SeTkTtgRad1EzRsCi4s&usp=drive_copy"},
+    {level: "B2+", tags: ["언어"], title: "글을 빠르게 읽는 것과 글의 내용을 깊이 있게 이해하는 것 사이에 어떤 관계가 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1w9KMPTr0G_NAdQvTvb_xHwV3Qh0E8LSQ0c0dhp9lr_Y&sz=w400", link: "https://drive.google.com/open?id=1w9KMPTr0G_NAdQvTvb_xHwV3Qh0E8LSQ0c0dhp9lr_Y&usp=drive_copy"},
+    {level: "B2+", tags: ["언어"], title: "“감사하다”와 “고맙다” - \u003c우리말 어감사전： 말의 속뜻을 잘 이해하고 표현하는 법\u003e (안상순, 2021)", thumb: "https://drive.google.com/thumbnail?id=1stN4KBd9q_D7zVYUbesAibvig8gpI6PiBY6fRy1H9Xs&sz=w400", link: "https://drive.google.com/open?id=1stN4KBd9q_D7zVYUbesAibvig8gpI6PiBY6fRy1H9Xs&usp=drive_copy"},
+    {level: "B2+", tags: ["언어"], title: "“세상”과 “세계”- \u003c우리말 어감사전： 말의 속뜻을 잘 이해하고 표현하는 법\u003e (안상순, 2021)", thumb: "https://drive.google.com/thumbnail?id=1_NZeTXCitsSNkdYrehAy6rcM_iJTpjo7bmBx-ND9Z5M&sz=w400", link: "https://drive.google.com/open?id=1_NZeTXCitsSNkdYrehAy6rcM_iJTpjo7bmBx-ND9Z5M&usp=drive_copy"},
+    {level: "B2+", tags: ["여행"], title: "사람들은 왜 여행을 할까요?", thumb: "https://drive.google.com/thumbnail?id=1y9zmowFfd_Ojn7wfNxEoevV9vxzdzUUqzOS4DqCfKsk&sz=w400", link: "https://drive.google.com/open?id=1y9zmowFfd_Ojn7wfNxEoevV9vxzdzUUqzOS4DqCfKsk&usp=drive_copy"},
+    {level: "B2+", tags: ["예술"], title: "'건축은 과학적? 예술적?", thumb: "https://drive.google.com/thumbnail?id=10buUeO6ZN1IRKVLWT9yJl0SjgznhIWc_DxpPj5yB6Kw&sz=w400", link: "https://drive.google.com/open?id=10buUeO6ZN1IRKVLWT9yJl0SjgznhIWc_DxpPj5yB6Kw&usp=drive_copy"},
+    {level: "C1", tags: ["경제"], title: "구독경제는 무엇일까요? - 소유보다는 경험, 구독하며 산다", thumb: "https://drive.google.com/thumbnail?id=1NpvaxGjWKrG8TYf4tKJk02hcASPjvQqmIkTXCUE1kGo&sz=w400", link: "https://drive.google.com/open?id=1NpvaxGjWKrG8TYf4tKJk02hcASPjvQqmIkTXCUE1kGo&usp=drive_copy"},
+    {level: "C1", tags: ["경제"], title: "성장주와 가치주, 어디에 투자하시겠습니까? - 테슬라 주식 vs. 제너널모터스(GM) 주식", thumb: "https://drive.google.com/thumbnail?id=1xAWCcNe9z9PTPdjoroY2C7Azea4krVqFLGHIeOUd4Is&sz=w400", link: "https://drive.google.com/open?id=1xAWCcNe9z9PTPdjoroY2C7Azea4krVqFLGHIeOUd4Is&usp=drive_copy"},
+    {level: "C1", tags: ["경제"], title: "투자의 정석은 ‘분산투자’, 정말 그럴까? - 포트폴리오 이론 vs. 워렌 버핏", thumb: "https://drive.google.com/thumbnail?id=12XNtDdqlkEML1Xa7xudpfnu3L-AkNpbqpK7IYp7aKsY&sz=w400", link: "https://drive.google.com/open?id=12XNtDdqlkEML1Xa7xudpfnu3L-AkNpbqpK7IYp7aKsY&usp=drive_copy"},
+    {level: "C1", tags: ["과학"], title: "지하도시: 인류의 미래일까요?", thumb: "https://drive.google.com/thumbnail?id=1-27hdgNyttYluxz7NQFmqF87ku7KRNk_FvM1zUOKdu4&sz=w400", link: "https://drive.google.com/open?id=1-27hdgNyttYluxz7NQFmqF87ku7KRNk_FvM1zUOKdu4&usp=drive_copy"},
+    {level: "C1", tags: ["과학"], title: "탄소중립에 원자력 발전이 도움이 된다?", thumb: "https://drive.google.com/thumbnail?id=1018Rx5QJA7mfOesdc3vyZG2rGrpc-S-2zW0hnigDLhs&sz=w400", link: "https://drive.google.com/open?id=1018Rx5QJA7mfOesdc3vyZG2rGrpc-S-2zW0hnigDLhs&usp=drive_copy"},
+    {level: "C1", tags: ["과학"], title: "ADHD가 있는 사람들은 정상일까요? 비정상일까요?", thumb: "https://drive.google.com/thumbnail?id=1ldWQjz3wDxbJy5U1FsP3alb1NgeCI0A2XTi6gkvtGUQ&sz=w400", link: "https://drive.google.com/open?id=1ldWQjz3wDxbJy5U1FsP3alb1NgeCI0A2XTi6gkvtGUQ&usp=drive_copy"},
+    {level: "C1", tags: ["과학","기술"], title: "가까운 미래에 AI가 인간 의사를 대체할까? - 여러분은 AI에게 정신과 치료를 받으실 수 있나요?!", thumb: "https://drive.google.com/thumbnail?id=10UaIJJmUUKSWclI_3K9lzOEGiRKMGF7GuoaAyEfKfkI&sz=w400", link: "https://drive.google.com/open?id=10UaIJJmUUKSWclI_3K9lzOEGiRKMGF7GuoaAyEfKfkI&usp=drive_copy"},
+    {level: "C1", tags: ["과학","기술"], title: "AI, 인간의 친구가 될 수 있을까? - 존재감 굳혀가는 ‘가상 인간", thumb: "https://drive.google.com/thumbnail?id=1kx76ELz8QVnTvJO3u8wCLEi2a6trRff4aMFsQeLv7sA&sz=w400", link: "https://drive.google.com/open?id=1kx76ELz8QVnTvJO3u8wCLEi2a6trRff4aMFsQeLv7sA&usp=drive_copy"},
+    {level: "C1", tags: ["과학","사회"], title: "과연 실험실에서 만든 고기, \"배양육\"이 동물을 통해 얻는 고기를 대체할 수 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1rCHaBlVqa40SmAb40Ijnmko8nk75KxlaHSvdF9tzJK4&sz=w400", link: "https://drive.google.com/open?id=1rCHaBlVqa40SmAb40Ijnmko8nk75KxlaHSvdF9tzJK4&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "\u003c여행의 이유\u003e - 상처를 몽땅 흡수한 물건들로부터 달아나기", thumb: "https://drive.google.com/thumbnail?id=1mTkzJRzA1W0QiAKjXS8lOj8KpeWSjaADcVWbcrkEK2o&sz=w400", link: "https://drive.google.com/open?id=1mTkzJRzA1W0QiAKjXS8lOj8KpeWSjaADcVWbcrkEK2o&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "인터뷰도 스포츠의 일부일까? 인터뷰를 '안 해도 될 권리' 묻는 스포츠 선수들", thumb: "https://drive.google.com/thumbnail?id=1AW1Q53bHIvJwxyax7MjxraPiVLd3VtrcMWa0uETwvg8&sz=w400", link: "https://drive.google.com/open?id=1AW1Q53bHIvJwxyax7MjxraPiVLd3VtrcMWa0uETwvg8&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "한국 대중문화 역사_Part.1_1980대, “홍콩 영화”의 유행", thumb: "https://drive.google.com/thumbnail?id=1GU1eX81NuZSCzzvjstslJANKQN0gLehW020GXucx2_g&sz=w400", link: "https://drive.google.com/open?id=1GU1eX81NuZSCzzvjstslJANKQN0gLehW020GXucx2_g&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "한국 대중문화 역사_Part.2_1998년, “일본 대중문화” 개방", thumb: "https://drive.google.com/thumbnail?id=1wOh_PlAQp394gChrkNlXCoQmhIMazUeK_W2KVlxOyLI&sz=w400", link: "https://drive.google.com/open?id=1wOh_PlAQp394gChrkNlXCoQmhIMazUeK_W2KVlxOyLI&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "한국 대중문화 역사_Part.3 2000년대, “미국 문화” 열풍", thumb: "https://drive.google.com/thumbnail?id=16dn9smbt4XJ0tfJWDPA3KNraPUTmKUHz7k3utQA5Ju4&sz=w400", link: "https://drive.google.com/open?id=16dn9smbt4XJ0tfJWDPA3KNraPUTmKUHz7k3utQA5Ju4&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "한국 대중문화 역사_Part.4_한류의 시작 및 확산1.(아시아) - 확산2.(미국 및 유럽...전세계???)", thumb: "https://drive.google.com/thumbnail?id=1VLx_c2N8yNLspO4mzNMzC2CIDC_STYAng5mVUD5jRzI&sz=w400", link: "https://drive.google.com/open?id=1VLx_c2N8yNLspO4mzNMzC2CIDC_STYAng5mVUD5jRzI&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "The Gamer - 더 게이머_한국게임의 역사_by_Sangbin", thumb: "https://drive.google.com/thumbnail?id=1AKodICoM2ZXlOH2JR1rimv6vpTPua61BegY_RXahQ5M&sz=w400", link: "https://drive.google.com/open?id=1AKodICoM2ZXlOH2JR1rimv6vpTPua61BegY_RXahQ5M&usp=drive_copy"},
+    {level: "C1", tags: ["문화"], title: "“원조는 한국” 주장 나오는 세계적 신조어···‘조용한 사직’을 아시나요?", thumb: "https://drive.google.com/thumbnail?id=1GDnwUWs4-DxHUa53ct1spaxTsriWT-uqL70ZLoWSQIU&sz=w400", link: "https://drive.google.com/open?id=1GDnwUWs4-DxHUa53ct1spaxTsriWT-uqL70ZLoWSQIU&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "노동시간 유연화 논쟁: 일주일에 3일만 일할 수 있을까?", thumb: "https://drive.google.com/thumbnail?id=1tfHtwxupat5F7EtFXyaN2rduDPWXLRQ3-SPwam3m5tc&sz=w400", link: "https://drive.google.com/open?id=1tfHtwxupat5F7EtFXyaN2rduDPWXLRQ3-SPwam3m5tc&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "가짜 노동: 나는 의미 있는 일을 하고 있을까?", thumb: "https://drive.google.com/thumbnail?id=16f2fccuBy40mWzxjQ3bOu-Xjer0fdxdNyA8DrUv0d-w&sz=w400", link: "https://drive.google.com/open?id=16f2fccuBy40mWzxjQ3bOu-Xjer0fdxdNyA8DrUv0d-w&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "나는 중산층인가요? - 나라별 중산층 기준 (한국, 프랑스, 영국, 미국)", thumb: "https://drive.google.com/thumbnail?id=1ibIFhvmj7SKGaRaC4RrVKYV1IGCGSjgZTlN2KrssMmg&sz=w400", link: "https://drive.google.com/open?id=1ibIFhvmj7SKGaRaC4RrVKYV1IGCGSjgZTlN2KrssMmg&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "돈으로 시간을 살 수 있을까? - 자본주의 논리는 어디까지 허용될 수 있을까?", thumb: "https://drive.google.com/thumbnail?id=1uAomOTRPlWDQD9N5_90ILhNAO03dpcfMmdFd4KBwXwg&sz=w400", link: "https://drive.google.com/open?id=1uAomOTRPlWDQD9N5_90ILhNAO03dpcfMmdFd4KBwXwg&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "의사 파업 : 왜 의사들은 의사 숫자를 늘리는 것에 반대할까요?", thumb: "https://drive.google.com/thumbnail?id=1G4Xwsrs7ni8oWdYzi24HxuOQ0mrC9GktZNdDoLJU9XM&sz=w400", link: "https://drive.google.com/open?id=1G4Xwsrs7ni8oWdYzi24HxuOQ0mrC9GktZNdDoLJU9XM&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "죽음을 선택할 권리 Feat. “올리버 색스” 교수의 죽음을 받아들이는 방법", thumb: "https://drive.google.com/thumbnail?id=1Hi-FxYG_qFNUORKyO1s6xPThLc34u4gaYl-9O-_hAWY&sz=w400", link: "https://drive.google.com/open?id=1Hi-FxYG_qFNUORKyO1s6xPThLc34u4gaYl-9O-_hAWY&usp=drive_copy"},
+    {level: "C1", tags: ["사회"], title: "죽음을 선택할 권리 Feat. “올리버 색스” 교수의 죽음을 받아들이는 방법.pdf", thumb: "https://drive.google.com/thumbnail?id=17ZPOjWdFYgjpG6_aqVBvkGXpAu6pya8e&sz=w400", link: "https://drive.google.com/open?id=17ZPOjWdFYgjpG6_aqVBvkGXpAu6pya8e"},
+    {level: "C1", tags: ["사회","경제"], title: "전 세계에서 왜 집값이 천정부지로 치솟을까요? - 집값 잡기 위해서 어떤 노력이 필요할까요?", thumb: "https://drive.google.com/thumbnail?id=1Z_Wft1geb7Gv_ejYOU6--xDgKlLJ7KhvB84zSoRyKsM&sz=w400", link: "https://drive.google.com/open?id=1Z_Wft1geb7Gv_ejYOU6--xDgKlLJ7KhvB84zSoRyKsM&usp=drive_copy"},
+    {level: "C1", tags: ["사회","과학"], title: "로봇에도 인권이 있을까?", thumb: "https://drive.google.com/thumbnail?id=1iiLokuf48w_KqOHPqrRSuQwLSGuJIOJVQO9JoZEq1ow&sz=w400", link: "https://drive.google.com/open?id=1iiLokuf48w_KqOHPqrRSuQwLSGuJIOJVQO9JoZEq1ow&usp=drive_copy"},
+    {level: "C1", tags: ["사회","문화"], title: "읽을 책, 볼 영상이 쌓인 당신에게", thumb: "https://drive.google.com/thumbnail?id=1m81U2wNQ6S5kg9UmF9QhWswJ39wxccULZgyHFnOa6PA&sz=w400", link: "https://drive.google.com/open?id=1m81U2wNQ6S5kg9UmF9QhWswJ39wxccULZgyHFnOa6PA&usp=drive_copy"},
+    {level: "C1", tags: ["사회","환경"], title: "명작에 수프를 뒤집어씌우는 사람들 — 환경 운동가인가 ？ 테러리스트인가 ？", thumb: "https://drive.google.com/thumbnail?id=1uveDBLGxMfmgTS0pxuc7kuCg2QbgAspV4Hw5xgsrIpw&sz=w400", link: "https://drive.google.com/open?id=1uveDBLGxMfmgTS0pxuc7kuCg2QbgAspV4Hw5xgsrIpw&usp=drive_copy"},
+    {level: "C1", tags: ["수학","사회"], title: "알고보면 완전 소중한 수학 - 어떻게 배우고 평가해야 할까요?", thumb: "https://drive.google.com/thumbnail?id=1JgSOji6eJSeak8GkUVQSle5VvmayBUg8i4jT6bLzPYc&sz=w400", link: "https://drive.google.com/open?id=1JgSOji6eJSeak8GkUVQSle5VvmayBUg8i4jT6bLzPYc&usp=drive_copy"},
+    {level: "C1", tags: ["수학","사회"], title: "알고보면 완전 소중한 수학 - 어떻게 배우고 평가해야 할까요? - 차이나는 클라스(231회 JTBC)", thumb: "https://drive.google.com/thumbnail?id=1wFUafrC_c7abM-_FiT5CFHD9HFNsQ_jN&sz=w400", link: "https://drive.google.com/open?id=1wFUafrC_c7abM-_FiT5CFHD9HFNsQ_jN"},
+    {level: "C1", tags: ["심리","사회"], title: "어떻게 빼앗긴 집중력을 되찾을 수 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1mQaD5QwXjqw1aJW6GW1pymCdn1ryWNRdLDFR-Vs1wug&sz=w400", link: "https://drive.google.com/open?id=1mQaD5QwXjqw1aJW6GW1pymCdn1ryWNRdLDFR-Vs1wug&usp=drive_copy"},
+    {level: "C1", tags: ["심리","언어"], title: "사람들이 욕을 하는 이유는 무엇일까?", thumb: "https://drive.google.com/thumbnail?id=1y7zYy6NL7zkD_SukH2TllLRBnURrO-N-IUhjptm-Jsg&sz=w400", link: "https://drive.google.com/open?id=1y7zYy6NL7zkD_SukH2TllLRBnURrO-N-IUhjptm-Jsg&usp=drive_copy"},
+    {level: "C1", tags: ["심리","언어"], title: "우리는 \"🐶개소리\"가 만연한 사회에 살고 있을까요? - \u003c개소리에 대하여\u003e", thumb: "https://drive.google.com/thumbnail?id=1LHTzl1d1kQzY_HIbxQLPsIJxpdI6gkUmQbble1hdaxY&sz=w400", link: "https://drive.google.com/open?id=1LHTzl1d1kQzY_HIbxQLPsIJxpdI6gkUmQbble1hdaxY&usp=drive_copy"},
+    {level: "C1", tags: ["언어"], title: "알아두면 유용한 단어: 위신", thumb: "https://drive.google.com/thumbnail?id=1Qve4xLqv7TrXOoMNeFVVrJV5Ed_KpPsfLH4okbXe7hg&sz=w400", link: "https://drive.google.com/open?id=1Qve4xLqv7TrXOoMNeFVVrJV5Ed_KpPsfLH4okbXe7hg&usp=drive_copy"},
+    {level: "C1", tags: ["언어"], title: "“세상”과 “세계”- \u003c우리말 어감사전： 말의 속뜻을 잘 이해하고 표현하는 법\u003e (안상순, 2021)", thumb: "https://drive.google.com/thumbnail?id=11uAlT_BhVIQKazS8Q0eLqdjGp-hPHGasYb57Ca3l7bg&sz=w400", link: "https://drive.google.com/open?id=11uAlT_BhVIQKazS8Q0eLqdjGp-hPHGasYb57Ca3l7bg&usp=drive_copy"},
+    {level: "C1", tags: ["언어"], title: "“올바른 우리말”이 존재할까요?만약 있다면, 누가 어떤 방법으로 “올바르다”를 결정할까요?", thumb: "https://drive.google.com/thumbnail?id=1TNoQxkGBlMK_4sCHQnMNQdjGoP0yrIV7L_ppri6S-V8&sz=w400", link: "https://drive.google.com/open?id=1TNoQxkGBlMK_4sCHQnMNQdjGoP0yrIV7L_ppri6S-V8&usp=drive_copy"},
+    {level: "C1", tags: ["언어"], title: "소설 \u003c책상은 책상이다\u003e - 나 혼자만 쓰는 언어를 만들 수 있을까", thumb: "https://drive.google.com/thumbnail?id=17VzO5adLAldPmEK0OYgh7g6HIItt96OyhL_9M7ujkHU&sz=w400", link: "https://drive.google.com/open?id=17VzO5adLAldPmEK0OYgh7g6HIItt96OyhL_9M7ujkHU&usp=drive_copy"},
+    {level: "C1", tags: ["역사"], title: "강제 징용.pdf", thumb: "https://drive.google.com/thumbnail?id=1JFcLtCp8PiOoXqTWEqFpSTlYCjQY3kJw&sz=w400", link: "https://drive.google.com/open?id=1JFcLtCp8PiOoXqTWEqFpSTlYCjQY3kJw"},
+    {level: "C1", tags: ["역사"], title: "식민지 근대화론.pdf", thumb: "https://drive.google.com/thumbnail?id=1K-dfa_HIncP326zJjpY2XeEXXccAcTwf&sz=w400", link: "https://drive.google.com/open?id=1K-dfa_HIncP326zJjpY2XeEXXccAcTwf"},
+    {level: "C1", tags: ["역사"], title: "한일 협정.pdf", thumb: "https://drive.google.com/thumbnail?id=1r_sc1xfHp2GK1kK2TYdQOjF4uDRRA2Ci&sz=w400", link: "https://drive.google.com/open?id=1r_sc1xfHp2GK1kK2TYdQOjF4uDRRA2Ci"},
+    {level: "C1", tags: ["예술"], title: "'공간의 중요성: 어떤 집에서 구조의 집에서 살고 싶나요?", thumb: "https://drive.google.com/thumbnail?id=122jau2TXKmEawWQYgMMExnAfOt3FKSrPmFqcUj2LpJI&sz=w400", link: "https://drive.google.com/open?id=122jau2TXKmEawWQYgMMExnAfOt3FKSrPmFqcUj2LpJI&usp=drive_copy"},
+    {level: "C1", tags: ["음식","문화"], title: "\u003c흑백요리사\u003e를 통해 살펴보는 요리의 정체성", thumb: "https://drive.google.com/thumbnail?id=14PPeomZx5POXvoSIACEi4Fq31PV4NX8wLuxK2PS2HLk&sz=w400", link: "https://drive.google.com/open?id=14PPeomZx5POXvoSIACEi4Fq31PV4NX8wLuxK2PS2HLk&usp=drive_copy"},
+    {level: "C1", tags: ["인문"], title: "유튜브도 독서다?", thumb: "https://drive.google.com/thumbnail?id=1m0JBe7jbtLJyGsMtG4jNWk8sijVJt-YvnzNGhxacZdM&sz=w400", link: "https://drive.google.com/open?id=1m0JBe7jbtLJyGsMtG4jNWk8sijVJt-YvnzNGhxacZdM&usp=drive_copy"},
+    {level: "C1", tags: ["정치"], title: "“보편적 기본소득”이란 무엇일까요? - 한국은 세계 최초의 모든 사람에게 기본소득을 제공할 수 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1aS-eDT7kv9yUOVUHnE_kLG_ai7DzuSDwp_8J5xx2WRw&sz=w400", link: "https://drive.google.com/open?id=1aS-eDT7kv9yUOVUHnE_kLG_ai7DzuSDwp_8J5xx2WRw&usp=drive_copy"},
+    {level: "C1", tags: ["정치"], title: "국가는 어떻게 만들어지는가", thumb: "https://drive.google.com/thumbnail?id=1x3jIgWVE52TCXhYszYw3s5uPEC-FSu6VxJhu-rIx5Go&sz=w400", link: "https://drive.google.com/open?id=1x3jIgWVE52TCXhYszYw3s5uPEC-FSu6VxJhu-rIx5Go&usp=drive_copy"},
+    {level: "C1", tags: ["정치","법"], title: "언론중재법 필요할까요? 언론의 자유 vs 가짜뉴스 방지", thumb: "https://drive.google.com/thumbnail?id=19TJf1i8Ul-EIxNKzRouJRO_WtjLOxpikXj8VTxK7uBU&sz=w400", link: "https://drive.google.com/open?id=19TJf1i8Ul-EIxNKzRouJRO_WtjLOxpikXj8VTxK7uBU&usp=drive_copy"},
+    {level: "C1+", tags: ["건강","사회"], title: "가속 노화: 무엇이 현대인들을 더 빨리 늙게 만들고 있을까?", thumb: "https://drive.google.com/thumbnail?id=1MskwJVV_IuP2vbfOcL4kf_Pyk20DDbpadFkLsPZthLA&sz=w400", link: "https://drive.google.com/open?id=1MskwJVV_IuP2vbfOcL4kf_Pyk20DDbpadFkLsPZthLA&usp=drive_copy"},
+    {level: "C1+", tags: ["경제","사회"], title: "1997년 외환 위기는 한국 사회를 어떻게 바꿨을까요? - IMF 사태 20년 후, 한국 사회를 돌아보다", thumb: "https://drive.google.com/thumbnail?id=1GbgZt7hckFUN8z-uOpMuhoe1jblqFda70xjR5bMM3Pk&sz=w400", link: "https://drive.google.com/open?id=1GbgZt7hckFUN8z-uOpMuhoe1jblqFda70xjR5bMM3Pk&usp=drive_copy"},
+    {level: "C1+", tags: ["과학"], title: "유전자가 사회를 지배할까?", thumb: "https://drive.google.com/thumbnail?id=1cQ71Hg1NwV5bAElQX4RZjd3MYGQBFwACpmrnC4LPaJo&sz=w400", link: "https://drive.google.com/open?id=1cQ71Hg1NwV5bAElQX4RZjd3MYGQBFwACpmrnC4LPaJo&usp=drive_copy"},
+    {level: "C1+", tags: ["과학","사회"], title: "실험실에 만든 고기, 배양육이 세상을 바꿀 수 있을까?", thumb: "https://drive.google.com/thumbnail?id=10kxwuRZSbvzWD2L03Kkx3f1HuJV-Q-5MnYs81FhBi08&sz=w400", link: "https://drive.google.com/open?id=10kxwuRZSbvzWD2L03Kkx3f1HuJV-Q-5MnYs81FhBi08&usp=drive_copy"},
+    {level: "C1+", tags: ["문화"], title: "사라진 단일 대중문화(monoculture): 세계화에 맞선 문화 다원주의의 승리?", thumb: "https://drive.google.com/thumbnail?id=1qOkNGbmvJ5cPyYXKmTE6Qk0xZm_NroGvFm_alMorH64&sz=w400", link: "https://drive.google.com/open?id=1qOkNGbmvJ5cPyYXKmTE6Qk0xZm_NroGvFm_alMorH64&usp=drive_copy"},
+    {level: "C1+", tags: ["문화"], title: "표절의 기준은 무엇일까요?", thumb: "https://drive.google.com/thumbnail?id=19Lx3mb9ukh38Hej2ZZ3MGL_2Z3O3LjLjRROa0YF-SW8&sz=w400", link: "https://drive.google.com/open?id=19Lx3mb9ukh38Hej2ZZ3MGL_2Z3O3LjLjRROa0YF-SW8&usp=drive_copy"},
+    {level: "C1+", tags: ["문화","사회"], title: "“회귀, 빙의, 환생” 이야기가 인기 있는 이유", thumb: "https://drive.google.com/thumbnail?id=1TP8gaz1_yc8HfgRITqXkA1sBohBhbPOz_oFYk7mPxhY&sz=w400", link: "https://drive.google.com/open?id=1TP8gaz1_yc8HfgRITqXkA1sBohBhbPOz_oFYk7mPxhY&usp=drive_copy"},
+    {level: "C1+", tags: ["문화","언어"], title: "\"심심한 사과\"에 \"안 심심해\" 발끈...문제는 '문해력'이 아니다", thumb: "https://drive.google.com/thumbnail?id=1TGYQQLzJ-JfNVRU6gz4bmB6KA0ZwFT9RqEs8WKq4zgE&sz=w400", link: "https://drive.google.com/open?id=1TGYQQLzJ-JfNVRU6gz4bmB6KA0ZwFT9RqEs8WKq4zgE&usp=drive_copy"},
+    {level: "C1+", tags: ["사회"], title: "야망계급: 비과시적 소비의 부상과 새로운 계급의 탄생", thumb: "https://drive.google.com/thumbnail?id=1c_mWLcX6xVSkZ89LUFeESSjif9AlwhleSqTXhqKiS-E&sz=w400", link: "https://drive.google.com/open?id=1c_mWLcX6xVSkZ89LUFeESSjif9AlwhleSqTXhqKiS-E&usp=drive_copy"},
+    {level: "C1+", tags: ["사회"], title: "왜 사람들은 질문을 할까요? 그리고 어떻게 해야 질문을 잘하는 것일까요?", thumb: "https://drive.google.com/thumbnail?id=1zetFHf4LVuUX42kkIBZDp4HwaJpV-hAPoKZlbHOuEEs&sz=w400", link: "https://drive.google.com/open?id=1zetFHf4LVuUX42kkIBZDp4HwaJpV-hAPoKZlbHOuEEs&usp=drive_copy"},
+    {level: "C1+", tags: ["사회","언어"], title: "경청: 타인과 사회적으로 연결되는 시작점", thumb: "https://drive.google.com/thumbnail?id=1CpmTQcrCuqzrZaLplfwR8oEKToBrNyxp7jzGUxyskyk&sz=w400", link: "https://drive.google.com/open?id=1CpmTQcrCuqzrZaLplfwR8oEKToBrNyxp7jzGUxyskyk&usp=drive_copy"},
+    {level: "C1+", tags: ["심리","철학"], title: "취미란 무엇인가 - 취미의 조건", thumb: "https://drive.google.com/thumbnail?id=1Y3-Edrks-9fOmHgkrvSFM__xEO7lGOIm6av8Ir3U4ac&sz=w400", link: "https://drive.google.com/open?id=1Y3-Edrks-9fOmHgkrvSFM__xEO7lGOIm6av8Ir3U4ac&usp=drive_copy"},
+    {level: "C1+", tags: ["언어"], title: "“감사하다”와 “고맙다” - \u003c우리말 어감사전： 말의 속뜻을 잘 이해하고 표현하는 법\u003e (안상순, 2021)", thumb: "https://drive.google.com/thumbnail?id=1HYhWpHSPI_AIiKwnS4v0nLHcYMLX24VUFH28XiCpVng&sz=w400", link: "https://drive.google.com/open?id=1HYhWpHSPI_AIiKwnS4v0nLHcYMLX24VUFH28XiCpVng&usp=drive_copy"},
+    {level: "C1+", tags: ["언어"], title: "번역 논란: 맨부커 수상은 한글 원본 『채식주의자』의 승리가 아니라 영어판 『Vegetarian』의 승리?", thumb: "https://drive.google.com/thumbnail?id=1bBC65m9clgrLBa278xNVUyZh9-MsaQAp8I9cge7Zj-4&sz=w400", link: "https://drive.google.com/open?id=1bBC65m9clgrLBa278xNVUyZh9-MsaQAp8I9cge7Zj-4&usp=drive_copy"},
+    {level: "C1+", tags: ["언어","사회"], title: "읽는 것은 멋지다: 텍스트힙(Text Hip)", thumb: "https://drive.google.com/thumbnail?id=17GpPRWzH6bDuSR7YHaFNVhISocDh7R1V4j6AjYfealM&sz=w400", link: "https://drive.google.com/open?id=17GpPRWzH6bDuSR7YHaFNVhISocDh7R1V4j6AjYfealM&usp=drive_copy"},
+    {level: "C1+", tags: ["예술"], title: "AI가 쓴 소설도 예술 작품이 될 수 있을까?", thumb: "https://drive.google.com/thumbnail?id=17Vwk40UYzDYU-KXqL-bUVNpUY0fzbKa8ndqREbWEoqw&sz=w400", link: "https://drive.google.com/open?id=17Vwk40UYzDYU-KXqL-bUVNpUY0fzbKa8ndqREbWEoqw&usp=drive_copy"},
+    {level: "C1+", tags: ["인문","철학"], title: "‘아는 척’ 교양 : 3분 인문학의 시대", thumb: "https://drive.google.com/thumbnail?id=1AfIxGHZjGZ3_rB0-mcVC6RyrMyQDL0pQERmWMkVJfY&sz=w400", link: "https://drive.google.com/open?id=1AfIxGHZjGZ3_rB0-mcVC6RyrMyQDL0pQERmWMkVJfY&usp=drive_copy"},
+    {level: "C1+", tags: ["철학"], title: "정체성과 변화: 테세우스의 배 문제", thumb: "https://drive.google.com/thumbnail?id=19w89vxB9FYJLe9EFIW3iJJFM1aJdZZ0GUZNQgCpA5UE&sz=w400", link: "https://drive.google.com/open?id=19w89vxB9FYJLe9EFIW3iJJFM1aJdZZ0GUZNQgCpA5UE&usp=drive_copy"},
+    {level: "C1+", tags: ["철학","윤리"], title: "크리스마스 철학 101： 산타는 누가 착한 아이인지 어떻게 알까？.pdf", thumb: "https://drive.google.com/thumbnail?id=1hG3KOuknKmMOkwUuy86BnL0AiCZi6MR3&sz=w400", link: "https://drive.google.com/open?id=1hG3KOuknKmMOkwUuy86BnL0AiCZi6MR3"},
+    {level: "C2", tags: ["과학"], title: "2020년 노벨 물리학상: 블랙홀의 존재 어떻게 밝혀졌는가?", thumb: "https://drive.google.com/thumbnail?id=1gUaTKBYoJcvyRDBhbb4Colqtc-7RH-lnvcChRXGtmi0&sz=w400", link: "https://drive.google.com/open?id=1gUaTKBYoJcvyRDBhbb4Colqtc-7RH-lnvcChRXGtmi0&usp=drive_copy"},
+    {level: "C2", tags: ["과학"], title: "감정은 타고나는 것일까? 만들어지는 것일까?", thumb: "https://drive.google.com/thumbnail?id=1BV7vTrfM6Sa_rTIENWyu6iBJsM6yAuM3WZp41SXv_3I&sz=w400", link: "https://drive.google.com/open?id=1BV7vTrfM6Sa_rTIENWyu6iBJsM6yAuM3WZp41SXv_3I&usp=drive_copy"},
+    {level: "C2", tags: ["과학"], title: "대학에서 실패한 과학자, mRNA 백신으로 세상을 구하다 - 2023년 노벨 생리의학상 수장자 카탈린 카리코", thumb: "https://drive.google.com/thumbnail?id=1drYEBV02065B6OLtjqIHxcZC3Ml1ETWySt2l7RLxATQ&sz=w400", link: "https://drive.google.com/open?id=1drYEBV02065B6OLtjqIHxcZC3Ml1ETWySt2l7RLxATQ&usp=drive_copy"},
+    {level: "C2", tags: ["과학"], title: "인공지능(AI)은 우리의 삶을 위협하는가? 우리의 삶에 도움이 되는가?", thumb: "https://drive.google.com/thumbnail?id=1k_BMbsgdnoet5Bs8NV8lAZfK1SkyMtu4Kx_88zZfcOo&sz=w400", link: "https://drive.google.com/open?id=1k_BMbsgdnoet5Bs8NV8lAZfK1SkyMtu4Kx_88zZfcOo&usp=drive_copy"},
+    {level: "C2", tags: ["과학"], title: "잠을 자야 하는 이유 - 잠을 자지 않았을 때, 우리의 몸에 어떤 일들이 발생할까요?", thumb: "https://drive.google.com/thumbnail?id=1FxTp-q2JDNiT-RQ0Y5t66uHIRZoMK7mto_miZ_B7T0U&sz=w400", link: "https://drive.google.com/open?id=1FxTp-q2JDNiT-RQ0Y5t66uHIRZoMK7mto_miZ_B7T0U&usp=drive_copy"},
+    {level: "C2", tags: ["과학","철학"], title: "과학과 은유, 생산적 활용과 위험", thumb: "https://drive.google.com/thumbnail?id=1TYsKDatbowL8vGUm6ANPBBNuAWc9ws48zkm1IN1xok8&sz=w400", link: "https://drive.google.com/open?id=1TYsKDatbowL8vGUm6ANPBBNuAWc9ws48zkm1IN1xok8&usp=drive_copy"},
+    {level: "C2", tags: ["과학","철학"], title: "ADHD에 대한 논쟁 - “정상”과 “비정상\"의 경계는 어떻게 형성될까요?", thumb: "https://drive.google.com/thumbnail?id=1W5rUykUampyxxedALZkNiZcxyeT9XR_Vhzl9KfNGONU&sz=w400", link: "https://drive.google.com/open?id=1W5rUykUampyxxedALZkNiZcxyeT9XR_Vhzl9KfNGONU&usp=drive_copy"},
+    {level: "C2", tags: ["과학","철학"], title: "인본주의 과학: 과학, 철학을 만나다 - 장하석 교수", thumb: "https://drive.google.com/thumbnail?id=1lT-WYIgMiw9zouBPKtrJgabo3I5pcqRgoUBkDFvgP7E&sz=w400", link: "https://drive.google.com/open?id=1lT-WYIgMiw9zouBPKtrJgabo3I5pcqRgoUBkDFvgP7E&usp=drive_copy"},
+    {level: "C2", tags: ["문학","사회"], title: "소설 \u003c82년생 김지영\u003e로 본 한국 사회", thumb: "https://drive.google.com/thumbnail?id=1fpkuAsBklc2ACXbfNlwC_mCsmkc0PNQyvnD2afoZcG8&sz=w400", link: "https://drive.google.com/open?id=1fpkuAsBklc2ACXbfNlwC_mCsmkc0PNQyvnD2afoZcG8&usp=drive_copy"},
+    {level: "C2", tags: ["문학","사회"], title: "한국인의 발견 - 소설 \u003c고등어\u003e에 속에 나타난 한국인의 정체성", thumb: "https://drive.google.com/thumbnail?id=1PXCG2cK-22wAOvuqqkqycUvPmNKetqphAX_swLdZNwE&sz=w400", link: "https://drive.google.com/open?id=1PXCG2cK-22wAOvuqqkqycUvPmNKetqphAX_swLdZNwE&usp=drive_copy"},
+    {level: "C2", tags: ["문화"], title: "영화 \u003c미나리\u003e를 통해 본 한국인의 미국 이민 역사 - \u003c미나리\u003e는 미국 영화인가? 한국영화 인가?", thumb: "https://drive.google.com/thumbnail?id=1_ijD703tIgvVSlEj7xKn04X966VfS6OD3Y8tJe03NcU&sz=w400", link: "https://drive.google.com/open?id=1_ijD703tIgvVSlEj7xKn04X966VfS6OD3Y8tJe03NcU&usp=drive_copy"},
+    {level: "C2", tags: ["문화"], title: "창작물의 재미를 위해서 역사 왜곡 이해할 수 있다 vs 없다", thumb: "https://drive.google.com/thumbnail?id=1xP447gGLnMFEDGLJjYMDkeShYONkZm5tHyF9lyRFm4I&sz=w400", link: "https://drive.google.com/open?id=1xP447gGLnMFEDGLJjYMDkeShYONkZm5tHyF9lyRFm4I&usp=drive_copy"},
+    {level: "C2", tags: ["문화"], title: "채식주의(Vegetarianism)는 개인적 기호인가? 아니면, 사회적 도덕인가?", thumb: "https://drive.google.com/thumbnail?id=1pPpVox1XOd4FEkcK7jnGRhHjh9K15-pEadkD7TeOwTs&sz=w400", link: "https://drive.google.com/open?id=1pPpVox1XOd4FEkcK7jnGRhHjh9K15-pEadkD7TeOwTs&usp=drive_copy"},
+    {level: "C2", tags: ["문화"], title: "책의 운명: 독자의 미래 - 지금 무슨 책을 선택했나요?", thumb: "https://drive.google.com/thumbnail?id=10qTHMgLMqN6j1hHIkGZ3bgkHNduj4KzKZ7abKIUz0lw&sz=w400", link: "https://drive.google.com/open?id=10qTHMgLMqN6j1hHIkGZ3bgkHNduj4KzKZ7abKIUz0lw&usp=drive_copy"},
+    {level: "C2", tags: ["문화"], title: "책의 운명: 종이책의 미래(종이책 vs. 전자책?)_by_Sangbin", thumb: "https://drive.google.com/thumbnail?id=1fR6MW5BhyHacm4GkLA8WUwsHDbOrJMum6WNl033e_Kc&sz=w400", link: "https://drive.google.com/open?id=1fR6MW5BhyHacm4GkLA8WUwsHDbOrJMum6WNl033e_Kc&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "난민 반대와 래디컬 페미니즘", thumb: "https://drive.google.com/thumbnail?id=17NHk4XY_NfzfStyuH8_dv0X3wpc-Uh4_7V1CjOjzEnM&sz=w400", link: "https://drive.google.com/open?id=17NHk4XY_NfzfStyuH8_dv0X3wpc-Uh4_7V1CjOjzEnM&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "“데이터가 증거가 되기까지”: 사회 현상은 어떤 방법으로 연구되어야 할까?", thumb: "https://drive.google.com/thumbnail?id=1PDce2OME5CLmT6izfYd3p6ZBL2wl4Y9ZPn74wn6aozk&sz=w400", link: "https://drive.google.com/open?id=1PDce2OME5CLmT6izfYd3p6ZBL2wl4Y9ZPn74wn6aozk&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "능력주의의 함정(Meritocracy Trap): \"상위 1% 부자는 행복할까?\" _by_Sangbin", thumb: "https://drive.google.com/thumbnail?id=112_1gH_q40e_riFpbheKvI6RECk6lOxNBloVEqhuO-k&sz=w400", link: "https://drive.google.com/open?id=112_1gH_q40e_riFpbheKvI6RECk6lOxNBloVEqhuO-k&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "대한민국 = 서울 공화국? : 지방 인구 흡수해 점차 확장되는 서울 초집중화 현상", thumb: "https://drive.google.com/thumbnail?id=1N5Q69HFd_Tq5XSXwLolxzEY3DCeNs9pPQyo0SIyn_-o&sz=w400", link: "https://drive.google.com/open?id=1N5Q69HFd_Tq5XSXwLolxzEY3DCeNs9pPQyo0SIyn_-o&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "도시 주거문화 비교: 덴마크 협동조합주택과 한국 아파트", thumb: "https://drive.google.com/thumbnail?id=1BBSItH7KLGcxtKCud5b9bQU6r9J_13Sm88Yvz8BIplc&sz=w400", link: "https://drive.google.com/open?id=1BBSItH7KLGcxtKCud5b9bQU6r9J_13Sm88Yvz8BIplc&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "문화자본: 취향의 차이가 사회적 신분을 결정한다?", thumb: "https://drive.google.com/thumbnail?id=101ZzHJIv099PHEiHqEqABpA9ABD5sOX5VD0BqN2G3Qc&sz=w400", link: "https://drive.google.com/open?id=101ZzHJIv099PHEiHqEqABpA9ABD5sOX5VD0BqN2G3Qc&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "밀레니얼 세대： 희망을 잃고 있는 중국, 희망을 잃어버린 한국, 희망이 사라진 일본", thumb: "https://drive.google.com/thumbnail?id=1_sZR5Gzohl7ZMgVnued-zDid0aN6FUeOtIO3HuqrHuE&sz=w400", link: "https://drive.google.com/open?id=1_sZR5Gzohl7ZMgVnued-zDid0aN6FUeOtIO3HuqrHuE&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "사회적 자본: 함께 사회를 만드는 힘", thumb: "https://drive.google.com/thumbnail?id=1xqvTiGvb9TePfIN2yJa7wTwVMMAkQp3PngC0Ire3nSY&sz=w400", link: "https://drive.google.com/open?id=1xqvTiGvb9TePfIN2yJa7wTwVMMAkQp3PngC0Ire3nSY&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "수능 시험은 무엇이고, 왜 만들어졌을까? - 수능에 담긴 학교교육과 공정 배분의 의미", thumb: "https://drive.google.com/thumbnail?id=1x2MndNrtqsrvc0JIP5FMdi8ciDtvE8SYbjXY_IT4KH4&sz=w400", link: "https://drive.google.com/open?id=1x2MndNrtqsrvc0JIP5FMdi8ciDtvE8SYbjXY_IT4KH4&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "언어가 달라지면 생각이 달라질까?", thumb: "https://drive.google.com/thumbnail?id=1DPdAxqlMb7qp-BKY5B5uYpjFZLsV5IyXMa_cZIyxVQ4&sz=w400", link: "https://drive.google.com/open?id=1DPdAxqlMb7qp-BKY5B5uYpjFZLsV5IyXMa_cZIyxVQ4&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "타인의 고통과 공감 - 재해를 겪고 있거나 역사적 아픔이 있는 곳에 여행을 가도 괜찮을까?", thumb: "https://drive.google.com/thumbnail?id=1Nfjqp_NELoZGGHag0jb1B4B9gIbqnC6ZMum5q1t_hDY&sz=w400", link: "https://drive.google.com/open?id=1Nfjqp_NELoZGGHag0jb1B4B9gIbqnC6ZMum5q1t_hDY&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "평판 전쟁: 나락의 일상화, 일상의 나락화", thumb: "https://drive.google.com/thumbnail?id=1elTUh-tADaX2EaHGUKNJyP2ZEcTJ1pH7OukJ9AhoFTM&sz=w400", link: "https://drive.google.com/open?id=1elTUh-tADaX2EaHGUKNJyP2ZEcTJ1pH7OukJ9AhoFTM&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "한국에서 힙합은 어떻게 인기를 얻게 되었을까요? - 사람들이 쇼미더머니에 열광하는 이유", thumb: "https://drive.google.com/thumbnail?id=1Ck6xdl2YZzUxzAOX3bK3Zp7JP-QRrOp7xIB8nRnZRUg&sz=w400", link: "https://drive.google.com/open?id=1Ck6xdl2YZzUxzAOX3bK3Zp7JP-QRrOp7xIB8nRnZRUg&usp=drive_copy"},
+    {level: "C2", tags: ["사회"], title: "한국인의 자격, 귀화 시험 — 직접 풀어보니, 한국인도 틀립니다.pdf", thumb: "https://drive.google.com/thumbnail?id=1pI2QOqv0plm0S7nmwURD_PPuWZGs6YME&sz=w400", link: "https://drive.google.com/open?id=1pI2QOqv0plm0S7nmwURD_PPuWZGs6YME"},
+    {level: "C2", tags: ["사회","문학"], title: "한국인의 정체성: \u003c우리들의 일그러진 영웅\u003e과 \u003c우상의 눈물\u003e을 통해 살펴보는 1980년대", thumb: "https://drive.google.com/thumbnail?id=1Q0mB01ITvya0aCXgoffg2MiGHp3UK2CAVM8RSjPGNOE&sz=w400", link: "https://drive.google.com/open?id=1Q0mB01ITvya0aCXgoffg2MiGHp3UK2CAVM8RSjPGNOE&usp=drive_copy"},
+    {level: "C2", tags: ["사회","문화"], title: "\u003c당신들의 대한민국\u003e - 전근대적이고 권위주의적인 한국 사회", thumb: "https://drive.google.com/thumbnail?id=10yEq4clpew1E2Bs3Fzpz0ucJHsFe7-p7jwyvlqDF12c&sz=w400", link: "https://drive.google.com/open?id=10yEq4clpew1E2Bs3Fzpz0ucJHsFe7-p7jwyvlqDF12c&usp=drive_copy"},
+    {level: "C2", tags: ["사회","법"], title: "모두가 군대에 가는 \"징병제\" vs. 직업으로 군대에 가는 \"모병제\"", thumb: "https://drive.google.com/thumbnail?id=1DOoJb3Rrg7K0KC5A0TgSPyHfFb1x6xZYJejqm8fCIok&sz=w400", link: "https://drive.google.com/open?id=1DOoJb3Rrg7K0KC5A0TgSPyHfFb1x6xZYJejqm8fCIok&usp=drive_copy"},
+    {level: "C2", tags: ["스포츠","철학"], title: "춤도 스포츠? 뇌 운동도 스포츠? - 스포츠란 무엇일까?", thumb: "https://drive.google.com/thumbnail?id=1WD0dmw1tg-7OFiihVzkPo0Bay5NSEppdoZMR_V2cXIg&sz=w400", link: "https://drive.google.com/open?id=1WD0dmw1tg-7OFiihVzkPo0Bay5NSEppdoZMR_V2cXIg&usp=drive_copy"},
+    {level: "C2", tags: ["심리"], title: "직관과 직감: 언제 따라야 할까요? 그리고 어디까지 믿을 수 있을까요?", thumb: "https://drive.google.com/thumbnail?id=14DEo0x3ZEFqj5CTbpAT_oy6SW0LLQwBw5YKbF-rDkpw&sz=w400", link: "https://drive.google.com/open?id=14DEo0x3ZEFqj5CTbpAT_oy6SW0LLQwBw5YKbF-rDkpw&usp=drive_copy"},
+    {level: "C2", tags: ["언어"], title: "‘사투리’의 탄생 - 서울 사투리가 있을까요?", thumb: "https://drive.google.com/thumbnail?id=1Uw2Anb3acykQWgVe-kN_t8FMMKGA2uJwz9U9afbUasA&sz=w400", link: "https://drive.google.com/open?id=1Uw2Anb3acykQWgVe-kN_t8FMMKGA2uJwz9U9afbUasA&usp=drive_copy"},
+    {level: "C2", tags: ["언어"], title: "“국가가 정한 말 아니면 틀렸다니” 표준어 없애는 거 어때요?", thumb: "https://drive.google.com/thumbnail?id=1TfBc-4GznpExHh_ADOC9jpQ09OFgxEzcOkYEPJ2Y9LM&sz=w400", link: "https://drive.google.com/open?id=1TfBc-4GznpExHh_ADOC9jpQ09OFgxEzcOkYEPJ2Y9LM&usp=drive_copy"},
+    {level: "C2", tags: ["언어"], title: "Society는 어떻게 그리고 왜 “사회(社會)”로 번역되었을까요? - 개념 번역의 역사", thumb: "https://drive.google.com/thumbnail?id=17rxcs70uDuA60qXznAWxds1oXOYkD2TGE_5oED9kI4o&sz=w400", link: "https://drive.google.com/open?id=17rxcs70uDuA60qXznAWxds1oXOYkD2TGE_5oED9kI4o&usp=drive_copy"},
+    {level: "C2", tags: ["언어","과학"], title: "글자에 오류가 있어도 읽을 수 있을까요? - EBS다큐멘터리 \"책맹인류\"", thumb: "https://drive.google.com/thumbnail?id=1Q82dVzNk4rlMW8FMiAbQJl3u9uW53a_6K6tQww6MSnw&sz=w400", link: "https://drive.google.com/open?id=1Q82dVzNk4rlMW8FMiAbQJl3u9uW53a_6K6tQww6MSnw&usp=drive_copy"},
+    {level: "C2", tags: ["언어","철학"], title: "지루함이란 무엇일까?", thumb: "https://drive.google.com/thumbnail?id=1c8xO_94F86boeEHFUJmbvJLxymwP8deg-ghScXvlB9w&sz=w400", link: "https://drive.google.com/open?id=1c8xO_94F86boeEHFUJmbvJLxymwP8deg-ghScXvlB9w&usp=drive_copy"},
+    {level: "C2", tags: ["역사"], title: "백 투 더 퓨쳐 : 정말로 새로운 시대인가?", thumb: "https://drive.google.com/thumbnail?id=1yc75Dq5CynluVaOpiQiQo6eL0NQuOpMFTObmt0sqNu8&sz=w400", link: "https://drive.google.com/open?id=1yc75Dq5CynluVaOpiQiQo6eL0NQuOpMFTObmt0sqNu8&usp=drive_copy"},
+    {level: "C2", tags: ["역사","국제관계"], title: "혼란의 한일관계 - 강제동원 문제의 주요 쟁점", thumb: "https://drive.google.com/thumbnail?id=1fi-rnZDsMnUaB8p8jS3wnGIxe4Ta9S0V9A5-iVtC9qs&sz=w400", link: "https://drive.google.com/open?id=1fi-rnZDsMnUaB8p8jS3wnGIxe4Ta9S0V9A5-iVtC9qs&usp=drive_copy"},
+    {level: "C2", tags: ["역사"], title: "농업혁명은 인류에게 “역사상 최대의 사기” 또는 “역사상 최악의 실수\"일까? - 사피엔스(유발 하라리, 2015)", thumb: "https://drive.google.com/thumbnail?id=1nDysLaUz3t7P2yItueTC3XQUS75gGJMBfA6gUUVpQkE&sz=w400", link: "https://drive.google.com/open?id=1nDysLaUz3t7P2yItueTC3XQUS75gGJMBfA6gUUVpQkE&usp=drive_copy"},
+    {level: "C2", tags: ["영화","철학"], title: "박찬욱 감독의 복수 3부작을 통해 살펴보는 '복수'의 의미", thumb: "https://drive.google.com/thumbnail?id=1G8QI3S8t-_ivVcDNaHTr7U3ObjoJLqqNwGxmKiFCf9E&sz=w400", link: "https://drive.google.com/open?id=1G8QI3S8t-_ivVcDNaHTr7U3ObjoJLqqNwGxmKiFCf9E&usp=drive_copy"},
+    {level: "C2", tags: ["인문"], title: "무소유(無Ohio, simatiga) - 법정(法頂) 스님", thumb: "https://drive.google.com/thumbnail?id=1h39ygnoizqxMdWRdxVIhWhGz19S1Vuyj4FqMHeqAYrc&sz=w400", link: "https://drive.google.com/open?id=1h39ygnoizqxMdWRdxVIhWhGz19S1Vuyj4FqMHeqAYrc&usp=drive_copy"},
+    {level: "C2", tags: ["인문","철학"], title: "자유의지와 결정론에 대한 고찰", thumb: "https://drive.google.com/thumbnail?id=1Ki-fa1K9ffu27j1A8MCUDp7ky-B0QKNVe3frAxjwDIc&sz=w400", link: "https://drive.google.com/open?id=1Ki-fa1K9ffu27j1A8MCUDp7ky-B0QKNVe3frAxjwDIc&usp=drive_copy"},
+    {level: "C2", tags: ["인문학","철학"], title: "흔들리지 않는 마음 - 아파테이아(apatheia) & 부동심(不動心)", thumb: "https://drive.google.com/thumbnail?id=1QPxvpNit8hpzojZe4OX2CitJHj3QLj15DyS9coA2KAg&sz=w400", link: "https://drive.google.com/open?id=1QPxvpNit8hpzojZe4OX2CitJHj3QLj15DyS9coA2KAg&usp=drive_copy"},
+    {level: "C2", tags: ["정치"], title: "\"소수집단 우대 정책\"은 폐지되어야 할까요? 유지되어야 할까요?", thumb: "https://drive.google.com/thumbnail?id=1siLQ6k4sX6chTANTjRO7NM2TUHMBzMYa1v8HtJ0Bj0A&sz=w400", link: "https://drive.google.com/open?id=1siLQ6k4sX6chTANTjRO7NM2TUHMBzMYa1v8HtJ0Bj0A&usp=drive_copy"},
+    {level: "C2", tags: ["정치"], title: "한국 정당의 후보 공천에서 나타나는 문제점", thumb: "https://drive.google.com/thumbnail?id=1rhYprUabOdjILDAaiPNqjgsdiCmZ70er5e-HWLoKsuM&sz=w400", link: "https://drive.google.com/open?id=1rhYprUabOdjILDAaiPNqjgsdiCmZ70er5e-HWLoKsuM&usp=drive_copy"},
+    {level: "C2", tags: ["정치"], title: "Z세대 남자들: 그들은 왜 자신들이 차별 받고 있다고 생각할까요?", thumb: "https://drive.google.com/thumbnail?id=1b9QM5A-L1zFfUgk--7BwQ9pMW0Y63uHyQZkBH_JKR_M&sz=w400", link: "https://drive.google.com/open?id=1b9QM5A-L1zFfUgk--7BwQ9pMW0Y63uHyQZkBH_JKR_M&usp=drive_copy"},
+    {level: "C2", tags: ["정치","법"], title: "한국에서 낙태죄 불법인가? 합법인가? - 2019년 낙태죄 헌법불합치 판결 이후", thumb: "https://drive.google.com/thumbnail?id=1dEXiWPpuLnoZQ_8PuMW1mKi5vbXj7QYJWdBMR_iXMnw&sz=w400", link: "https://drive.google.com/open?id=1dEXiWPpuLnoZQ_8PuMW1mKi5vbXj7QYJWdBMR_iXMnw&usp=drive_copy"},
+    {level: "C2", tags: ["정치","사회"], title: "북한 이탈 주민의 정체성", thumb: "https://drive.google.com/thumbnail?id=1PN6lqGr2G9dFeAtGi85WwBGfIW9Uk8Q1h8Mr-u-5HpQ&sz=w400", link: "https://drive.google.com/open?id=1PN6lqGr2G9dFeAtGi85WwBGfIW9Uk8Q1h8Mr-u-5HpQ&usp=drive_copy"},
+    {level: "C2", tags: ["정치","철학"], title: "민족주의는 무엇일까요?", thumb: "https://drive.google.com/thumbnail?id=1faF0N-kEg0tycSdT3dcYnnRRXQPyVPGKErx-bpxe1Kw&sz=w400", link: "https://drive.google.com/open?id=1faF0N-kEg0tycSdT3dcYnnRRXQPyVPGKErx-bpxe1Kw&usp=drive_copy"},
+    {level: "C2", tags: ["철학","과학"], title: "📚 단 한 번의 앎혁명", thumb: "https://drive.google.com/thumbnail?id=1ISxowjHOeoDNEKiBqMK8gWdr7R92KjSZn3OY9FswpWo&sz=w400", link: "https://drive.google.com/open?id=1ISxowjHOeoDNEKiBqMK8gWdr7R92KjSZn3OY9FswpWo&usp=drive_copy"},
+    {level: "C2", tags: ["철학","과학"], title: "과학과 철학 그리고 언어 - 철학으로 보는 과학", thumb: "https://drive.google.com/thumbnail?id=1NDDNBUuj2RRPPBOrwpSV3gWTRrbMG5QhHyxTSv_ENKQ&sz=w400", link: "https://drive.google.com/open?id=1NDDNBUuj2RRPPBOrwpSV3gWTRrbMG5QhHyxTSv_ENKQ&usp=drive_copy"},
+    {level: "C2", tags: ["철학","과학"], title: "시간에 대한 태도와 무시제적 시간 이론", thumb: "https://drive.google.com/thumbnail?id=1yX5y4-ugi7mewufTKc8LRIRDaBcVgq6UybVSBe_XzsE&sz=w400", link: "https://drive.google.com/open?id=1yX5y4-ugi7mewufTKc8LRIRDaBcVgq6UybVSBe_XzsE&usp=drive_copy"},
+    {level: "C2", tags: ["철학","교육"], title: "\u003c메논\u003e과 \u003c무지한 스승\u003e을 통해 알아보는 배움의 정의: 설명 없이 배울 수 있을까?", thumb: "https://drive.google.com/thumbnail?id=1ZKkboh1LzYDRC3HW1--1zcfWmpcTEVQ8RmCjURXuIXM&sz=w400", link: "https://drive.google.com/open?id=1ZKkboh1LzYDRC3HW1--1zcfWmpcTEVQ8RmCjURXuIXM&usp=drive_copy"},
+    {level: "C2", tags: ["철학","언어"], title: "말할 수 없는 것은 침묵해야 한다 : 언어와 삶", thumb: "https://drive.google.com/thumbnail?id=14rzpxQAEauYPqTUUD91io6gqhxgMpYedlrdBcD7xJx0&sz=w400", link: "https://drive.google.com/open?id=14rzpxQAEauYPqTUUD91io6gqhxgMpYedlrdBcD7xJx0&usp=drive_copy"},
+    {level: "C2", tags: ["철학","언어"], title: "표상과 현상은 무엇일까요?", thumb: "https://drive.google.com/thumbnail?id=1e2mKtmrd3gN2EIVVQ4oWjC3c4PHYJHZqyY5DAHKkAOU&sz=w400", link: "https://drive.google.com/open?id=1e2mKtmrd3gN2EIVVQ4oWjC3c4PHYJHZqyY5DAHKkAOU&usp=drive_copy"},
+    {level: "C2", tags: ["철학","언어","역사"], title: "\u003c역사를 읽는 방법\u003e - 1장 서론：그들의 방식으로 바라보기", thumb: "https://drive.google.com/thumbnail?id=1bWysDNo3szA9MIWAv0Ud-oPGGG3ovkop6YMa4pnTLLU&sz=w400", link: "https://drive.google.com/open?id=1bWysDNo3szA9MIWAv0Ud-oPGGG3ovkop6YMa4pnTLLU&usp=drive_copy"},
+    {level: "A2+", tags: ["일상"], title: "영화를 어떻게 봐요? — 결말 먼저 보기 vs 처음부터 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/l6bdY6ZsbJM/hqdefault.jpg", link: "a2plus-watch-ending-first.html"},
+    {level: "B1", tags: ["일상","문화"], title: "SNS를 어떤 목적으로 써요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Qjfa0oxuHmA/hqdefault.jpg", link: "b1-sns-purpose.html"},
+    {level: "B1", tags: ["일상","문화"], title: "감칠맛과 MSG - 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/emo3pCumqmo/hqdefault.jpg", link: "b1-umami-and-msg.html"},
+    {level: "B1+", tags: ["일상","문화"], title: "뒷담화는 나쁠까요? 괜찮을까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZJxoxoACBCU/hqdefault.jpg", link: "b1plus-is-gossip-bad.html"},
+    {level: "B2", tags: ["과학"], title: "조상 찾기 DNA 검사", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/yG728zOrtl0/hqdefault.jpg", link: "b2-ancestry-dna-test.html"},
+    {level: "B1", tags: ["일상"], title: "보통 어떤 음악을 들어요? - 잔잔한 음악 vs 신나는 음악", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/vWwWShQVcGc/hqdefault.jpg", link: "b1-what-music-do-you-listen-to.html"},
+    {level: "B1+", tags: ["문화","음식"], title: "한국의 크리스마스 케이크", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/bZufTDKqQ8g/hqdefault.jpg", link: "b1plus-korean-christmas-cake.html"},
+    {level: "A2+", tags: ["일상"], title: "마음에 들지 않는 선물", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/6wPteSottlc/hqdefault.jpg", link: "a2plus-gift-not-liked.html"},
+    {level: "A2+", tags: ["일상"], title: "드라마 시청 습관: 몰아 보기 vs 매주 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/61SqgIZeXRc/hqdefault.jpg", link: "a2plus-drama-watching-habits.html"},
+    {level: "B1", tags: ["일상","문화"], title: "왼손잡이에 대한 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/YTVDuOi6L1c/hqdefault.jpg", link: "b1-left-handed.html"},
+    {level: "A2+", tags: ["일상"], title: "말차 라떼", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/do5Rs4A-P58/hqdefault.jpg", link: "a2plus-matcha-latte.html"},
+    {level: "B1", tags: ["일상"], title: "뇌 이야기: 기억력과 집중력", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/fkDwuqGLdvI/hqdefault.jpg", link: "b1-brain.html"},
+    {level: "B1", tags: ["일상"], title: "체크리스트가 사람들을 멍청하게 만들까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/KXXFd4y57xY/hqdefault.jpg", link: "b1-checklists-stupid.html"},
+    {level: "A2+", tags: ["일상"], title: "오늘 일을 다 못했어요: 늦게까지 일할 거예요 vs 내일 일할 거예요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/jbfUEVOCSds/hqdefault.jpg", link: "a2plus-overtime.html"},
+    {level: "A2+", tags: ["일상"], title: "잘못 나온 음식", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/klxx6ChKQFg/hqdefault.jpg", link: "a2plus-wrong-food.html"},
+    {level: "A2+", tags: ["일상"], title: "여름 에어컨 고장 VS 겨울 보일러 고장", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/_5dwoII2L_M/hqdefault.jpg", link: "a2plus-summer-winter.html"},
+    {level: "A2+", tags: ["일상"], title: "선크림이 피부를 지켜줘요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Q2j3xlxzlxU/hqdefault.jpg", link: "a2plus-sunscreen.html"},
+    {level: "A2", tags: ["일상"], title: "주말에 보통 뭐 해요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/5ONz3--hTRM/hqdefault.jpg", link: "a2-weekend.html"},
+    {level: "A1+", tags: ["일상"], title: "어디가 아파요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/IENdLlBwNe8/hqdefault.jpg", en: "Where does it hurt?", link: "a1plus-where-does-it-hurt.html"},
+    {level: "A1+", tags: ["일상"], title: "책을 몇 권 읽어요? (How Many Books Do You Read?)", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/xEF1OHf2dI0/hqdefault.jpg", link: "a1plus-how-many-books.html"},
+    {level: "A1", tags: ["일상"], title: "오늘 뭐 해요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/dvs7VQb-b3U/hqdefault.jpg", en: "What are you up to today?", link: "a1-easy-today-what-doing.html"},
+    {level: "A1", tags: ["일상"], title: "하루에 커피를 몇 잔 마셔요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZjnRIXjJU7Y/hqdefault.jpg", en: "How many cups of coffee a day?", link: "a1-how-many-cups-of-coffee.html"},
+    {level: "B1", tags: ["문화","일상"], title: "인생 첫 사우나 - 나는 마루", type: "video", thumb: "https://i.ytimg.com/vi/E8ZHFRY1reU/hqdefault.jpg", link: "b1-first-sauna-maru.html"},
+    {level: "A1+", tags: ["일상"], title: "무슨 요일이야?", type: "video", thumb: "https://i.ytimg.com/vi/AOylqCIDuHc/hqdefault.jpg", en: "What day is it?", link: "a1plus-what-day.html"}
+  ];
+  var LEVELS = ['A1','A1+','A2','A2+','B1','B1+','B2','B2+','C1','C1+','C2'];
+  var LV_NAME = {'A1':'Novice','A1+':'Pre-Beginner','A2':'Beginner','A2+':'Upper Beginner','B1':'Pre-Intermediate','B1+':'Lower Intermediate','B2':'Intermediate','B2+':'Upper Intermediate','C1':'Advanced','C1+':'Upper Advanced','C2':'Proficient'};
+
+  /* ===== i18n: 보조 언어 번역 사전. 언어를 추가하려면 아래에 새 코드 블록(예: fr:{...})을 그대로 더하면 됨 =====
+     키 규칙: g_=그룹탭, t_=히어로 제목, d_=레벨 설명, tag_=주제태그, ser_=시리즈 배지, 그 외 공통 라벨 */
+  var I18N = {
+    en: {
+      g_all:'All', g_beginner:'Beginner', g_lowint:'Lower-Intermediate', g_intermediate:'Intermediate', g_upint:'Upper-Intermediate', g_advanced:'Advanced',
+      t_all:'Korean Learning Materials', t_beginner:'Beginner Materials', t_lowint:'Lower-Intermediate Materials', t_intermediate:'Intermediate Materials', t_upint:'Upper-Intermediate Materials', t_advanced:'Advanced Materials',
+      d_all:'Every Korean learning material from A1 to C2 in one place. Pick a level band, or jump straight in with search and tags.',
+      d_beginner:'Review the key expressions and basic grammar from your class or textbook. Watch short videos to practice them again, then answer simple questions in Korean.',
+      d_lowint:'Study Korean with videos about everyday life. Use what you learn right away in class, and practice thinking and speaking directly in Korean without translating in your head.',
+      d_intermediate:'Level up with authentic videos and articles that native Koreans actually watch and read. You’ll practice understanding real-world content accurately, then use it as a launchpad to share your own experiences and ideas naturally in Korean.',
+      d_upint:'Go deeper into native content and practice organizing your thoughts logically, building the ability to read and listen critically.',
+      d_advanced:'Go beyond just studying the language. You’ll critically analyze articles and videos across a wide range of topics, training yourself to organize your thoughts and express your opinions logically in Korean.',
+      'tag_전체':'All','tag_최신':'Latest','tag_일상':'Daily','tag_건강':'Health','tag_문화':'Culture','tag_음식':'Food','tag_사회':'Society','tag_과학':'Science','tag_예술':'Art','tag_경제':'Economy','tag_역사':'History','tag_정치':'Politics','tag_교육':'Education','tag_문학':'Literature','tag_음악':'Music','tag_언어':'Language',
+      'tag_이 주제로 이야기해 봐요':"Let's Talk About It",'tag_쉬운 한국어로 이야기해 봐요':"Let's Chat in Easy Korean",
+      'ser_이 주제로 이야기해 봐요':"LET'S TALK ABOUT IT",'ser_쉬운 한국어로 이야기해 봐요':"LET'S CHAT IN EASY KOREAN",
+      all:'All', search:'Search…', more:'Load more', noresult:'No results.'
+    }
+    /* , fr: { g_all:'Tout', ... }  ← 나중에 언어 추가 위치 */
+  };
+  var LANG_NAMES = { en:'English' /* , fr:'Français', de:'Deutsch', ja:'日本語', 'zh-Hans':'中文(简体)', 'zh-Hant':'中文(繁體)', ... */ };
+
+  var GROUPS = {
+    all:         { ko:'전체', levels:LEVELS, desc:'초급부터 고급까지(A1–C2) 한국어 학습 자료를 한곳에. 레벨대를 고르거나 검색·태그로 바로 찾아보세요.' },
+    beginner:    { ko:'초급',   levels:['A1','A1+','A2'] },
+    lowint:      { ko:'초중급', levels:['A2+','B1'] },
+    intermediate:{ ko:'중급',   levels:['B1+','B2'] },
+    upint:       { ko:'중고급', levels:['B2+','C1'] },
+    advanced:    { ko:'고급',   levels:['C1+','C2'] }
+  };
+  var GROUP_ORDER = ['all','beginner','lowint','intermediate','upint','advanced'];
+  var DETAIL = {
+    beginner:{ ko:'책이나 수업에서 배운 표현과 기초 문법을 다시 공부해요. 짧은 동영상을 보면서 중요한 표현을 다시 듣고 익혀요. 그리고 쉬운 질문에 내 생각을 한국어로 말해 봐요.' },
+    lowint:{ ko:'일상생활 주제의 동영상을 보면서 한국어를 공부해요. 자료에서 배운 표현을 수업에서 바로 써 보고, 번역하지 않고 한국어로 바로 생각해서 말하는 연습을 해요.' },
+    intermediate:{ ko:'실제 한국인들이 즐겨 보는 동영상이나 글을 활용해서 한국어를 공부해 봐요. 콘텐츠의 내용을 정확히 이해하는 연습도 하고, 이를 바탕으로 자신의 경험이나 생각을 자연스럽게 한국어로 말하는 연습을 해 봐요.' },
+    upint:{ ko:'원어민 콘텐츠를 더 깊이 다루며, 자신의 생각을 논리적으로 정리해 표현하는 연습을 해요. 비판적으로 읽고 듣는 힘을 조금씩 키우는 단계예요.' },
+    advanced:{ ko:'단순히 한국어 자체를 배우는 단계를 넘어, 한국어로 다양한 주제에 대한 글이나 동영상을 비판적으로 분석하고, 자신의 의견을 논리적으로 정리해 말하는 연습을 해 봐요.' }
+  };
+  var SERIES = { '이 주제로 이야기해 봐요':true, '쉬운 한국어로 이야기해 봐요':true };
+  var ITALKI = 'https://www.italki.com/ko/teacher/3553151';
+  var ARROW = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>';
+
+  var state = { view:'gate', group:'all', level:'all', entryBand:'beginner', page:1, lang:'auto', langOpen:false, q:'', tag:'최신', itemsToShow:12 };
+  var app = document.getElementById('app');
+
+  // 보조 언어 결정: null=한국어만, 그 외=언어코드. 'auto'는 브라우저 언어를 따름
+  function sec(){
+    if(state.lang==='ko') return null;
+    if(state.lang!=='auto') return I18N[state.lang] ? state.lang : 'en';
+    var prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || navigator.userLanguage || ''];
+    for(var i=0;i<prefs.length;i++){
+      var p = (prefs[i]||'').toLowerCase(); if(!p) continue;
+      if(p.indexOf('ko')===0) return null;                 // 한국어 브라우저 → 한국어만
+      if(p.indexOf('zh')===0){ if(I18N['zh-Hant'] && /^zh-(tw|hk|mo|hant)/.test(p)) return 'zh-Hant'; if(I18N['zh-Hans']) return 'zh-Hans'; }
+      var base = p.split('-')[0];
+      if(I18N[base]) return base;
+    }
+    return I18N['en'] ? 'en' : null;                       // 비한국어 폴백 → 영어
+  }
+  function tr(key){ var s=sec(); if(!s) return ''; var d=I18N[s]; if(d && d[key]!=null) return d[key]; var e=I18N.en; return (e && e[key]!=null) ? e[key] : ''; }
+  function bilingual(){ return sec()!==null; }
+
+  function scopeItems(){
+    var g = GROUPS[state.group];
+    return MATERIALS.filter(function(m){
+      if(g.levels.indexOf(m.level)<0) return false;
+      if(state.level!=='all' && m.level!==state.level) return false;
+      return true;
+    });
+  }
+  function seriesBadge(m, bi){
+    if(!m.series) return '';
+    var se = bi ? tr('ser_'+m.series) : '';
+    return '<div class="series-badge">'+esc(m.series)+(se ? ' <em>'+esc(se)+'</em>' : '')+'</div>';
+  }
+  function computeTags(){
+    var set = [], ser = [];
+    scopeItems().forEach(function(m){ (m.tags||[]).forEach(function(t){ if(set.indexOf(t)<0) set.push(t); }); if(m.series && ser.indexOf(m.series)<0) ser.push(m.series); });
+    return ['전체','최신'].concat(ser).concat(set);
+  }
+  function finalItems(){
+    var q = state.q.trim().toLowerCase();
+    return scopeItems().filter(function(m){
+      if(state.tag!=='전체' && state.tag!=='최신'){ if(SERIES[state.tag]){ if(m.series!==state.tag) return false; } else if((m.tags||[]).indexOf(state.tag)<0) return false; }
+      if(q){ if((m.title+' '+(m.en||'')+' '+m.tags.join(' ')).toLowerCase().indexOf(q)<0) return false; }
+      return true;
+    });
+  }
+  function recentItems(){
+    var q = state.q.trim().toLowerCase();
+    var pool = MATERIALS.filter(function(m){
+      if(state.level !== 'all' && m.level !== state.level) return false;
+      if(q && (m.title+' '+(m.en||'')+' '+m.tags.join(' ')).toLowerCase().indexOf(q)<0) return false;
+      return true;
+    });
+    return pool.slice(0, state.level === 'all' ? 10 : 5);
+  }
+  function detailHTML(key, bi){
+    var dd = DETAIL[key]; if(!dd) return '';
+    return '<div class="detail"><p class="d-ko">'+esc(dd.ko)+'</p>'+(bi?'<p class="d-en">'+esc(tr('d_'+key))+'</p>':'')+'</div>';
+  }
+  function thumbHTML(m){
+    var play = m.type==='video' ? '<span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' : '';
+    var fb = '<div class="thumb-fallback"><span class="fb-lv">'+esc(m.level)+'</span></div>';
+    var img = m.thumb ? '<img class="thumb-img" src="'+esc(m.thumb)+'" loading="lazy" referrerpolicy="no-referrer" alt="">' : '';
+    return '<div class="thumb'+(m.thumb?'':' noimg')+'">'+img+fb+play+'</div>';
+  }
+  function moreHTML(total){
+    if(total <= state.itemsToShow) return '';
+    var label = bilingual() ? '더보기 / '+tr('more') : '더보기';
+    return '<div class="more-wrap"><button type="button" id="load-more" class="more-btn">'+label+' <span>('+(total-state.itemsToShow)+')</span></button></div>';
+  }
+  function cardOf(m, bi){
+    var tags = m.tags.map(function(x){ return '<span class="ctag">'+esc(x)+'</span>'; }).join('');
+    var props = m.link.indexOf('http')===0 ? ' target="_blank" rel="noreferrer"' : '';
+    return '<a class="card" href="'+esc(m.link)+'"'+props+'>'
+      + thumbHTML(m)
+      + '<div class="cbody"><div class="meta"><span class="lv">'+esc(m.level)+'</span>'+seriesBadge(m, bi)+tags+'</div>'
+      + '<h3>'+esc(m.title)+'</h3>'+(m.en?'<div class="en">'+esc(m.en)+'</div>':'')+'</div></a>';
+  }
+  function levelOrder(){
+    if(state.group!=='all') return GROUPS[state.group].levels;
+    var lead = (GROUPS[state.entryBand]||{}).levels || [];
+    var rest = LEVELS.filter(function(l){ return lead.indexOf(l)<0; });
+    return lead.concat(rest);
+  }
+  var PER_PAGE = 10;
+  function pagerHTML(pages, cur){
+    if(pages<=1) return '';
+    var set={}; [1,pages,cur,cur-1,cur+1].forEach(function(n){ if(n>=1&&n<=pages) set[n]=1; });
+    var keys=Object.keys(set).map(Number).sort(function(a,b){ return a-b; });
+    var h='<button type="button" class="pg-arrow" data-page="'+(cur>1?cur-1:1)+'"'+(cur===1?' disabled':'')+'>‹</button>';
+    var prev=0;
+    keys.forEach(function(n){ if(prev && n-prev>1) h+='<span class="pg-gap">…</span>'; h+='<button type="button" class="pg-num'+(n===cur?' on':'')+'" data-page="'+n+'">'+n+'</button>'; prev=n; });
+    h+='<button type="button" class="pg-arrow" data-page="'+(cur<pages?cur+1:pages)+'"'+(cur===pages?' disabled':'')+'>›</button>';
+    return '<div class="pager">'+h+'</div>';
+  }
+  function listHTML(){
+    var bi = bilingual();
+    if(state.tag === '최신'){
+      var recent = recentItems();
+      if(!recent.length) return '<div class="empty">검색 결과가 없습니다.'+(bi?' / '+tr('noresult'):'')+'</div>';
+      return '<div class="cards">'+recent.map(function(m){ return cardOf(m, bi); }).join('')+'</div>';
+    }
+    var order = levelOrder();
+    var items = finalItems().slice().sort(function(a,b){ return order.indexOf(a.level)-order.indexOf(b.level); });
+    if(!items.length) return '<div class="empty">검색 결과가 없습니다.'+(bi?' / '+tr('noresult'):'')+'</div>';
+    if(state.level!=='all'){
+      var pages = Math.ceil(items.length/PER_PAGE);
+      if(state.page>pages) state.page = pages||1;
+      var start=(state.page-1)*PER_PAGE;
+      var pcards = items.slice(start, start+PER_PAGE).map(function(m){ return cardOf(m, bi); }).join('');
+      return '<div class="cards">'+pcards+'</div>'+pagerHTML(pages, state.page);
+    }
+    var shown = items.slice(0, state.itemsToShow);
+    var out = order.map(function(lv){
+      var rows = shown.filter(function(m){ return m.level===lv; });
+      if(!rows.length) return '';
+      var cards = rows.map(function(m){ return cardOf(m, bi); }).join('');
+      return '<div class="divider"><span class="lvcode">'+esc(lv)+'</span>'
+        + '<span class="lvname">'+esc(LV_NAME[lv])+'</span><span class="ln"></span></div>'
+        + '<div class="cards">'+cards+'</div>';
+    }).join('');
+    return out + moreHTML(items.length);
+  }
+  function langMenuHTML(){
+    var opts = [{v:'auto',l:'자동 · Auto'},{v:'ko',l:'한국어'}].concat(Object.keys(I18N).map(function(k){ return {v:k, l:(LANG_NAMES[k]||k)}; }));
+    var menu = state.langOpen ? '<div class="lang-menu" id="lang-menu">'
+      + opts.map(function(o){ return '<button type="button" data-setlang="'+esc(o.v)+'" class="'+(state.lang===o.v?'on':'')+'">'+esc(o.l)+'</button>'; }).join('')
+      + '</div>' : '';
+    return '<div class="lang" id="lang"><button type="button" class="lang-btn" id="lang-btn" aria-haspopup="true" title="언어 / Language">Language <span class="chev">▾</span></button>'+menu+'</div>';
+  }
+
+  var GATE_BANDS = {
+    beginner:    { ko:'초급',   en:'Beginner',           code:'A1 – A2' },
+    lowint:      { ko:'초중급', en:'Lower-Intermediate', code:'A2+ – B1' },
+    intermediate:{ ko:'중급',   en:'Intermediate',       code:'B1+ – B2' },
+    upint:       { ko:'중고급', en:'Upper-Intermediate', code:'B2+ – C1' },
+    advanced:    { ko:'고급',   en:'Advanced',           code:'C1+ – C2' }
+  };
+  var italkiBtn = '<a class="italki" href="'+ITALKI+'" target="_blank" rel="noopener noreferrer">Visit Sangbin\'s italki profile '+ARROW+'</a>';
+  function gateHTML(){
+    var cards = Object.keys(GATE_BANDS).map(function(key){
+      var b = GATE_BANDS[key];
+      return '<div class="band" data-band="'+esc(key)+'">'
+        + '<div class="code">'+esc(b.code)+'</div>'
+        + '<div class="ko">'+esc(b.ko)+'</div>'
+        + '<div class="en">'+esc(b.en)+'</div>'
+        + '<div class="go">자료 보기<br><span class="go-en">Explore materials →</span></div></div>';
+    }).join('');
+    return '<div class="gate"><div class="wrap">'
+      + '<div class="gate-header">'
+      + '<div class="gate-brand">OpenKoreanLearningLab</div>'
+      + '<h1>한국어 학습 자료</h1>'
+      + '<div class="sub-en">Korean Learning Materials</div>'
+      + '<div class="sub-instruction">레벨을 선택하세요<br>Choose your level</div>'
+      + '</div>'
+      + '<div class="bands">'+cards+'</div>'
+      + '<div class="gate-cta">'+italkiBtn+'</div>'
+      + '<div class="gate-foot">© 2025–2026 Sangbin Lee (OpenKoreanLearningLab)</div>'
+      + '</div></div>';
+  }
+  function groupSelectHTML(){
+    var bi=bilingual();
+    return '<select class="nav-select" data-navsel="group" aria-label="레벨대">'
+      + GROUP_ORDER.map(function(key){ var lab=GROUPS[key].ko+(bi?' / '+tr('g_'+key):''); return '<option value="'+esc(key)+'"'+(state.group===key?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + '</select>';
+  }
+  function levelSelectHTML(){
+    var bi=bilingual(), g=GROUPS[state.group];
+    return '<select class="nav-select" data-navsel="level" aria-label="레벨">'
+      + ['all'].concat(g.levels).map(function(lv){ var lab=lv==='all'?(bi?'전체 / All':'전체'):lv; return '<option value="'+esc(lv)+'"'+(state.level===lv?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + '</select>';
+  }
+  function tagSelectHTML(){
+    var bi=bilingual();
+    return '<select class="nav-select" data-navsel="tag" aria-label="주제">'
+      + computeTags().map(function(tag){ var lab=bi?(tag+' / '+(tr('tag_'+tag)||tag)):tag; return '<option value="'+esc(tag)+'"'+(state.tag===tag?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + '</select>';
+  }
+  function render(){
+
+    if(state.view==='gate'){ app.innerHTML = gateHTML(); return; }
+    var g = GROUPS[state.group], bi = bilingual();
+    var groupTabs = GROUP_ORDER.map(function(key){
+      var gg = GROUPS[key], on = state.group===key?' on':'';
+      return '<button class="'+on.trim()+'" data-group="'+esc(key)+'">'+esc(gg.ko)+(bi?'<span class="en">'+esc(tr('g_'+key))+'</span>':'')+'</button>';
+    }).join('');
+    var chips = ['all'].concat(g.levels).map(function(lv){
+      var on = state.level===lv?' on':'';
+      var label = lv==='all' ? (bi?('전체 '+tr('all')):'전체') : lv;
+      return '<button class="chip'+on+'" data-level="'+esc(lv)+'">'+esc(label)+'</button>';
+    }).join('');
+    var tagBtns = computeTags().map(function(tag){
+      var on = state.tag===tag?' on':'';
+      var label = bi ? '<span class="tko">'+esc(tag)+'</span><span class="ten">'+esc(tr('tag_'+tag)||tag)+'</span>' : esc(tag);
+      return '<button class="tag-btn'+(bi?' bi':'')+on+'" data-tag="'+esc(tag)+'">'+label+'</button>';
+    }).join('');
+    var heroKo = g.ko==='전체' ? '한국어 학습 자료' : (g.ko+' 학습 자료');
+    var ph = bi ? ('제목·태그 검색 / '+tr('search')) : '제목·태그 검색…';
+
+    app.innerHTML =
+      '<div class="topbar"><div class="wrap"><div class="row">'
+      + '<a href="#" class="brand" data-home="1">OpenKoreanLearningLab</a>'
+      + langMenuHTML()
+      + '</div></div></div>'
+      + '<div class="wrap">'
+      + '<div class="hero"><span class="badge">'+esc(g.ko)+(bi?' · '+esc(tr('g_'+state.group)):'')+'</span>'
+      + '<h1>'+esc(heroKo)+'</h1>'+(bi?'<div class="sub">'+esc(tr('t_'+state.group))+'</div>':'')
+      + (state.group==='all' ? '<div class="hero-desc">'+esc(g.desc)+(bi?'<em>'+esc(tr('d_all'))+'</em>':'')+'</div>' : detailHTML(state.group, bi))
+      + '<div class="groups">'+groupTabs+'</div><div class="nav-sel nav-sel-group">'+groupSelectHTML()+'</div></div>'
+      + '<div class="controls">'
+      + '<div class="search"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>'
+      + '<input id="search" type="text" placeholder="'+esc(ph)+'" value="'+esc(state.q)+'" /></div>'
+      + '<div class="chips">'+chips+'</div></div><div class="nav-sel nav-sel-level">'+levelSelectHTML()+'</div>'
+      + '<div class="tags">'+tagBtns+'</div><div class="nav-sel nav-sel-tag">'+tagSelectHTML()+'</div>'
+      + '<div class="pad" id="list">'+listHTML()+'</div>'
+      + '</div>'
+      + '<footer><a class="italki" href="'+ITALKI+'" target="_blank" rel="noopener noreferrer">Visit Sangbin\'s italki profile '+ARROW+'</a>'
+      + '<div class="copy">© 2025–2026 Sangbin Lee (OpenKoreanLearningLab)</div></footer>';
+
+    var inp = document.getElementById('search');
+    if(inp && state.q){ inp.focus(); inp.setSelectionRange(state.q.length, state.q.length); }
+  }
+
+  app.addEventListener('click', function(e){
+    var band = e.target.closest('[data-band]');
+    if(band){ var bd=band.getAttribute('data-band'); state.entryBand=bd; state.group=bd; state.view='app'; state.level='all'; state.tag='전체'; state.q=''; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
+    var home = e.target.closest('[data-home]');
+    if(home){ state.view='gate'; window.scrollTo(0,0); render(); return; }
+    var setlang = e.target.closest('[data-setlang]');
+    if(setlang){ state.lang = setlang.getAttribute('data-setlang'); state.langOpen=false; render(); return; }
+    var langbtn = e.target.closest('#lang-btn');
+    if(langbtn){ state.langOpen = !state.langOpen; render(); return; }
+    var wasOpen = state.langOpen; state.langOpen = false;
+    var grp = e.target.closest('[data-group]');
+    if(grp){ state.group = grp.getAttribute('data-group'); state.level='all'; state.tag='전체'; state.page=1; state.itemsToShow=12; render(); return; }
+    var lv = e.target.closest('[data-level]');
+    if(lv){ state.level = lv.getAttribute('data-level'); state.tag='전체'; state.page=1; state.itemsToShow=12; render(); return; }
+    var tg = e.target.closest('[data-tag]');
+    if(tg){ state.tag = tg.getAttribute('data-tag'); state.page=1; state.itemsToShow=12; render(); return; }
+    var more = e.target.closest('#load-more');
+    if(more){ state.itemsToShow+=12; var le=document.getElementById('list'); if(le) le.innerHTML=listHTML(); return; }
+    var pg = e.target.closest('[data-page]');
+    if(pg){ var pn=parseInt(pg.getAttribute('data-page'),10); if(pn){ state.page=pn; var pe=document.getElementById('list'); if(pe){ pe.innerHTML=listHTML(); try{ pe.scrollIntoView(); }catch(_e){} } } return; }
+    if(wasOpen) render();
+  });
+  app.addEventListener('input', function(e){
+    if(e.target.id==='search'){
+      state.q = e.target.value; state.page=1; state.itemsToShow=12;
+      var listEl = document.getElementById('list');
+      if(listEl) listEl.innerHTML = listHTML();
+    }
+  });
+  app.addEventListener('change', function(e){
+    var ns = e.target.getAttribute && e.target.getAttribute('data-navsel');
+    if(!ns) return;
+    var v = e.target.value;
+    if(ns==='group'){ state.group=v; state.level='all'; state.tag='전체'; }
+    else if(ns==='level'){ state.level=v; state.tag='전체'; }
+    else if(ns==='tag'){ state.tag=v; }
+    state.page=1; state.itemsToShow=12; render();
+  });
+  app.addEventListener('error', function(e){
+    var t = e.target;
+    if(t && t.classList && t.classList.contains('thumb-img')){ var p=t.parentNode; if(p) p.classList.add('noimg'); }
+  }, true);
+  render();
+
+})();
+</script>
+</body>
+</html>
