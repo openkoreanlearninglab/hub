@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="천원의 재능마켓 — 한국어 학습자료 (읽기·핵심 어휘·내용 확인 퀴즈·생각해 보기) | OpenKoreanLearningLab">
+    <title>천원의 재능마켓 | OpenKoreanLearningLab</title>
+    <!-- Chart.js 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style id="tailwind-compiled">
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Noto Sans KR,sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.\!container{width:100%!important}.container{width:100%}@media (min-width:640px){.\!container{max-width:640px!important}.container{max-width:640px}}@media (min-width:768px){.\!container{max-width:768px!important}.container{max-width:768px}}@media (min-width:1024px){.\!container{max-width:1024px!important}.container{max-width:1024px}}@media (min-width:1280px){.\!container{max-width:1280px!important}.container{max-width:1280px}}@media (min-width:1536px){.\!container{max-width:1536px!important}.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.visible{visibility:visible}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.-bottom-1\.5{bottom:-.375rem}.-bottom-6{bottom:-1.5rem}.-bottom-px{bottom:-1px}.-left-1{left:-.25rem}.-left-1\.5{left:-.375rem}.-left-\[7px\]{left:-7px}.-right-1\.5{right:-.375rem}.-right-3{right:-.75rem}.-right-\[7px\]{right:-7px}.-top-0\.5{top:-.125rem}.-top-1{top:-.25rem}.-top-1\.5{top:-.375rem}.bottom-0{bottom:0}.bottom-4{bottom:1rem}.bottom-\[-1px\]{bottom:-1px}.left-0{left:0}.left-0\.5{left:.125rem}.left-1\/2{left:50%}.left-3{left:.75rem}.left-4{left:1rem}.left-6{left:1.5rem}.left-full{left:100%}.right-0{right:0}.right-3{right:.75rem}.right-4{right:1rem}.top-0{top:0}.top-0\.5{top:.125rem}.top-1{top:.25rem}.top-1\/2{top:50%}.top-24{top:6rem}.top-4{top:1rem}.top-6{top:1.5rem}.top-\[114px\]{top:114px}.top-full{top:100%}.z-10{z-index:10}.z-20{z-index:20}.z-40{z-index:40}.z-50{z-index:50}.z-\[100\]{z-index:100}.z-\[60\]{z-index:60}.z-\[9999\]{z-index:9999}.mx-0\.5{margin-left:.125rem;margin-right:.125rem}.mx-1{margin-left:.25rem;margin-right:.25rem}.mx-2{margin-left:.5rem;margin-right:.5rem}.mx-auto{margin-left:auto;margin-right:auto}.my-8{margin-top:2rem;margin-bottom:2rem}.-mt-3{margin-top:-.75rem}.mb-0\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:.5rem}.mb-2\.5{margin-bottom:.625rem}.mb-24{margin-bottom:6rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mb-\[1px\]{margin-bottom:1px}.ml-0\.5{margin-left:.125rem}.ml-1{margin-left:.25rem}.ml-2{margin-left:.5rem}.ml-3{margin-left:.75rem}.ml-4{margin-left:1rem}.ml-6{margin-left:1.5rem}.ml-\[1\.5px\]{margin-left:1.5px}.mr-1{margin-right:.25rem}.mr-2{margin-right:.5rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-12{margin-top:3rem}.mt-2{margin-top:.5rem}.mt-20{margin-top:5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.mt-\[1px\]{margin-top:1px}.mt-auto{margin-top:auto}.mt-px{margin-top:1px}.line-clamp-2{-webkit-line-clamp:2}.line-clamp-2,.line-clamp-3{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical}.line-clamp-3{-webkit-line-clamp:3}.line-clamp-4{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.contents{display:contents}.hidden{display:none}.aspect-video{aspect-ratio:16/9}.h-0{height:0}.h-0\.5{height:.125rem}.h-1{height:.25rem}.h-1\.5{height:.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-2{height:.5rem}.h-2\.5{height:.625rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\.5{height:.875rem}.h-32{height:8rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-64{height:16rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\[1px\]{height:1px}.h-\[2\.5rem\]{height:2.5rem}.h-\[2\.75rem\]{height:2.75rem}.h-\[2px\]{height:2px}.h-\[3\.5rem\]{height:3.5rem}.h-\[3\.75rem\]{height:3.75rem}.h-\[3rem\]{height:3rem}.h-\[4rem\]{height:4rem}.h-\[5\.2rem\]{height:5.2rem}.h-\[5rem\]{height:5rem}.h-\[8px\]{height:8px}.h-\[calc\(100vh-114px\)\]{height:calc(100vh - 114px)}.h-\[calc\(100vh-6rem\)\]{height:calc(100vh - 6rem)}.h-\[calc\(100vh-9rem\)\]{height:calc(100vh - 9rem)}.h-auto{height:auto}.h-full{height:100%}.h-px{height:1px}.h-screen{height:100vh}.max-h-0{max-height:0}.max-h-96{max-height:24rem}.min-h-0{min-height:0}.min-h-\[10rem\]{min-height:10rem}.min-h-\[150px\]{min-height:150px}.min-h-\[40vh\]{min-height:40vh}.min-h-\[7\.5rem\]{min-height:7.5rem}.min-h-full{min-height:100%}.min-h-screen{min-height:100vh}.w-1{width:.25rem}.w-1\.5{width:.375rem}.w-1\/3{width:33.333333%}.w-10{width:2.5rem}.w-12{width:3rem}.w-16{width:4rem}.w-2{width:.5rem}.w-2\.5{width:.625rem}.w-20{width:5rem}.w-24{width:6rem}.w-3{width:.75rem}.w-3\.5{width:.875rem}.w-3\/12{width:25%}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-64{width:16rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-80{width:20rem}.w-9{width:2.25rem}.w-\[0\.375rem\]{width:.375rem}.w-\[18\.4rem\]{width:18.4rem}.w-\[18rem\]{width:18rem}.w-\[1px\]{width:1px}.w-\[2\.5rem\]{width:2.5rem}.w-\[2\.75rem\]{width:2.75rem}.w-\[3\.5rem\]{width:3.5rem}.w-\[3\.75rem\]{width:3.75rem}.w-\[300px\]{width:300px}.w-\[3rem\]{width:3rem}.w-\[4rem\]{width:4rem}.w-\[5\.5rem\]{width:5.5rem}.w-\[5rem\]{width:5rem}.w-\[8px\]{width:8px}.w-fit{width:-moz-fit-content;width:fit-content}.w-full{width:100%}.w-px{width:1px}.min-w-0{min-width:0}.min-w-\[120px\]{min-width:120px}.min-w-\[140px\]{min-width:140px}.min-w-\[2rem\]{min-width:2rem}.min-w-\[3\.75rem\]{min-width:3.75rem}.min-w-\[5rem\]{min-width:5rem}.min-w-\[80px\]{min-width:80px}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-6xl{max-width:72rem}.max-w-7xl{max-width:80rem}.max-w-\[1000px\]{max-width:1000px}.max-w-\[25rem\]{max-width:25rem}.max-w-\[85\%\]{max-width:85%}.max-w-\[90\%\]{max-width:90%}.max-w-lg{max-width:32rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.grow{flex-grow:1}.-translate-x-1\/2{--tw-translate-x:-50%}.-translate-x-1\/2,.-translate-x-6{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-6{--tw-translate-x:-1.5rem}.-translate-y-1\/2{--tw-translate-y:-50%}.-translate-y-1\/2,.-translate-y-full{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-full{--tw-translate-y:-100%}.translate-x-0{--tw-translate-x:0px}.translate-x-0,.translate-x-4{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-4{--tw-translate-x:1rem}.rotate-180{--tw-rotate:180deg}.rotate-180,.rotate-45{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-45{--tw-rotate:45deg}.rotate-90{--tw-rotate:90deg}.rotate-90,.scale-105{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05}.scale-\[1\.01\]{--tw-scale-x:1.01;--tw-scale-y:1.01}.scale-\[1\.01\],.scale-\[1\.02\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-\[1\.02\]{--tw-scale-x:1.02;--tw-scale-y:1.02}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-help{cursor:help}.cursor-not-allowed{cursor:not-allowed}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.select-all{-webkit-user-select:all;-moz-user-select:all;user-select:all}.resize-none{resize:none}.resize-y{resize:vertical}.resize{resize:both}.appearance-none{-webkit-appearance:none;-moz-appearance:none;appearance:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-row{flex-direction:row}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-0{gap:0}.gap-0\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-10{gap:2.5rem}.gap-12{gap:3rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-10>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.space-y-8>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem*var(--tw-space-y-reverse))}.self-end{align-self:flex-end}.overflow-hidden{overflow:hidden}.overflow-visible{overflow:visible}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.whitespace-pre-wrap{white-space:pre-wrap}.break-keep{word-break:keep-all}.rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-none{border-radius:0}.rounded-sm{border-radius:.125rem}.rounded-xl{border-radius:.75rem}.rounded-r-lg{border-top-right-radius:.5rem;border-bottom-right-radius:.5rem}.rounded-t-xl{border-top-left-radius:.75rem;border-top-right-radius:.75rem}.rounded-bl-none{border-bottom-left-radius:0}.rounded-br-none{border-bottom-right-radius:0}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-b-0{border-bottom-width:0}.border-b-2{border-bottom-width:2px}.border-l{border-left-width:1px}.border-l-0{border-left-width:0}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-l-\[3px\]{border-left-width:3px}.border-r{border-right-width:1px}.border-r-0{border-right-width:0}.border-t{border-top-width:1px}.border-t-0{border-top-width:0}.border-solid{border-style:solid}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-none{border-style:none}.border-\[\#ea3323\]{--tw-border-opacity:1;border-color:rgb(234 51 35/var(--tw-border-opacity,1))}.border-black{--tw-border-opacity:1;border-color:rgb(0 0 0/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-current{border-color:currentColor}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246/var(--tw-border-opacity,1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235/var(--tw-border-opacity,1))}.border-gray-200\/60{border-color:rgba(229,231,235,.6)}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity,1))}.border-gray-400{--tw-border-opacity:1;border-color:rgb(156 163 175/var(--tw-border-opacity,1))}.border-gray-50{--tw-border-opacity:1;border-color:rgb(249 250 251/var(--tw-border-opacity,1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity,1))}.border-gray-900{--tw-border-opacity:1;border-color:rgb(17 24 39/var(--tw-border-opacity,1))}.border-green-100{--tw-border-opacity:1;border-color:rgb(220 252 231/var(--tw-border-opacity,1))}.border-green-500{--tw-border-opacity:1;border-color:rgb(34 197 94/var(--tw-border-opacity,1))}.border-lime-100{--tw-border-opacity:1;border-color:rgb(236 252 203/var(--tw-border-opacity,1))}.border-red-100{--tw-border-opacity:1;border-color:rgb(254 226 226/var(--tw-border-opacity,1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202/var(--tw-border-opacity,1))}.border-red-300{--tw-border-opacity:1;border-color:rgb(252 165 165/var(--tw-border-opacity,1))}.border-red-400{--tw-border-opacity:1;border-color:rgb(248 113 113/var(--tw-border-opacity,1))}.border-red-500{--tw-border-opacity:1;border-color:rgb(239 68 68/var(--tw-border-opacity,1))}.border-red-600{--tw-border-opacity:1;border-color:rgb(220 38 38/var(--tw-border-opacity,1))}.border-sky-100{--tw-border-opacity:1;border-color:rgb(224 242 254/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-700\/50{border-color:rgba(51,65,85,.5)}.border-transparent{border-color:transparent}.border-violet-100{--tw-border-opacity:1;border-color:rgb(237 233 254/var(--tw-border-opacity,1))}.border-white\/20{border-color:hsla(0,0%,100%,.2)}.border-yellow-100{--tw-border-opacity:1;border-color:rgb(254 249 195/var(--tw-border-opacity,1))}.border-yellow-200{--tw-border-opacity:1;border-color:rgb(254 240 138/var(--tw-border-opacity,1))}.border-yellow-400{--tw-border-opacity:1;border-color:rgb(250 204 21/var(--tw-border-opacity,1))}.border-t-black{--tw-border-opacity:1;border-top-color:rgb(0 0 0/var(--tw-border-opacity,1))}.border-t-blue-600{--tw-border-opacity:1;border-top-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-t-transparent{border-top-color:transparent}.border-t-white{--tw-border-opacity:1;border-top-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\[\#111827\]{--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity,1))}.bg-\[\#ea3323\]{--tw-bg-opacity:1;background-color:rgb(234 51 35/var(--tw-bg-opacity,1))}.bg-\[\#f9fafb\]{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\/55{background-color:rgba(0,0,0,.55)}.bg-black\/90{background-color:rgba(0,0,0,.9)}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246/var(--tw-bg-opacity,1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.bg-gray-300{--tw-bg-opacity:1;background-color:rgb(209 213 219/var(--tw-bg-opacity,1))}.bg-gray-400{--tw-bg-opacity:1;background-color:rgb(156 163 175/var(--tw-bg-opacity,1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity,1))}.bg-gray-50\/50{background-color:rgba(249,250,251,.5)}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128/var(--tw-bg-opacity,1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity,1))}.bg-green-200{--tw-bg-opacity:1;background-color:rgb(187 247 208/var(--tw-bg-opacity,1))}.bg-green-300{--tw-bg-opacity:1;background-color:rgb(134 239 172/var(--tw-bg-opacity,1))}.bg-green-50{--tw-bg-opacity:1;background-color:rgb(240 253 244/var(--tw-bg-opacity,1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229/var(--tw-bg-opacity,1))}.bg-lime-50{--tw-bg-opacity:1;background-color:rgb(247 254 231/var(--tw-bg-opacity,1))}.bg-red-200{--tw-bg-opacity:1;background-color:rgb(254 202 202/var(--tw-bg-opacity,1))}.bg-red-300{--tw-bg-opacity:1;background-color:rgb(252 165 165/var(--tw-bg-opacity,1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242/var(--tw-bg-opacity,1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.bg-sky-50{--tw-bg-opacity:1;background-color:rgb(240 249 255/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\/95{background-color:rgba(15,23,42,.95)}.bg-transparent{background-color:transparent}.bg-violet-50{--tw-bg-opacity:1;background-color:rgb(245 243 255/var(--tw-bg-opacity,1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\/90{background-color:hsla(0,0%,100%,.9)}.bg-yellow-100{--tw-bg-opacity:1;background-color:rgb(254 249 195/var(--tw-bg-opacity,1))}.bg-yellow-200{--tw-bg-opacity:1;background-color:rgb(254 240 138/var(--tw-bg-opacity,1))}.bg-yellow-300{--tw-bg-opacity:1;background-color:rgb(253 224 71/var(--tw-bg-opacity,1))}.bg-yellow-50{--tw-bg-opacity:1;background-color:rgb(254 252 232/var(--tw-bg-opacity,1))}.decoration-clone{-webkit-box-decoration-break:clone;box-decoration-break:clone}.fill-current{fill:currentColor}.object-cover{-o-object-fit:cover;object-fit:cover}.p-0{padding:0}.p-1{padding:.25rem}.p-1\.5{padding:.375rem}.p-10{padding:2.5rem}.p-2{padding:.5rem}.p-2\.5{padding:.625rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.p-\[0\.125rem\]{padding:.125rem}.p-\[0\.25rem\]{padding:.25rem}.p-\[1\.25rem\]{padding:1.25rem}.p-\[1rem\]{padding:1rem}.px-0{padding-left:0;padding-right:0}.px-0\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.px-\[2px\]{padding-left:2px;padding-right:2px}.py-0{padding-top:0;padding-bottom:0}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.py-\[0\.375rem\]{padding-top:.375rem;padding-bottom:.375rem}.pb-0\.5{padding-bottom:.125rem}.pb-10{padding-bottom:2.5rem}.pb-12{padding-bottom:3rem}.pb-2{padding-bottom:.5rem}.pb-20{padding-bottom:5rem}.pb-24{padding-bottom:6rem}.pb-4{padding-bottom:1rem}.pb-6{padding-bottom:1.5rem}.pb-8{padding-bottom:2rem}.pl-0{padding-left:0}.pl-1{padding-left:.25rem}.pl-11{padding-left:2.75rem}.pl-2{padding-left:.5rem}.pl-3{padding-left:.75rem}.pl-4{padding-left:1rem}.pl-5{padding-left:1.25rem}.pr-10{padding-right:2.5rem}.pr-12{padding-right:3rem}.pr-14{padding-right:3.5rem}.pr-20{padding-right:5rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-1{padding-top:.25rem}.pt-12{padding-top:3rem}.pt-16{padding-top:4rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-36{padding-top:9rem}.pt-4{padding-top:1rem}.pt-40{padding-top:10rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.pt-\[3\.75rem\]{padding-top:3.75rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-justify{text-align:justify}.align-middle{vertical-align:middle}.font-eng-header{font-family:Montserrat,sans-serif}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans,.font-sans-kr{font-family:Noto Sans KR,sans-serif}.font-serif,.font-serif-kr{font-family:"Noto Serif KR",serif}.font-ui{font-family:Noto Sans KR,sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}.text-\[0\.5em\]{font-size:.5em}.text-\[0\.5rem\]{font-size:.5rem}.text-\[0\.625em\]{font-size:.625em}.text-\[0\.625rem\]{font-size:.625rem}.text-\[0\.6875em\]{font-size:.6875em}.text-\[0\.6875rem\]{font-size:.6875rem}.text-\[0\.75em\]{font-size:.75em}.text-\[0\.75rem\]{font-size:.75rem}.text-\[0\.875em\]{font-size:.875em}.text-\[0\.875rem\]{font-size:.875rem}.text-\[1\.0625em\]{font-size:1.0625em}.text-\[1\.0625rem\]{font-size:1.0625rem}.text-\[1\.125em\]{font-size:1.125em}.text-\[1\.125rem\]{font-size:1.125rem}.text-\[1\.15rem\]{font-size:1.15rem}.text-\[1\.1875em\]{font-size:1.1875em}.text-\[1\.1875rem\]{font-size:1.1875rem}.text-\[1\.25em\]{font-size:1.25em}.text-\[1\.25rem\]{font-size:1.25rem}.text-\[1\.3125em\]{font-size:1.3125em}.text-\[1\.35rem\]{font-size:1.35rem}.text-\[1\.3rem\]{font-size:1.3rem}.text-\[1\.4rem\]{font-size:1.4rem}.text-\[1\.55rem\]{font-size:1.55rem}.text-\[1\.5625rem\]{font-size:1.5625rem}.text-\[1\.5em\]{font-size:1.5em}.text-\[1\.875em\]{font-size:1.875em}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[13px\]{font-size:13px}.text-\[14px\]{font-size:14px}.text-\[15px\]{font-size:15px}.text-\[16px\]{font-size:16px}.text-\[17px\]{font-size:17px}.text-\[1em\]{font-size:1em}.text-\[1rem\]{font-size:1rem}.text-\[2\.25em\]{font-size:2.25em}.text-\[28px\]{font-size:28px}.text-\[3\.125em\]{font-size:3.125em}.text-\[32px\]{font-size:32px}.text-\[3em\]{font-size:3em}.text-\[8px\]{font-size:8px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.leading-\[0\.75em\]{line-height:.75em}.leading-\[1\.8\]{line-height:1.8}.leading-\[1\.9\]{line-height:1.9}.leading-loose{line-height:2}.leading-none{line-height:1}.leading-normal{line-height:1.5}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\[0\.2em\]{letter-spacing:.2em}.tracking-tight{letter-spacing:-.025em}.tracking-tighter{letter-spacing:-.05em}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-\[\#1a1a1a\]{--tw-text-opacity:1;color:rgb(26 26 26/var(--tw-text-opacity,1))}.text-\[\#222\]{--tw-text-opacity:1;color:rgb(34 34 34/var(--tw-text-opacity,1))}.text-\[\#444444\],.text-\[\#444\]{--tw-text-opacity:1;color:rgb(68 68 68/var(--tw-text-opacity,1))}.text-\[\#888888\]{--tw-text-opacity:1;color:rgb(136 136 136/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-current{color:currentColor}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81/var(--tw-text-opacity,1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55/var(--tw-text-opacity,1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39/var(--tw-text-opacity,1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94/var(--tw-text-opacity,1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74/var(--tw-text-opacity,1))}.text-green-700{--tw-text-opacity:1;color:rgb(21 128 61/var(--tw-text-opacity,1))}.text-green-800{--tw-text-opacity:1;color:rgb(22 101 52/var(--tw-text-opacity,1))}.text-journal-black{--tw-text-opacity:1;color:rgb(26 26 26/var(--tw-text-opacity,1))}.text-lime-600{--tw-text-opacity:1;color:rgb(101 163 13/var(--tw-text-opacity,1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68/var(--tw-text-opacity,1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38/var(--tw-text-opacity,1))}.text-red-700{--tw-text-opacity:1;color:rgb(185 28 28/var(--tw-text-opacity,1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27/var(--tw-text-opacity,1))}.text-sky-600{--tw-text-opacity:1;color:rgb(2 132 199/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-violet-600{--tw-text-opacity:1;color:rgb(124 58 237/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-yellow-500{--tw-text-opacity:1;color:rgb(234 179 8/var(--tw-text-opacity,1))}.text-yellow-600{--tw-text-opacity:1;color:rgb(202 138 4/var(--tw-text-opacity,1))}.text-yellow-700{--tw-text-opacity:1;color:rgb(161 98 7/var(--tw-text-opacity,1))}.text-yellow-800{--tw-text-opacity:1;color:rgb(133 77 14/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.no-underline{text-decoration-line:none}.decoration-gray-400{text-decoration-color:#9ca3af}.decoration-red-300\/60{text-decoration-color:hsla(0,94%,82%,.6)}.decoration-1{text-decoration-thickness:1px}.underline-offset-2{text-underline-offset:2px}.underline-offset-4{text-underline-offset:4px}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.placeholder-gray-400::-moz-placeholder{--tw-placeholder-opacity:1;color:rgb(156 163 175/var(--tw-placeholder-opacity,1))}.placeholder-gray-400::placeholder{--tw-placeholder-opacity:1;color:rgb(156 163 175/var(--tw-placeholder-opacity,1))}.opacity-0{opacity:0}.opacity-100{opacity:1}.opacity-40{opacity:.4}.opacity-50{opacity:.5}.opacity-70{opacity:.7}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.opacity-95{opacity:.95}.shadow{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.shadow,.shadow-2xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-lg,.shadow-md{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring-1{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-1,.ring-2{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.ring-black{--tw-ring-opacity:1;--tw-ring-color:rgb(0 0 0/var(--tw-ring-opacity,1))}.ring-gray-200{--tw-ring-opacity:1;--tw-ring-color:rgb(229 231 235/var(--tw-ring-opacity,1))}.ring-red-200{--tw-ring-opacity:1;--tw-ring-color:rgb(254 202 202/var(--tw-ring-opacity,1))}.ring-yellow-400{--tw-ring-opacity:1;--tw-ring-color:rgb(250 204 21/var(--tw-ring-opacity,1))}.ring-offset-1{--tw-ring-offset-width:1px}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px)}.backdrop-blur,.backdrop-blur-sm{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-shadow{transition-property:box-shadow;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-200{transition-duration:.2s}.duration-300{transition-duration:.3s}.duration-500{transition-duration:.5s}.duration-700{transition-duration:.7s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.selection\:bg-gray-200 ::-moz-selection{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.selection\:bg-gray-200 ::selection{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.selection\:text-black ::-moz-selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.selection\:text-black ::selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.selection\:bg-gray-200::-moz-selection{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.selection\:bg-gray-200::selection{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.selection\:text-black::-moz-selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.selection\:text-black::selection{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.placeholder\:text-gray-300::-moz-placeholder{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.placeholder\:text-gray-300::placeholder{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.last\:mb-0:last-child{margin-bottom:0}.last\:border-0:last-child{border-width:0}.hover\:scale-110:hover{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-black:hover{--tw-border-opacity:1;border-color:rgb(0 0 0/var(--tw-border-opacity,1))}.hover\:border-gray-200:hover{--tw-border-opacity:1;border-color:rgb(229 231 235/var(--tw-border-opacity,1))}.hover\:border-gray-300:hover{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity,1))}.hover\:border-gray-400:hover{--tw-border-opacity:1;border-color:rgb(156 163 175/var(--tw-border-opacity,1))}.hover\:border-gray-500:hover{--tw-border-opacity:1;border-color:rgb(107 114 128/var(--tw-border-opacity,1))}.hover\:border-gray-800:hover{--tw-border-opacity:1;border-color:rgb(31 41 55/var(--tw-border-opacity,1))}.hover\:border-gray-900:hover{--tw-border-opacity:1;border-color:rgb(17 24 39/var(--tw-border-opacity,1))}.hover\:bg-black:hover{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246/var(--tw-bg-opacity,1))}.hover\:bg-gray-100\/50:hover{background-color:rgba(243,244,246,.5)}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235/var(--tw-bg-opacity,1))}.hover\:bg-gray-50:hover{--tw-bg-opacity:1;background-color:rgb(249 250 251/var(--tw-bg-opacity,1))}.hover\:bg-gray-800:hover{--tw-bg-opacity:1;background-color:rgb(31 41 55/var(--tw-bg-opacity,1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202/var(--tw-bg-opacity,1))}.hover\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\:bg-yellow-200:hover{--tw-bg-opacity:1;background-color:rgb(254 240 138/var(--tw-bg-opacity,1))}.hover\:text-black:hover{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.hover\:text-gray-500:hover{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.hover\:text-gray-700:hover{--tw-text-opacity:1;color:rgb(55 65 81/var(--tw-text-opacity,1))}.hover\:text-gray-800:hover{--tw-text-opacity:1;color:rgb(31 41 55/var(--tw-text-opacity,1))}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39/var(--tw-text-opacity,1))}.hover\:text-journal-black:hover{--tw-text-opacity:1;color:rgb(26 26 26/var(--tw-text-opacity,1))}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.hover\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.hover\:opacity-100:hover{opacity:1}.hover\:opacity-90:hover{opacity:.9}.hover\:shadow:hover{--tw-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color),0 1px 2px -1px var(--tw-shadow-color)}.hover\:shadow-2xl:hover,.hover\:shadow:hover{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color),0 2px 4px -2px var(--tw-shadow-color)}.hover\:shadow-md:hover,.hover\:shadow-sm:hover{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.hover\:shadow-sm:hover{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.focus\:border-black:focus{--tw-border-opacity:1;border-color:rgb(0 0 0/var(--tw-border-opacity,1))}.focus\:border-blue-500:focus{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-0:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(var(--tw-ring-offset-width)) var(--tw-ring-color)}.focus\:ring-0:focus,.focus\:ring-1:focus{box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\:ring-1:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color)}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.focus\:ring-gray-800:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(31 41 55/var(--tw-ring-opacity,1))}.group:hover .group-hover\:h-\[2px\]{height:2px}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem}.group:hover .group-hover\:scale-105,.group:hover .group-hover\:translate-x-1{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity,1))}.group:hover .group-hover\:border-gray-900{--tw-border-opacity:1;border-color:rgb(17 24 39/var(--tw-border-opacity,1))}.group:hover .group-hover\:bg-black\/75{background-color:rgba(0,0,0,.75)}.group:hover .group-hover\:font-semibold{font-weight:600}.group:hover .group-hover\:text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39/var(--tw-text-opacity,1))}.group:hover .group-hover\:text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.group:hover .group-hover\:opacity-100{opacity:1}.group:hover .group-hover\:opacity-60{opacity:.6}@media (min-width:400px){.min-\[400px\]\:flex{display:flex}}@media (min-width:640px){.sm\:block{display:block}.sm\:inline{display:inline}.sm\:flex{display:flex}.sm\:w-1\/4{width:25%}.sm\:w-24{width:6rem}.sm\:w-auto{width:auto}.sm\:min-w-\[180px\]{min-width:180px}.sm\:max-w-\[70\%\]{max-width:70%}.sm\:max-w-xs{max-width:20rem}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-4{gap:1rem}.sm\:self-center{align-self:center}.sm\:p-8{padding:2rem}.sm\:px-4{padding-left:1rem;padding-right:1rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:.875rem;line-height:1.25rem}.sm\:text-xs{font-size:.75rem;line-height:1rem}}@media (min-width:768px){.md\:sticky{position:sticky}.md\:left-2{left:.5rem}.md\:top-24{top:6rem}.md\:mb-12{margin-bottom:3rem}.md\:mb-16{margin-bottom:4rem}.md\:mb-20{margin-bottom:5rem}.md\:mb-32{margin-bottom:8rem}.md\:mt-16{margin-top:4rem}.md\:block{display:block}.md\:inline{display:inline}.md\:flex{display:flex}.md\:hidden{display:none}.md\:h-10{height:2.5rem}.md\:h-2{height:.5rem}.md\:h-3{height:.75rem}.md\:h-4{height:1rem}.md\:h-\[20rem\]{height:20rem}.md\:h-\[2rem\]{height:2rem}.md\:min-h-\[50vh\]{min-height:50vh}.md\:w-10{width:2.5rem}.md\:w-2{width:.5rem}.md\:w-4{width:1rem}.md\:w-5\/12{width:41.666667%}.md\:w-64{width:16rem}.md\:w-7{width:1.75rem}.md\:w-7\/12{width:58.333333%}.md\:min-w-\[180px\]{min-width:180px}.md\:min-w-\[220px\]{min-width:220px}.md\:max-w-\[80\%\]{max-width:80%}.md\:max-w-md{max-width:28rem}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:gap-8{gap:2rem}.md\:p-10{padding:2.5rem}.md\:p-12{padding:3rem}.md\:p-6{padding:1.5rem}.md\:p-8{padding:2rem}.md\:px-12{padding-left:3rem;padding-right:3rem}.md\:px-4{padding-left:1rem;padding-right:1rem}.md\:pl-14{padding-left:3.5rem}.md\:pl-7{padding-left:1.75rem}.md\:pt-24{padding-top:6rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-6xl{font-size:3.75rem;line-height:1}.md\:text-\[0\.5625rem\]{font-size:.5625rem}.md\:text-\[0\.6875rem\]{font-size:.6875rem}.md\:text-\[0\.8125rem\]{font-size:.8125rem}.md\:text-\[18px\]{font-size:18px}.md\:text-\[36px\]{font-size:36px}.md\:text-\[9px\]{font-size:9px}.md\:text-base{font-size:1rem;line-height:1.5rem}.md\:text-lg{font-size:1.125rem;line-height:1.75rem}.md\:text-sm{font-size:.875rem;line-height:1.25rem}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}.md\:text-xs{font-size:.75rem;line-height:1rem}}@media (min-width:1024px){.lg\:static{position:static}.lg\:sticky{position:sticky}.lg\:left-\[18\.4rem\]{left:18.4rem}.lg\:left-\[5\.5rem\]{left:5.5rem}.lg\:top-0{top:0}.lg\:ml-\[18\.4rem\]{margin-left:18.4rem}.lg\:ml-\[5\.5rem\]{margin-left:5.5rem}.lg\:block{display:block}.lg\:flex{display:flex}.lg\:hidden{display:none}.lg\:aspect-auto{aspect-ratio:auto}.lg\:h-3{height:.75rem}.lg\:h-4{height:1rem}.lg\:h-5{height:1.25rem}.lg\:h-6{height:1.5rem}.lg\:h-\[2\.25rem\]{height:2.25rem}.lg\:h-\[calc\(100vh-4rem\)\]{height:calc(100vh - 4rem)}.lg\:h-full{height:100%}.lg\:w-3{width:.75rem}.lg\:w-5{width:1.25rem}.lg\:w-5\/12{width:41.666667%}.lg\:w-6{width:1.5rem}.lg\:w-8{width:2rem}.lg\:w-\[42\%\]{width:42%}.lg\:w-\[58\%\]{width:58%}.lg\:w-full{width:100%}.lg\:min-w-\[5rem\]{min-width:5rem}.lg\:max-w-5xl{max-width:64rem}.lg\:flex-1{flex:1 1 0%}.lg\:flex-none{flex:none}.lg\:flex-row{flex-direction:row}.lg\:overflow-hidden{overflow:hidden}.lg\:overflow-y-auto{overflow-y:auto}.lg\:px-0{padding-left:0;padding-right:0}.lg\:px-4{padding-left:1rem;padding-right:1rem}.lg\:px-6{padding-left:1.5rem;padding-right:1.5rem}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:py-2{padding-top:.5rem;padding-bottom:.5rem}.lg\:text-2xl{font-size:1.5rem;line-height:2rem}.lg\:text-4xl{font-size:2.25rem;line-height:2.5rem}.lg\:text-6xl{font-size:3.75rem;line-height:1}.lg\:text-7xl{font-size:4.5rem;line-height:1}.lg\:text-\[0\.625rem\]{font-size:.625rem}.lg\:text-\[0\.75rem\]{font-size:.75rem}.lg\:text-\[0\.875rem\]{font-size:.875rem}.lg\:text-base{font-size:1rem;line-height:1.5rem}.lg\:text-sm{font-size:.875rem;line-height:1.25rem}.lg\:text-xl{font-size:1.25rem;line-height:1.75rem}.lg\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}}@media (min-width:1280px){.xl\:block{display:block}.xl\:flex{display:flex}.xl\:w-4\/12{width:33.333333%}.xl\:w-5\/12{width:41.666667%}.xl\:w-7\/12{width:58.333333%}.xl\:w-9\/12{width:75%}.xl\:flex-1{flex:1 1 0%}.xl\:text-3xl{font-size:1.875rem;line-height:2.25rem}.xl\:text-base{font-size:1rem;line-height:1.5rem}.xl\:text-sm{font-size:.875rem;line-height:1.25rem}}@media print{.print\:static{position:static}.print\:top-0{top:0}.print\:m-0{margin:0}.print\:my-0{margin-top:0}.print\:mb-0,.print\:my-0{margin-bottom:0}.print\:mb-0\.5{margin-bottom:.125rem}.print\:mb-1{margin-bottom:.25rem}.print\:mb-2{margin-bottom:.5rem}.print\:mb-4{margin-bottom:1rem}.print\:mb-6{margin-bottom:1.5rem}.print\:mb-8{margin-bottom:2rem}.print\:mb-\[2px\]{margin-bottom:2px}.print\:ml-1{margin-left:.25rem}.print\:mr-1{margin-right:.25rem}.print\:mt-0{margin-top:0}.print\:mt-1{margin-top:.25rem}.print\:mt-2{margin-top:.5rem}.print\:block{display:block}.print\:inline-block{display:inline-block}.print\:flex{display:flex}.print\:grid{display:grid}.print\:hidden{display:none}.print\:h-auto{height:auto}.print\:min-h-0{min-height:0}.print\:w-\[20\%\]{width:20%}.print\:w-\[80\%\]{width:80%}.print\:w-full{width:100%}.print\:max-w-\[85\%\]{max-width:85%}.print\:max-w-none{max-width:none}.print\:flex-none{flex:none}.print\:break-inside-avoid{-moz-column-break-inside:avoid;break-inside:avoid}.print\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.print\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.print\:flex-row{flex-direction:row}.print\:flex-col{flex-direction:column}.print\:items-start{align-items:flex-start}.print\:items-end{align-items:flex-end}.print\:items-baseline{align-items:baseline}.print\:justify-start{justify-content:flex-start}.print\:justify-center{justify-content:center}.print\:gap-0{gap:0}.print\:gap-1{gap:.25rem}.print\:gap-1\.5{gap:.375rem}.print\:gap-2{gap:.5rem}.print\:gap-4{gap:1rem}.print\:gap-6{gap:1.5rem}.print\:space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.print\:space-y-0\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.print\:space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.print\:space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.print\:space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.print\:overflow-visible{overflow:visible}.print\:rounded-2xl{border-radius:1rem}.print\:rounded-md{border-radius:.375rem}.print\:border{border-width:1px}.print\:border-l-0{border-left-width:0}.print\:border-l-\[1px\]{border-left-width:1px}.print\:border-t{border-top-width:1px}.print\:border-dotted{border-style:dotted}.print\:border-none{border-style:none}.print\:border-black{--tw-border-opacity:1;border-color:rgb(0 0 0/var(--tw-border-opacity,1))}.print\:border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235/var(--tw-border-opacity,1))}.print\:border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219/var(--tw-border-opacity,1))}.print\:border-gray-400{--tw-border-opacity:1;border-color:rgb(156 163 175/var(--tw-border-opacity,1))}.print\:border-transparent{border-color:transparent}.print\:bg-transparent{background-color:transparent}.print\:bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.print\:stroke-gray-200{stroke:#e5e7eb}.print\:p-0{padding:0}.print\:p-1{padding:.25rem}.print\:p-2{padding:.5rem}.print\:p-3{padding:.75rem}.print\:p-4{padding:1rem}.print\:px-0{padding-left:0;padding-right:0}.print\:px-4{padding-left:1rem;padding-right:1rem}.print\:py-3{padding-top:.75rem;padding-bottom:.75rem}.print\:py-4{padding-top:1rem;padding-bottom:1rem}.print\:pb-0{padding-bottom:0}.print\:pb-2{padding-bottom:.5rem}.print\:pb-4{padding-bottom:1rem}.print\:pl-1{padding-left:.25rem}.print\:pl-2{padding-left:.5rem}.print\:pl-3{padding-left:.75rem}.print\:pl-6{padding-left:1.5rem}.print\:pr-4{padding-right:1rem}.print\:pt-0{padding-top:0}.print\:pt-1{padding-top:.25rem}.print\:pt-2{padding-top:.5rem}.print\:pt-4{padding-top:1rem}.print\:text-center{text-align:center}.print\:font-sans{font-family:Noto Sans KR,sans-serif}.print\:text-\[10px\]{font-size:10px}.print\:text-\[11px\]{font-size:11px}.print\:text-\[12px\]{font-size:12px}.print\:text-\[13px\]{font-size:13px}.print\:text-\[14px\]{font-size:14px}.print\:text-\[16px\]{font-size:16px}.print\:text-\[18px\]{font-size:18px}.print\:text-\[22px\]{font-size:22px}.print\:text-\[6px\]{font-size:6px}.print\:text-\[8px\]{font-size:8px}.print\:text-\[9px\]{font-size:9px}.print\:leading-\[1\.15\]{line-height:1.15}.print\:leading-none{line-height:1}.print\:leading-normal{line-height:1.5}.print\:leading-relaxed{line-height:1.625}.print\:leading-snug{line-height:1.375}.print\:leading-tight{line-height:1.25}.print\:text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.print\:text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.print\:text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.print\:text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81/var(--tw-text-opacity,1))}.print\:text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39/var(--tw-text-opacity,1))}.print\:no-underline{text-decoration-line:none}.print\:opacity-100{opacity:1}.print\:opacity-20{opacity:.2}.print\:shadow-none{--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}}
+    </style>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+        }
+
+        .font-sans {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .font-serif {
+            font-family: 'Noto Serif KR', serif;
+        }
+
+        .font-ui {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 0px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #000;
+            cursor: pointer;
+            margin-top: -7px;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px #e5e7eb;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #e5e7eb;
+        }
+
+        .highlight-yellow::selection {
+            background-color: rgba(253, 224, 71, 0.5);
+            color: inherit;
+        }
+
+        .highlight-red::selection {
+            background-color: rgba(252, 165, 165, 0.5);
+            color: inherit;
+        }
+
+        .highlight-green::selection {
+            background-color: rgba(134, 239, 172, 0.5);
+            color: inherit;
+        }
+
+        .cursor-eraser {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.5"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L20 20Z"/></svg>') 0 24, auto;
+        }
+
+        ::selection {
+            background-color: #f3f4f6;
+            color: #000;
+        }
+
+        /* 인쇄 최적화 글로벌 스타일 */
+        @media print {
+            @page {
+                margin: 1cm;
+                size: A4;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background-color: white !important;
+            }
+
+            #root,
+            main,
+            .overflow-y-auto,
+            .overflow-x-hidden,
+            .h-screen,
+            .h-full {
+                height: auto !important;
+                overflow: visible !important;
+                min-height: 0 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <noscript><div style="max-width:720px;margin:24px auto;padding:16px;border:1px solid #ddd;border-radius:8px;font-family:sans-serif;font-size:14px;color:#374151">이 학습 자료를 보려면 자바스크립트를 켜 주세요.</div></noscript>
+    <div id="app"></div>
+    <script>
+    (function () {
+        'use strict';
+
+        /* =====================================================================
+           </> TEMPLATE — C — reading   (배포용 아님 / NOT for deployment)
+           순수 바닐라 JS 학습자료 베이스. 새 자료는 아래 데이터 배열만 교체:
+           READING_DATA · VOCAB_READING_DATA · QUIZ_LIST · DISCUSS_DATA
+           + 홈/차트의 [대괄호] 플레이스홀더 문구.
+           ===================================================================== */
+
+        /* ===== 데이터 (임시 플레이스홀더 — 실제 콘텐츠로 교체) ===== */
+        const CONFIG = { GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent', API_RETRY_DELAYS: [1000, 2000, 4000] };
+        const LEVEL_DEFINITIONS = { "A1":{title:"Novice",desc:""},"A1+":{title:"Pre-Beginner",desc:""},"A2":{title:"Beginner",desc:""},"A2+":{title:"Upper Beginner",desc:""},"B1":{title:"Pre-Intermediate",desc:""},"B1+":{title:"Lower Intermediate",desc:""},"B2":{title:"Intermediate",desc:""},"B2+":{title:"Upper Intermediate",desc:""},"C1":{title:"Advanced",desc:""},"C1+":{title:"Upper Advanced",desc:""},"C2":{title:"Proficient",desc:""} };
+        const HOME_TAGS = ["사회", "문화"];
+        const HOME_SERIES_BADGE = "";
+        const READING_DATA = [
+            { id: 1, title: "[기사] 누구에게나 천원어치의 재능은 있다", subtitle: "", source: "https://www.ibrandnews.com/news/articleView.html?idxno=10897", content: [
+                { id: 'p1', text: '당신에게 재능이 있다면 그것을 얼마에 팔겠는가. 천원으로 물건이 아닌 재능을 사고판다는 ‘천원의 재능마켓’은 바로 그 질문에서 출발했다. 투데이신문은 3일 오후, 서울 마포구에서 열린 현장을 직접 찾았다.', trans: "If you had a talent, how much would you sell it for? The '1,000 Won Talent Market', where people buy and sell talent rather than goods for a thousand won, started with this very question. Today News visited the scene held in Mapo-gu, Seoul, on the afternoon of the 3rd." },
+                { id: 'p2', text: '비가 내리는 연휴임에도 행사가 열리는 넓은 공간 안에는 사람들의 열기로 가득했다. 입구에서 천원짜리 티켓 세 장을 구매해 들어서자 작은 박람회처럼 판매자와 구매자가 작은 책상을 사이에 두고 마주 앉아 이야기를 나누는 모습이 한눈에 들어왔다.', trans: "Despite the rain during the holiday, the spacious venue was filled with the heat of people. Upon purchasing three 1,000-won tickets at the entrance and stepping inside, the sight of sellers and buyers sitting face-to-face across small desks, engaging in conversation like a miniature expo, came into view at a glance." },
+                { id: 'p3', text: '어떤 재능이 판매되고 있나 둘러보던 중 모든 판매자의 책상 위에는 타이머가 놓여있다는 것을 알게 됐다. 운영팀들은 ‘시간 엄수’라는 메모를 들고 테이블과 테이블 사이를 누비며 판매자와 구매자를 살폈다. 재능을 사고파는 곳에서 ‘시간’이 중요한 이유를 물어보니 “각 재능이 10분 단위로 운영되기 때문에 한 타임의 시간이 길어지면 다음 구매자들이 오래 기다리게 될 수 있다”며 “단 몇 분의 지연도 전체 흐름에 영향을 주기 때문에 운영에 있어 시간 관리를 가장 중요하게 생각하고 있다”고 설명했다.', trans: "While looking around to see what talents were on sale, I noticed timers placed on every seller's desk. The operation team roamed between tables holding notes that read 'Punctuality,' checking on sellers and buyers. When asked why 'time' is important in a place where talent is traded, they explained, 'Since each talent operates in 10-minute units, if one session runs long, subsequent buyers might have to wait a long time. Even a few minutes of delay affects the entire flow, so we prioritize time management in our operations.'" },
+                { id: 'p4', text: '시범 운영을 거쳐 2회차를 맞이한 ‘천원의 재능마켓’은 지난번보다 규모가 한층 더 커졌다. 12개의 재능과 100명의 방문객이 참여한 1회차 마켓에 이어, 이번에는 18개의 재능이 모였고 사전 신청자만 300명에 달했다. 재능 종류도 더욱 다양해져 상담·예술·심리·체험 등 각자의 개성을 살린 프로그램들이 공간 곳곳을 채웠다.', trans: "The '1,000 Won Talent Market,' now in its second run after a pilot operation, has grown significantly in scale. Following the first market with 12 talents and 100 visitors, this time 18 talents gathered, and pre-applicants alone reached 300. The types of talents also became more diverse, filling the space with programs reflecting individual personalities such as counseling, art, psychology, and hands-on experiences." },
+                { id: 'p5', text: '다양하게 판매되고 있는 재능 중에서도 투명한 창문을 닦기 위한 도구와 각도, 세정법을 모두 알려준다는 ‘투명한 창문닦기 원포인트 레슨’, 머리를 땋아준다는 ‘꼼지락 미용실’, 나를 위한 칭찬과 책을 추천해준다는 ‘칭찬 책방’ 등 유쾌하고도 기발한 재능들이 눈길을 끌었다.', trans: "Among the diverse talents on sale, playful and inventive ones caught the eye, such as 'One-Point Lesson on Transparent Window Cleaning' which teaches tools, angles, and cleaning methods for wiping windows; 'Fidget Hair Salon' which braids hair; and 'Praise Bookstore' which offers praise and book recommendations just for you." },
+                { id: 'p6', text: '‘천원의 재능마켓’은 판매자가 티켓 금액의 전체를 정산받는 구조로 운영된다. 이를 통해 판매자는 단순히 수익을 얻는 데서 그치지 않고 자신의 재능 가치와 적정 가격, 판매 기준을 가늠해볼 수 있게 된다. 판매자는 운영팀의 직접 섭외 방식으로 이뤄졌다. 무형의 재능을 다루는 만큼 불편한 상황이 없도록 인성과 안정성 확보를 최우선 과제로 삼았다는 기획자의 설명이다.', trans: "The '1,000 Won Talent Market' operates on a structure where the seller receives the entire ticket amount. Through this, sellers don't just earn revenue but can also gauge the value of their talent, appropriate pricing, and sales standards. Sellers were recruited directly by the operation team. The planner explained that since they deal with intangible talents, securing character and stability was the top priority to prevent any uncomfortable situations." },
+                { id: 'p7', text: '다만 참여자와 방문객이 늘어남에 따라 향후에는 공개 모집 방식을 도입할 예정이라고 전했다. 단순 지원이 아닌 간단한 온라인 미팅 심사를 통해 소통 태도와 재능의 성격을 확인하는 절차를 마련해 운영 안정성을 유지하겠다는 계획이다.', trans: "However, they mentioned plans to introduce an open recruitment method in the future as the number of participants and visitors increases. They plan to maintain operational stability by establishing a procedure to verify communication attitudes and the nature of talents through simple online meeting screenings, rather than just simple applications." },
+                { id: 'p8', text: '‘졸음 유발 낭독소’를 운영하는 이연재 판매자는 과거 시각장애인 낭독 봉사 오디션에서 ‘목소리가 너무 졸려 낭독에 어울리지 않는다’는 평가를 받았던 경험을 떠올려 재능을 판매하게 됐다고 전했다. 이 판매자는 “마켓을 시작하기 전까지는 내 재능이 팔릴 수 있을까 걱정을 많이 했는데 다행히 재능을 궁금해해 주시는 분들이 많았다. 적은 돈이지만 이곳의 취지를 이해해주시고 와주셔서 오히려 응원과 용기를 얻게 됐다”고 덧붙였다.', trans: "Seller Lee Yeon-jae, who runs the 'Sleep-Inducing Reading Post,' shared that she decided to sell her talent recalling an experience where she was evaluated as 'not suitable for reading because her voice is too sleepy' at a past audition for reading volunteering for the visually impaired. This seller added, 'Before starting the market, I worried a lot about whether my talent would sell, but fortunately, many people were curious about it. Although it's a small amount of money, I gained support and courage from those who understood the purpose of this place and came to visit.'" },
+                { id: 'p9', text: 'SNS에서 ‘천원의 재능마켓’을 보고 왔다는 방문자 최씨는 “이런 형식의 마켓은 처음 봤다. 재능을 구매할 수 있다는 것이 신기해서 와보게 됐다”며 “크든 작든 누구나 재능을 가지고 있다는 메시지가 좋았다. 큰 기대 없이 왔는데 생각보다 진지하게 마음을 돌아보고 이야기할 수 있게 돼 신기했다”고 전했다. 최씨와 함께 온 김씨는 “천원이라는 금액이 너무 가볍게 느껴졌는데 막상 체험해보니 훨씬 큰 걸 얻고 가는 기분이다. 다음에는 구매자가 아닌 판매자로 나와보고 싶다고 생각했다”고 말했다.', trans: "Visitor Choi, who came after seeing the '1,000 Won Talent Market' on social media, said, 'I've never seen a market like this before. I came because it was fascinating that you could purchase talent,' adding, 'I liked the message that everyone has talent, whether big or small. I came without big expectations, but it was amazing to be able to look back on my mind and talk more seriously than I thought.' Kim, who came with Choi, said, 'The amount of 1,000 won felt too light, but after actually experiencing it, I feel like I'm taking away something much bigger. I thought I'd like to come out as a seller, not a buyer, next time.'" },
+                { id: 'p10', text: '‘천원의 재능마켓’은 ‘의미 있는 시도를 해보자’는 공감대 속에서 별도의 급여 없이 기획을 이어가고 있다. 운영비는 신청비 등 소액의 경비로 충당하고 부족한 부분은 직접 제작한 굿즈 판매나 협력 지원을 통해 메워왔다고 전했다. 프로젝트가 열리는 공간 섭외부터 홍보까지 모두 직접 해결해왔으며 장기적으로 지속 가능한 운영 구조를 마련하기 위해 다양한 방안을 고민 중이라고 밝혔다.', trans: "The '1,000 Won Talent Market' continues its planning without separate pay under the consensus of 'let's try something meaningful.' Operating costs are covered by small expenses such as application fees, and shortages have been filled through sales of self-produced goods or cooperative support. They revealed that they have handled everything directly, from renting the space where the project takes place to promotion, and are considering various ways to establish a sustainable operating structure in the long term." },
+                { id: 'p11', text: '10분 동안 천원으로 재능을 사고파는 이곳은 단순한 마켓이 아닌 ‘사람의 마음’을 거래하는 장이었다. 천원이라는 부담 없는 금액으로 사람들은 오히려 마음을 열고 재능을 나눴다.', trans: "This place, where talent is bought and sold for 1,000 won for 10 minutes, was not just a market but a venue for trading 'people's hearts.' With the burden-free amount of 1,000 won, people rather opened their hearts and shared their talents." }
+            ] },
+            { id: 2, title: "[인터뷰] ‘천원의 재능마켓’ 기획자 안다비", subtitle: "", source: "https://www.ibrandnews.com/news/articleView.html?idxno=10897", content: [
+                { id: 'i1', text: 'Q. ‘천원의 재능마켓’을 시작하게 된 계기가 무엇인가요?', trans: "Q. What triggered the start of the '1,000 Won Talent Market'?" },
+                { id: 'i2', text: '이 기획은 프리랜서로 일하면서 느낀 어려움에서 시작됐었어요. 아이디어처럼 형태가 없는 재능은 얼마에 팔아야 할지 기준이 없어 고민이 많았는데 생각해보니 어릴 때부터 무언가를 직접 팔아본 경험이 한 번도 없었던 거예요. 미국 만화에서 아이들이 집 앞에서 레모네이드를 파는 모습을 떠올리며, 한국 사회를 살아가는 우리에겐 그런 경험이 부족하다는 것을 깨달았어요. 그래서 성인이라도 부담 없이 자신의 재능을 사고팔아볼 수 있는 공간이 필요하다고 생각하며 이 기획을 준비하게 됐어요.', trans: "This project started from the difficulties I felt while working as a freelancer. Like ideas, intangible talents have no standard for how much they should be sold for, so I worried a lot. Then I realized I had never personally sold anything since I was young. Thinking of scenes in American cartoons where children sell lemonade in front of their houses, I realized that we living in Korean society lack such experiences. So I prepared this project thinking that a space is needed where even adults can buy and sell their talents without burden." },
+                { id: 'i3', text: 'Q. 오천원, 만원도 아닌 ‘천원’에 파는 이유가 있나요?', trans: "Q. Is there a reason for selling at '1,000 won', not 5,000 or 10,000 won?" },
+                { id: 'i4', text: '처음엔 ‘재능마켓’이라 이름 붙였지만 ‘재능’이라는 단어가 사람들을 주눅 들게 한다는 걸 알게 됐어요. 누구나 작게나마 잘하는 게 있어요. 근데 대부분 ‘이게 팔릴까?’라고 생각하죠. 그래서 문턱을 아예 낮췄어요. ‘천 원이면 어때?’ 그 순간 이 아이디어가 시작됐어요. 누구나 용기 낼 수 있도록 가장 낮은 화폐 단위인 천원을 붙였고 ‘천원어치 재능은 누구에게나 있다’는 슬로건을 만들었어요. 천 원이면, 뭐라도 한번 해보고 싶잖아요.', trans: "At first, I named it 'Talent Market,' but I realized the word 'talent' intimidates people. Everyone has something they are good at, however small. But most think, 'Will this sell?' So I lowered the threshold completely. 'How about 1,000 won?' That's when this idea started. I attached 1,000 won, the lowest currency unit, so anyone could muster the courage, and created the slogan 'Everyone has 1,000 won worth of talent.' If it's 1,000 won, you want to try just about anything." },
+                { id: 'i5', text: '이 마켓에서 천 원은 단순한 가격이 아니에요. ‘값’이 아니라 ‘가치’의 단위를 새로 정하는 실험이에요. 재능을 돈으로 환산하면 끝이 없잖아요. 천 원이라는 상징적인 금액은 ‘돈보다 중요한 건 나누는 경험’이라는 메시지를 담고 있어요. 가치의 무게 중심을 돈에서 사람으로 옮기고 싶었어요. 참가자들은  고객의 피드백을 통해 자신의 재능 가치를 직접 확인해 볼 수 있어요. ', trans: "In this market, 1,000 won is not a simple price. It's an experiment to redefine the unit of 'value', not 'cost'. If you convert talent into money, there's no end to it. The symbolic amount of 1,000 won contains the message that 'what is more important than money is the experience of sharing.' I wanted to shift the center of gravity of value from money to people. Participants can directly check the value of their talent through customer feedback." },
+                { id: 'i6', text: 'Q. 기획자가 생각하는 재능의 정의는 무엇인가요?', trans: "Q. What is the planner's definition of talent?" },
+                { id: 'i7', text: '제 생각에 재능은 ‘완성된 능력이 아니라, 나누는 순간 비로소 빛나는 가능성’이에요. 많은 사람들이 자기 재능을 너무 작게 여겨요. 그런데 그걸 꺼내놓고 나눠보면, 누군가에게는 큰 위로가 되기도 하고, 또 다른 누군가에겐 새로운 시작이 되기도 해요. 그게 바로 재능이죠. 천원의 재능마켓은 이름 그대로 누구나 자신의 작은 재능을 1,000원에 나누는 시장이에요. 거창한 능력, 전문가 수준의 스킬이 아니어도 돼요. ', trans: "In my opinion, talent is 'not a completed ability, but a possibility that shines only when shared.' Many people consider their talents too small. But if you take it out and share it, it becomes a great comfort to someone, and a new beginning for another. That is exactly what talent is. The 1,000 Won Talent Market is, as the name suggests, a market where anyone shares their small talent for 1,000 won. It doesn't have to be a grandiose ability or expert-level skill." },
+                { id: 'i8', text: 'Q. 주로 어떤 사람이 재능을 팔거나 사기 위해 오나요?', trans: "Q. What kind of people mainly come to sell or buy talent?" },
+                { id: 'i9', text: '처음 기획할 때는 ‘언젠가 나도 내 재능을 팔아보고 싶다’는 잠재 판매자들이 주로 올 거라고 생각했어요. 그러나 실제로는 이 기획을 통해 무언가를 배우거나 변화를 기대하는 분들도 많이 찾아와주셨어요. ‘천원의 재능마켓’에는 작다고 여겨질 수 있는 재능을 통해 새로운 가능성을 경험하러 오는 사람들이 모이는 것 같아요.', trans: "When first planning, I thought potential sellers who thought 'someday I want to sell my talent too' would mainly come. However, in reality, many people who expected to learn something or change through this project also visited. It seems that people who come to experience new possibilities through talents that might be considered small gather at the '1,000 Won Talent Market'." },
+                { id: 'i10', text: '이전에 한번 참여해보고, 이 일이 꼭 필요하다고 느껴 운영까지 돕겠다고 자청한 분들이 있었어요. 마켓이 그 사람들의 삶에도 변화를 준 거죠. 마켓의 경험을 바탕으로 공방을 열거나 새로운 프로젝트를 시작하시는 분들도 있었어요. 이 작은 시장이 누군가에게는 커다란 전환점이 된 것이죠.', trans: "There were people who participated once before, felt this work was essential, and volunteered to help with operations. The market brought change to their lives as well. There were also people who opened workshops or started new projects based on their market experience. This small market became a significant turning point for some." },
+                { id: 'i11', text: 'Q. 앞으로의 계획이나 꿈이 있다면?', trans: "Q. Do you have any future plans or dreams?" },
+                { id: 'i12', text: '사실 이번 프로젝트는 내가 필요해서 만든 기획이라 언젠가는 직접 판매자로 앉아 ‘첫인상 말해주기’ 같은 재능을 팔아보고 싶어요. 지금은 운영을 맡고 있어서 직접 참여하지 못하고 있지만 시스템이 안정되고 자리를 잡으면 판매자로 참여해서 내 재능이 통할 수 있을지 시험해보고 싶어요. ', trans: "Actually, since this project was a plan I made because I needed it, someday I want to sit as a seller myself and sell a talent like 'Telling First Impressions.' I can't participate directly right now because I'm in charge of operations, but once the system stabilizes and settles down, I want to participate as a seller and test if my talent can work." },
+                { id: 'i13', text: '그리고 이 ‘천원의 재능마켓’이 이벤트성 행사로 남지 않았으면 해요. ‘천원의 재능마켓’이 앞으로 더 많은 사람들에게 닿고자 해요. 서울뿐 아니라 부산, 제주 같은 지역에서도 열어보고 싶어요. 나아가 온라인에서도 재능을 사고파는 운영안도 그리고 있어요. 어디에 살든, 어떤 상황이든 자신의 재능을 가볍게 시험해볼 수 있는 환경이 마련됐으면 해요. 궁극적으로는 누군가 진로를 고민할 때 집 앞 편의점에 들르듯 ‘재능 한 번 팔아볼까?’하며 자연스럽게 찾을 수 있는 상시적인 공간으로 자리 잡는 게 꿈이에요. 물론, 규모의 확장도 중요하지만 ‘첫 경험의 설렘’을 잃지 않는 것이 더 중요하다고 생각해요.', trans: "And I hope this '1,000 Won Talent Market' doesn't remain as a one-time event. The '1,000 Won Talent Market' wants to reach more people in the future. I want to open it not only in Seoul but also in regions like Busan and Jeju. Furthermore, I am drawing up an operation plan to buy and sell talents online. I hope an environment is created where anyone can lightly test their talent regardless of where they live or what situation they are in. Ultimately, my dream is for it to settle as a permanent space where someone worrying about their career can naturally find it, asking 'Shall I try selling my talent once?' just like stopping by a convenience store in front of their house. Of course, expanding the scale is important, but I think not losing the 'excitement of the first experience' is more important." }
+            ] }
+        ];
+
+        const VOCAB_READING_DATA = [
+                { term: '천원어치', mainDef: '천 원으로 살 수 있는 만큼.', subDefs: [{ subTerm: '• -어치', subDef: '어떤 돈으로 살 수 있는 만큼의 양.' }], variants: ['천원어치의', '천원어치'], translations: { en: { mainDef: 'The amount you can buy with 1,000 won.', subDefs: [{ term: '• -어치', def: 'The quantity that can be purchased with a given amount of money.' }] } } },
+                { term: '서울 마포구에서 열린 현장', mainDef: '서울 마포구에서 이 행사를 한 곳.', subDefs: [{ subTerm: '• 열리다', subDef: '행사나 모임을 하다.' }, { subTerm: '• 현장', subDef: '실제로 어떤 일이 일어나는 곳.' }], variants: ['서울 마포구에서 열린 현장', '현장', '현장을'], translations: { en: { mainDef: 'The place in Mapo-gu, Seoul where this event was held.', subDefs: [{ term: '• 열리다', def: 'To hold an event or gathering.' }, { term: '• 현장', def: 'The actual place where something happens.' }] } } },
+                { term: '연휴', mainDef: '이틀 이상 계속 쉬는 날.', variants: ['연휴', '연휴임에도'], translations: { en: { mainDef: 'A period of two or more consecutive days off.' } } },
+                { term: '열기로 가득하다', mainDef: '많은 사람들이 적극적으로 어떤 활동을 하려는 분위기이다.', subDefs: [{ subTerm: '• 열기', subDef: '사람들의 뜨겁고 신난 분위기.' }, { subTerm: '• 가득하다', subDef: '빈 곳이 없이 꽉 차 있다.' }], variants: ['열기로 가득했다', '열기로 가득하다', '열기'], translations: { en: { mainDef: 'Describes an atmosphere where many people are eager and active.', subDefs: [{ term: '• 열기', def: 'A heated, excited mood among people.' }, { term: '• 가득하다', def: 'To be completely full with no empty space.' }] } } },
+                { term: '운영', mainDef: '어떤 일이나 행사를 계획하고 진행하는 것.', subDefs: [{ subTerm: '• 운영팀', subDef: '행사를 진행하는 일을 하는 사람들.' }, { subTerm: '• 운영자', subDef: '어떤 일을 관리하고 진행하는 사람.' }, { subTerm: '• 운영비', subDef: '어떤 일을 하는 데 드는 돈.' }, { subTerm: '• 운영되다', subDef: '어떤 일이 진행되다.' }], variants: ['운영', '운영팀', '운영자', '운영비', '운영되다', '운영하는', '운영되기', '운영에', '운영까지', '운영을', '운영 안정성을', '운영 구조를', '운영안도'], translations: { en: { mainDef: 'Planning and carrying out an activity or event.', subDefs: [{ term: '• 운영팀', def: 'The people who carry out the event.' }, { term: '• 운영자', def: 'A person who manages and runs something.' }, { term: '• 운영비', def: 'Money spent to conduct the work.' }, { term: '• 운영되다', def: 'For something to be operated or carried out.' }] } } },
+                { term: '시간 엄수', mainDef: '정해진 시간을 정확하게 지키는 것.', subDefs: [{ subTerm: '• 엄수', subDef: '규칙이나 약속을 꼭 지키는 것.' }], variants: ['시간 엄수'], translations: { en: { mainDef: 'Strictly keeping to the set time.', subDefs: [{ term: '• 엄수', def: 'Strict observance of rules or promises.' }] } } },
+                { term: '누비다', mainDef: '여러 곳을 계속 돌아다니다.', variants: ['누비며', '누비다'], translations: { en: { mainDef: 'To keep moving around to many places.' } } },
+                { term: '지연', mainDef: '시간이 늦어지는 것.', variants: ['지연', '지연도'], translations: { en: { mainDef: 'A situation where something happens later than scheduled.' } } },
+                { term: '시범 운영', mainDef: '정식으로 하기 전에 한번 해 보는 것.', subDefs: [{ subTerm: '• 시범', subDef: '진짜 하기 전에 먼저 해 보는 것.' }], variants: ['시범 운영', '시범 운영을'], translations: { en: { mainDef: 'Trying something once before doing it for real.', subDefs: [{ term: '• 시범', def: 'A preliminary trial before the real thing.' }] } } },
+                { term: '2회차를 맞이하다', mainDef: '두 번째로 하게 되다.', subDefs: [{ subTerm: '• 회차', subDef: '몇 번째인지 세는 말.' }, { subTerm: '• 맞이하다', subDef: '어떤 때나 상황이 오다.' }], variants: ['2회차를 맞이한', '2회차를 맞이하다'], translations: { en: { mainDef: 'To reach the second iteration.', subDefs: [{ term: '• 회차', def: 'A counter indicating which numbered round it is.' }, { term: '• 맞이하다', def: 'For a time or situation to arrive.' }] } } },
+                { term: '사전 신청자', mainDef: '미리 "참가하고 싶어요"라고 말한 사람.', subDefs: [{ subTerm: '• 사전', subDef: '어떤 일이 있기 전에 미리.' }, { subTerm: '• 신청자', subDef: '"하고 싶어요"라고 말한 사람.' }], variants: ['사전 신청자', '사전 신청자만'], translations: { en: { mainDef: 'A person who expressed in advance that they want to participate.', subDefs: [{ term: '• 사전', def: 'Before something happens; in advance.' }, { term: '• 신청자', def: 'A person who says they want to do something (an applicant).' }] } } },
+                { term: '개성을 살리다', mainDef: '각자 다른 특별한 점을 잘 보이게 하다.', subDefs: [{ subTerm: '• 개성', subDef: '다른 사람과 다른 자기만의 특별한 점.' }, { subTerm: '• 살리다', subDef: '좋은 점이 잘 보이게 하다.' }], variants: ['개성을 살린', '개성을 살리다'], translations: { en: { mainDef: 'To make each person’s unique traits stand out well.', subDefs: [{ term: '• 개성', def: 'One’s own special traits that differ from others.' }, { term: '• 살리다', def: 'To highlight and bring out the good points.' }] } } },
+                { term: '투명하다', mainDef: '유리처럼 속이 다 보일 만큼 맑고 깨끗하다.', variants: ['투명한'], translations: { en: { mainDef: 'So clear and clean that you can see through it like glass.' } } },
+                { term: '각도', mainDef: '(창문을 닦을 때) 어떤 방향이나 위치.', variants: ['각도'], translations: { en: { mainDef: 'A particular direction or position (e.g., when cleaning a window).' } } },
+                { term: '세정법', mainDef: '더러운 것을 깨끗하게 씻는 방법.', subDefs: [{ subTerm: '• 세정', subDef: '더러운 것을 물이나 세제로 씻는 것.' }], variants: ['세정법'], translations: { en: { mainDef: 'A method for washing something dirty clean.', subDefs: [{ term: '• 세정', def: 'Washing dirt with water or detergent.' }] } } },
+                { term: '머리를 땋다', mainDef: '머리카락을 여러 줄로 나눠서 서로 엮다.', subDefs: [{ subTerm: '• 땋다', subDef: '머리카락이나 실을 여러 줄로 나눠서 서로 엮는 것.' }], variants: ['머리를 땋아준다', '머리를 땋다'], translations: { en: { mainDef: 'To divide hair into several strands and weave them together.', subDefs: [{ term: '• 땋다', def: 'To separate into strands and weave together.' }] } } },
+                { term: '꼼지락', mainDef: '작고 천천히 자꾸 움직이는 모양.', variants: ['꼼지락'], translations: { en: { mainDef: 'A manner of small, slow, repeated movements.' } } },
+                { term: '유쾌하다', mainDef: '기분이 좋고 즐겁다.', variants: ['유쾌하고도', '유쾌한', '유쾌하다'], translations: { en: { mainDef: 'To feel pleasant and joyful.' } } },
+                { term: '기발하다', mainDef: '생각이나 아이디어가 보통과 다르게 아주 새롭다.', variants: ['기발한', '기발하다'], translations: { en: { mainDef: 'To be very new and different from the ordinary in idea.' } } },
+                { term: '정산받다', mainDef: '(판매자가) 티켓 판매로 번 돈을 받다.', subDefs: [{ subTerm: '• 정산', subDef: '돈을 계산해서 정리하는 것.' }], variants: ['정산받는', '정산받다'], translations: { en: { mainDef: 'For the seller to receive the money earned from ticket sales.', subDefs: [{ term: '• 정산', def: 'Calculating and organizing accounts.' }] } } },
+                { term: '적정 가격', mainDef: '너무 비싸지도 싸지도 않은 알맞은 가격.', subDefs: [{ subTerm: '• 적정', subDef: '딱 알맞은 것.' }], variants: ['적정 가격', '적정 가격을'], translations: { en: { mainDef: 'A price that is just right—neither too expensive nor too cheap.', subDefs: [{ term: '• 적정', def: 'Exactly appropriate or suitable.' }] } } },
+                { term: '가늠해 보다', mainDef: '대충 어느 정도인지 생각해 보다.', subDefs: [{ subTerm: '• 가늠하다', subDef: '대충 어느 정도인지 헤아려 보다.' }], variants: ['가늠해볼', '가늠해 보다', '가늠할'], translations: { en: { mainDef: 'To roughly consider the degree or amount of something.', subDefs: [{ term: '• 가늠하다', def: 'To roughly gauge or estimate.' }] } } },
+                { term: '직접 섭외 방식', mainDef: '운영팀이 직접 사람을 찾아서 부탁하는 방법.', subDefs: [{ subTerm: '• 섭외', subDef: '어떤 일을 위해 사람을 찾아서 부탁하는 것.' }], variants: ['직접 섭외 방식', '섭외', '섭외부터'], translations: { en: { mainDef: 'A method where the operations team directly finds people and asks them to join.', subDefs: [{ term: '• 섭외', def: 'Finding people and requesting their participation for a task.' }] } } },
+                { term: '무형의 재능', mainDef: '손으로 만질 수 없는 재능.', subDefs: [{ subTerm: '• 무형', subDef: '모양이 없는 것.' }], variants: ['무형의 재능', '무형', '무형의'], translations: { en: { mainDef: 'A talent that cannot be physically touched.', subDefs: [{ term: '• 무형', def: 'Something without tangible form.' }] } } },
+                { term: '인성', mainDef: '사람의 성격이나 태도.', variants: ['인성', '인성과'], translations: { en: { mainDef: 'A person’s character or attitude.' } } },
+                { term: '최우선 과제로 삼다', mainDef: '여러 일 중에서 가장 먼저 하고 가장 중요하게 생각하다.', subDefs: [{ subTerm: '• 최우선', subDef: '가장 먼저, 가장 중요한 것.' }, { subTerm: '• 과제', subDef: '해야 할 일이나 문제.' }], variants: ['최우선 과제로 삼았다는', '최우선 과제로 삼다', '최우선'], translations: { en: { mainDef: 'To treat something as the first and most important task among many.', subDefs: [{ term: '• 최우선', def: 'The foremost and most important thing.' }, { term: '• 과제', def: 'A task to be done or a problem to solve.' }] } } },
+                { term: '기획', mainDef: '어떤 일을 하기 위해 미리 계획하는 것.', subDefs: [{ subTerm: '• 기획자', subDef: '프로젝트나 행사를 계획하는 사람.' }, { subTerm: '• 기획하다', subDef: '어떤 일을 계획하다.' }], variants: ['기획', '기획자', '기획한', '기획할', '기획은'], translations: { en: { mainDef: 'Planning something in advance in order to carry it out.', subDefs: [{ term: '• 기획자', def: 'A person who plans a project or event.' }, { term: '• 기획하다', def: 'To make a plan for something.' }] } } },
+                { term: '향후', mainDef: '앞으로, 나중에.', variants: ['향후에는', '향후'], translations: { en: { mainDef: 'From now on or at a later time.' } } },
+                { term: '공개 모집 방식', mainDef: '모든 사람에게 알려서 참가하고 싶은 사람을 받는 방법.', subDefs: [{ subTerm: '• 공개', subDef: '모든 사람에게 보이게 하는 것.' }, { subTerm: '• 모집', subDef: '사람을 모으는 것.' }], variants: ['공개 모집 방식', '공개 모집'], translations: { en: { mainDef: 'A method that announces to everyone and accepts those who wish to join.', subDefs: [{ term: '• 공개', def: 'Making something visible to everyone.' }, { term: '• 모집', def: 'Gathering people together.' }] } } },
+                { term: '심사', mainDef: '괜찮은지 아닌지 확인하고 평가하는 것.', variants: ['심사를', '심사'], translations: { en: { mainDef: 'Examining and evaluating to decide whether it is acceptable.' } } },
+                { term: '졸음 유발', mainDef: '잠이 오게 만드는 것.', subDefs: [{ subTerm: '• 유발', subDef: '어떤 일이 일어나게 하다.' }, { subTerm: '• 졸음', subDef: '잠이 오려는 느낌.' }], variants: ['졸음 유발', '졸음을 유발하는', '졸음'], translations: { en: { mainDef: 'Something that causes sleepiness.', subDefs: [{ term: '• 유발', def: 'To bring about or cause something to happen.' }, { term: '• 졸음', def: 'The feeling of getting sleepy.' }] } } },
+                { term: '낭독', mainDef: '글을 소리 내서 읽는 것.', subDefs: [{ subTerm: '• 낭독소', subDef: '책을 소리 내서 읽어주는 곳.' }, { subTerm: '• 낭독 봉사', subDef: '돈을 받지 않고 앞이 안 보이는 사람들에게 글을 읽어주는 활동.' }], variants: ['낭독', '낭독소', '낭독을', '낭독에', '낭독하다'], translations: { en: { mainDef: 'Reading written text aloud.', subDefs: [{ term: '• 낭독소', def: 'A place where books are read aloud.' }, { term: '• 낭독 봉사', def: 'Volunteering to read for people with visual impairments without pay.' }] } } },
+                { term: '시각장애인', mainDef: '눈이 안 보이거나 잘 안 보이는 사람.', variants: ['시각장애인'], translations: { en: { mainDef: 'A person who is blind or has low vision.' } } },
+                { term: '취지', mainDef: '어떤 일을 하려는 목적이나 뜻.', variants: ['취지', '취지를'], translations: { en: { mainDef: 'The purpose or intention behind doing something.' } } },
+                { term: '형식', mainDef: '어떤 것의 모양이나 방식.', variants: ['형식', '형식의'], translations: { en: { mainDef: 'The shape or method of something.' } } },
+                { term: '진지하게', mainDef: '장난이 아니라 정말 성실하게.', subDefs: [{ subTerm: '• 진지하다', subDef: '장난이 아니라 정말 성실한 것.' }], variants: ['진지하게', '진지한'], translations: { en: { mainDef: 'Sincerely, not playfully; in a truly earnest manner.', subDefs: [{ term: '• 진지하다', def: 'To be serious and sincere, not joking.' }] } } },
+                { term: '막상', mainDef: '생각과 다르게 실제로는.', variants: ['막상', '막상 체험해보니'], translations: { en: { mainDef: 'In reality, contrary to what was expected.' } } },
+                { term: '공감대', mainDef: '서로 같은 생각이나 느낌을 가지는 것.', variants: ['공감대', '공감대 속에서'], translations: { en: { mainDef: 'Having shared thoughts or feelings in common.' } } },
+                { term: '별도의 급여 없이', mainDef: '따로 돈을 받지 않고.', subDefs: [{ subTerm: '• 별도', subDef: '따로, 다르게.' }, { subTerm: '• 급여', subDef: '일한 대가로 받는 돈.' }], variants: ['별도의 급여 없이', '급여 없이'], translations: { en: { mainDef: 'Without receiving separate pay.', subDefs: [{ term: '• 별도', def: 'Separate or different from the usual.' }, { term: '• 급여', def: 'Money paid in return for work (salary).' }] } } },
+                { term: '소액의 경비', mainDef: '아주 적은 돈.', subDefs: [{ subTerm: '• 소액', subDef: '아주 적은 돈.' }, { subTerm: '• 경비', subDef: '어떤 일을 하는 데 쓰는 돈.' }], variants: ['소액의 경비', '소액의 경비로', '소액'], translations: { en: { mainDef: 'A very small amount of expenses.', subDefs: [{ term: '• 소액', def: 'A very small amount of money.' }, { term: '• 경비', def: 'Money used to carry out a task (expenses).' }] } } },
+                { term: '충당하다', mainDef: '필요한 돈이나 물건을 채우다.', variants: ['충당하고', '충당하다'], translations: { en: { mainDef: 'To make up for or supply the necessary money or items.' } } },
+                { term: '직접 제작한 굿즈 판매', mainDef: '자기가 만든 기념품을 파는 것.', subDefs: [{ subTerm: '• 굿즈', subDef: '어떤 행사나 브랜드의 기념품.' }, { subTerm: '• 제작', subDef: '물건을 만드는 것.' }], variants: ['직접 제작한 굿즈 판매', '굿즈 판매', '굿즈'], translations: { en: { mainDef: 'Selling souvenirs that one has made oneself.', subDefs: [{ term: '• 굿즈', def: 'Souvenirs related to an event or brand.' }, { term: '• 제작', def: 'The act of making or producing items.' }] } } },
+                { term: '협력 지원', mainDef: '다른 사람이나 회사가 함께 도와주는 것.', subDefs: [{ subTerm: '• 협력', subDef: '서로 함께 일하는 것.' }, { subTerm: '• 지원', subDef: '돕는 것.' }], variants: ['협력 지원', '협력 지원을', '협력'], translations: { en: { mainDef: 'Help provided together by other people or organizations.', subDefs: [{ term: '• 협력', def: 'Working together with others.' }, { term: '• 지원', def: 'Providing assistance.' }] } } },
+                { term: '메워 오다', mainDef: '부족한 것을 계속 채워 오다.', subDefs: [{ subTerm: '• 메우다', subDef: '빈 곳이나 부족한 것을 채우다.' }], variants: ['메워왔다고', '메워 오다', '메우다'], translations: { en: { mainDef: 'To keep filling in what is lacking over time.', subDefs: [{ term: '• 메우다', def: 'To fill an empty or deficient part.' }] } } },
+                { term: '공간 섭외', mainDef: '행사를 할 장소를 찾아서 계약하는 것.', variants: ['공간 섭외', '공간 섭외부터'], translations: { en: { mainDef: 'Finding and securing a venue for an event.' } } },
+                { term: '사람의 마음을 거래하는 장', mainDef: '물건이 아니라 사람의 마음과 재능을 나누는 곳.', subDefs: [{ subTerm: '• 장', subDef: '어떤 일이 일어나는 곳.' }, { subTerm: '• 거래', subDef: '물건을 사고파는 것.' }], variants: ['사람의 마음을 거래하는 장', '거래하는 장', '장'], translations: { en: { mainDef: 'A place where people share hearts and talents instead of goods.', subDefs: [{ term: '• 장', def: 'A place where activities occur.' }, { term: '• 거래', def: 'Buying and selling; exchange.' }] } } },
+                { term: '형태', mainDef: '어떤 것의 모양.', variants: ['형태', '형태가 없는'], translations: { en: { mainDef: 'The shape or form of something.' } } },
+                { term: '주눅 들게 하다', mainDef: '사람을 겁나게 하고 자신감을 없어지게 만들다.', subDefs: [{ subTerm: '• 주눅 들다', subDef: '겁이 나서 자신감이 없어지다.' }], variants: ['주눅 들게', '주눅 들다'], translations: { en: { mainDef: 'To intimidate someone and take away their confidence.', subDefs: [{ term: '• 주눅 들다', def: 'To lose confidence out of fear.' }] } } },
+                { term: '문턱을 낮추다', mainDef: '어려운 것을 쉽게 만들다.', subDefs: [{ subTerm: '• 문턱', subDef: '(비유) 어떤 일을 시작하기 어렵게 만드는 것.' }], variants: ['문턱을 아예 낮췄어요', '문턱을 낮추다'], translations: { en: { mainDef: 'To make something difficult easier to start.', subDefs: [{ term: '• 문턱', def: 'A figurative barrier that makes starting something difficult.' }] } } },
+                { term: '화폐 단위', mainDef: '돈을 세는 기준 (예: 원, 달러).', subDefs: [{ subTerm: '• 화폐', subDef: '물건을 살 때 쓰는 돈.' }], variants: ['화폐 단위', '화폐 단위인'], translations: { en: { mainDef: 'The unit used to count money (e.g., won, dollar).', subDefs: [{ term: '• 화폐', def: 'Money used to buy things (currency).' }] } } },
+                { term: '돈으로 환산하다', mainDef: '어떤 것의 가치를 돈으로 계산하다.', subDefs: [{ subTerm: '• 환산', subDef: '다른 것으로 바꿔서 계산하는 것.' }], variants: ['환산하면', '환산할', '돈으로 환산하다'], translations: { en: { mainDef: 'To calculate the value of something in monetary terms.', subDefs: [{ term: '• 환산', def: 'Converting into another basis for calculation.' }] } } },
+                { term: '상징적', mainDef: '어떤 의미를 나타내는.', subDefs: [{ subTerm: '• 상징', subDef: '어떤 뜻을 나타는 것.' }], variants: ['상징적', '상징적인'], translations: { en: { mainDef: 'Expressing or representing a particular meaning.', subDefs: [{ term: '• 상징', def: 'Something that stands for a meaning (a symbol).' }] } } },
+                { term: '무게 중심', mainDef: '(비유) 가장 중요하게 생각하는 것.', variants: ['무게 중심', '무게 중심을'], translations: { en: { mainDef: 'Figuratively, what is regarded as the most important focal point.' } } },
+                { term: '비로소', mainDef: '그때서야, 그때 처음으로.', variants: ['비로소'], translations: { en: { mainDef: 'Only then; for the first time at that point.' } } },
+                { term: '거창하다', mainDef: '크고 대단하다.', variants: ['거창한', '거창하다'], translations: { en: { mainDef: 'To be large in scale and grand.' } } },
+                { term: '자청하다', mainDef: '다른 사람이 시키지 않아도 스스로 하겠다고 말하다.', variants: ['자청한', '자청하다'], translations: { en: { mainDef: 'To volunteer to do something without being told.' } } },
+                { term: '공방', mainDef: '손으로 물건을 만드는 작업실.', variants: ['공방', '공방을'], translations: { en: { mainDef: 'A workshop where items are made by hand.' } } },
+                { term: '전환점', mainDef: '인생이나 상황이 크게 바뀌는 순간.', subDefs: [{ subTerm: '• 전환', subDef: '방향이나 상태를 바꾸는 것.' }], variants: ['전환점', '전환점이'], translations: { en: { mainDef: 'A moment when life or a situation changes greatly.', subDefs: [{ term: '• 전환', def: 'A change in direction or state.' }] } } },
+                { term: '이벤트성 행사', mainDef: '한번만 하고 끝나는 행사.', subDefs: [{ subTerm: '• 이벤트성', subDef: '한번만 하는 것.' }], variants: ['이벤트성 행사'], translations: { en: { mainDef: 'An event that is held only once and then ends.', subDefs: [{ term: '• 이벤트성', def: 'The nature of being a one-time event.' }] } } },
+                { term: '닿다', mainDef: '(메시지나 사람이) 어떤 곳에 가다.', variants: ['닿고자', '닿다'], translations: { en: { mainDef: 'For a message or person to reach a place.' } } },
+                { term: '운영안', mainDef: '어떻게 운영할지에 대한 계획.', subDefs: [{ subTerm: '• 안', subDef: '어떤 일을 위한 계획.' }], variants: ['운영안', '운영안도'], translations: { en: { mainDef: 'A plan for how something will be operated.', subDefs: [{ term: '• 안', def: 'A plan or proposal for a task.' }] } } },
+                { term: '궁극적으로', mainDef: '마지막에, 결국에는.', subDefs: [{ subTerm: '• 궁극적', subDef: '마지막의, 최종적인.' }], variants: ['궁극적으로', '궁극적으로는'], translations: { en: { mainDef: 'In the end; ultimately.', subDefs: [{ term: '• 궁극적', def: 'Final or ultimate in nature.' }] } } },
+                { term: '상시적', mainDef: '항상, 언제나.', subDefs: [{ subTerm: '• 상시', subDef: '항상, 언제나.' }], variants: ['상시적', '상시적인'], translations: { en: { mainDef: 'Happening at all times on a continual basis.', subDefs: [{ term: '• 상시', def: 'Always; at any time.' }] } } },
+                { term: '규모의 확장', mainDef: '크기를 더 크게 만드는 것.', subDefs: [{ subTerm: '• 규모', subDef: '크기나 범위.' }, { subTerm: '• 확장', subDef: '크기나 범위를 더 크게 하는 것.' }], variants: ['규모의 확장', '규모의 확장도'], translations: { en: { mainDef: 'Making the size or scope larger.', subDefs: [{ term: '• 규모', def: 'Size or scope.' }, { term: '• 확장', def: 'The act of enlarging size or scope.' }] } } },
+                { term: '설렘', mainDef: '기대되고 기뻐서 가슴이 두근거리는 느낌.', subDefs: [{ subTerm: '• 설레다', subDef: '기대되고 기뻐서 가슴이 두근거리다.' }], variants: ['설렘', '설렘을'], translations: { en: { mainDef: 'A fluttering feeling of excitement and joy in anticipation.', subDefs: [{ term: '• 설레다', def: 'To have one’s heart flutter with excitement and joy.' }] } } }
+            ];
+
+        const ANSWER_CHOICES = [
+                '어치', '운영', '가늠해 보다', '무형', '기발하다', 
+                '기획', '환산하다', '주눅 들다', '거창하다', '상시',
+                '섭외', '닿다', '자청하다', '무게 중심'
+            ];
+        const QUIZ_LIST = [
+                { 
+                    id: 1, 
+                    textParts: ['"천원의 재능마켓"은 "누구에게나 천원', '의 재능은 있다"는 생각에서 시작되었어요.'], 
+                    answer: '어치', 
+                    hint: '~만큼의 가치나 분량을 나타내는 단위예요.', 
+                    explanation: "맞아요. '천원어치의 재능'이라는 표현으로 누구나 작은 재능이 있다는 메시지를 전했어요.",
+                    textParts_eng: ["'The 1,000 Won Talent Market' started from the idea that 'everyone has at least 1,000 won ", " of talent.'"],
+                    answer_eng: 'worth'
+                },
+                { 
+                    id: 2, 
+                    textParts: ['각 재능은 10분 단위로 ', '되기 때문에 시간 관리가 매우 중요해요.'], 
+                    answer: '운영', 
+                    hint: '어떤 일이나 조직을 지속적으로 진행하고 관리하는 것이에요.', 
+                    explanation: "정확해요. 시간 엄수가 전체 흐름에 영향을 주기 때문에 운영 시 시간 관리를 가장 중요하게 생각해요.",
+                    textParts_eng: ["Each talent is ", " in 10-minute units, so time management is very important."],
+                    answer_eng: 'operated'
+                },
+                { 
+                    id: 3, 
+                    textParts: ['판매자는 티켓 금액 전체를 정산받으면서 자신의 재능 가치와 적정 가격을 ', ' 수 있어요.'], 
+                    answer: '가늠해 볼', 
+                    hint: '어떤 것의 정도나 수준을 짐작하거나 판단해 보는 것이에요. (동사 변형: -아/어 볼)', 
+                    explanation: "맞아요. 판매 경험을 통해 자신의 재능 가치를 가늠해볼 수 있게 됩니다.",
+                    textParts_eng: ["Sellers receive the full ticket amount and can ", " the value and appropriate price of their talents."],
+                    answer_eng: 'gauge'
+                },
+                { 
+                    id: 4, 
+                    textParts: ['', '의 재능을 다루는 만큼 인성과 안정성 확보를 최우선 과제로 삼았어요.'], 
+                    answer: '무형', 
+                    hint: '눈에 보이지 않고 형태가 없는 것을 말해요.', 
+                    explanation: "정확해요. 형태가 없는 재능을 다루기 때문에 판매자 선정에 신중했어요.",
+                    textParts_eng: ["Since they deal with ", " talents, securing character and stability was the top priority."],
+                    answer_eng: 'intangible'
+                },
+                { 
+                    id: 5, 
+                    textParts: ['"투명한 창문닦기 원포인트 레슨", "꼼지락 미용실" 등 유쾌하고도 ', ' 재능들이 눈길을 끌었어요.'], 
+                    answer: '기발한', 
+                    hint: '생각이나 아이디어가 참신하고 독특한 것이에요.', 
+                    explanation: "맞아요. 창의적이고 독특한 재능들이 마켓을 더욱 흥미롭게 만들었어요.",
+                    textParts_eng: ["Pleasant and ", " talents like 'One-point Window Cleaning Lesson' and 'Fidgety Hair Salon' caught people's attention."],
+                    answer_eng: 'ingenious'
+                },
+                { 
+                    id: 6, 
+                    textParts: ['"천원의 재능마켓"은 "의미 있는 시도를 해보자"는 공감대 속에서 ', '을/를 이어가고 있어요.'], 
+                    answer: '기획', 
+                    hint: '일이나 행사를 계획하고 준비하는 것이에요.', 
+                    explanation: "정확해요. 별도의 급여 없이 의미 있는 기획을 지속하고 있어요.",
+                    textParts_eng: ["'The 1,000 Won Talent Market' continues its ", " with the consensus of 'let's try something meaningful.'"],
+                    answer_eng: 'planning'
+                },
+                { 
+                    id: 7, 
+                    textParts: ['10분에 천원이면 시간당으로 ', ' 6천 원 정도가 돼요.'], 
+                    answer: '환산하면', 
+                    hint: '다른 단위나 기준으로 계산해서 바꾸는 것이에요. (동사 변형: -면)', 
+                    explanation: "맞아요. 10분당 천원을 시간 단위로 바꿔서 계산하면 그렇게 됩니다.",
+                    textParts_eng: ["If you ", " 1,000 won for 10 minutes into an hourly rate, it's about 6,000 won."],
+                    answer_eng: 'convert'
+                },
+                { 
+                    id: 8, 
+                    textParts: ['"재능"이라는 단어가 사람들을 ', ' 한다는 걸 알게 됐어요.'], 
+                    answer: '주눅 들게', 
+                    hint: '자신감이 없어지고 기가 죽는 느낌이에요. (동사 변형: -게)', 
+                    explanation: "정확해요. 그래서 천원이라는 부담 없는 금액을 설정하게 되었어요.",
+                    textParts_eng: ["They realized that the word 'talent' makes people feel ", "."],
+                    answer_eng: 'intimidated'
+                },
+                { 
+                    id: 9, 
+                    textParts: ['', ' 재능이 아니어도 누구나 작게나마 잘하는 게 있다는 메시지를 전해요.'], 
+                    answer: '거창한', 
+                    hint: '규모나 내용이 크고 대단한 것을 말해요.', 
+                    explanation: "맞아요. 작고 사소한 재능도 충분히 가치가 있다는 것을 보여줍니다.",
+                    textParts_eng: ["The message is that even if it's not a ", " talent, everyone has something they're good at."],
+                    answer_eng: 'grand'
+                },
+                { 
+                    id: 10, 
+                    textParts: ['기획자의 꿈은 이 마켓이 이벤트로 남지 않고, 집 앞 편의점처럼 누구나 ', ' 으로 찾을 수 있는 공간이 되는 것이에요.'], 
+                    answer: '상시', 
+                    hint: '언제나, 늘.', 
+                    explanation: "맞아요. 궁극적으로는 서울뿐 아니라 부산, 제주, 그리고 온라인에서도 재능을 시험해볼 수 있는 환경을 꿈꾼다고 했어요.",
+                    textParts_eng: ["The planner's dream is for this market not to remain just an event, but to become a space that people can ", " visit, like a neighborhood convenience store."],
+                    answer_eng: 'regularly'
+                }
+            ];
+
+        const DISCUSS_DATA = [
+                { 
+                    num: 1, 
+                    kor: "재능은 무엇일까요? 완성된 능력이나 노력과는 어떻게 다를까요?", 
+                    eng: "What is talent? How is it different from completed ability or effort?", 
+                    vocab: [{ term: "완성된", meaning: "완전히 다 이루어진." }] 
+                },
+                { 
+                    num: 2, 
+                    kor: "기획자는 재능을 '나누는 순간 비로소 빛나는 가능성'이라고 정의했어요. 이 주장에 동의해요?", 
+                    eng: "The planner defined talent as 'possibility that finally shines the moment it is shared'. Do you agree with this claim?", 
+                    vocab: [{ term: "기획자", meaning: "어떤 일을 꾸미고 계획하는 사람." }, { term: "비로소 빛나는", meaning: "그제야 환하게 드러나는." }] 
+                },
+                { 
+                    num: 3, 
+                    kor: "‘누구에게나 재능은 있다'고 생각해요? 그런데 어떤 사람들은 왜 “저는 진짜 재능이 없는 것 같아요\"라고 말할까요?", 
+                    eng: "Do you think 'everyone has talent'? Then why do some people say \"I don't think I really have any talent\"?", 
+                    vocab: [{ term: "누구에게나", meaning: "어떤 사람이라도 예외 없이." }] 
+                },
+                { 
+                    num: 4, 
+                    kor: "어떤 재능은 돈이 되는 반면 다른 재능은 돈이 되지 않을까요? 그리고 재능이 돈이 되지 않으면, 그 재능이 버려진다고 생각해요?", 
+                    eng: "Why do some talents make money while others don't? And if a talent doesn't make money, do you think that talent is wasted?", 
+                    vocab: [{ term: "돈이 되다", meaning: "이익이 생기거나 수입이 되다." }] 
+                },
+                { 
+                    num: 5, 
+                    kor: "기획자는 무형의 재능을 얼마에 팔아야 할지 기준이 없어 고민했다고 했어요. 여러분도 자신의 재능을 가늠해 보기 어려운 적이 있었어요?", 
+                    eng: "The planner said they worried because there was no standard for how much to sell intangible talent for. Have you ever had trouble gauging your own talent?", 
+                    vocab: [{ term: "기획자", meaning: "일을 계획하는 사람." }, { term: "무형의 재능", meaning: "형체가 없는 재능." }, { term: "가늠해 보다", meaning: "어림잡아 헤아려 보다." }] 
+                },
+                { 
+                    num: 6, 
+                    kor: "천 원에 재능을 판다고 하면, 거창한 재능이 없다고 생각하는 사람들도 부담 없이 참여할 수 있다고 생각해요? 아니면 여전히 재능이라는 단어가 사람들을 주눅 들게 할까요?", 
+                    eng: "If talent is sold for 1,000 won, do you think people who don't think they have grand talents can participate without burden? Or will the word 'talent' still intimidate people?", 
+                    vocab: [{ term: "거창한", meaning: "무엇의 규모가 아주 큰." }, { term: "부담 없이", meaning: "마음에 짐이나 책임감을 느끼지 않고." }, { term: "주눅 들게 하다", meaning: "기를 펴지 못하고 움츠러들게 하다." }] 
+                },
+                { 
+                    num: 7, 
+                    kor: "이 마켓에서 고객들이 재능을 천 원에 구매한 후에 그 ‘값어치'를 다시 정해서 판매자에게 쪽지로 알려줘요. 왜 기획자는 재능을 돈으로 환산해 알려주는 규칙을 정해 놓았을까요? 이 규칙이 재능 마켓의 목적에 맞다고 생각해요? 그렇다면 그 이유는 뭐예요?", 
+                    eng: "In this market, after customers buy talent for 1,000 won, they re-determine its 'value' and let the seller know via a note. Why did the planner set a rule to convert talent into money and communicate it? Do you think this rule fits the purpose of the talent market? If so, why?", 
+                    vocab: [{ term: "값어치", meaning: "일정한 값에 해당하는 분량이나 가치." }, { term: "돈으로 환산하다", meaning: "가치를 돈의 액수로 바꾸어 계산하다." }, { term: "정해 놓다", meaning: "미리 결정하여 두다." }] 
+                },
+                { 
+                    num: 8, 
+                    kor: "기획자는 ‘천원의 재능마켓’이 '값'이 아니라 '가치'의 단위를 새로 정하는 실험이라고 했어요. 여기서 재능을 파는 사람들은 무슨 가치를 얻게 되는 것일까요? 자기 효능감일까요?", 
+                    eng: "The planner said the '1,000 Won Talent Market' is an experiment to redefine the unit of 'value', not 'cost'. What value do people selling talent here gain? Is it self-efficacy?", 
+                    vocab: [{ term: "가치의 단위", meaning: "값어치를 재는 기준." }, { term: "자기 효능감", meaning: "어떤 상황에서 적절한 행동을 할 수 있다는 기대와 신념." }] 
+                },
+                { 
+                    num: 9, 
+                    kor: "'천원의 재능마켓'이 이벤트성 행사가 아니라 상시적인 공간으로 또는 온라인으로 자리 잡을 수 있을까요? 만약 그렇다면, 처음 시작했을 때의 '열기'나 '설렘'을 계속 똑같이 전달할 수 있을까요?", 
+                    eng: "Can the '1,000 Won Talent Market' establish itself as a permanent space or online, rather than just an event? If so, can it continue to deliver the same 'heat' or 'excitement' as when it first started?", 
+                    vocab: [{ term: "이벤트성 행사", meaning: "특별한 목적을 위해 일시적으로 여는 모임." }, { term: "상시적인 공간", meaning: "항상 열려 있는 장소." }, { term: "열기", meaning: "뜨거운 기운이나 분위기." }, { term: "설렘", meaning: "마음이 가라앉지 않고 들떠서 두근거리는 느낌." }] 
+                },
+                { 
+                    num: 10, 
+                    kor: "만약 여러분의 나라에도 ‘천원의 재능마켓’이 있다면, 참여해 보고 싶어요? 어떤 재능을 팔아 보고 싶어요?", 
+                    eng: "If there were a '1,000 Won Talent Market' in your country, would you like to participate? What talent would you like to sell?", 
+                    vocab: [{ term: "팔아 보다", meaning: "파는 경험을 해 보다." }] 
+                }
+            ];
+
+        const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+        const qs  = (sel, root) => (root || document).querySelector(sel);
+        const qsa = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+        const viewRoot = () => document.getElementById('view-root');
+
+        // ---------- 1. 아이콘 ----------
+        const ICON = {
+            home:'<rect x="3" y="3" width="18" height="18" rx="0" ry="0"/><path d="M3 9h18"/><path d="M9 21V9"/>',
+            learn:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+            vocab:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+            quiz:'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+            discuss:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
+            openbook:'<path d="M2 6 C2 3 8 2 12 6 C16 2 22 3 22 6 V20 C22 17 16 16 12 20 C8 16 2 17 2 20 Z"/><path d="M12 6 V20"/>',
+            arrowRight:'<path d="M5 12h14M12 5l7 7-7 7"/>',
+            menu:'<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
+            externalLink:'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
+            sparkles:'<path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>',
+            highlighter:'<path d="M9 11l-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/>',
+            eraser:'<path d="M20 20H7L3 16C2 15 2 13 3 12L13 2L22 11L20 20Z"/>',
+            search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+            close:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'
+        };
+        const svgIcon = (name, cls, opts) => {
+            opts = opts || {};
+            const fill = opts.fill || 'none';
+            const stroke = opts.fill === 'currentColor' ? '' : 'stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"';
+            const style = opts.style ? ` style="${opts.style}"` : '';
+            return `<svg viewBox="0 0 24 24" fill="${fill}" ${stroke} class="${cls || ''}"${style}>${ICON[name]}</svg>`;
+        };
+        const NAV_ITEMS = [
+            { id: 'home', label: '시작 페이지', icon: 'home' },
+            { id: 'reading', label: '읽기 자료', icon: 'learn' },
+            { id: 'vocab', label: '핵심 어휘', icon: 'vocab' },
+            { id: 'quiz', label: '내용 확인 퀴즈', icon: 'quiz' },
+            { id: 'discuss', label: '생각해 보기', icon: 'discuss' }
+        ];
+
+        // ---------- 2. 공용 헬퍼 ----------
+        const getContainerOffset = (root, node, offset) => {
+            let total = 0; const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) { if (walker.currentNode === node) return total + offset; total += walker.currentNode.length; }
+            return total;
+        };
+        const getPopupLeftPos = (x, width) => {
+            const pad = 20, ww = window.innerWidth; let left = x - width / 2;
+            if (left < pad) return pad;
+            if (left + width > ww - pad) return ww - width - pad;
+            return left;
+        };
+        const callGeminiWithBackoff = async (payload) => {
+            const apiKey = ''; const apiUrl = `${CONFIG.GEMINI_API_URL}?key=${apiKey}`; const delays = CONFIG.API_RETRY_DELAYS;
+            for (let i = 0; i <= delays.length; i++) {
+                try {
+                    const r = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    if (!r.ok) {
+                        const t = await r.text();
+                        if (r.status === 400 || r.status === 401 || r.status === 403) throw new Error(`API 인증/요청 오류(HTTP ${r.status}): ${t}`);
+                        if (r.status === 429 || r.status >= 500) throw new Error(`Server error: ${r.status} - ${t}`);
+                        throw new Error(`API error: ${r.statusText} - ${t}`);
+                    }
+                    return await r.json();
+                } catch (e) {
+                    if (i === delays.length || e.message.includes('API 인증/요청 오류')) throw e;
+                    await new Promise(res => setTimeout(res, delays[i]));
+                }
+            }
+        };
+        const getAIDictionaryData = async (term, contextData) => {
+            const articleText = contextData.map(p => p.text).filter(Boolean).join('\n');
+            const systemPrompt = `당신은 친절한 한국어 선생님입니다. '본문 맥락'을 참고하여 '검색어'를 '-요' 체로 간결히 설명해주세요.\n\n본문 맥락:\n---${articleText}\n---`;
+            const payload = { contents: [{ parts: [{ text: `검색어: "${term}"` }] }], systemInstruction: { parts: [{ text: systemPrompt }] }, generationConfig: { responseMimeType: 'application/json' } };
+            const result = await callGeminiWithBackoff(payload);
+            return JSON.parse(result.candidates[0].content.parts[0].text);
+        };
+        const transBtn = (action, isShowing, extra) =>
+            `<button type="button" data-action="${action}" class="inline-flex items-center gap-1 text-[8px] font-bold font-sans uppercase tracking-widest text-gray-500 opacity-40 hover:opacity-100 transition-opacity cursor-pointer border-none p-0 bg-transparent ${extra || ''}">${svgIcon('externalLink', 'w-2.5 h-2.5')}${isShowing ? 'Hide Eng' : 'Eng'}</button>`;
+        const levelBadgeHTML = (code) => {
+            const d = LEVEL_DEFINITIONS[code] || { title: 'Unknown' };
+            return `<div class="flex items-center gap-2 border border-black px-2 py-0.5 rounded-none"><span class="text-xs font-bold font-sans text-black print:text-[12px]">${esc(code)}</span><div class="w-px h-3 bg-gray-300"></div><span class="text-xs text-gray-500 font-sans print:text-[12px]">${esc(d.title)}</span></div>`;
+        };
+
+        // ---------- 3. 전역 상태 ----------
+        const app = { activeTab: 'home', userLevel: 'B2+', showVocab: false, headerExpanded: true };
+        const reading = { activeId: 1, highlightMode: false, color: 'yellow', highlights: {}, trans: {}, showDict: false, dictTerm: '', dictResult: null, dictLoading: false };
+        const vocabState = { query: '', globalTrans: false, itemTrans: {} };
+        const quizState = { attempts: {}, shuffled: ANSWER_CHOICES.slice(), q: {} };
+        const discussState = {};
+        const appEl = document.getElementById('app');
+
+        function setTab(tab) { app.activeTab = tab; app.headerExpanded = (tab !== 'reading'); closeVocabPopup(); buildApp(); window.scrollTo({ top: 0, behavior: 'auto' }); }
+
+        // ---------- 4. 셸 ----------
+        function shellHTML() {
+            const isReading = app.activeTab === 'reading';
+            const navBtns = NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" class="text-sm font-medium transition-colors font-sans relative ${app.activeTab === m.id ? 'text-black' : 'text-gray-400 hover:text-gray-600'}">${esc(m.label)}${app.activeTab === m.id ? '<div class="absolute -bottom-6 left-0 w-full h-0.5 bg-black"></div>' : ''}</button>`).join('');
+            const desktopHeader = `<div class="hidden lg:block relative z-50 print:hidden">
+                <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 flex items-center justify-between px-8 pr-20 transition-all duration-500 ease-in-out overflow-hidden ${app.headerExpanded ? 'h-16 opacity-100' : 'h-0 opacity-0 border-none'}">
+                    <div class="flex items-center cursor-pointer text-left" data-tab="home"><span class="text-lg font-bold font-sans tracking-tighter text-black whitespace-nowrap">OpenKoreanLearningLab</span></div>
+                    <nav class="flex items-center gap-8">${navBtns}</nav>
+                </header>
+                <button type="button" data-action="toggle-header" class="fixed top-0 right-0 z-[60] w-10 h-16 bg-white flex items-center justify-center transition-colors hover:bg-gray-50 ${app.headerExpanded ? 'border-b border-gray-100' : 'border-transparent'}">${svgIcon('menu', 'w-5 h-5 text-black')}</button>
+            </div>`;
+            const mobileTop = `<div class="lg:hidden h-14 border-b border-gray-100 flex items-center justify-center sticky top-0 bg-white z-40 print:hidden"><span class="text-lg font-bold font-sans tracking-tighter">OpenKoreanLearningLab</span></div>`;
+            const mobileNav = `<nav class="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-100 flex justify-around p-3 z-50 print:hidden">${NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" class="p-2 ${app.activeTab === m.id ? 'text-black' : 'text-gray-300'}">${svgIcon(m.icon, 'w-6 h-6')}</button>`).join('')}</nav>`;
+            return `${desktopHeader}${mobileTop}<main id="view-root" class="flex-1 relative flex flex-col ${isReading ? 'overflow-x-hidden lg:overflow-hidden lg:h-full print:h-auto print:overflow-visible' : ''}"></main>${mobileNav}`;
+        }
+        function buildApp() {
+            const isReading = app.activeTab === 'reading';
+            appEl.className = `flex flex-col bg-white text-gray-900 selection:bg-gray-200 selection:text-black font-sans ${isReading ? 'h-screen overflow-hidden print:h-auto print:overflow-visible' : 'min-h-screen'}`;
+            appEl.innerHTML = shellHTML();
+            paint();
+        }
+        function viewHTML() {
+            switch (app.activeTab) {
+                case 'home': return homeHTML();
+                case 'reading': return readingHTML();
+                case 'vocab': return vocabHTML();
+                case 'quiz': return quizHTML();
+                case 'discuss': return discussHTML();
+                default: return homeHTML();
+            }
+        }
+        function paint() {
+            const root = viewRoot(); if (!root) return;
+            root.innerHTML = viewHTML();
+            if (app.activeTab === 'reading') mountChart();
+        }
+
+        // ---------- 5. HOME ----------
+        function homeTagsHTML(){ var __hb=(typeof HOME_SERIES_BADGE!=="undefined" && HOME_SERIES_BADGE)?HOME_SERIES_BADGE:""; return __hb+(HOME_TAGS||[]).map(t=>`<span class="px-3 py-1 bg-gray-900 text-white text-[10px] font-sans font-bold tracking-widest uppercase">${esc(t)}</span>`).join(""); }
+        function homeHTML() {
+            const lvl = app.userLevel, info = LEVEL_DEFINITIONS[lvl] || { title: 'Unknown' };
+            const card = (tab, kicker, title, desc, cta) =>
+                `<button type="button" data-tab="${tab}" class="group flex flex-col sm:flex-row sm:items-center justify-between p-5 md:p-6 bg-white border border-gray-200 hover:border-black hover:shadow-md transition-all duration-300 text-left rounded-xl gap-4">
+                    <div class="flex-1"><div class="flex items-center gap-2 mb-2"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold font-sans tracking-widest uppercase rounded">${esc(kicker)}</span></div><h3 class="font-serif text-lg font-bold text-gray-900 mb-1">${esc(title)}</h3><p class="font-sans text-sm text-gray-500 leading-relaxed">${esc(desc)}</p></div>
+                    <div class="flex items-center gap-2 text-black font-bold text-sm shrink-0 self-end sm:self-center">${esc(cta)} ${svgIcon('arrowRight', 'w-3.5 h-3.5 transition-transform group-hover:translate-x-1')}</div>
+                </button>`;
+            return `<div class="animate-fade-in max-w-5xl mx-auto w-full px-6 lg:px-0 pt-36 pb-20 flex flex-col items-center print:pt-0 print:pb-0">
+                <div class="flex flex-col items-center justify-center min-h-[40vh] md:min-h-[50vh] text-center mb-10 pb-6 w-full print:min-h-0 print:mb-4 print:pb-4">
+                    <div class="flex items-center gap-3 mb-6 print:mb-2">${homeTagsHTML()}<div class="flex items-center border border-gray-900 px-3 py-1 text-[10px] font-sans tracking-widest uppercase text-gray-900"><span class="font-bold">${esc(lvl)}</span><span class="mx-2 w-px h-2.5 bg-gray-300"></span><span class="font-medium">${esc(info.title)}</span></div></div>
+                    <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl text-black leading-tight mb-6 font-bold print:text-[22px] print:mb-2">천원의 재능마켓: 누구에게나 천원어치의 재능은 있다</h1>
+                    <p class="font-serif text-gray-500 text-sm md:text-lg italic mb-10 max-w-2xl leading-relaxed print:text-[16px] print:mb-4">천 원으로 재능을 사고파는 '천원의 재능마켓' 현장 기사와 기획자 인터뷰</p>
+                    <div class="flex flex-col gap-5 w-full max-w-xl mx-auto print:hidden">
+                        <button type="button" data-tab="reading" class="group relative flex items-stretch w-full bg-white border border-gray-200 hover:border-black hover:shadow-md transition-all duration-300 text-left overflow-hidden rounded-xl">
+                            <div class="w-1/3 min-w-[140px] md:min-w-[180px] relative overflow-hidden bg-gray-900 shrink-0"><img src="https://placehold.co/600x400/111827/ffffff?text=Thumbnail" onerror="this.src='https://placehold.co/600x400/111827/ffffff?text=Bookstore';" alt="본문 썸네일" fetchpriority="high" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" /></div>
+                            <div class="flex-1 p-5 md:p-6 flex flex-col justify-center"><div class="flex items-center gap-2 mb-2"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-[10px] font-bold font-sans tracking-widest uppercase rounded">읽기 자료</span></div><h3 class="font-serif text-lg md:text-xl font-bold text-gray-900 mb-2">[읽기 자료 카드 제목]</h3><p class="font-sans text-sm text-gray-500 line-clamp-2 mb-4">[읽기 자료 카드 설명]</p><div class="mt-auto flex items-center gap-2 text-black font-bold text-sm">읽기 시작하기 ${svgIcon('arrowRight', 'w-4 h-4 transition-transform group-hover:translate-x-1')}</div></div>
+                        </button>
+                        ${card('vocab', '핵심 어휘', "[어휘 카드 제목]", '[설명을 입력하세요]', '학습 하기')}
+                        ${card('quiz', '내용 확인 퀴즈', '[퀴즈 카드 제목]', '[설명을 입력하세요]', '퀴즈 풀기')}
+                        ${card('discuss', '생각해 보기', '[토론 카드 제목]', '[설명을 입력하세요]', '사유 하기')}
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // ---------- 6. 어휘 카드 공용 ----------
+        function readingVocabContentHTML(word, showTrans, toggleAction) {
+            const t = (word.translations && word.translations.en) || {};
+            const subDefs = (word.subDefs || []).map((s, i) => `<div class="mb-2 last:mb-0"><p class="font-serif text-sm font-bold text-gray-700">${esc(s.subTerm)}</p>${showTrans && t.subDefs && t.subDefs[i] && t.subDefs[i].subTerm ? `<p class="font-sans text-[10px] text-gray-400 mb-0.5 animate-fade-in">${esc(t.subDefs[i].subTerm)}</p>` : ''}<p class="font-serif text-sm text-gray-600">${esc(s.subDef)}</p>${showTrans && t.subDefs && t.subDefs[i] && t.subDefs[i].subDef ? `<p class="font-sans text-[10px] text-gray-400 animate-fade-in">${esc(t.subDefs[i].subDef)}</p>` : ''}</div>`).join('');
+            const examples = (word.examples || []).map(ex => `<div class="mb-2 last:mb-0"><p class="font-serif text-sm text-gray-800 leading-relaxed">${esc(ex.kor)}</p>${showTrans ? `<p class="font-sans text-xs text-gray-400 mt-0.5 animate-fade-in">${esc(ex.eng)}</p>` : ''}</div>`).join('');
+            return `<div class="flex flex-col h-full"><div class="flex justify-between items-start mb-2"><h3 class="font-serif text-xl font-bold text-gray-900 leading-tight">${esc(word.term)}</h3>${transBtn(toggleAction, showTrans)}</div>${showTrans && t.term ? `<p class="font-sans text-xs text-gray-400 mb-1 animate-fade-in">${esc(t.term)}</p>` : ''}<p class="font-serif text-[15px] text-gray-800 leading-snug mb-3">${esc(word.mainDef)}</p>${showTrans && t.mainDef ? `<p class="font-sans text-xs text-gray-400 mb-3 animate-fade-in">${esc(t.mainDef)}</p>` : ''}${subDefs ? `<div class="mb-3 pl-3 border-l-2 border-gray-200">${subDefs}</div>` : ''}${examples ? `<div class="mt-auto pt-2"><span class="inline-block border border-gray-300 text-gray-500 text-[10px] px-1 rounded mb-1 font-sans">예문</span>${examples}</div>` : ''}</div>`;
+        }
+        function vocabItemHTML(word, idx, showTrans) {
+            const t = (word.translations && word.translations.en) || {};
+            const subDefs = (word.subDefs || []).map((s, i) => `<div class="text-left"><p class="text-sm font-bold text-gray-800 font-ui">${esc(s.subTerm)}</p><p class="text-xs text-gray-600 font-serif mt-0.5 ml-2">${esc(s.subDef)}</p>${showTrans && t.subDefs && t.subDefs[i] ? `<p class="text-[11px] text-gray-400 font-sans mt-0.5 ml-2 animate-fade-in"><span class="font-semibold">${esc(t.subDefs[i].term || t.subDefs[i].subTerm || '')}</span> — ${esc(t.subDefs[i].def || t.subDefs[i].subDef || '')}</p>` : ''}</div>`).join('');
+            const ex = (word.examples && word.examples[0]) || null;
+            return `<div class="vocab-card border border-gray-200 hover:border-gray-300 transition-colors p-6 flex flex-col group bg-white h-full" data-vidx="${idx}"><div class="flex justify-between items-start mb-4"><h3 class="text-[28px] font-bold font-serif text-[#1a1a1a] group-hover:text-black transition-colors">${esc(word.term)}</h3><div class="flex flex-col items-end gap-1">${transBtn('vocab-toggle', showTrans)}${showTrans && t.term ? `<span class="font-serif text-sm text-gray-400 italic animate-fade-in text-right">${esc(t.term)}</span>` : ''}</div></div><div class="mb-6 flex-1"><p class="text-[17px] text-[#444] font-serif leading-relaxed">${esc(word.mainDef)}</p>${showTrans && t.mainDef ? `<p class="text-sm text-gray-500 font-sans mt-2 animate-fade-in leading-relaxed">${esc(t.mainDef)}</p>` : ''}</div>${subDefs ? `<div class="mb-4 space-y-2 border-t border-gray-100 pt-3">${subDefs}</div>` : ''}${ex ? `<div class="bg-gray-50 p-5 mt-auto border-l-2 border-transparent group-hover:border-gray-300 transition-all"><p class="text-[15px] text-[#1a1a1a] font-serif leading-snug">${esc(ex.kor)}</p>${showTrans ? `<p class="text-[13px] text-gray-500 font-sans mt-2 pt-2 border-t border-gray-200 animate-fade-in">${esc(ex.eng)}</p>` : ''}</div>` : ''}</div>`;
+        }
+
+        // ---------- 7. 어휘 팝업 ----------
+        let popupEl = null;
+        function ensurePopupEl() {
+            if (!popupEl) {
+                popupEl = document.createElement('div'); popupEl.id = 'vocab-popup'; popupEl.style.display = 'none';
+                document.body.appendChild(popupEl);
+                popupEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const tb = e.target.closest('[data-action="popup-trans"]'); if (!tb) return;
+                    const word = VOCAB_READING_DATA.find(w => w.term === popupEl.dataset.term);
+                    const showing = popupEl.dataset.trans === '1'; popupEl.dataset.trans = showing ? '' : '1';
+                    fillPopup(word, !showing);
+                });
+            }
+            return popupEl;
+        }
+        function fillPopup(word, showTrans) {
+            const arrow = popupEl.dataset.arrow || '0';
+            popupEl.innerHTML = `<div class="absolute top-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white border-l border-t border-gray-200 rotate-45" style="left:${arrow}px"></div>` +
+                (popupEl.dataset.fixed ? readingVocabContentHTML(word, showTrans, 'popup-trans') : `<div><h3 class="font-serif text-lg font-bold text-gray-900 mb-1">${esc(word.term)}</h3><p class="font-serif text-sm text-gray-600 line-clamp-2">${esc(word.mainDef)}</p></div>`);
+        }
+        function showVocabPopup(word, x, y, fixed) {
+            const el = ensurePopupEl();
+            const width = 300, left = getPopupLeftPos(x, width);
+            el.className = `fixed z-[9999] bg-white border border-gray-200 rounded-lg p-5 w-[300px] animate-fade-in shadow-lg ${fixed ? '' : 'pointer-events-none'} print:hidden`;
+            el.style.left = left + 'px'; el.style.top = (y + 16) + 'px'; el.style.display = 'block';
+            el.dataset.fixed = fixed ? '1' : ''; el.dataset.term = word.term; el.dataset.trans = ''; el.dataset.arrow = String(x - left);
+            fillPopup(word, false);
+        }
+        function closeVocabPopup() { if (popupEl) { popupEl.style.display = 'none'; popupEl.dataset.fixed = ''; popupEl.dataset.term = ''; } }
+        document.addEventListener('click', (e) => {
+            if (!popupEl || popupEl.style.display === 'none') return;
+            if (popupEl.dataset.fixed && !popupEl.contains(e.target) && !(e.target.closest && e.target.closest('[data-vocab-idx]'))) closeVocabPopup();
+        });
+
+        // ---------- 8. READING ----------
+        function currentReading() { return READING_DATA.find(r => r.id === reading.activeId); }
+        function buildVocabRanges(text) {
+            const allTerms = VOCAB_READING_DATA.flatMap(v => { const terms = [v.term]; if (v.variants) terms.push(...v.variants); return terms.map(term => ({ term, vocab: v })); }).sort((a, b) => b.term.length - a.term.length);
+            const ranges = [];
+            allTerms.forEach(({ term, vocab }) => { let i = 0; while ((i = text.indexOf(term, i)) !== -1) { const end = i + term.length; const overlaps = ranges.some(m => (i >= m.start && i < m.end) || (end > m.start && end <= m.end)); if (!overlaps) ranges.push({ start: i, end, term, vocab }); i = end; } });
+            return ranges;
+        }
+        function renderTextSegments(text, blockIndex, isHeading) {
+            if (!text) return '';
+            const blockId = `${reading.activeId}-${blockIndex}`;
+            const blockHi = reading.highlights[blockId] || [];
+            const vocabRanges = buildVocabRanges(text);
+            const points = new Set([0, text.length]);
+            blockHi.forEach(h => { points.add(h.start); points.add(h.end); });
+            vocabRanges.forEach(v => { points.add(v.start); points.add(v.end); });
+            const sorted = Array.from(points).sort((a, b) => a - b);
+            let out = '';
+            for (let i = 0; i < sorted.length - 1; i++) {
+                const s = sorted[i], e = sorted[i + 1], mid = (s + e) / 2;
+                let hiColor = null;
+                for (let j = blockHi.length - 1; j >= 0; j--) { const h = blockHi[j]; if (h.start <= mid && h.end >= mid) { hiColor = h.color; break; } }
+                const av = vocabRanges.find(v => v.start <= mid && v.end >= mid);
+                let cls = 'transition-colors duration-200 decoration-clone ';
+                if (hiColor === 'yellow') cls += 'bg-yellow-200 '; else if (hiColor === 'red') cls += 'bg-red-200 '; else if (hiColor === 'green') cls += 'bg-green-200 ';
+                let attrs = '';
+                if (av) { cls += `cursor-pointer ${isHeading ? 'font-extrabold' : 'font-semibold'} text-gray-900 hover:text-black hover:bg-gray-100 rounded px-0.5 `; attrs = ` data-vocab-idx="${VOCAB_READING_DATA.indexOf(av.vocab)}"`; }
+                else if (!hiColor) cls += 'text-gray-800 ';
+                out += `<span class="${cls}"${attrs}>${esc(text.slice(s, e))}</span>`;
+            }
+            return out;
+        }
+        function readingBlocksHTML() {
+            const cr = currentReading();
+            return cr.content.map((p, idx) => {
+                if (p.isChart) return `<div class="my-8" data-chart="1"></div>`;
+                const pcls = p.isHeading ? 'text-xl md:text-2xl font-bold text-gray-900 mt-12 mb-5 border-l-4 border-black pl-3' : p.isSubHeading ? 'text-lg md:text-xl font-bold text-gray-800 mt-8 mb-4 border-l-2 border-gray-400 pl-3' : 'text-[17px] md:text-[18px] text-[#222]';
+                const segs = renderTextSegments(p.text, idx, p.isHeading || p.isSubHeading);
+                const transBlock = reading.trans[idx] ? `<div class="flex flex-col mt-3 print:hidden"><p class="text-sm font-sans text-gray-500 bg-gray-50 p-4 rounded-sm w-full animate-fade-in leading-relaxed text-left">${esc(p.trans)}</p></div>` : '';
+                return `<div class="relative mb-8 ${p.isBullet ? 'pl-5 md:pl-7' : ''}" data-block-index="${idx}">${p.isBullet ? '<span class="absolute left-0 md:left-2 top-0 text-[17px] md:text-[18px] text-[#222] font-serif select-none leading-[1.9]">•</span>' : ''}<p class="${pcls} leading-[1.9] font-serif tracking-wide text-justify">${segs}<button type="button" data-action="para-trans" data-idx="${idx}" class="ml-3 relative -top-0.5 inline-flex items-center gap-1 text-[8px] font-bold font-sans uppercase tracking-widest text-gray-500 opacity-40 hover:opacity-100 cursor-pointer bg-transparent border-none p-0">${svgIcon('externalLink', 'w-2.5 h-2.5')}${reading.trans[idx] ? 'Hide Eng' : 'Eng'}</button></p>${transBlock}</div>`;
+            }).join('');
+        }
+        function readingHeaderRightHTML() {
+            const colorBtns = reading.highlightMode ? `<div class="flex items-center gap-2 pl-2 border-l border-gray-200 animate-fade-in"><button type="button" data-hcolor="yellow" class="w-3 h-3 rounded-full bg-yellow-300 ring-1 ring-gray-200 ${reading.color === 'yellow' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="red" class="w-3 h-3 rounded-full bg-red-300 ring-1 ring-gray-200 ${reading.color === 'red' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="green" class="w-3 h-3 rounded-full bg-green-300 ring-1 ring-gray-200 ${reading.color === 'green' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="eraser" class="text-gray-400 hover:text-black ${reading.color === 'eraser' ? 'text-black' : ''}">${svgIcon('eraser', 'w-4 h-4', { fill: 'currentColor' })}</button></div>` : '';
+            const hex = reading.highlightMode ? (reading.color === 'yellow' ? '#facc15' : reading.color === 'red' ? '#f87171' : reading.color === 'green' ? '#4ade80' : '#9ca3af') : 'currentColor';
+            const dictPanel = reading.showDict ? `<div class="absolute top-full right-0 mt-4 w-80 bg-white border border-gray-200 shadow-xl p-5 rounded-lg z-50 animate-fade-in font-sans"><div class="flex justify-between items-center mb-3"><h3 class="text-sm font-bold text-gray-900">AI 문맥 사전 <span class="font-normal text-xs text-gray-500">(AI Context Dictionary)</span></h3><button type="button" data-action="dict-close" class="text-gray-400 hover:text-gray-600">${svgIcon('close', 'w-4 h-4')}</button></div><form data-action="dict-search" class="flex gap-2 mb-4"><input type="text" id="dict-input" value="${esc(reading.dictTerm)}" placeholder="단어를 입력하세요..." class="flex-1 bg-gray-50 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500" /><button type="submit" class="bg-black text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-800">검색</button></form>${reading.dictLoading ? '<div class="flex justify-center py-6"><div class="animate-spin rounded-full h-6 w-6 border-2 border-gray-200 border-t-blue-600"></div></div>' : reading.dictResult ? `<div class="space-y-3 animate-fade-in"><h3 class="text-lg font-bold text-gray-900 font-serif">${esc(reading.dictResult.term)}</h3><div class="text-sm text-gray-800 leading-relaxed font-serif border-l-2 border-blue-500 pl-3">${esc(reading.dictResult.definition)}</div>${reading.dictResult.example ? `<div class="pt-3 mt-3 border-t border-gray-100 bg-gray-50 p-3 rounded"><p class="text-xs font-bold text-gray-500 mb-1 font-sans uppercase">Example</p><p class="text-sm text-gray-800 font-serif">${esc(reading.dictResult.example)}</p></div>` : ''}</div>` : `<p class="text-xs text-gray-400 text-center py-4 leading-relaxed">본문의 내용을 바탕으로 단어를 설명해드립니다.<br/>현재 Gemini 웹에서만 가능합니다. <a href="https://gemini.google.com/share/0df0e744a920" target="_blank" rel="noreferrer" class="underline hover:text-black inline-flex items-center gap-1">Gemini에서 열기 ${svgIcon('externalLink', 'w-3 h-3')}</a></p>`}</div>` : '';
+            return `<div class="flex items-center gap-4"><div class="flex items-center gap-2"><button type="button" data-action="toggle-highlight" class="p-1 ${reading.highlightMode ? 'text-black' : 'text-gray-300 hover:text-gray-500'}">${svgIcon('highlighter', 'w-5 h-5', { style: `color:${hex}` })}</button>${colorBtns}</div><div class="w-px h-3 bg-gray-200"></div><div class="relative"><button type="button" data-action="toggle-dict" class="flex items-center gap-2 text-xs font-bold font-sans uppercase tracking-wider transition-colors ${reading.showDict ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}">${svgIcon('search', 'w-4 h-4')}<span>사전</span></button>${dictPanel}</div><div class="w-px h-3 bg-gray-200"></div><button type="button" data-action="toggle-vocab" class="flex items-center gap-2 text-xs font-bold font-sans uppercase ${app.showVocab ? 'text-black' : 'text-gray-400 hover:text-gray-600'}">${svgIcon('openbook', 'w-4 h-4')} <span>어휘 목록</span></button></div>`;
+        }
+        function readingHTML() {
+            const cr = currentReading();
+            const readingTabs = READING_DATA.map(r => `<button type="button" data-reading="${r.id}" class="text-xs font-bold font-sans px-2 py-1 ${reading.activeId === r.id ? 'text-black underline underline-offset-4' : 'text-gray-400 hover:text-gray-600'}">읽기 자료 ${r.id}</button>`).join('');
+            const cursorCls = reading.highlightMode ? (reading.color === 'eraser' ? 'cursor-eraser' : `highlight-${reading.color}`) : '';
+            return `<div class="flex flex-col lg:flex-row h-full relative"><div class="flex-1 flex flex-col h-full bg-white transition-all duration-300"><div class="h-16 px-6 border-b border-gray-50 flex items-center justify-between bg-white sticky top-0 z-20 pr-12 print:hidden"><div class="flex items-center gap-4">${levelBadgeHTML(app.userLevel)}<div class="flex items-center gap-2 ml-4">${readingTabs}</div></div>${readingHeaderRightHTML()}</div><div id="reading-scroll" class="flex-1 overflow-y-auto px-6 py-12 md:px-12 ${cursorCls} print:overflow-visible print:h-auto print:p-0"><div class="max-w-3xl mx-auto"><div class="mb-10 flex flex-col items-center text-center"><h1 class="text-2xl md:text-3xl lg:text-4xl font-serif font-bold text-gray-900 mb-4 leading-snug">${cr.title}</h1>${cr.subtitle ? `<h2 class="text-xl font-serif text-gray-600 mb-6">${esc(cr.subtitle)}</h2>` : ''}<div class="flex items-center justify-center text-xs font-sans text-gray-400"><a href="${esc(cr.source)}" target="_blank" rel="noreferrer" class="hover:text-black flex items-center gap-1">원문 링크 ${svgIcon('externalLink', 'w-3 h-3')}</a></div><div class="w-[1px] h-6 bg-gray-200 mt-8"></div></div><div id="reading-blocks" class="space-y-8">${readingBlocksHTML()}</div><div class="h-24"></div></div></div></div><div class="w-80 flex-col border-l border-black bg-white shrink-0 animate-fade-in z-10 ${app.showVocab ? 'hidden lg:flex' : 'hidden'}"><div class="h-14 px-5 border-b border-gray-200 flex items-center bg-gray-50"><span class="text-xs font-bold font-sans text-black uppercase tracking-widest">핵심 어휘</span></div><div class="flex-1 overflow-y-auto px-5 py-2">${VOCAB_READING_DATA.map((w, i) => `<div class="mb-4 rounded-lg border p-4 bg-white border-gray-200 hover:bg-gray-50" data-sb-idx="${i}">${readingVocabContentHTML(w, false, 'sb-trans')}</div>`).join('')}</div></div></div>`;
+        }
+        function mountChart() {
+            const slot = qs('[data-chart="1"]', viewRoot()); if (!slot) return;
+            if (typeof window.Chart === 'undefined') { slot.innerHTML = '<div class="text-center text-xs text-gray-400 py-8 print:hidden">차트를 불러올 수 없습니다.</div>'; return; }
+            slot.innerHTML = `<div class="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 w-full max-w-lg mx-auto my-8 font-sans shadow-sm"><div class="text-center mb-6"><span class="inline-block bg-black text-white text-[10px] font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-widest">[차트 배지]</span><h3 class="text-lg md:text-xl font-bold text-gray-900 mb-1 leading-snug">[차트 제목]</h3><p class="text-xs text-gray-500">[참여자 수]</p></div><div class="relative mb-6 flex justify-center h-64"><canvas id="survey-chart"></canvas></div><div class="grid grid-cols-2 gap-3 bg-gray-50 p-4 rounded-xl"><div class="flex items-center gap-2"><div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color:rgb(245,46,45)"></div><span class="text-xs font-medium text-gray-700 whitespace-nowrap">[항목 A]</span></div><div class="flex items-center gap-2"><div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color:rgb(3,104,247)"></div><span class="text-xs font-medium text-gray-700 whitespace-nowrap">[항목 B]</span></div><div class="flex items-center gap-2"><div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color:rgb(255,170,69)"></div><span class="text-xs font-medium text-gray-700 whitespace-nowrap">[항목 C]</span></div><div class="flex items-center gap-2"><div class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color:rgb(29,173,100)"></div><span class="text-xs font-medium text-gray-700 whitespace-nowrap">[항목 D]</span></div></div></div>`;
+            try {
+                const ctx = qs('#survey-chart', viewRoot()).getContext('2d');
+                new window.Chart(ctx, { type: 'pie', data: { labels: ['항목 A', '항목 B', '항목 C', '항목 D'], datasets: [{ data: [1532, 1871, 913, 510], backgroundColor: ['rgb(245,46,45)', 'rgb(3,104,247)', 'rgb(255,170,69)', 'rgb(29,173,100)'], borderWidth: 2, borderColor: '#ffffff' }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => ` ${c.label || ''}: ${c.parsed}명` } } } } });
+            } catch (e) {}
+        }
+        function rerenderReadingBlocks() { const w = qs('#reading-blocks', viewRoot()); if (w) { w.innerHTML = readingBlocksHTML(); mountChart(); } }
+
+        // ---------- 9. VOCAB ----------
+        function vocabFiltered() {
+            const q = vocabState.query.toLowerCase().trim();
+            if (!q) return VOCAB_READING_DATA.map((w, i) => ({ w, i }));
+            return VOCAB_READING_DATA.map((w, i) => ({ w, i })).filter(({ w }) => {
+                const t = (w.translations && w.translations.en) || {};
+                return w.term.toLowerCase().includes(q) || w.mainDef.toLowerCase().includes(q) || (w.variants && w.variants.some(v => v.toLowerCase().includes(q))) || (t.term && t.term.toLowerCase().includes(q)) || (t.mainDef && t.mainDef.toLowerCase().includes(q));
+            });
+        }
+        function vocabGridHTML() {
+            const list = vocabFiltered();
+            if (list.length === 0) return '<div class="text-center py-20 text-gray-400 font-serif">검색 결과에 맞는 어휘가 없습니다.</div>';
+            return `<div class="grid grid-cols-1 md:grid-cols-2 gap-6">${list.map(({ w, i }) => vocabItemHTML(w, i, vocabState.itemTrans[i] != null ? vocabState.itemTrans[i] : vocabState.globalTrans)).join('')}</div>`;
+        }
+        function vocabHTML() {
+            return `<div class="max-w-4xl mx-auto w-full px-6 pt-40 pb-20 animate-fade-in"><div class="mb-16 flex flex-col items-center text-center"><h2 class="text-[32px] md:text-[36px] font-bold text-[#1a1a1a] leading-tight font-serif mb-3 tracking-tight">핵심 어휘</h2><p class="text-[16px] text-[#444444] font-serif leading-relaxed mt-2 max-w-2xl">[설명을 입력하세요]</p><div class="w-[1px] h-6 bg-gray-200 mt-8"></div></div><div class="mb-8 flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 rounded-xl border border-gray-100"><div class="relative w-full sm:max-w-xs"><input type="text" id="vocab-search" value="${esc(vocabState.query)}" placeholder="단어, 뜻, 영어 검색..." class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all" />${vocabState.query ? '<button type="button" data-action="vocab-clear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-bold">✕</button>' : ''}</div><div class="flex items-center gap-4 w-full sm:w-auto justify-end"><span class="text-xs text-gray-500 font-sans">검색 결과: <strong id="vocab-count">${vocabFiltered().length}</strong>개 / 전체 ${VOCAB_READING_DATA.length}개</span><button type="button" data-action="vocab-global" class="px-4 py-2 text-xs font-semibold rounded-lg border transition-all ${vocabState.globalTrans ? 'bg-gray-900 text-white border-gray-900 hover:bg-black' : 'bg-white text-gray-800 border-gray-300 hover:border-gray-500'}">${vocabState.globalTrans ? '영어 일괄 숨기기' : '영어 일괄 표시'}</button></div></div><div class="mb-16"><div class="flex items-center gap-3 mb-8"><h3 class="text-xl font-bold font-serif text-black">읽기 자료 어휘</h3><div class="h-px flex-1 bg-gray-200"></div><span class="text-xs font-sans text-gray-400 font-bold uppercase tracking-widest">Reading</span></div><div id="vocab-grid">${vocabGridHTML()}</div></div></div>`;
+        }
+        function refreshVocabGrid() { const g = qs('#vocab-grid', viewRoot()); if (g) g.innerHTML = vocabGridHTML(); const c = qs('#vocab-count', viewRoot()); if (c) c.textContent = vocabFiltered().length; }
+
+        // ---------- 10. QUIZ ----------
+        function quizScore() { const c = Object.values(quizState.attempts).filter(Boolean).length; return Math.round((c / QUIZ_LIST.length) * 100); }
+        function shuffleChoices() { const a = quizState.shuffled.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } quizState.shuffled = a; }
+        function quizSentenceHTML(quiz) {
+            const st = quizState.q[quiz.id] || (quizState.q[quiz.id] = { input: '', result: null, hint: false, trans: false });
+            const len = Math.max(st.input.length, quiz.answer ? quiz.answer.length : 0);
+            const w = Math.max(120, len * 25);
+            const inpCls = st.result === 'correct' ? 'border-green-500 text-green-700' : st.result === 'incorrect' ? 'border-red-500 text-red-700' : 'border-gray-300 text-black focus:border-black';
+            return `<div class="quiz-q mb-10 pb-10 border-b border-gray-200 last:border-0" data-qid="${quiz.id}"><div class="flex items-baseline gap-4 mb-4"><span class="text-xs font-bold font-sans text-black border border-black px-1.5 py-0.5">Q.${quiz.id}</span></div><div class="text-xl font-serif text-gray-900 leading-loose mb-6"><span>${esc((quiz.textParts||quiz.parts)[0])}</span><input type="text" class="quiz-input mx-2 px-2 py-0 border-b-2 font-bold text-center outline-none bg-transparent transition-colors font-serif ${inpCls}" style="width:${w}px" value="${esc(st.input)}" /><span>${esc((quiz.textParts||quiz.parts)[1])}</span></div><div class="flex flex-wrap gap-3 items-center print:hidden"><button type="button" data-q="check" class="px-4 py-2 bg-black text-white text-xs font-bold font-sans hover:bg-gray-800 transition-colors">정답 확인</button><button type="button" data-q="show" class="px-4 py-2 bg-white border border-gray-300 text-gray-600 text-xs font-bold font-sans hover:border-black hover:text-black transition-colors">정답 보기</button><button type="button" data-q="hint" class="text-xs font-bold font-sans text-gray-400 hover:text-gray-600 underline">힌트</button><button type="button" data-q="trans" class="inline-flex items-center gap-1 text-[8px] font-bold font-sans uppercase tracking-widest text-gray-500 opacity-40 hover:opacity-100 cursor-pointer bg-transparent border-none p-0">${svgIcon('externalLink', 'w-2.5 h-2.5')}${st.trans ? 'Hide Eng' : 'Eng'}</button></div>${st.trans ? `<p class="mt-4 text-sm font-sans text-gray-500 bg-gray-50 p-3">${esc(quiz.textParts_eng[0])}<span class="font-bold text-gray-700">${esc(quiz.answer_eng)}</span>${esc(quiz.textParts_eng[1])}</p>` : ''}${st.hint ? `<p class="mt-4 text-sm font-sans text-gray-500 italic">💡 Hint: ${esc(quiz.hint)}</p>` : ''}${quiz.explanation && st.result === 'correct' ? `<p class="mt-4 text-sm font-sans text-green-700 font-medium">✓ Correct. ${esc(quiz.explanation)}</p>` : ''}${quiz.explanation && st.result === 'incorrect' ? '<p class="mt-4 text-sm font-sans text-red-600 font-medium">✕ Try again.</p>' : ''}</div>`;
+        }
+        function quizChoicesHTML() { return quizState.shuffled.map(c => `<span class="text-xs font-serif text-gray-600 bg-white border border-gray-200 px-2 py-1 select-all">${esc(c)}</span>`).join(''); }
+        function quizHTML() {
+            return `<div class="max-w-4xl mx-auto w-full px-6 pt-40 pb-20 flex flex-col md:flex-row gap-12 animate-fade-in"><div class="w-full md:w-64 shrink-0"><div class="sticky top-24"><div class="md:sticky md:top-24"><h2 class="text-[32px] md:text-[36px] font-serif font-bold text-[#1a1a1a] mb-2">내용 확인 퀴즈</h2><p class="text-sm font-sans text-gray-500 mb-6">학습 자료에 대한 이해도를 확인해 보세요.</p><div class="border-t border-gray-200 pt-4 mb-8"><span class="text-xs font-bold font-sans text-black uppercase block mb-2">정답률</span><span class="text-4xl font-serif font-bold text-gray-900" id="quiz-score">${quizScore()}%</span></div><div class="bg-gray-50 p-4 border border-gray-100"><h4 class="text-xs font-bold font-sans text-gray-500 uppercase mb-3 border-b border-gray-200 pb-2">정답 목록</h4><div class="flex flex-wrap gap-2" id="quiz-choices">${quizChoicesHTML()}</div></div></div></div></div><div class="flex-1" id="quiz-list">${QUIZ_LIST.map(quizSentenceHTML).join('')}</div></div>`;
+        }
+        function refreshQuizSidebar() { const sc = qs('#quiz-score', viewRoot()); if (sc) sc.textContent = quizScore() + '%'; const ch = qs('#quiz-choices', viewRoot()); if (ch) ch.innerHTML = quizChoicesHTML(); }
+        function rerenderQuizQ(qid) { const el = qs(`.quiz-q[data-qid="${qid}"]`, viewRoot()); if (el) el.outerHTML = quizSentenceHTML(QUIZ_LIST.find(q => q.id === qid)); }
+
+        // ---------- 11. DISCUSS ----------
+        function discussItemHTML(item) {
+            const st = discussState[item.id] || (discussState[item.id] = { text: '', showTrans: false, feedback: null, loading: false, fbTrans: false });
+            const vocab = item.vocab.map(v => `<div><p class="text-sm font-serif text-gray-700"><span class="font-bold text-black mr-2">${esc(v.term)}</span>${esc(v.def)}</p>${st.showTrans ? `<p class="text-[13px] font-sans text-gray-500 mt-1 animate-fade-in"><span class="font-bold mr-2">${esc(v.termEng)}</span>${esc(v.defEng)}</p>` : ''}</div>`).join('');
+            let fb = '';
+            if (st.feedback) {
+                const corr = (st.feedback.corrections || []).map(c => `<div class="border border-gray-100 p-5 bg-white"><div class="flex items-start gap-4 mb-3"><span class="shrink-0 text-[11px] font-bold px-2 py-0.5 bg-gray-100 text-gray-400 mt-0.5">수정 전</span><p class="text-[15px] font-serif text-gray-400 line-through leading-relaxed">${esc(c.original)}</p></div><div class="flex items-start gap-4 mb-5"><span class="shrink-0 text-[11px] font-bold px-2 py-0.5 bg-blue-50 text-blue-600 mt-0.5">수정 후</span><p class="text-[15px] font-serif text-gray-900 font-bold leading-relaxed">${esc(c.corrected)}</p></div><div class="pt-4 border-t border-gray-100 border-dashed"><span class="font-bold text-gray-400 text-[11px] mr-2 font-sans">💡 설명</span><span class="text-[14px] font-serif text-gray-700 leading-relaxed">${esc(c.explanation)}</span>${st.fbTrans ? `<p class="text-[13px] font-sans text-gray-500 mt-2 ml-6 animate-fade-in">${esc(c.explanationTrans)}</p>` : ''}</div></div>`).join('');
+                fb = `<div class="mt-8 border border-gray-100 rounded-sm p-6 bg-white animate-fade-in shadow-sm"><h4 class="text-lg font-bold font-serif flex items-center gap-2 mb-6 text-gray-900">${svgIcon('sparkles', 'w-5 h-5 text-gray-700', { fill: 'currentColor' })} AI 한국어 도우미</h4><div class="bg-gray-50 px-5 py-4 mb-8 border-l-[3px] border-gray-800"><span class="text-xs font-bold text-gray-500 mb-2 block font-sans">총평 및 잘한 점</span><p class="text-[15px] font-serif text-gray-800 leading-relaxed">${esc(st.feedback.overallComment)}</p>${st.fbTrans && st.feedback.overallCommentTrans ? `<p class="text-[13px] font-sans text-gray-500 mt-2 pt-2 border-t border-gray-200 animate-fade-in">${esc(st.feedback.overallCommentTrans)}</p>` : ''}</div>${corr ? `<h5 class="text-xs font-bold text-gray-500 mb-4 font-sans">문장별 교정 및 설명</h5><div class="space-y-6">${corr}</div>` : ''}<div class="flex justify-end mt-4">${transBtn('discuss-fbtrans', st.fbTrans)}</div></div>`;
+            }
+            const disabled = (!st.text.trim() || st.loading);
+            return `<div class="discuss-q mb-16 group" data-did="${item.id}"><div class="flex items-center gap-4 mb-6"><span class="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900">${String(item.id).padStart(2, '0')}</span><h3 class="text-xl font-serif font-bold text-gray-900 leading-normal">${esc(item.questionKor)}</h3></div><div class="pl-0 md:pl-14"><div class="flex gap-2 mb-4">${transBtn('discuss-qtrans', st.showTrans)}${st.showTrans ? `<p class="text-sm font-sans text-gray-500 animate-fade-in">${esc(item.questionEng)}</p>` : ''}</div><div class="bg-gray-50 p-5 mb-6 border-l-2 border-black"><span class="text-xs font-bold font-sans text-gray-400 uppercase mb-3 block">핵심 어휘${st.showTrans ? ' <span class="font-normal normal-case ml-1">(Key Vocabulary)</span>' : ''}</span><div class="space-y-4">${vocab}</div></div><textarea data-action="discuss-text" placeholder="여기에 생각을 적어보세요..." class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea><div class="flex justify-end"><button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '<div class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>' : ''}AI 피드백 받기</button></div>${fb}</div></div>`;
+        }
+        function discussHTML() {
+            return `<div class="max-w-3xl mx-auto w-full px-6 pt-40 pb-20 animate-fade-in"><div class="mb-6 pb-6 text-center"><h2 class="text-[32px] md:text-[36px] font-serif font-bold text-[#1a1a1a] mb-2">생각해 보기</h2><p class="text-sm font-sans text-gray-500">학습 자료에 대해 심층적으로 생각해 보세요.</p></div><div class="bg-gray-50 border border-gray-200 p-4 mb-10 flex items-start gap-3"><div class="shrink-0 mt-0.5">${svgIcon('sparkles', 'w-4 h-4 text-gray-400', { fill: 'currentColor' })}</div><p class="text-xs font-sans text-gray-600 leading-relaxed">AI 피드백은 현재 Gemini 웹에서만 가능합니다. <a href="https://gemini.google.com/share/0df0e744a920" target="_blank" rel="noreferrer" class="underline decoration-gray-400 underline-offset-2 hover:text-black inline-flex items-center gap-1">Gemini에서 열기 ${svgIcon('externalLink', 'w-3 h-3')}</a></p></div><div id="discuss-list">${DISCUSS_DATA.map(discussItemHTML).join('')}</div></div>`;
+        }
+        function rerenderDiscussItem(id) { const el = qs(`.discuss-q[data-did="${id}"]`, viewRoot()); if (el) el.outerHTML = discussItemHTML(DISCUSS_DATA.find(d => d.id === id)); }
+
+        // ---------- 12. 이벤트 위임 (안정적 #app 에 1회만) ----------
+        appEl.addEventListener('click', (e) => {
+            const tabBtn = e.target.closest('[data-tab]'); if (tabBtn) { setTab(tabBtn.dataset.tab); return; }
+            const hdr = e.target.closest('[data-action="toggle-header"]'); if (hdr) { app.headerExpanded = !app.headerExpanded; buildApp(); return; }
+            const a = e.target.closest('[data-action]');
+            const tab = app.activeTab;
+
+            if (tab === 'reading') {
+                const vspan = e.target.closest('[data-vocab-idx]');
+                if (vspan) { e.stopPropagation(); const w = VOCAB_READING_DATA[+vspan.dataset.vocabIdx]; const r = vspan.getBoundingClientRect(); if (popupEl && popupEl.dataset.fixed && popupEl.dataset.term === w.term) { closeVocabPopup(); } else { showVocabPopup(w, r.left + r.width / 2, r.bottom, true); } return; }
+                const hc = e.target.closest('[data-hcolor]'); if (hc) { reading.color = hc.dataset.hcolor; paint(); return; }
+                const rd = e.target.closest('[data-reading]'); if (rd) { reading.activeId = +rd.dataset.reading; paint(); return; }
+                const sb = e.target.closest('[data-sb-idx]'); const sbBtn = e.target.closest('[data-action="sb-trans"]');
+                if (sb && sbBtn) { const i = +sb.dataset.sbIdx; const showing = sb.dataset.trans === '1'; sb.dataset.trans = showing ? '' : '1'; sb.innerHTML = readingVocabContentHTML(VOCAB_READING_DATA[i], !showing, 'sb-trans'); return; }
+                if (a) {
+                    const act = a.dataset.action;
+                    if (act === 'toggle-highlight') { reading.highlightMode = !reading.highlightMode; paint(); }
+                    else if (act === 'toggle-dict') { reading.showDict = !reading.showDict; paint(); }
+                    else if (act === 'dict-close') { reading.showDict = false; paint(); }
+                    else if (act === 'toggle-vocab') { app.showVocab = !app.showVocab; paint(); }
+                    else if (act === 'para-trans') { const i = +a.dataset.idx; reading.trans[i] = !reading.trans[i]; rerenderReadingBlocks(); }
+                    return;
+                }
+            } else if (tab === 'vocab') {
+                if (!a) return;
+                if (a.dataset.action === 'vocab-clear') { vocabState.query = ''; paint(); }
+                else if (a.dataset.action === 'vocab-global') { vocabState.globalTrans = !vocabState.globalTrans; vocabState.itemTrans = {}; paint(); }
+                else if (a.dataset.action === 'vocab-toggle') { const card = a.closest('[data-vidx]'); const i = +card.dataset.vidx; const cur = vocabState.itemTrans[i] != null ? vocabState.itemTrans[i] : vocabState.globalTrans; vocabState.itemTrans[i] = !cur; card.outerHTML = vocabItemHTML(VOCAB_READING_DATA[i], i, !cur); }
+                return;
+            } else if (tab === 'quiz') {
+                const btn = e.target.closest('[data-q]'); if (!btn) return;
+                const qEl = btn.closest('.quiz-q'); const qid = +qEl.dataset.qid; const quiz = QUIZ_LIST.find(q => q.id === qid); const st = quizState.q[qid];
+                const inp = qs('.quiz-input', qEl); if (inp) st.input = inp.value;
+                if (btn.dataset.q === 'check') { const t = st.input.trim(); const ok = t === quiz.answer || (quiz.altAnswer && t === quiz.altAnswer); st.result = ok ? 'correct' : 'incorrect'; st.hint = false; if (!quizState.attempts.hasOwnProperty(qid)) quizState.attempts[qid] = ok; shuffleChoices(); rerenderQuizQ(qid); refreshQuizSidebar(); }
+                else if (btn.dataset.q === 'show') { st.input = quiz.answer; st.result = null; st.hint = false; shuffleChoices(); rerenderQuizQ(qid); refreshQuizSidebar(); }
+                else if (btn.dataset.q === 'hint') { st.hint = !st.hint; rerenderQuizQ(qid); }
+                else if (btn.dataset.q === 'trans') { st.trans = !st.trans; rerenderQuizQ(qid); }
+                return;
+            } else if (tab === 'discuss') {
+                if (!a) return;
+                const qEl = a.closest('.discuss-q'); const id = +qEl.dataset.did; const st = discussState[id];
+                if (a.dataset.action === 'discuss-qtrans') { st.showTrans = !st.showTrans; rerenderDiscussItem(id); }
+                else if (a.dataset.action === 'discuss-fbtrans') { st.fbTrans = !st.fbTrans; rerenderDiscussItem(id); }
+                else if (a.dataset.action === 'discuss-feedback') { runDiscussFeedback(id); }
+                return;
+            }
+        });
+
+        appEl.addEventListener('input', (e) => {
+            const tab = app.activeTab;
+            if (tab === 'vocab' && e.target.id === 'vocab-search') { vocabState.query = e.target.value; vocabState.itemTrans = {}; refreshVocabGrid(); }
+            else if (tab === 'quiz' && e.target.classList.contains('quiz-input')) { const qid = +e.target.closest('.quiz-q').dataset.qid; const st = quizState.q[qid]; st.input = e.target.value; st.result = null; }
+            else if (tab === 'discuss' && e.target.matches('[data-action="discuss-text"]')) {
+                const id = +e.target.closest('.discuss-q').dataset.did; const st = discussState[id];
+                const wasDisabled = !st.text.trim(); st.text = e.target.value;
+                if (wasDisabled !== !st.text.trim()) { const pos = e.target.selectionStart; rerenderDiscussItem(id); const ta = qs(`.discuss-q[data-did="${id}"] [data-action="discuss-text"]`, viewRoot()); if (ta) { ta.focus(); try { ta.setSelectionRange(pos, pos); } catch (_) {} } }
+            }
+        });
+
+        appEl.addEventListener('submit', async (e) => {
+            const form = e.target.closest('[data-action="dict-search"]'); if (!form) return;
+            e.preventDefault();
+            const inp = qs('#dict-input', viewRoot()); reading.dictTerm = inp ? inp.value : '';
+            if (!reading.dictTerm.trim()) return;
+            reading.dictLoading = true; reading.dictResult = null; paint();
+            try { reading.dictResult = await getAIDictionaryData(reading.dictTerm, currentReading().content); }
+            catch (err) { reading.dictResult = { term: reading.dictTerm, definition: '검색 중 오류가 발생했습니다. (API 키 없음/요청 오류)', example: '' }; }
+            finally { reading.dictLoading = false; paint(); }
+        });
+
+        // reading: 어휘 호버 팝업 (bubbling 가능한 mouseover/mouseout)
+        appEl.addEventListener('mouseover', (e) => {
+            if (app.activeTab !== 'reading') return;
+            const span = e.target.closest && e.target.closest('[data-vocab-idx]'); if (!span) return;
+            if (popupEl && popupEl.dataset.fixed) return;
+            const w = VOCAB_READING_DATA[+span.dataset.vocabIdx]; const r = span.getBoundingClientRect();
+            showVocabPopup(w, r.left + r.width / 2, r.bottom, false);
+        });
+        appEl.addEventListener('mouseout', (e) => {
+            if (app.activeTab !== 'reading') return;
+            const span = e.target.closest && e.target.closest('[data-vocab-idx]'); if (!span) return;
+            if (popupEl && popupEl.dataset.fixed) return;
+            if (e.relatedTarget && span.contains(e.relatedTarget)) return;
+            closeVocabPopup();
+        });
+        // reading: 형광펜 선택
+        appEl.addEventListener('mouseup', () => { if (app.activeTab === 'reading') handleTextMouseUp(); });
+
+        function handleTextMouseUp() {
+            if (!reading.highlightMode) return;
+            const sel = window.getSelection(); if (!sel || sel.isCollapsed) return;
+            let container = sel.anchorNode && sel.anchorNode.parentElement;
+            while (container && !(container.dataset && container.dataset.blockIndex)) container = container.parentElement;
+            if (!container) return;
+            const blockId = `${reading.activeId}-${container.dataset.blockIndex}`;
+            const range = sel.getRangeAt(0);
+            const start = getContainerOffset(container, range.startContainer, range.startOffset);
+            const end = getContainerOffset(container, range.endContainer, range.endOffset);
+            const s = Math.min(start, end), e2 = Math.max(start, end); if (s === e2) return;
+            const cur = reading.highlights[blockId] || [];
+            if (reading.color === 'eraser') {
+                const next = [];
+                for (const h of cur) { const os = Math.max(h.start, s), oe = Math.min(h.end, e2); if (os < oe) { if (h.start < os) next.push({ start: h.start, end: os, color: h.color }); if (h.end > oe) next.push({ start: oe, end: h.end, color: h.color }); } else next.push(h); }
+                reading.highlights[blockId] = next;
+            } else { reading.highlights[blockId] = [...cur, { start: s, end: e2, color: reading.color }]; }
+            sel.removeAllRanges();
+            rerenderReadingBlocks();
+        }
+
+        async function runDiscussFeedback(id) {
+            const st = discussState[id]; if (!st.text.trim() || st.loading) return;
+            st.loading = true; st.feedback = null; rerenderDiscussItem(id);
+            try {
+                const prompt = `당신은 친절한 'AI 한국어 도우미'입니다. 학습자의 한국어 문장을 교정하고 설명하세요. 반드시 JSON으로만 응답하세요. 형식: {"overallComment":"","overallCommentTrans":"","corrections":[{"original":"","corrected":"","explanation":"","explanationTrans":""}]}`;
+                const payload = { contents: [{ role: 'user', parts: [{ text: prompt + `\n\n질문: ${DISCUSS_DATA.find(d => d.id === id).questionKor}\n학습자 작성 문장: ${st.text}` }] }], generationConfig: { responseMimeType: 'application/json' } };
+                const result = await callGeminiWithBackoff(payload);
+                let jt = result.candidates[0].content.parts[0].text; jt = jt.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+                st.feedback = JSON.parse(jt);
+            } catch (err) { st.feedback = { overallComment: '피드백을 받아오는 중 오류가 발생했습니다. (API 키가 없거나 요청 형식 오류)', overallCommentTrans: err.message, corrections: [] }; }
+            finally { st.loading = false; rerenderDiscussItem(id); }
+        }
+
+        // ---------- 13. 시작 ----------
+        buildApp();
+    })();
+    </script>
+</body>
+
+</html>
