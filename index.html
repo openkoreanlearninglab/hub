@@ -7,9 +7,10 @@
 <meta name="description" content="초급부터 고급까지(A1–C2) 한국어 학습 자료. 동영상과 읽기 자료로 한국어를 배워 보세요. Korean learning materials from A1 to C2." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" media="print" id="gfonts" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700;900&text=%ED%95%9C%EA%B5%AD%EC%96%B4%ED%95%99%EC%8A%B5%EC%9E%90%EB%A3%8C%EB%A0%88%EB%B2%A8%EC%9D%84%EC%84%A0%ED%83%9D%ED%95%98%EC%84%B8%EC%9A%94%EC%B4%88%EA%B8%89%EC%A4%91%EA%B3%A0%EB%B3%B4%EA%B8%B0%20ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%2B%E2%80%93%C2%A9%E2%86%92%E2%80%99'().%2C%26%3A%2F&display=swap" rel="stylesheet" id="gfonts-gate" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet" media="print" id="gfonts" />
 <script>(function(){var l=document.getElementById("gfonts");if(!l)return;function a(){l.media="all";}if(l.sheet)a();else l.addEventListener("load",a);})();</script>
-<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet" /></noscript>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet" /></noscript>
 <style>
   :root{ --ink:#18181b; --gray:#71717a; --line:#e4e4e7; --light-gray:#a1a1aa; --bg-subtle:#fafafa; }
   *{ box-sizing:border-box; margin:0; padding:0; }
@@ -456,7 +457,7 @@
       g_all:'All', g_beginner:'Beginner', g_lowint:'Lower-Intermediate', g_intermediate:'Intermediate', g_upint:'Upper-Intermediate', g_advanced:'Advanced',
       t_all:'Korean Learning Materials', t_beginner:'Beginner Materials', t_lowint:'Lower-Intermediate Materials', t_intermediate:'Intermediate Materials', t_upint:'Upper-Intermediate Materials', t_advanced:'Advanced Materials',
       d_all:'Every Korean learning material from A1 to C2 in one place. Pick a level band, or jump straight in with search and tags.',
-      d_beginner:'Review the key expressions and basic grammar from your class or textbook. Watch short videos to practice them again, then answer simple questions in Korean.',
+      d_beginner:'Review the basic grammar and expressions you learned in class through short videos, then practice speaking your mind in Korean with a few easy questions.',
       d_lowint:'Study Korean with videos about everyday life. Use what you learn right away in class, and practice thinking and speaking directly in Korean without translating in your head.',
       d_intermediate:'Level up with authentic videos and articles that native Koreans actually watch and read. You’ll practice understanding real-world content accurately, then use it as a launchpad to share your own experiences and ideas naturally in Korean.',
       d_upint:'Go deeper into native content and practice organizing your thoughts logically, building the ability to read and listen critically.',
@@ -480,7 +481,7 @@
   };
   var GROUP_ORDER = ['all','beginner','lowint','intermediate','upint','advanced'];
   var DETAIL = {
-    beginner:{ ko:'책이나 수업에서 배운 표현과 기초 문법을 다시 공부해요. 짧은 동영상을 보면서 중요한 표현을 다시 듣고 익혀요. 그리고 쉬운 질문에 내 생각을 한국어로 말해 봐요.' },
+    beginner:{ ko:'텍스트북이나 수업에서 기초 문법하고 표현들을 배웠어요. 짧은 동영상을 보면서 기초 문법하고 표현들을 다시 공부해 봐요. 그리고 쉬운 질문에 자기 생각을 한국어로 말해 봐요.' },
     lowint:{ ko:'일상생활 주제의 동영상을 보면서 한국어를 공부해요. 자료에서 배운 표현을 수업에서 바로 써 보고, 번역하지 않고 한국어로 바로 생각해서 말하는 연습을 해요.' },
     intermediate:{ ko:'실제 한국인들이 즐겨 보는 동영상이나 글을 활용해서 한국어를 공부해 봐요. 콘텐츠의 내용을 정확히 이해하는 연습도 하고, 이를 바탕으로 자신의 경험이나 생각을 자연스럽게 한국어로 말하는 연습을 해 봐요.' },
     upint:{ ko:'원어민 콘텐츠를 더 깊이 다루며, 자신의 생각을 논리적으로 정리해 표현하는 연습을 해요. 비판적으로 읽고 듣는 힘을 조금씩 키우는 단계예요.' },
@@ -528,6 +529,7 @@
     scopeItems().forEach(function(m){ (m.tags||[]).forEach(function(t){ if(set.indexOf(t)<0) set.push(t); }); if(m.series && ser.indexOf(m.series)<0) ser.push(m.series); });
     return ['전체','최신'].concat(ser).concat(set);
   }
+  function byDateDesc(a,b){ var da=a.date||'', db=b.date||''; return da===db?0:(da<db?1:-1); }
   function finalItems(){
     var q = state.q.trim().toLowerCase();
     return scopeItems().filter(function(m){
@@ -542,11 +544,7 @@
       if(q && (m.title+' '+(m.en||'')+' '+m.tags.join(' ')).toLowerCase().indexOf(q)<0) return false;
       return true;
     });
-    pool = pool.slice().sort(function(a,b){
-      var da = a.date || '', db = b.date || '';
-      if(da===db) return 0;
-      return da < db ? 1 : -1;
-    });
+    pool = pool.slice().sort(byDateDesc);
     return pool.slice(0, state.level === 'all' ? 10 : 5);
   }
   function detailHTML(key, bi){
@@ -597,18 +595,20 @@
       return '<div class="cards">'+recent.map(function(m){ return cardOf(m, bi); }).join('')+'</div>';
     }
     var order = levelOrder();
-    var items = finalItems().slice().sort(function(a,b){ return order.indexOf(a.level)-order.indexOf(b.level); });
+    var items = finalItems();
     if(!items.length) return '<div class="empty">검색 결과가 없습니다.'+(bi?' / '+tr('noresult'):'')+'</div>';
     if(state.level!=='all'){
-      var pages = Math.ceil(items.length/PER_PAGE);
+      var sorted = items.slice().sort(byDateDesc);
+      var pages = Math.ceil(sorted.length/PER_PAGE);
       if(state.page>pages) state.page = pages||1;
       var start=(state.page-1)*PER_PAGE;
-      var pcards = items.slice(start, start+PER_PAGE).map(function(m){ return cardOf(m, bi); }).join('');
+      var pcards = sorted.slice(start, start+PER_PAGE).map(function(m){ return cardOf(m, bi); }).join('');
       return '<div class="cards">'+pcards+'</div>'+pagerHTML(pages, state.page);
     }
-    var shown = items.slice(0, state.itemsToShow);
+    var ordered = items.slice().sort(function(a,b){ return order.indexOf(a.level)-order.indexOf(b.level); });
+    var shown = ordered.slice(0, state.itemsToShow);
     var out = order.map(function(lv){
-      var rows = shown.filter(function(m){ return m.level===lv; });
+      var rows = shown.filter(function(m){ return m.level===lv; }).sort(byDateDesc);
       if(!rows.length) return '';
       var cards = rows.map(function(m){ return cardOf(m, bi); }).join('');
       return '<div class="divider"><span class="lvcode">'+esc(lv)+'</span>'
