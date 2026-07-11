@@ -166,6 +166,8 @@
   var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
 
   var MATERIALS = [
+    {level: "C1+", tags: ["사회"], title: "얼룩소(alookso) 프로젝트 - 글값을 주면 공론장을 만들 수 있을까?", thumb: "thumbnails/c1plus-alookso-project.jpg", link: "https://docs.google.com/document/d/1DBPKPbhjrl0L-vV2oqf3LZIGDiOlfnMGAs1XwfZjnxU/edit?usp=sharing", date: "2026-07-02"},
+    {level: "C1", tags: ["사회"], title: "한중일 출신이 구글에서 CEO가 못 되는 이유 - 권위에 순종적인 문화 vs 대나무 천장", type: "video", thumb: "https://i.ytimg.com/vi/BgaWOzvH49A/hqdefault.jpg", link: "https://docs.google.com/document/d/1T7TflpJkaWDK9c5e1dHeTTZ793e4Jr3bJARU3ZdNmrU/edit?usp=sharing", date: "2021-09-27"},
     {level: "C1", tags: ["사회","문화"], title: "〈한국이 싫어서〉 - 한국이 싫은 이유가 무엇이며, 한국을 떠나면 그 문제가 사라질까?", thumb: "thumbnails/c1-because-i-hate-korea.jpg", link: "https://docs.google.com/document/d/1EK_vwqYMgvhb7dB9zFlKQprhjN8ZmvqecJU-rgBudOY/edit?usp=sharing", date: "2026-06-30"},
     {level: "C2", tags: ["사회","교육"], title: "21세기, 대학은 존재론적 위기를 맞이했을까?", thumb: "thumbnails/c2-university-existential-crisis.jpg", link: "https://docs.google.com/document/d/1qVqh4boOn621kY1Es3yQtSwgVPOI3nr7SfIFA9mb8bY/edit?usp=sharing", date: "2026-06-30"},
     {level: "C2", tags: ["문학","철학"], title: "소설 \u003c스무드\u003e를 통해 살펴보는 정체성의 경계", thumb: "thumbnails/c2-novel-smooth-identity.jpg", link: "https://docs.google.com/document/d/1ReWCwk4xRRqJBSwqsGKI6CPStYR5ABy5bEPuPjq6HPk/edit?usp=sharing", date: "2026-06-30"},
@@ -493,6 +495,12 @@
   var state = { view:'gate', group:'all', level:'all', entryBand:'beginner', page:1, lang:'auto', langOpen:false, q:'', tag:'최신', itemsToShow:12 };
   var app = document.getElementById('app');
 
+  // 게이트 선택 기억: 카드를 고르면 localStorage에 저장하고, 재방문 시 게이트를 건너뛰고 해당 페이지로 바로 진입.
+  // 브라우저의 사이트 데이터(쿠키·로컬 저장소)를 삭제하면 다시 게이트가 나타남. 시크릿 모드 등 저장 불가 환경은 try/catch로 무시.
+  var CHOICE_KEY = 'okll.gateChoice';
+  function saveChoice(v){ try{ localStorage.setItem(CHOICE_KEY, v); }catch(_e){} }
+  function loadChoice(){ try{ return localStorage.getItem(CHOICE_KEY); }catch(_e){ return null; } }
+
   // 보조 언어 결정: null=한국어만, 그 외=언어코드. 'auto'는 브라우저 언어를 따름
   function sec(){
     if(state.lang==='ko') return null;
@@ -718,11 +726,11 @@
 
   app.addEventListener('click', function(e){
     var band = e.target.closest('[data-band]');
-    if(band){ var bd=band.getAttribute('data-band'); state.entryBand=bd; state.group=bd; state.view='app'; state.level='all'; state.tag='전체'; state.q=''; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
+    if(band){ var bd=band.getAttribute('data-band'); saveChoice(bd); state.entryBand=bd; state.group=bd; state.view='app'; state.level='all'; state.tag='전체'; state.q=''; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
     var home = e.target.closest('[data-home]');
     if(home){ state.view='gate'; window.scrollTo(0,0); render(); return; }
     var ent = e.target.closest('[data-enter]');
-    if(ent){ state.view='app'; state.group='all'; state.level='all'; state.tag='최신'; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
+    if(ent){ saveChoice('all'); state.view='app'; state.group='all'; state.level='all'; state.tag='최신'; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
     var setlang = e.target.closest('[data-setlang]');
     if(setlang){ state.lang = setlang.getAttribute('data-setlang'); state.langOpen=false; render(); return; }
     var langbtn = e.target.closest('#lang-btn');
@@ -760,6 +768,13 @@
     var t = e.target;
     if(t && t.classList && t.classList.contains('thumb-img')){ var p=t.parentNode; if(p) p.classList.add('noimg'); }
   }, true);
+
+  // 첫 진입: 저장된 게이트 선택이 있으면 게이트를 건너뛰고 해당 화면으로 (카드 클릭과 동일한 상태로 진입)
+  (function(){
+    var saved = loadChoice();
+    if(saved==='all'){ state.view='app'; state.group='all'; state.level='all'; state.tag='최신'; }
+    else if(saved && GATE_BANDS[saved]){ state.view='app'; state.entryBand=saved; state.group=saved; state.level='all'; state.tag='전체'; }
+  })();
   render();
 
 })();
