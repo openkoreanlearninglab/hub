@@ -166,15 +166,21 @@
   var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
 
   var MATERIALS = [
+    {level: "B1+", tags: ["일상","문화"], title: "여러분들의 원래 꿈은 무엇인가요?", thumb: "thumbnails/b1plus-original-dream.webp", link: "content/b1plus-original-dream.html", date: "2025-11-14"},
+    {level: "B1", tags: ["사회","문화"], title: "누구에게나 1000원의 재능은 있다?", type: "video", thumb: "https://i.ytimg.com/vi/TwJUbLOmBCM/hqdefault.jpg", link: "content/b1-1000won-talent.html", date: "2025-11-12"},
+    {level: "B1", tags: ["일상"], title: "만화책도 책일까?", link: "content/b1-are-comics-books.html", date: "2025-10-17"},
+    {level: "C2", tags: ["시사","정치"], title: "실용 정부? 실용 외교? ‘실용’이란 무엇일까", thumb: "thumbnails/c2-what-is-pragmatism.webp", link: "content/c2-what-is-pragmatism.html", date: "2025-09-18"},
+    {level: "C1", tags: ["사회","심리"], title: "사람을 바꾸는 나눔의 힘", thumb: "thumbnails/c1-sharing-power.webp", link: "content/c1-sharing-power.html", date: "2025-08-01"},
+    {level: "C2", tags: ["사회","미디어"], title: "멋진 숏폼 세계 — 네트워킹은 사라지고 무한한 흐름만 남았다", thumb: "thumbnails/c2-short-form-infinite-feed.webp", link: "https://docs.google.com/document/d/1Vc87TC_w4sl0lrlPUmpgR1My8ILkl2cqwrVcr6MdHEg/edit?usp=sharing", date: "2026-07-13"},
     {level: "B2+", tags: ["사회","문화"], title: "화장실 유료화 논쟁", type: "video", thumb: "https://i.ytimg.com/vi/GAq69exyPAc/hqdefault.jpg", link: "content/b2plus-toilet-fee-debate.html", date: "2026-07-12"},
-    {level: "C1+", tags: ["사회"], title: "얼룩소(alookso) 프로젝트 - 글값을 주면 공론장을 만들 수 있을까?", thumb: "thumbnails/c1plus-alookso-project.jpg", link: "https://docs.google.com/document/d/1DBPKPbhjrl0L-vV2oqf3LZIGDiOlfnMGAs1XwfZjnxU/edit?usp=sharing", date: "2026-07-02"},
+    {level: "C1+", tags: ["사회"], title: "얼룩소(alookso) 프로젝트 - 글값을 주면 공론장을 만들 수 있을까?", thumb: "thumbnails/c1plus-alookso-project.webp", link: "https://docs.google.com/document/d/1DBPKPbhjrl0L-vV2oqf3LZIGDiOlfnMGAs1XwfZjnxU/edit?usp=sharing", date: "2026-07-02"},
     {level: "C1", tags: ["사회"], title: "한중일 출신이 구글에서 CEO가 못 되는 이유 - 권위에 순종적인 문화 vs 대나무 천장", type: "video", thumb: "https://i.ytimg.com/vi/BgaWOzvH49A/hqdefault.jpg", link: "https://docs.google.com/document/d/1T7TflpJkaWDK9c5e1dHeTTZ793e4Jr3bJARU3ZdNmrU/edit?usp=sharing", date: "2021-09-27"},
-    {level: "C1", tags: ["사회","문화"], title: "〈한국이 싫어서〉 - 한국이 싫은 이유가 무엇이며, 한국을 떠나면 그 문제가 사라질까?", thumb: "thumbnails/c1-because-i-hate-korea.jpg", link: "https://docs.google.com/document/d/1EK_vwqYMgvhb7dB9zFlKQprhjN8ZmvqecJU-rgBudOY/edit?usp=sharing", date: "2026-06-30"},
-    {level: "C2", tags: ["사회","교육"], title: "21세기, 대학은 존재론적 위기를 맞이했을까?", thumb: "thumbnails/c2-university-existential-crisis.jpg", link: "https://docs.google.com/document/d/1qVqh4boOn621kY1Es3yQtSwgVPOI3nr7SfIFA9mb8bY/edit?usp=sharing", date: "2026-06-30"},
-    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c스무드\u003e를 통해 살펴보는 정체성의 경계", thumb: "thumbnails/c2-novel-smooth-identity.jpg", link: "https://docs.google.com/document/d/1ReWCwk4xRRqJBSwqsGKI6CPStYR5ABy5bEPuPjq6HPk/edit?usp=sharing", date: "2026-06-30"},
-    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c혼모노\u003e를 통해 살펴보는 진짜와 가짜의 경계", thumb: "thumbnails/c2-novel-honmono-real-fake.jpg", link: "https://docs.google.com/document/d/1ji7VWgB-8yvApxyYLt7H34MYg-lcX0iI6kAb5ZPXTS8/edit?usp=sharing", date: "2026-06-30"},
-    {level: "C1", tags: ["사회","철학","과학"], title: "뒷담화에 대해서 - 뒷담화는 자제할 수 없는 인간 본성인가?", thumb: "thumbnails/c1-gossip-human-nature.jpg", link: "https://docs.google.com/document/d/1hWysNw_TrVlrWHhLyvLaIprazQWejXJsqZrfaTXRO2E/edit?usp=sharing", date: "2026-06-30"},
-    {level: "C1", tags: ["문화","사회"], title: "‘번호 따기’ 성지가 된 서점", thumb: "thumbnails/c1-bookstore-pickup.jpeg", link: "content/c1-bookstore-pickup.html", date: "2026-06-29"},
+    {level: "C1", tags: ["사회","문화"], title: "〈한국이 싫어서〉 - 한국이 싫은 이유가 무엇이며, 한국을 떠나면 그 문제가 사라질까?", thumb: "thumbnails/c1-because-i-hate-korea.webp", link: "https://docs.google.com/document/d/1EK_vwqYMgvhb7dB9zFlKQprhjN8ZmvqecJU-rgBudOY/edit?usp=sharing", date: "2026-06-30"},
+    {level: "C2", tags: ["사회","교육"], title: "21세기, 대학은 존재론적 위기를 맞이했을까?", thumb: "thumbnails/c2-university-existential-crisis.webp", link: "https://docs.google.com/document/d/1qVqh4boOn621kY1Es3yQtSwgVPOI3nr7SfIFA9mb8bY/edit?usp=sharing", date: "2026-06-30"},
+    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c스무드\u003e를 통해 살펴보는 정체성의 경계", thumb: "thumbnails/c2-novel-smooth-identity.webp", link: "https://docs.google.com/document/d/1ReWCwk4xRRqJBSwqsGKI6CPStYR5ABy5bEPuPjq6HPk/edit?usp=sharing", date: "2026-06-30"},
+    {level: "C2", tags: ["문학","철학"], title: "소설 \u003c혼모노\u003e를 통해 살펴보는 진짜와 가짜의 경계", thumb: "thumbnails/c2-novel-honmono-real-fake.webp", link: "https://docs.google.com/document/d/1ji7VWgB-8yvApxyYLt7H34MYg-lcX0iI6kAb5ZPXTS8/edit?usp=sharing", date: "2026-06-30"},
+    {level: "C1", tags: ["사회","철학","과학"], title: "뒷담화에 대해서 - 뒷담화는 자제할 수 없는 인간 본성인가?", thumb: "thumbnails/c1-gossip-human-nature.webp", link: "https://docs.google.com/document/d/1hWysNw_TrVlrWHhLyvLaIprazQWejXJsqZrfaTXRO2E/edit?usp=sharing", date: "2026-06-30"},
+    {level: "C1", tags: ["문화","사회"], title: "‘번호 따기’ 성지가 된 서점", thumb: "thumbnails/c1-bookstore-pickup.webp", link: "content/c1-bookstore-pickup.html", date: "2026-06-29"},
     {level: "B2+", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "content/b2plus-bookstore-pickup.html", date: "2026-06-28"},
     {level: "B2", tags: ["스케치 코미디","일상"], title: "서점: '번호 따기'의 성지?", type: "video", thumb: "https://i.ytimg.com/vi/fwBGVX5NbsA/hqdefault.jpg", link: "content/b2-bookstore-pickup.html", date: "2026-06-28"},
     {level: "B2", tags: ["스케치 코미디","일상"], title: "서스펜스의 거장, 알프레드 히치콕은 말했다", type: "video", thumb: "https://i.ytimg.com/vi/CsJdnlpBPgE/hqdefault.jpg", link: "content/b2-alfred-hitchcock.html", date: "2026-06-11"},
@@ -188,11 +194,11 @@
     {level: "B1+", tags: ["예술"], title: "예술과 디자인의 차이", type: "video", thumb: "https://i.ytimg.com/vi/Q4O-bondzOk/hqdefault.jpg", link: "content/b1plus-art-and-design.html", date: "2026-05-17"},
     {level: "B1+", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "content/b1plus-reels-addiction.html", date: "2026-06-15"},
     {level: "B2", tags: ["스케치 코미디","일상"], title: "릴스 중독: 벌써 세 시간 째", type: "video", thumb: "https://i.ytimg.com/vi/nSqNLM5orPo/hqdefault.jpg", link: "content/b2-reels-addiction.html", date: "2026-06-15"},
-    {level: "C1", tags: ["문화","사회"], title: "“회귀, 빙의, 환생” 이야기가 인기 있는 이유", type: "video", thumb: "thumbnails/c1-regression-possession-reincarnation.jpg", link: "content/c1-regression-possession-reincarnation.html", date: "2026-05-18"},
-    {level: "C2", tags: ["경제","정치"], title: "코스피 5000 시대, 앞으로 어떤 길을 가야 하는가?", thumb: "thumbnails/c1-kospi-5000-meaning.jpg", link: "content/c2-kospi-5000-era.html", date: "2026-03-26"},
-    {level: "C1", tags: ["경제","정치"], title: "'코스피 5000'의 의미와 전망", type: "video", thumb: "thumbnails/c1-kospi-5000-meaning.jpg", link: "content/c1-kospi-5000-meaning.html", date: "2026-04-05"},
+    {level: "C1", tags: ["문화","사회"], title: "“회귀, 빙의, 환생” 이야기가 인기 있는 이유", type: "video", thumb: "thumbnails/c1-regression-possession-reincarnation.webp", link: "content/c1-regression-possession-reincarnation.html", date: "2026-05-18"},
+    {level: "C2", tags: ["경제","정치"], title: "코스피 5000 시대, 앞으로 어떤 길을 가야 하는가?", thumb: "thumbnails/c1-kospi-5000-meaning.webp", link: "content/c2-kospi-5000-era.html", date: "2026-03-26"},
+    {level: "C1", tags: ["경제","정치"], title: "'코스피 5000'의 의미와 전망", type: "video", thumb: "thumbnails/c1-kospi-5000-meaning.webp", link: "content/c1-kospi-5000-meaning.html", date: "2026-04-05"},
     {level: "C1", tags: ["과학","음식"], title: "두바이 쫀득 쿠키가 맛있는 과학적인 이유", type: "video", thumb: "https://i.ytimg.com/vi/htzfNwDM7II/hqdefault.jpg", link: "content/c1-dubai-cookie-science.html", date: "2026-03-22"},
-    {level: "B2+", tags: ["문화","음악"], title: "팝송에서 '페이드 아웃'이 사라진 이유", thumb: "assets/images/b2plus-fade-out-in-pop-songs.png", link: "content/b2plus-fade-out-in-pop-songs.html", date: "2026-03-25"},
+    {level: "B2+", tags: ["문화","음악"], title: "팝송에서 '페이드 아웃'이 사라진 이유", thumb: "thumbnails/b2plus-fade-out-in-pop-songs.webp", link: "content/b2plus-fade-out-in-pop-songs.html", date: "2026-03-25"},
     {level: "B2+", tags: ["문화","음식"], title: "한국인은 쫀득한 식감을 왜 좋아할까요?", type: "video", thumb: "https://i.ytimg.com/vi/Q3xPFQgDG4E/hqdefault.jpg", link: "content/b2plus-why-koreans-like-chewy-texture.html", date: "2026-03-22"},
     {level: "B2+", tags: ["언어","문화"], title: "우리는 왜 \"같아요\"라고 할까?", type: "video", thumb: "https://i.ytimg.com/vi/nb-L3S8AFh8/hqdefault.jpg", link: "content/b2plus-why-we-say-gata-yo.html", date: "2026-03-24"},
     {level: "C1+", tags: ["문화","역사"], title: "한국의 크리스마스 케익의 기원", type: "video", thumb: "https://i.ytimg.com/vi/YoIbPhMETD8/hqdefault.jpg", link: "content/c1plus-korean-christmas-cake-origin.html", date: "2025-12-27"},
@@ -465,6 +471,7 @@
       d_upint:'Ready to move past everyday conversation and start thinking and speaking critically in Korean? Dig deeper into native content and practice laying out your ideas and expressing them logically.',
       d_advanced:'Go beyond just learning the language itself. Critically analyze articles and videos on all kinds of topics in Korean, and practice organizing your opinions and expressing them logically.',
       'tag_전체':'All','tag_최신':'Latest','tag_일상':'Daily','tag_건강':'Health','tag_문화':'Culture','tag_음식':'Food','tag_사회':'Society','tag_과학':'Science','tag_예술':'Art','tag_경제':'Economy','tag_역사':'History','tag_정치':'Politics','tag_교육':'Education','tag_문학':'Literature','tag_음악':'Music','tag_언어':'Language',
+      'tag_철학':'Philosophy','tag_스케치 코미디':'Sketch Comedy','tag_기술':'Technology','tag_미디어':'Media','tag_심리':'Psychology','tag_시사':'Current Affairs','tag_에세이':'Essay','tag_여행':'Travel','tag_환경':'Environment','tag_생활':'Life','tag_스포츠':'Sports','tag_예능':'Variety','tag_인문':'Liberal Arts','tag_인문학':'Humanities','tag_경영':'Business','tag_국제':'International','tag_국제관계':'International Relations','tag_수학':'Math','tag_법':'Law','tag_윤리':'Ethics','tag_영화':'Film',
       'tag_이 주제로 이야기해 봐요':"Let's Talk About It",'tag_쉬운 한국어로 이야기해 봐요':"Let's Chat in Easy Korean",
       'ser_이 주제로 이야기해 봐요':"LET'S TALK ABOUT IT",'ser_쉬운 한국어로 이야기해 봐요':"LET'S CHAT IN EASY KOREAN",
       all:'All', search:'Search…', more:'Load more', noresult:'No results.'
@@ -677,7 +684,7 @@
   function tagSelectHTML(){
     var bi=bilingual();
     return '<select class="nav-select" data-navsel="tag" aria-label="주제">'
-      + computeTags().map(function(tag){ var lab=bi?(tag+' / '+(tr('tag_'+tag)||tag)):tag; return '<option value="'+esc(tag)+'"'+(state.tag===tag?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + computeTags().map(function(tag){ var tt=tr('tag_'+tag); var lab=(bi&&tt)?(tag+' / '+tt):tag; return '<option value="'+esc(tag)+'"'+(state.tag===tag?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
       + '</select>';
   }
   function render(){
@@ -695,7 +702,8 @@
     }).join('');
     var tagBtns = computeTags().map(function(tag){
       var on = state.tag===tag?' on':'';
-      var label = bi ? '<span class="tko">'+esc(tag)+'</span><span class="ten">'+esc(tr('tag_'+tag)||tag)+'</span>' : esc(tag);
+      var tt = tr('tag_'+tag);
+      var label = (bi && tt) ? '<span class="tko">'+esc(tag)+'</span><span class="ten">'+esc(tt)+'</span>' : esc(tag);
       return '<button class="tag-btn'+(bi?' bi':'')+on+'" data-tag="'+esc(tag)+'">'+label+'</button>';
     }).join('');
     var heroKo = g.ko==='전체' ? '한국어 학습 자료' : (g.ko+' 학습 자료');
