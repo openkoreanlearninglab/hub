@@ -93,6 +93,7 @@
   .meta{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:8px; }
   .lv{ font-size:10px; font-weight:700; letter-spacing:.1em; border:1px solid #111; padding:2px 6px; }
   .ctag{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:#f3f4f6; color:#4b5563; padding:2px 6px; }
+  .ctag em{ font-style:normal; opacity:.7; font-weight:500; margin-left:4px; }
   .card h3{ font-family:'Noto Serif KR',serif; font-size:17px; font-weight:700; line-height:1.4; }
   .card .en{ color:var(--gray); font-size:12.5px; margin-top:4px; }
   .empty{ padding:50px; text-align:center; color:#9ca3af; font-size:14px; border:1px dashed var(--line); border-radius:12px; }
@@ -166,10 +167,10 @@
   var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
 
   var MATERIALS = [
-    {level: "B1", tags: ["일상"], title: "아침밥 먹어요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/338dU6jP3tk/hqdefault.jpg", link: "content/b1-breakfast.html", date: "2026-07-20"},
+    {level: "B1", tags: ["일상"], title: "아침밥 먹어요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/338dU6jP3tk/hqdefault.jpg", en: "Do you eat breakfast?", link: "content/b1-breakfast.html", date: "2026-07-20"},
     {level: "B1+", tags: ["일상","문화"], title: "여러분들의 원래 꿈은 무엇인가요?", thumb: "thumbnails/b1plus-original-dream.webp", link: "content/b1plus-original-dream.html", date: "2025-11-14"},
-    {level: "B1", tags: ["사회","문화"], title: "누구에게나 1000원의 재능은 있다?", type: "video", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/thumbnails/b2plus-1000won-talent-market.webp", link: "content/b1-1000won-talent.html", date: "2025-11-12"},
-    {level: "B1", tags: ["일상"], title: "만화책도 책일까?", type: "video", thumb: "https://i.ytimg.com/vi/JkNMIqNgRBE/hqdefault.jpg", link: "content/b1-are-comics-books.html", date: "2025-10-17"},
+    {level: "B1", tags: ["사회","문화"], title: "누구에게나 1000원의 재능은 있다?", type: "video", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/thumbnails/b2plus-1000won-talent-market.webp", en: "Does everyone have a 1,000-won talent?", link: "content/b1-1000won-talent.html", date: "2025-11-12"},
+    {level: "B1", tags: ["일상"], title: "만화책도 책일까?", type: "video", thumb: "https://i.ytimg.com/vi/JkNMIqNgRBE/hqdefault.jpg", en: "Are comic books really books?", link: "content/b1-are-comics-books.html", date: "2025-10-17"},
     {level: "C2", tags: ["시사","정치"], title: "실용 정부? 실용 외교? ‘실용’이란 무엇일까", thumb: "thumbnails/c2-what-is-pragmatism.webp", link: "content/c2-what-is-pragmatism.html", date: "2025-09-18"},
     {level: "C1", tags: ["사회","심리"], title: "사람을 바꾸는 나눔의 힘", thumb: "thumbnails/c1-sharing-power.webp", link: "content/c1-sharing-power.html", date: "2025-08-01"},
     {level: "C2", tags: ["사회","미디어"], title: "멋진 숏폼 세계 — 네트워킹은 사라지고 무한한 흐름만 남았다", thumb: "thumbnails/c2-short-form-infinite-feed.webp", link: "https://docs.google.com/document/d/1Vc87TC_w4sl0lrlPUmpgR1My8ILkl2cqwrVcr6MdHEg/edit?usp=sharing", date: "2026-07-13"},
@@ -431,29 +432,29 @@
     {level: "C2", tags: ["철학","언어"], title: "말할 수 없는 것은 침묵해야 한다 : 언어와 삶", thumb: "https://drive.google.com/thumbnail?id=14rzpxQAEauYPqTUUD91io6gqhxgMpYedlrdBcD7xJx0&sz=w400", link: "https://drive.google.com/open?id=14rzpxQAEauYPqTUUD91io6gqhxgMpYedlrdBcD7xJx0&usp=drive_copy", date: "2023-02-22"},
     {level: "C2", tags: ["철학","언어"], title: "표상과 현상은 무엇일까요?", thumb: "https://drive.google.com/thumbnail?id=1e2mKtmrd3gN2EIVVQ4oWjC3c4PHYJHZqyY5DAHKkAOU&sz=w400", link: "https://drive.google.com/open?id=1e2mKtmrd3gN2EIVVQ4oWjC3c4PHYJHZqyY5DAHKkAOU&usp=drive_copy", date: "2026-01-01"},
     {level: "C2", tags: ["철학","언어","역사"], title: "\u003c역사를 읽는 방법\u003e - 1장 서론：그들의 방식으로 바라보기", thumb: "https://drive.google.com/thumbnail?id=1bWysDNo3szA9MIWAv0Ud-oPGGG3ovkop6YMa4pnTLLU&sz=w400", link: "https://drive.google.com/open?id=1bWysDNo3szA9MIWAv0Ud-oPGGG3ovkop6YMa4pnTLLU&usp=drive_copy", date: "2026-05-07"},
-    {level: "A2+", tags: ["일상"], title: "영화를 어떻게 봐요? — 결말 먼저 보기 vs 처음부터 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/l6bdY6ZsbJM/hqdefault.jpg", link: "content/a2plus-watch-ending-first.html", date: "2026-06-18"},
-    {level: "B1", tags: ["일상","문화"], title: "SNS를 어떤 목적으로 써요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Qjfa0oxuHmA/hqdefault.jpg", link: "content/b1-sns-purpose.html", date: "2026-05-14"},
-    {level: "B1", tags: ["일상","문화"], title: "감칠맛과 MSG - 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/emo3pCumqmo/hqdefault.jpg", link: "content/b1-umami-and-msg.html", date: "2026-03-31"},
+    {level: "A2+", tags: ["일상"], title: "영화를 어떻게 봐요? — 결말 먼저 보기 vs 처음부터 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/l6bdY6ZsbJM/hqdefault.jpg", en: "How do you watch movies? — Watching the ending first vs. from the start", link: "content/a2plus-watch-ending-first.html", date: "2026-06-18"},
+    {level: "B1", tags: ["일상","문화"], title: "SNS를 어떤 목적으로 써요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Qjfa0oxuHmA/hqdefault.jpg", en: "What do you use social media for?", link: "content/b1-sns-purpose.html", date: "2026-05-14"},
+    {level: "B1", tags: ["일상","문화"], title: "감칠맛과 MSG - 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/emo3pCumqmo/hqdefault.jpg", en: "Umami and MSG - Myths and truths", link: "content/b1-umami-and-msg.html", date: "2026-03-31"},
     {level: "B1+", tags: ["일상","문화"], title: "뒷담화는 나쁠까요? 괜찮을까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZJxoxoACBCU/hqdefault.jpg", link: "content/b1plus-is-gossip-bad.html", date: "2026-03-05"},
     {level: "B2", tags: ["과학"], title: "조상 찾기 DNA 검사", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/yG728zOrtl0/hqdefault.jpg", link: "content/b2-ancestry-dna-test.html", date: "2025-08-24"},
-    {level: "B1", tags: ["일상"], title: "보통 어떤 음악을 들어요? - 잔잔한 음악 vs 신나는 음악", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/vWwWShQVcGc/hqdefault.jpg", link: "content/b1-what-music-do-you-listen-to.html", date: "2026-02-06"},
+    {level: "B1", tags: ["일상"], title: "보통 어떤 음악을 들어요? - 잔잔한 음악 vs 신나는 음악", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/vWwWShQVcGc/hqdefault.jpg", en: "What kind of music do you usually listen to? - Calm music vs. upbeat music", link: "content/b1-what-music-do-you-listen-to.html", date: "2026-02-06"},
     {level: "B1+", tags: ["문화","음식"], title: "한국의 크리스마스 케이크", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/bZufTDKqQ8g/hqdefault.jpg", link: "content/b1plus-korean-christmas-cake.html", date: "2025-12-27"},
-    {level: "A2+", tags: ["일상"], title: "마음에 들지 않는 선물", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/6wPteSottlc/hqdefault.jpg", link: "content/a2plus-gift-not-liked.html", date: "2025-12-25"},
-    {level: "A2+", tags: ["일상"], title: "드라마 시청 습관: 몰아 보기 vs 매주 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/61SqgIZeXRc/hqdefault.jpg", link: "content/a2plus-drama-watching-habits.html", date: "2025-12-06"},
-    {level: "B1", tags: ["일상","문화"], title: "왼손잡이에 대한 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/YTVDuOi6L1c/hqdefault.jpg", link: "content/b1-left-handed.html", date: "2025-10-18"},
-    {level: "A2+", tags: ["일상"], title: "말차 라떼", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/do5Rs4A-P58/hqdefault.jpg", link: "content/a2plus-matcha-latte.html", date: "2025-07-29"},
-    {level: "B1", tags: ["일상"], title: "뇌 이야기: 기억력과 집중력", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/fkDwuqGLdvI/hqdefault.jpg", link: "content/b1-brain.html", date: "2025-07-20"},
-    {level: "B1", tags: ["일상"], title: "체크리스트가 사람들을 멍청하게 만들까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/KXXFd4y57xY/hqdefault.jpg", link: "content/b1-checklists-stupid.html", date: "2025-06-20"},
-    {level: "A2+", tags: ["일상"], title: "오늘 일을 다 못했어요: 늦게까지 일할 거예요 vs 내일 일할 거예요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/jbfUEVOCSds/hqdefault.jpg", link: "content/a2plus-overtime.html", date: "2025-08-26"},
-    {level: "A2+", tags: ["일상"], title: "잘못 나온 음식", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/klxx6ChKQFg/hqdefault.jpg", link: "content/a2plus-wrong-food.html", date: "2025-08-07"},
-    {level: "A2+", tags: ["일상"], title: "여름 에어컨 고장 VS 겨울 보일러 고장", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/_5dwoII2L_M/hqdefault.jpg", link: "content/a2plus-summer-winter.html", date: "2025-07-30"},
-    {level: "A2+", tags: ["일상"], title: "선크림이 피부를 지켜줘요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Q2j3xlxzlxU/hqdefault.jpg", link: "content/a2plus-sunscreen.html", date: "2025-07-25"},
+    {level: "A2+", tags: ["일상"], title: "마음에 들지 않는 선물", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/6wPteSottlc/hqdefault.jpg", en: "A gift you don't like", link: "content/a2plus-gift-not-liked.html", date: "2025-12-25"},
+    {level: "A2+", tags: ["일상"], title: "드라마 시청 습관: 몰아 보기 vs 매주 보기", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/61SqgIZeXRc/hqdefault.jpg", en: "Drama-watching habits: Binge-watching vs. watching weekly", link: "content/a2plus-drama-watching-habits.html", date: "2025-12-06"},
+    {level: "B1", tags: ["일상","문화"], title: "왼손잡이에 대한 오해와 진실", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/YTVDuOi6L1c/hqdefault.jpg", en: "Myths and truths about being left-handed", link: "content/b1-left-handed.html", date: "2025-10-18"},
+    {level: "A2+", tags: ["일상"], title: "말차 라떼", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/do5Rs4A-P58/hqdefault.jpg", en: "Matcha latte", link: "content/a2plus-matcha-latte.html", date: "2025-07-29"},
+    {level: "B1", tags: ["일상"], title: "뇌 이야기: 기억력과 집중력", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/fkDwuqGLdvI/hqdefault.jpg", en: "Talking about the brain: Memory and focus", link: "content/b1-brain.html", date: "2025-07-20"},
+    {level: "B1", tags: ["일상"], title: "체크리스트가 사람들을 멍청하게 만들까요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/KXXFd4y57xY/hqdefault.jpg", en: "Do checklists make people dumber?", link: "content/b1-checklists-stupid.html", date: "2025-06-20"},
+    {level: "A2+", tags: ["일상"], title: "오늘 일을 다 못했어요: 늦게까지 일할 거예요 vs 내일 일할 거예요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/jbfUEVOCSds/hqdefault.jpg", en: "I didn't finish work today: Stay late vs. do it tomorrow", link: "content/a2plus-overtime.html", date: "2025-08-26"},
+    {level: "A2+", tags: ["일상"], title: "잘못 나온 음식", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/klxx6ChKQFg/hqdefault.jpg", en: "When your order comes out wrong", link: "content/a2plus-wrong-food.html", date: "2025-08-07"},
+    {level: "A2+", tags: ["일상"], title: "여름 에어컨 고장 VS 겨울 보일러 고장", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/_5dwoII2L_M/hqdefault.jpg", en: "Summer AC breakdown vs. winter boiler breakdown", link: "content/a2plus-summer-winter.html", date: "2025-07-30"},
+    {level: "A2+", tags: ["일상"], title: "선크림이 피부를 지켜줘요", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/Q2j3xlxzlxU/hqdefault.jpg", en: "Sunscreen protects your skin", link: "content/a2plus-sunscreen.html", date: "2025-07-25"},
     {level: "A2", tags: ["일상"], title: "주말에 보통 뭐 해요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/5ONz3--hTRM/hqdefault.jpg", link: "content/a2-weekend.html", date: "2025-06-15"},
     {level: "A1+", tags: ["일상"], title: "어디가 아파요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/IENdLlBwNe8/hqdefault.jpg", en: "Where does it hurt?", link: "content/a1plus-where-does-it-hurt.html", date: "2026-04-29"},
-    {level: "A1+", tags: ["일상"], title: "책을 몇 권 읽어요? (How Many Books Do You Read?)", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/xEF1OHf2dI0/hqdefault.jpg", link: "content/a1plus-how-many-books.html", date: "2026-03-23"},
+    {level: "A1+", tags: ["일상"], title: "책을 몇 권 읽어요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/xEF1OHf2dI0/hqdefault.jpg", en: "How many books do you read?", link: "content/a1plus-how-many-books.html", date: "2026-03-23"},
     {level: "A1", tags: ["일상"], title: "오늘 뭐 해요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/dvs7VQb-b3U/hqdefault.jpg", en: "What are you up to today?", link: "content/a1-easy-today-what-doing.html", date: "2025-09-15"},
     {level: "A1", tags: ["일상"], title: "하루에 커피를 몇 잔 마셔요?", type: "video", series: "쉬운 한국어로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/ZjnRIXjJU7Y/hqdefault.jpg", en: "How many cups of coffee a day?", link: "content/a1-how-many-cups-of-coffee.html", date: "2026-01-20"},
-    {level: "B1", tags: ["문화","일상"], title: "인생 첫 사우나 - 나는 마루", type: "video", thumb: "https://i.ytimg.com/vi/E8ZHFRY1reU/hqdefault.jpg", link: "content/b1-first-sauna-maru.html", date: "2026-06-26"},
+    {level: "B1", tags: ["문화","일상"], title: "인생 첫 사우나 - 나는 마루", type: "video", thumb: "https://i.ytimg.com/vi/E8ZHFRY1reU/hqdefault.jpg", en: "My first sauna ever - I'm Maru", link: "content/b1-first-sauna-maru.html", date: "2026-06-26"},
     {level: "A1+", tags: ["일상"], title: "무슨 요일이야?", type: "video", thumb: "https://i.ytimg.com/vi/AOylqCIDuHc/hqdefault.jpg", en: "What day is it?", link: "content/a1plus-what-day.html", date: "2026-02-20"}
   ];
   var LEVELS = ['A1','A1+','A2','A2+','B1','B1+','B2','B2+','C1','C1+','C2'];
@@ -579,7 +580,7 @@
     return '<div class="more-wrap"><button type="button" id="load-more" class="more-btn">'+label+' <span>('+(total-state.itemsToShow)+')</span></button></div>';
   }
   function cardOf(m, bi){
-    var tags = m.tags.map(function(x){ return '<span class="ctag">'+esc(x)+'</span>'; }).join('');
+    var tags = m.tags.map(function(x){ var tt = bi ? tr('tag_'+x) : ''; return '<span class="ctag">'+esc(x)+(tt?' <em>'+esc(tt)+'</em>':'')+'</span>'; }).join('');
     var props = m.link.indexOf('http')===0 ? ' target="_blank" rel="noreferrer"' : '';
     return '<a class="card" href="'+esc(m.link)+'"'+props+'>'
       + thumbHTML(m)
