@@ -189,6 +189,12 @@ body.pw-printing #print-root{display:block}
         .fc-sbtn{ min-height:44px; padding:.7rem 1rem; background:#fff; border:1px solid #e5e7eb; font-family:'Noto Sans KR',sans-serif; font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; color:#374151; }
         .fc-sbtn:hover{ border-color:#000; color:#000; }
         .fc-sbtn.pri{ background:#000; color:#fff; border-color:#000; }
+        .fc-hint{ margin-top:1.5rem; font-size:.68rem; color:#d1d5db; text-align:center; line-height:1.7; }
+        .fc-hint kbd{ font-family:ui-monospace,Menlo,monospace; font-size:.65rem; background:#f9fafb; border:1px solid #e5e7eb; border-radius:3px; padding:.05rem .3rem; color:#6b7280; }
+        /* 힌트 언어 교체: 한국어만 모드=한국어 줄, 병기 모드=영어 줄 */
+        #app:not(.lk-ko) .lk-ko-only{ display:none !important; }
+        /* 터치 기기(물리 키보드 없음): 키보드 힌트 숨김 */
+        @media (hover:none){ .fc-hint{ display:none !important; } }
     </style>
 </head>
 
@@ -3228,6 +3234,11 @@ body.pw-printing #print-root{display:block}
         function fcCur(){ return FC_CARDS[fc.queue[fc.pos]]; }
         function fcCount(k){ return Object.keys(fc.status).filter(function(x){return fc.status[x]===k;}).length; }
         function fcUnknown(){ return Object.keys(fc.status).filter(function(x){return fc.status[x]==='unknown';}).map(Number); }
+        /* 이미지 프리로드: 다음·이전 카드 이미지를 미리 받아 전환 시 검정 화면 제거 */
+        const fcPre = {};
+        function fcPreloadOne(url){ if(!url||fcPre[url])return; fcPre[url]=true; const im=new Image(); im.src=url; }
+        function fcPreloadIdx(qp){ if(qp<0||qp>=fc.queue.length)return; const c=FC_CARDS[fc.queue[qp]]; if(!c)return; if(c.media&&c.media.type==='image')fcPreloadOne(c.media.src); if(c.back&&c.back.img)fcPreloadOne(c.back.img); }
+        function fcPreloadAround(){ const c=fcCur(); if(c&&c.back&&c.back.img)fcPreloadOne(c.back.img); fcPreloadIdx(fc.pos+1); fcPreloadIdx(fc.pos+2); fcPreloadIdx(fc.pos-1); }
         const FC_ICON = {
             prev:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>',
             next:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>',
@@ -3256,11 +3267,13 @@ body.pw-printing #print-root{display:block}
         function fcDeckHTML(){ if(!fc.queue.length)fcStart(null); if(fc.done)return '<div class="fc-wrap" id="fc-deck">'+fcStatsHTML()+fcSummaryHTML()+'</div>';
             return '<div class="fc-wrap" id="fc-deck">'+fcStatsHTML()+fcCardHTML()
             + '<div class="fc-judge"><button type="button" class="fc-jbtn k" data-action="fc-know">알아요<span class="lk-en"> · Got it</span></button><button type="button" class="fc-jbtn u" data-action="fc-dont">모르겠어요<span class="lk-en"> · Not yet</span></button></div>'
-            + '<div class="fc-ctrls"><button type="button" class="fc-ibtn" data-action="fc-prev" aria-label="이전 카드">'+FC_ICON.prev+'</button><button type="button" class="fc-fbtn" data-action="fc-flip">뒤집기<span class="lk-en"> · Flip</span></button><button type="button" class="fc-ibtn" data-action="fc-next" aria-label="다음 카드">'+FC_ICON.next+'</button></div></div>'; }
-        function fcSync(){ const root=viewRoot(); if(!root)return; const c=fcCur(); if(!c)return; const f=qs('#fc-front',root),b=qs('#fc-back',root); if(f)f.innerHTML=fcFrontHTML(c); if(b)b.innerHTML=fcBackHTML(c); fcApplyFlip(); }
+            + '<div class="fc-ctrls"><button type="button" class="fc-ibtn" data-action="fc-prev" aria-label="이전 카드">'+FC_ICON.prev+'</button><button type="button" class="fc-fbtn" data-action="fc-flip">뒤집기<span class="lk-en"> · Flip</span></button><button type="button" class="fc-ibtn" data-action="fc-next" aria-label="다음 카드">'+FC_ICON.next+'</button></div>'
+            + '<p class="fc-hint"><span class="lk-ko-only"><kbd>Space</kbd> 뒤집기 · <kbd>&larr;</kbd><kbd>&rarr;</kbd> 이전/다음 · <kbd>1</kbd> 알아요 · <kbd>2</kbd> 모르겠어요 · <kbd>S</kbd> 순서/섞기</span><span class="lk-en"><kbd>Space</kbd> Flip · <kbd>&larr;</kbd><kbd>&rarr;</kbd> Prev/Next · <kbd>1</kbd> Got it · <kbd>2</kbd> Not yet · <kbd>S</kbd> Order/Shuffle</span></p>'
+            + '</div>'; }
+        function fcSync(){ const root=viewRoot(); if(!root)return; const c=fcCur(); if(!c)return; const f=qs('#fc-front',root),b=qs('#fc-back',root); if(f)f.innerHTML=fcFrontHTML(c); if(b)b.innerHTML=fcBackHTML(c); fcApplyFlip(); fcPreloadAround(); }
         function fcApplyFlip(){ const root=viewRoot(); if(!root)return; const el=qs('#fc-inner',root); if(el)el.classList.toggle('flip',fc.flipped); const tr=qs('#fc-trans',root); if(tr)tr.textContent=fc.showTrans?fcCur().en:''; const tb=qs('#fc-back [data-action="fc-trans"]',root); if(tb)tb.classList.toggle('on',fc.showTrans); }
         function fcRefreshStats(){ const root=viewRoot(); if(!root)return; const k=qs('#fc-sk',root),u=qs('#fc-su',root); if(k)k.textContent=fcCount('known'); if(u)u.textContent=fcCount('unknown'); }
-        function fcRefreshDeck(){ const d=qs('#fc-deck',viewRoot()); if(d)d.outerHTML=fcDeckHTML(); else paint(); }
+        function fcRefreshDeck(){ const d=qs('#fc-deck',viewRoot()); if(d)d.outerHTML=fcDeckHTML(); else paint(); fcPreloadAround(); }
         function fcSetFlip(v){ fc.flipped=v; fcApplyFlip(); if(v)fcPlay(fcCur().audio); else fcStop(); }
         function fcGo(fn){ fcStop(); fc.flipped=false; fc.showTrans=false; fn(); if(fc.done)fcRefreshDeck(); else fcSync(); }
         function fcMark(kind){ fc.status[fc.queue[fc.pos]]=kind; fcRefreshStats(); fcGo(function(){ if(fc.pos+1>=fc.queue.length)fc.done=true; else fc.pos+=1; }); }
@@ -3445,7 +3458,7 @@ body.pw-printing #print-root{display:block}
             }
             if (tab === 'vocab') {
                 const modeBtn = e.target.closest('[data-action="fc-mode"]');
-                if (modeBtn) { const m = modeBtn.dataset.mode; if (m !== fc.mode) { fc.mode = m; if (m === 'card') fcStart(null); fcStop(); paint(); } return; }
+                if (modeBtn) { const m = modeBtn.dataset.mode; if (m !== fc.mode) { fc.mode = m; if (m === 'card') fcStart(null); fcStop(); paint(); if (m === 'card') fcPreloadAround(); } return; }
                 if (fc.mode === 'card') {
                     if (e.target.closest('.fc-video')) return;  // 동영상 컨트롤 조작 시 뒤집지 않음
                     const fa = e.target.closest('[data-action^="fc-"]');
@@ -3492,6 +3505,19 @@ body.pw-printing #print-root{display:block}
             if (e.code === 'Space') { e.preventDefault(); const p = learn.player; if (p && p.getPlayerState) { if (p.getPlayerState() === 1) p.pauseVideo(); else p.playVideo(); } }
             else if (e.code === 'ArrowLeft') { e.preventDefault(); const i = curVideo().script.findIndex(l => l.id === learn.activeLine); if (i > 0 && learn.player) { learn.player.seekTo(curVideo().script[i - 1].time[0], true); learn.player.playVideo(); } }
             else if (e.code === 'ArrowRight') { e.preventDefault(); const i = curVideo().script.findIndex(l => l.id === learn.activeLine); const ni = (i === -1) ? 0 : i + 1; if (ni < curVideo().script.length && learn.player) { learn.player.seekTo(curVideo().script[ni].time[0], true); learn.player.playVideo(); } }
+        });
+        // 어휘 탭 · 플래시 카드 모드 키보드 (PC용. 터치엔 힌트 자체가 숨겨짐)
+        window.addEventListener('keydown', (e) => {
+            if (app.activeTab !== 'vocab' || fc.mode !== 'card' || fc.done) return;
+            const ae = document.activeElement;
+            if (ae && (['INPUT', 'TEXTAREA', 'SELECT'].includes(ae.tagName) || ae.isContentEditable)) return;
+            if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); fcSetFlip(!fc.flipped); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); fcGo(function(){ fc.pos = (fc.pos + 1) % fc.queue.length; }); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); fcGo(function(){ fc.pos = (fc.pos - 1 + fc.queue.length) % fc.queue.length; }); }
+            else if (e.key === '1') { fcMark('known'); }
+            else if (e.key === '2') { fcMark('unknown'); }
+            else if (e.key === 's' || e.key === 'S') { fcSetOrder(!fc.shuffled); }
+            else if ((e.key === 't' || e.key === 'T') && fc.flipped) { fc.showTrans = !fc.showTrans; fcApplyFlip(); }
         });
 
         async function runDiscussFeedback(id) {
