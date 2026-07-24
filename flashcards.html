@@ -1,0 +1,508 @@
+<!-- VERSION B 전용 플래시카드 인덱스 (실험용 비교본, 2026-07-20): MATERIALS가 플래시카드(type==='flashcard') 항목만 포함. 게이트 생략하고 바로 목록(app 뷰)로 진입. 로고/홈 클릭 시 index-flashcard-gate.html로 실제 페이지 이동(이 파일 자체 게이트는 미사용).
+     TODO: 이 버전이 최종 채택되면 localStorage 키(okll.gateChoice)를 이 파일 전용으로 분리할지 재검토(현재는 원본 index.html과 동일한 키 공유). -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OpenKoreanLearningLab · 한국어 학습 자료</title>
+<meta name="description" content="초급부터 고급까지(A1–C2) 한국어 학습 자료. 동영상과 읽기 자료로 한국어를 배워 보세요. Korean learning materials from A1 to C2." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700;900&text=%ED%95%9C%EA%B5%AD%EC%96%B4%ED%95%99%EC%8A%B5%EC%9E%90%EB%A3%8C%EB%A0%88%EB%B2%A8%EC%9D%84%EC%84%A0%ED%83%9D%ED%95%98%EC%84%B8%EC%9A%94%EC%B4%88%EA%B8%89%EC%A4%91%EA%B3%A0%EB%B3%B4%EA%B8%B0%20ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%2B%E2%80%93%C2%A9%E2%86%92%E2%80%99'().%2C%26%3A%2F&display=swap" rel="stylesheet" media="print" id="gfonts-gate" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet" media="print" id="gfonts" />
+<script>(function(){["gfonts-gate","gfonts"].forEach(function(id){var l=document.getElementById(id);if(!l)return;function a(){l.media="all";}if(l.sheet)a();else l.addEventListener("load",a);});})();</script>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet" /></noscript>
+<style>
+  :root{ --ink:#18181b; --gray:#71717a; --line:#e4e4e7; --light-gray:#a1a1aa; --bg-subtle:#fafafa; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ font-family:'Noto Sans KR',sans-serif; color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased; }
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 20px; }
+  a{ color:inherit; text-decoration:none; }
+  /* ---- Gate (Centered Minimal Editorial) ---- */
+  @keyframes fadeIn { from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:translateY(0); } }
+  .gate{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 24px; background:#fff; animation:fadeIn .7s cubic-bezier(.16,1,.3,1) forwards; }
+  .gate-header{ display:flex; flex-direction:column; align-items:center; gap:16px; margin-bottom:56px; }
+  .gate-brand{ font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:13px; color:#3f3f46; letter-spacing:.04em; }
+  .gate h1{ font-family:'Noto Serif KR',serif; font-size:clamp(32px,5vw,44px); font-weight:700; letter-spacing:-.02em; color:var(--ink); line-height:1.2; }
+  .gate [data-enter]{ cursor:pointer; transition:opacity .2s; }
+  .gate [data-enter]:hover{ opacity:.6; }
+  .gate .sub-en{ font-family:'Noto Serif KR',serif; font-style:italic; color:#52525b; font-size:clamp(15px,2vw,19px); font-weight:400; }
+  .gate .sub-instruction{ font-family:'Noto Sans KR',sans-serif; color:#5f5f63; font-size:13px; font-weight:400; letter-spacing:.02em; margin-top:12px; border-top:1px solid var(--line); padding-top:24px; width:120px; line-height:1.6; }
+  .bands{ display:flex; flex-wrap:wrap; justify-content:center; align-items:stretch; gap:14px; width:100%; max-width:1040px; margin-top:20px; }
+  .band{ flex:0 0 calc(20% - 12px); }
+  @media(max-width:1024px){ .bands{ gap:16px; } .band{ flex:0 0 calc(33.333% - 12px); } }
+  @media(max-width:768px){ .band{ flex:0 0 100%; } }
+  .band{ background:#fff; border:1px solid var(--line); border-radius:8px; padding:28px 20px; cursor:pointer; transition:all .3s cubic-bezier(.16,1,.3,1); text-align:left; display:flex; flex-direction:column; }
+  .band:hover{ border-color:var(--ink); background:var(--bg-subtle); }
+  .band .code{ font-size:11px; font-weight:500; letter-spacing:.1em; color:#5f5f63; text-transform:uppercase; }
+  .band .ko{ font-family:'Noto Serif KR',serif; font-size:21px; font-weight:700; margin-top:14px; color:var(--ink); }
+  .band .en{ color:#52525b; font-size:13.5px; margin-top:2px; }
+  .band .go{ margin-top:auto; padding-top:24px; font-size:11.5px; font-weight:700; letter-spacing:.02em; color:var(--ink); line-height:1.8; transition:transform .2s ease; }
+  .band .go .go-en{ font-weight:500; color:#52525b; }
+  .band:hover .go{ transform:translateX(4px); }
+  .gate-cta{ margin-top:64px; }
+  .gate-foot{ color:#71717a; font-size:11.5px; margin-top:40px; letter-spacing:.02em; }
+  .topbar{
+ position:sticky; top:0; z-index:20; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .topbar .row{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand{ font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:17px; color:#111; letter-spacing:-.01em; }
+  .hero-desc{ max-width:660px; font-size:14px; line-height:1.7; color:#374151; margin-top:14px; }
+  .hero-desc em{ display:block; font-style:italic; color:#9ca3af; font-size:13px; margin-top:6px; }
+  .detail{ max-width:680px; margin-top:18px; }
+  .detail .d-ko{ font-size:14px; line-height:1.75; color:#374151; margin:0; }
+  .detail .d-en{ font-size:13px; line-height:1.7; color:#9ca3af; font-style:italic; margin:8px 0 0; }
+  .toggle{ display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; }
+  .toggle button{ border:0; background:#fff; font-family:inherit; font-size:11.5px; font-weight:700; letter-spacing:.04em; padding:6px 12px; cursor:pointer; color:var(--gray); }
+  .toggle button.on{ background:#111; color:#fff; }
+  .hero{ padding:44px 0 16px; }
+  .hero .badge{ display:inline-flex; align-items:center; gap:8px; border:1px solid #111; padding:5px 11px; font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; margin-bottom:14px; }
+  .hero h1{ font-family:'Noto Serif KR',serif; font-size:clamp(28px,4.6vw,48px); font-weight:900; letter-spacing:-.02em; }
+  .hero .sub{ font-family:'Noto Serif KR',serif; font-style:italic; color:var(--gray); margin-top:8px; font-size:clamp(14px,2vw,18px); }
+  .groups{ display:flex; gap:6px; margin-top:20px; border-bottom:1px solid var(--line); overflow-x:auto; }
+  .groups button{ border:0; background:transparent; font-family:inherit; font-size:14px; font-weight:500; color:var(--gray); padding:13px 16px; cursor:pointer; white-space:nowrap; position:relative; }
+  .groups button .en{ font-size:10px; letter-spacing:.06em; opacity:.7; margin-left:5px; text-transform:uppercase; }
+  .groups button.on{ color:#111; font-weight:800; }
+  .groups button.on::after{ content:''; position:absolute; left:16px; right:16px; bottom:-1px; height:2px; background:#111; }
+  /* controls */
+  .controls{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:20px 0 4px; }
+  .search{ position:relative; flex:1; min-width:220px; }
+  .search input{ width:100%; font-family:inherit; font-size:14px; padding:10px 14px 10px 38px; border:1px solid var(--line); border-radius:10px; outline:none; transition:.15s; }
+  .search input:focus{ border-color:#111; }
+  .search svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); width:17px; height:17px; color:#9ca3af; }
+  .chips{ display:flex; gap:7px; flex-wrap:wrap; }
+  .chip{ padding:6px 13px; font-size:12px; font-weight:700; letter-spacing:.04em; border:1px solid var(--line); background:#fff; border-radius:999px; cursor:pointer; transition:.15s; }
+  .chip:hover{ border-color:#111; }
+  .chip.on{ background:#111; color:#fff; border-color:#111; }
+  .tags{ display:flex; gap:7px; flex-wrap:wrap; margin:14px 0 4px; }
+  .tag-btn{ padding:5px 11px; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--line); background:#fff; color:var(--gray); border-radius:4px; cursor:pointer; transition:.15s; }
+  .tag-btn:hover{ border-color:#111; color:#111; }
+  .tag-btn.on{ background:#111; color:#fff; border-color:#111; }
+  .tag-btn.bi{ display:inline-flex; flex-direction:column; align-items:flex-start; line-height:1.15; }
+  .tag-btn .ten{ font-size:8.5px; opacity:.65; letter-spacing:.06em; margin-top:1px; }
+  .divider{ display:flex; align-items:center; gap:12px; margin:30px 0 14px; }
+  .divider .lvcode{ font-family:'Noto Serif KR',serif; font-weight:900; font-size:15px; letter-spacing:.05em; }
+  .divider .lvname{ font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); font-weight:700; }
+  .divider .ln{ flex:1; height:1px; background:var(--line); }
+  .cards{ display:flex; flex-direction:column; gap:14px; }
+  .card{ display:flex; background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; transition:.2s; }
+  .card:hover{ border-color:#111; }
+  .tile{ position:relative; width:120px; flex-shrink:0; background:#111; color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Noto Serif KR',serif; font-weight:900; font-size:20px; letter-spacing:.04em; }
+  @media(max-width:520px){ .tile{ width:78px; font-size:15px; } }
+  .ptype{ position:absolute; top:8px; right:8px; display:inline-flex; align-items:center; gap:3px; font-family:'Noto Sans KR',sans-serif; font-size:8px; font-weight:700; letter-spacing:.08em; padding:2px 5px; border-radius:999px; background:rgba(255,255,255,.16); }
+  .ptype svg{ width:8px; height:8px; }
+  .cbody{ padding:18px 20px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+  .meta{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:8px; }
+  .lv{ font-size:10px; font-weight:700; letter-spacing:.1em; border:1px solid #111; padding:2px 6px; }
+  .ctag{ font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; background:#f3f4f6; color:#4b5563; padding:2px 6px; }
+  .ctag em{ font-style:normal; opacity:.7; font-weight:500; margin-left:4px; }
+  .card h3{ font-family:'Noto Serif KR',serif; font-size:17px; font-weight:700; line-height:1.4; }
+  .card .en{ color:var(--gray); font-size:12.5px; margin-top:4px; }
+  .empty{ padding:50px; text-align:center; color:#9ca3af; font-size:14px; border:1px dashed var(--line); border-radius:12px; }
+  .pad{ padding-bottom:30px; min-height:200px; }
+  footer{ text-align:center; border-top:1px solid var(--line); margin-top:30px; padding:34px 0 50px; }
+  .italki{ display:inline-flex; align-items:center; gap:7px; padding:9px 18px; background:#f9fafb; border:1px solid var(--line); border-radius:999px; font-size:13px; font-weight:600; color:#374151; transition:.15s; }
+  .italki:hover{ border-color:#111; color:#111; }
+  .italki svg{ width:14px; height:14px; }
+  .copy{ color:#9ca3af; font-size:12.5px; margin-top:16px; }
+
+  /* thumbnails + pagination */
+  .thumb{ position:relative; width:148px; flex-shrink:0; background:var(--bg-subtle); overflow:hidden; border-right:1px solid var(--line); min-height:88px; }
+  @media(max-width:520px){ .thumb{ width:104px; min-height:74px; } }
+  .thumb-img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb-fallback{ position:absolute; inset:0; display:none; align-items:center; justify-content:center; background:var(--bg-subtle); padding:8px; text-align:center; }
+  .thumb.noimg .thumb-fallback{ display:flex; }
+  .fb-lv{ font-family:'Noto Serif KR',serif; font-weight:700; font-size:18px; color:var(--ink); letter-spacing:.02em; }
+  .play{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.5); color:#fff; display:flex; align-items:center; justify-content:center; }
+  .play svg{ width:13px; height:13px; margin-left:2px; }
+  .more-wrap{ text-align:center; margin-top:26px; }
+  .more-btn{ font-family:inherit; font-size:13px; font-weight:600; color:var(--gray); background:#fff; border:1px solid var(--line); border-radius:9px; padding:11px 24px; cursor:pointer; transition:.15s; }
+  .more-btn:hover{ border-color:var(--ink); color:var(--ink); }
+  .more-btn span{ color:var(--light-gray); margin-left:4px; }
+  .series-badge{ display:inline-flex; align-items:center; font-size:9.5px; font-weight:700; letter-spacing:.02em; background:var(--bg-subtle); color:var(--gray); border:1px solid var(--line); padding:2px 8px; border-radius:3px; }
+  .series-badge em{ font-style:normal; opacity:.7; font-weight:500; margin-left:5px; }
+  .lang-wrap{ display:inline-flex; align-items:center; gap:7px; }
+  .lang-label{ font-size:11px; font-weight:600; letter-spacing:.04em; color:var(--gray); text-transform:uppercase; }
+  .lang-select{ font-family:inherit; font-size:12px; font-weight:600; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:999px; padding:6px 12px; cursor:pointer; outline:none; }
+  .lang-select:hover{ border-color:var(--ink); }
+  .lang{ position:relative; }
+  .lang-btn{ font-family:inherit; font-size:12px; font-weight:600; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:999px; padding:6px 13px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:.15s; }
+  .lang-btn:hover{ border-color:var(--ink); }
+  .lang-btn .chev{ font-size:9px; color:var(--gray); }
+  .lang-menu{ position:absolute; right:0; top:calc(100% + 6px); background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:0 10px 26px -12px rgba(0,0,0,.25); padding:5px; min-width:150px; z-index:40; display:flex; flex-direction:column; }
+  .lang-menu button{ font-family:inherit; font-size:12.5px; text-align:left; background:transparent; border:0; padding:8px 11px; border-radius:7px; cursor:pointer; color:var(--ink); white-space:nowrap; }
+  .lang-menu button:hover{ background:var(--bg-subtle); }
+  .lang-menu button.on{ font-weight:700; }
+  .lang-menu button.on::after{ content:'✓'; float:right; color:var(--gray); margin-left:14px; }
+  .pager{ display:flex; align-items:center; justify-content:center; gap:5px; margin-top:30px; flex-wrap:wrap; }
+  .pager button{ font-family:inherit; font-size:12.5px; min-width:34px; height:34px; padding:0 9px; border:1px solid var(--line); background:#fff; color:var(--gray); border-radius:8px; cursor:pointer; transition:.15s; }
+  .pager button:hover:not([disabled]){ border-color:var(--ink); color:var(--ink); }
+  .pager button.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pager button[disabled]{ opacity:.4; cursor:default; }
+  .pager .pg-gap{ color:var(--light-gray); padding:0 3px; }
+  .nav-sel{ display:none; }
+  .nav-select{ width:100%; max-width:340px; font-family:inherit; font-size:13px; padding:9px 12px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); outline:none; }
+  .nav-sel-group{ margin-top:18px; } .nav-sel-tag{ margin-top:10px; }
+  @media(max-width:1024px){ .groups{ display:none; } .nav-sel-group{ display:block; } }
+  @media(max-width:640px){
+    .chips{ display:none; } .tags{ display:none; }
+    .nav-sel-level{ display:block; } .nav-sel-tag{ display:block; }
+    .card h3{ font-size:14.5px; }
+    .card .en{ font-size:11px; }
+    .hero h1{ font-size:25px; }
+    .hero .sub{ font-size:13px; }
+    .detail .d-ko{ font-size:13px; } .detail .d-en{ font-size:12px; }
+    .divider .lvcode{ font-size:14px; }
+    .cbody{ padding:14px 16px; }
+    .thumb{ width:108px; min-height:78px; }
+  }
+</style>
+</head>
+<body>
+<div id="app" role="main">
+  <noscript style="display:block;text-align:center;padding:40px">JavaScript가 필요합니다. / Please enable JavaScript.</noscript>
+</div>
+
+<script>
+'use strict';
+(function(){
+  var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
+
+  var MATERIALS = [
+    {level: "B1", tags: ["일상"], title: "아침밥 먹어요?", type: "flashcard", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/338dU6jP3tk/hqdefault.jpg", en: "Do you eat breakfast?", link: "content/b1-breakfast-flashcards.html", date: "2026-07-20"}
+  ];
+  var LEVELS = ['A1','A1+','A2','A2+','B1','B1+','B2','B2+','C1','C1+','C2'];
+  var LV_NAME = {'A1':'Novice','A1+':'Pre-Beginner','A2':'Beginner','A2+':'Upper Beginner','B1':'Pre-Intermediate','B1+':'Lower Intermediate','B2':'Intermediate','B2+':'Upper Intermediate','C1':'Advanced','C1+':'Upper Advanced','C2':'Proficient'};
+
+  /* ===== i18n: 보조 언어 번역 사전. 언어를 추가하려면 아래에 새 코드 블록(예: fr:{...})을 그대로 더하면 됨 =====
+     키 규칙: g_=그룹탭, t_=히어로 제목, d_=레벨 설명, tag_=주제태그, ser_=시리즈 배지, 그 외 공통 라벨 */
+  var I18N = {
+    en: {
+      g_all:'All', g_beginner:'Beginner', g_lowint:'Lower-Intermediate', g_intermediate:'Intermediate', g_upint:'Upper-Intermediate', g_advanced:'Advanced',
+      t_all:'Korean Learning Materials', t_beginner:'Beginner Materials', t_lowint:'Lower-Intermediate Materials', t_intermediate:'Intermediate Materials', t_upint:'Upper-Intermediate Materials', t_advanced:'Advanced Materials',
+      d_all:'Every Korean learning material from A1 to C2 in one place. Pick a level band, or jump straight in with search and tags.',
+      d_beginner:'You’ve picked up the basic grammar and everyday expressions in class or from a textbook. Now go back over them with short videos, and try putting your own thoughts into Korean with a few simple questions.',
+      d_lowint:'Try learning Korean through videos on everyday topics. Use what you pick up right away in class, and get into the habit of thinking straight in Korean as you speak, instead of translating in your head.',
+      d_intermediate:'Try studying with the videos and articles Koreans actually enjoy. Work on understanding them accurately, then use that as a springboard to talk about your own experiences and ideas naturally in Korean.',
+      d_upint:'Ready to move past everyday conversation and start thinking and speaking critically in Korean? Dig deeper into native content and practice laying out your ideas and expressing them logically.',
+      d_advanced:'Go beyond just learning the language itself. Critically analyze articles and videos on all kinds of topics in Korean, and practice organizing your opinions and expressing them logically.',
+      'tag_전체':'All','tag_최신':'Latest','tag_일상':'Daily','tag_건강':'Health','tag_문화':'Culture','tag_음식':'Food','tag_사회':'Society','tag_과학':'Science','tag_예술':'Art','tag_경제':'Economy','tag_역사':'History','tag_정치':'Politics','tag_교육':'Education','tag_문학':'Literature','tag_음악':'Music','tag_언어':'Language',
+      'tag_철학':'Philosophy','tag_스케치 코미디':'Sketch Comedy','tag_기술':'Technology','tag_미디어':'Media','tag_심리':'Psychology','tag_시사':'Current Affairs','tag_에세이':'Essay','tag_여행':'Travel','tag_환경':'Environment','tag_생활':'Life','tag_스포츠':'Sports','tag_예능':'Variety','tag_인문':'Liberal Arts','tag_인문학':'Humanities','tag_경영':'Business','tag_국제':'International','tag_국제관계':'International Relations','tag_수학':'Math','tag_법':'Law','tag_윤리':'Ethics','tag_영화':'Film',
+      'tag_이 주제로 이야기해 봐요':"Let's Talk About It",'tag_쉬운 한국어로 이야기해 봐요':"Let's Chat in Easy Korean",
+      'ser_이 주제로 이야기해 봐요':"LET'S TALK ABOUT IT",'ser_쉬운 한국어로 이야기해 봐요':"LET'S CHAT IN EASY KOREAN",
+      all:'All', search:'Search…', more:'Load more', noresult:'No results.'
+    }
+    /* , fr: { g_all:'Tout', ... }  ← 나중에 언어 추가 위치 */
+  };
+  var LANG_NAMES = { en:'English' /* , fr:'Français', de:'Deutsch', ja:'日本語', 'zh-Hans':'中文(简体)', 'zh-Hant':'中文(繁體)', ... */ };
+
+  var GROUPS = {
+    all:         { ko:'전체', levels:LEVELS, desc:'초급부터 고급까지(A1–C2) 한국어 학습 자료를 한곳에. 레벨대를 고르거나 검색·태그로 바로 찾아보세요.' },
+    beginner:    { ko:'초급',   levels:['A1','A1+','A2'] },
+    lowint:      { ko:'초중급', levels:['A2+','B1'] },
+    intermediate:{ ko:'중급',   levels:['B1+','B2'] },
+    upint:       { ko:'중고급', levels:['B2+','C1'] },
+    advanced:    { ko:'고급',   levels:['C1+','C2'] }
+  };
+  var GROUP_ORDER = ['all','beginner','lowint','intermediate','upint','advanced'];
+  var DETAIL = {
+    beginner:{ ko:'텍스트북이나 수업에서 기초 문법하고 표현들을 배웠어요. 짧은 동영상을 보면서 기초 문법하고 표현들을 다시 공부해 봐요. 그리고 쉬운 질문에 자기 생각을 한국어로 말해 봐요.' },
+    lowint:{ ko:'일상생활 주제의 동영상을 보면서 한국어를 공부해 봐요. 자료에서 배운 표현을 수업에서 바로 써 보고, 번역하지 않고 한국어로 바로 생각해서 말하는 연습을 해 봐요.' },
+    intermediate:{ ko:'실제 한국인들이 즐겨 보는 동영상이나 글을 활용해서 한국어를 공부해 봐요. 콘텐츠의 내용을 정확히 이해하는 연습도 하고, 이를 바탕으로 자신의 경험이나 생각을 자연스럽게 한국어로 말하는 연습을 해 봐요.' },
+    upint:{ ko:'일상생활 수준의 대화를 넘어 한국어로도 비판적으로 생각하고 말하고 싶어요? 그렇다면 더 깊이 다루며 원어민 콘텐츠를 자신의 생각을 논리적으로 정리해 표현하는 연습을 해 봐요.' },
+    advanced:{ ko:'단순히 한국어 자체를 배우는 단계를 넘어, 한국어로 다양한 주제에 대한 글이나 동영상을 비판적으로 분석하고, 자신의 의견을 논리적으로 정리해 말하는 연습을 해 봐요.' }
+  };
+  var SERIES = { '이 주제로 이야기해 봐요':true, '쉬운 한국어로 이야기해 봐요':true };
+  var ITALKI = 'https://www.italki.com/ko/teacher/3553151';
+  var ARROW = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>';
+
+  var state = { view:'app', group:'all', level:'all', entryBand:'beginner', page:1, lang:'auto', langOpen:false, q:'', tag:'최신', itemsToShow:12 };
+  var app = document.getElementById('app');
+
+  // 게이트 선택 기억: 카드를 고르면 localStorage에 저장하고, 재방문 시 게이트를 건너뛰고 해당 페이지로 바로 진입.
+  // 브라우저의 사이트 데이터(쿠키·로컬 저장소)를 삭제하면 다시 게이트가 나타남. 시크릿 모드 등 저장 불가 환경은 try/catch로 무시.
+  var CHOICE_KEY = 'okll.gateChoice';
+  function saveChoice(v){ try{ localStorage.setItem(CHOICE_KEY, v); }catch(_e){} }
+  function loadChoice(){ try{ return localStorage.getItem(CHOICE_KEY); }catch(_e){ return null; } }
+
+  // 보조 언어 결정: null=한국어만, 그 외=언어코드. 'auto'는 브라우저 언어를 따름
+  function sec(){
+    if(state.lang==='ko') return null;
+    if(state.lang!=='auto') return I18N[state.lang] ? state.lang : 'en';
+    var prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || navigator.userLanguage || ''];
+    for(var i=0;i<prefs.length;i++){
+      var p = (prefs[i]||'').toLowerCase(); if(!p) continue;
+      if(p.indexOf('ko')===0) return null;                 // 한국어 브라우저 → 한국어만
+      if(p.indexOf('zh')===0){ if(I18N['zh-Hant'] && /^zh-(tw|hk|mo|hant)/.test(p)) return 'zh-Hant'; if(I18N['zh-Hans']) return 'zh-Hans'; }
+      var base = p.split('-')[0];
+      if(I18N[base]) return base;
+    }
+    return I18N['en'] ? 'en' : null;                       // 비한국어 폴백 → 영어
+  }
+  function tr(key){ var s=sec(); if(!s) return ''; var d=I18N[s]; if(d && d[key]!=null) return d[key]; var e=I18N.en; return (e && e[key]!=null) ? e[key] : ''; }
+  function bilingual(){ return sec()!==null; }
+
+  function scopeItems(){
+    var g = GROUPS[state.group];
+    return MATERIALS.filter(function(m){
+      if(g.levels.indexOf(m.level)<0) return false;
+      if(state.level!=='all' && m.level!==state.level) return false;
+      return true;
+    });
+  }
+  function seriesBadge(m, bi){
+    if(!m.series) return '';
+    var se = bi ? tr('ser_'+m.series) : '';
+    return '<div class="series-badge">'+esc(m.series)+(se ? ' <em>'+esc(se)+'</em>' : '')+'</div>';
+  }
+  function computeTags(){
+    var set = [], ser = [];
+    scopeItems().forEach(function(m){ (m.tags||[]).forEach(function(t){ if(set.indexOf(t)<0) set.push(t); }); if(m.series && ser.indexOf(m.series)<0) ser.push(m.series); });
+    return ['전체','최신'].concat(ser).concat(set);
+  }
+  function byDateDesc(a,b){ var da=a.date||'', db=b.date||''; return da===db?0:(da<db?1:-1); }
+  function finalItems(){
+    var q = state.q.trim().toLowerCase();
+    return scopeItems().filter(function(m){
+      if(state.tag!=='전체' && state.tag!=='최신'){ if(SERIES[state.tag]){ if(m.series!==state.tag) return false; } else if((m.tags||[]).indexOf(state.tag)<0) return false; }
+      if(q){ if((m.title+' '+(m.en||'')+' '+m.tags.join(' ')).toLowerCase().indexOf(q)<0) return false; }
+      return true;
+    });
+  }
+  function recentItems(){
+    var q = state.q.trim().toLowerCase();
+    var pool = scopeItems().filter(function(m){
+      if(q && (m.title+' '+(m.en||'')+' '+m.tags.join(' ')).toLowerCase().indexOf(q)<0) return false;
+      return true;
+    });
+    pool = pool.slice().sort(byDateDesc);
+    return pool.slice(0, state.level === 'all' ? 10 : 5);
+  }
+  function detailHTML(key, bi){
+    var dd = DETAIL[key]; if(!dd) return '';
+    return '<div class="detail"><p class="d-ko">'+esc(dd.ko)+'</p>'+(bi?'<p class="d-en">'+esc(tr('d_'+key))+'</p>':'')+'</div>';
+  }
+  function thumbHTML(m){
+    var play = m.type==='video' ? '<span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' : '';
+    var fb = '<div class="thumb-fallback"><span class="fb-lv">'+esc(m.level)+'</span></div>';
+    var img = m.thumb ? '<img class="thumb-img" src="'+esc(m.thumb)+'" loading="lazy" referrerpolicy="no-referrer" alt="">' : '';
+    return '<div class="thumb'+(m.thumb?'':' noimg')+'">'+img+fb+play+'</div>';
+  }
+  function moreHTML(total){
+    if(total <= state.itemsToShow) return '';
+    var label = bilingual() ? '더보기 / '+tr('more') : '더보기';
+    return '<div class="more-wrap"><button type="button" id="load-more" class="more-btn">'+label+' <span>('+(total-state.itemsToShow)+')</span></button></div>';
+  }
+  function cardOf(m, bi){
+    var tags = m.tags.map(function(x){ var tt = bi ? tr('tag_'+x) : ''; return '<span class="ctag">'+esc(x)+(tt?' <em>'+esc(tt)+'</em>':'')+'</span>'; }).join('');
+    var props = m.link.indexOf('http')===0 ? ' target="_blank" rel="noreferrer"' : '';
+    return '<a class="card" href="'+esc(m.link)+'"'+props+'>'
+      + thumbHTML(m)
+      + '<div class="cbody"><div class="meta"><span class="lv">'+esc(m.level)+'</span>'+seriesBadge(m, bi)+tags+'</div>'
+      + '<h3>'+esc(m.title)+'</h3>'+(m.en?'<div class="en">'+esc(m.en)+'</div>':'')+'</div></a>';
+  }
+  function levelOrder(){
+    if(state.group!=='all') return GROUPS[state.group].levels;
+    var lead = (GROUPS[state.entryBand]||{}).levels || [];
+    var rest = LEVELS.filter(function(l){ return lead.indexOf(l)<0; });
+    return lead.concat(rest);
+  }
+  var PER_PAGE = 10;
+  function pagerHTML(pages, cur){
+    if(pages<=1) return '';
+    var set={}; [1,pages,cur,cur-1,cur+1].forEach(function(n){ if(n>=1&&n<=pages) set[n]=1; });
+    var keys=Object.keys(set).map(Number).sort(function(a,b){ return a-b; });
+    var h='<button type="button" class="pg-arrow" data-page="'+(cur>1?cur-1:1)+'"'+(cur===1?' disabled':'')+'>‹</button>';
+    var prev=0;
+    keys.forEach(function(n){ if(prev && n-prev>1) h+='<span class="pg-gap">…</span>'; h+='<button type="button" class="pg-num'+(n===cur?' on':'')+'" data-page="'+n+'">'+n+'</button>'; prev=n; });
+    h+='<button type="button" class="pg-arrow" data-page="'+(cur<pages?cur+1:pages)+'"'+(cur===pages?' disabled':'')+'>›</button>';
+    return '<div class="pager">'+h+'</div>';
+  }
+  function listHTML(){
+    var bi = bilingual();
+    if(state.tag === '최신'){
+      var recent = recentItems();
+      if(!recent.length) return '<div class="empty">검색 결과가 없습니다.'+(bi?' / '+tr('noresult'):'')+'</div>';
+      return '<div class="cards">'+recent.map(function(m){ return cardOf(m, bi); }).join('')+'</div>';
+    }
+    var order = levelOrder();
+    var items = finalItems();
+    if(!items.length) return '<div class="empty">검색 결과가 없습니다.'+(bi?' / '+tr('noresult'):'')+'</div>';
+    if(state.level!=='all'){
+      var sorted = items.slice().sort(byDateDesc);
+      var pages = Math.ceil(sorted.length/PER_PAGE);
+      if(state.page>pages) state.page = pages||1;
+      var start=(state.page-1)*PER_PAGE;
+      var pcards = sorted.slice(start, start+PER_PAGE).map(function(m){ return cardOf(m, bi); }).join('');
+      return '<div class="cards">'+pcards+'</div>'+pagerHTML(pages, state.page);
+    }
+    var ordered = items.slice().sort(function(a,b){ return order.indexOf(a.level)-order.indexOf(b.level); });
+    var shown = ordered.slice(0, state.itemsToShow);
+    var out = order.map(function(lv){
+      var rows = shown.filter(function(m){ return m.level===lv; }).sort(byDateDesc);
+      if(!rows.length) return '';
+      var cards = rows.map(function(m){ return cardOf(m, bi); }).join('');
+      return '<div class="divider"><span class="lvcode">'+esc(lv)+'</span>'
+        + '<span class="lvname">'+esc(LV_NAME[lv])+'</span><span class="ln"></span></div>'
+        + '<div class="cards">'+cards+'</div>';
+    }).join('');
+    return out + moreHTML(items.length);
+  }
+  function langMenuHTML(){
+    var opts = [{v:'auto',l:'자동 · Auto'},{v:'ko',l:'한국어'}].concat(Object.keys(I18N).map(function(k){ return {v:k, l:(LANG_NAMES[k]||k)}; }));
+    var menu = state.langOpen ? '<div class="lang-menu" id="lang-menu">'
+      + opts.map(function(o){ return '<button type="button" data-setlang="'+esc(o.v)+'" class="'+(state.lang===o.v?'on':'')+'">'+esc(o.l)+'</button>'; }).join('')
+      + '</div>' : '';
+    return '<div class="lang" id="lang"><button type="button" class="lang-btn" id="lang-btn" aria-haspopup="true" title="언어 / Language">Language <span class="chev">▾</span></button>'+menu+'</div>';
+  }
+
+  var GATE_BANDS = {
+    beginner:    { ko:'초급',   en:'Beginner',           code:'A1 – A2' },
+    lowint:      { ko:'초중급', en:'Lower-Intermediate', code:'A2+ – B1' },
+    intermediate:{ ko:'중급',   en:'Intermediate',       code:'B1+ – B2' },
+    upint:       { ko:'중고급', en:'Upper-Intermediate', code:'B2+ – C1' },
+    advanced:    { ko:'고급',   en:'Advanced',           code:'C1+ – C2' }
+  };
+  var italkiBtn = '<a class="italki" href="'+ITALKI+'" target="_blank" rel="noopener noreferrer">Visit Sangbin\'s italki profile '+ARROW+'</a>';
+  function gateHTML(){
+    var cards = Object.keys(GATE_BANDS).map(function(key){
+      var b = GATE_BANDS[key];
+      return '<div class="band" data-band="'+esc(key)+'">'
+        + '<div class="code">'+esc(b.code)+'</div>'
+        + '<div class="ko">'+esc(b.ko)+'</div>'
+        + '<div class="en">'+esc(b.en)+'</div>'
+        + '<div class="go">자료 보기<br><span class="go-en">Explore materials →</span></div></div>';
+    }).join('');
+    return '<div class="gate"><div class="wrap">'
+      + '<div class="gate-header">'
+      + '<div class="gate-brand" data-enter="all">OpenKoreanLearningLab</div>'
+      + '<h1 data-enter="all">한국어 학습 자료</h1>'
+      + '<div class="sub-en">Korean Learning Materials</div>'
+      + '<div class="sub-instruction">레벨을 선택하세요<br>Choose your level</div>'
+      + '</div>'
+      + '<div class="bands">'+cards+'</div>'
+      + '<div class="gate-cta">'+italkiBtn+'</div>'
+      + '<div class="gate-foot">© 2025–2026 Sangbin Lee (OpenKoreanLearningLab)</div>'
+      + '</div></div>';
+  }
+  function groupSelectHTML(){
+    var bi=bilingual();
+    return '<select class="nav-select" data-navsel="group" aria-label="레벨대">'
+      + GROUP_ORDER.map(function(key){ var lab=GROUPS[key].ko+(bi?' / '+tr('g_'+key):''); return '<option value="'+esc(key)+'"'+(state.group===key?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + '</select>';
+  }
+  function levelSelectHTML(){
+    var bi=bilingual(), g=GROUPS[state.group];
+    return '<select class="nav-select" data-navsel="level" aria-label="레벨">'
+      + ['all'].concat(g.levels).map(function(lv){ var lab=lv==='all'?(bi?'전체 / All':'전체'):lv; return '<option value="'+esc(lv)+'"'+(state.level===lv?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + '</select>';
+  }
+  function tagSelectHTML(){
+    var bi=bilingual();
+    return '<select class="nav-select" data-navsel="tag" aria-label="주제">'
+      + computeTags().map(function(tag){ var tt=tr('tag_'+tag); var lab=(bi&&tt)?(tag+' / '+tt):tag; return '<option value="'+esc(tag)+'"'+(state.tag===tag?' selected':'')+'>'+esc(lab)+'</option>'; }).join('')
+      + '</select>';
+  }
+  function render(){
+
+    if(state.view==='gate'){ app.innerHTML = gateHTML(); return; }
+    var g = GROUPS[state.group], bi = bilingual();
+    var groupTabs = GROUP_ORDER.map(function(key){
+      var gg = GROUPS[key], on = state.group===key?' on':'';
+      return '<button class="'+on.trim()+'" data-group="'+esc(key)+'">'+esc(gg.ko)+(bi?'<span class="en">'+esc(tr('g_'+key))+'</span>':'')+'</button>';
+    }).join('');
+    var chips = ['all'].concat(g.levels).map(function(lv){
+      var on = state.level===lv?' on':'';
+      var label = lv==='all' ? (bi?('전체 '+tr('all')):'전체') : lv;
+      return '<button class="chip'+on+'" data-level="'+esc(lv)+'">'+esc(label)+'</button>';
+    }).join('');
+    var tagBtns = computeTags().map(function(tag){
+      var on = state.tag===tag?' on':'';
+      var tt = tr('tag_'+tag);
+      var label = (bi && tt) ? '<span class="tko">'+esc(tag)+'</span><span class="ten">'+esc(tt)+'</span>' : esc(tag);
+      return '<button class="tag-btn'+(bi?' bi':'')+on+'" data-tag="'+esc(tag)+'">'+label+'</button>';
+    }).join('');
+    var heroKo = g.ko==='전체' ? '한국어 학습 자료' : (g.ko+' 학습 자료');
+    var ph = bi ? ('제목·태그 검색 / '+tr('search')) : '제목·태그 검색…';
+
+    app.innerHTML =
+      '<div class="topbar"><div class="wrap"><div class="row">'
+      + '<a href="#" class="brand" data-home="1">OpenKoreanLearningLab</a>'
+      + langMenuHTML()
+      + '</div></div></div>'
+      + '<div class="wrap">'
+      + '<div class="hero"><span class="badge">'+esc(g.ko)+(bi?' · '+esc(tr('g_'+state.group)):'')+'</span>'
+      + '<h1>'+esc(heroKo)+'</h1>'+(bi?'<div class="sub">'+esc(tr('t_'+state.group))+'</div>':'')
+      + (state.group==='all' ? '<div class="hero-desc">'+esc(g.desc)+(bi?'<em>'+esc(tr('d_all'))+'</em>':'')+'</div>' : detailHTML(state.group, bi))
+      + '<div class="groups">'+groupTabs+'</div><div class="nav-sel nav-sel-group">'+groupSelectHTML()+'</div></div>'
+      + '<div class="controls">'
+      + '<div class="search"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>'
+      + '<input id="search" type="text" placeholder="'+esc(ph)+'" value="'+esc(state.q)+'" /></div>'
+      + '<div class="chips">'+chips+'</div></div><div class="nav-sel nav-sel-level">'+levelSelectHTML()+'</div>'
+      + '<div class="tags">'+tagBtns+'</div><div class="nav-sel nav-sel-tag">'+tagSelectHTML()+'</div>'
+      + '<div class="pad" id="list">'+listHTML()+'</div>'
+      + '</div>'
+      + '<footer><a class="italki" href="'+ITALKI+'" target="_blank" rel="noopener noreferrer">Visit Sangbin\'s italki profile '+ARROW+'</a>'
+      + '<div class="copy">© 2025–2026 Sangbin Lee (OpenKoreanLearningLab)</div></footer>';
+
+    var inp = document.getElementById('search');
+    if(inp && state.q){ inp.focus(); inp.setSelectionRange(state.q.length, state.q.length); }
+  }
+
+  app.addEventListener('click', function(e){
+    var band = e.target.closest('[data-band]');
+    if(band){ var bd=band.getAttribute('data-band'); saveChoice(bd); state.entryBand=bd; state.group=bd; state.view='app'; state.level='all'; state.tag='전체'; state.q=''; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
+    var home = e.target.closest('[data-home]');
+    if(home){ window.location.href='index-flashcard-gate.html'; return; }
+    var ent = e.target.closest('[data-enter]');
+    if(ent){ saveChoice('all'); state.view='app'; state.group='all'; state.level='all'; state.tag='최신'; state.page=1; state.itemsToShow=12; window.scrollTo(0,0); render(); return; }
+    var setlang = e.target.closest('[data-setlang]');
+    if(setlang){ state.lang = setlang.getAttribute('data-setlang'); state.langOpen=false; render(); return; }
+    var langbtn = e.target.closest('#lang-btn');
+    if(langbtn){ state.langOpen = !state.langOpen; render(); return; }
+    var wasOpen = state.langOpen; state.langOpen = false;
+    var grp = e.target.closest('[data-group]');
+    if(grp){ state.group = grp.getAttribute('data-group'); state.level='all'; state.tag='전체'; state.page=1; state.itemsToShow=12; render(); return; }
+    var lv = e.target.closest('[data-level]');
+    if(lv){ state.level = lv.getAttribute('data-level'); state.tag='전체'; state.page=1; state.itemsToShow=12; render(); return; }
+    var tg = e.target.closest('[data-tag]');
+    if(tg){ state.tag = tg.getAttribute('data-tag'); state.page=1; state.itemsToShow=12; render(); return; }
+    var more = e.target.closest('#load-more');
+    if(more){ state.itemsToShow+=12; var le=document.getElementById('list'); if(le) le.innerHTML=listHTML(); return; }
+    var pg = e.target.closest('[data-page]');
+    if(pg){ var pn=parseInt(pg.getAttribute('data-page'),10); if(pn){ state.page=pn; var pe=document.getElementById('list'); if(pe){ pe.innerHTML=listHTML(); try{ pe.scrollIntoView(); }catch(_e){} } } return; }
+    if(wasOpen) render();
+  });
+  app.addEventListener('input', function(e){
+    if(e.target.id==='search'){
+      state.q = e.target.value; state.page=1; state.itemsToShow=12;
+      var listEl = document.getElementById('list');
+      if(listEl) listEl.innerHTML = listHTML();
+    }
+  });
+  app.addEventListener('change', function(e){
+    var ns = e.target.getAttribute && e.target.getAttribute('data-navsel');
+    if(!ns) return;
+    var v = e.target.value;
+    if(ns==='group'){ state.group=v; state.level='all'; state.tag='전체'; }
+    else if(ns==='level'){ state.level=v; state.tag='전체'; }
+    else if(ns==='tag'){ state.tag=v; }
+    state.page=1; state.itemsToShow=12; render();
+  });
+  app.addEventListener('error', function(e){
+    var t = e.target;
+    if(t && t.classList && t.classList.contains('thumb-img')){ var p=t.parentNode; if(p) p.classList.add('noimg'); }
+  }, true);
+
+  // 첫 진입: 저장된 게이트 선택이 있으면 게이트를 건너뛰고 해당 화면으로 (카드 클릭과 동일한 상태로 진입)
+  (function(){
+    var saved = loadChoice();
+    if(saved==='all'){ state.view='app'; state.group='all'; state.level='all'; state.tag='최신'; }
+    else if(saved && GATE_BANDS[saved]){ state.view='app'; state.entryBand=saved; state.group=saved; state.level='all'; state.tag='전체'; }
+  })();
+  render();
+
+})();
+</script>
+</body>
+</html>

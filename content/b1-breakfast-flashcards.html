@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아침밥 먹어요? — 핵심 어휘 플래시 카드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb; --g300:#d1d5db;
+    --g400:#9ca3af; --g500:#6b7280; --g600:#4b5563; --g700:#374151; --g800:#1f2937; --g900:#111827;
+    --ok:#047857; --no:#b91c1c;
+    --sans:'Noto Sans KR', sans-serif; --serif:'Noto Serif KR', serif; --eng:'Montserrat', sans-serif;
+    --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sh:0 1px 2px 0 rgb(0 0 0 / .05);
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  body{ margin:0; background:#fff; color:#1a1a1a; font-family:var(--sans); -webkit-font-smoothing:antialiased; }
+  button, a, [role="button"]{ touch-action:manipulation; }
+  ::selection{ background:var(--g100); color:#000; }
+  ::-webkit-scrollbar{ width:4px; height:4px; }
+  ::-webkit-scrollbar-thumb{ background:var(--g200); }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  .fade{ animation:fadeIn .4s ease-out forwards; }
+
+  .head{ text-align:center; padding:3.5rem 1.5rem 0; }
+  .head .brand{ font-family:var(--eng); font-size:12px; font-weight:600; color:var(--g900); letter-spacing:.01em; margin-bottom:1rem; }
+  .head h1{ font-family:var(--serif); font-weight:600; color:var(--g900); font-size:1.5rem; margin:0; letter-spacing:-.01em; }
+  .head .sub{ display:block; font-family:var(--sans); font-size:.72rem; letter-spacing:.02em; color:var(--g400); margin-top:.5rem; }
+  .head .full-link{ display:inline-block; margin-top:1rem; font-family:var(--sans); font-size:.72rem; color:var(--g400); text-decoration:none; border-bottom:1px solid var(--g200); padding-bottom:1px; transition:color .2s, border-color .2s; }
+  .head .full-link:hover{ color:var(--g700); border-color:var(--g400); }
+
+  /* 언어 설정: 한국어만 모드면 영어 병기(lk-en) 숨김 */
+  body.lk-ko .lk-en{ display:none !important; }
+  /* 교체형(병기 아님): 힌트처럼 한국어/영어를 서로 대체 */
+  body:not(.lk-ko) .lk-ko-only{ display:none !important; }
+  /* 페이지와 함께 스크롤(absolute) → 모바일에서 콘텐츠를 덮지 않음 */
+  .lk-lang{ position:absolute; top:12px; right:12px; z-index:60; }
+  .lk-lang-btn{ font-family:var(--sans); font-size:12px; font-weight:500; color:var(--g500); background:#fff;
+                border:1px solid var(--g200); border-radius:2px; padding:.35rem .6rem; cursor:pointer;
+                display:inline-flex; align-items:center; gap:5px; min-height:36px; }
+  .lk-lang-btn:hover{ color:#111; border-color:var(--g400); }
+  .lk-lang-chev{ font-size:9px; color:var(--g400); }
+  .lk-lang-menu{ position:absolute; top:calc(100% + 6px); right:0; background:#fff; border:1px solid var(--g200); border-radius:6px;
+                 box-shadow:0 10px 26px -12px rgba(0,0,0,.25); padding:5px; min-width:150px; z-index:61; display:flex; flex-direction:column; }
+  .lk-lang-menu button{ font-family:var(--sans); font-size:12.5px; text-align:left; background:transparent; border:0;
+                        padding:8px 11px; border-radius:4px; cursor:pointer; color:#111; min-height:40px; }
+  .lk-lang-menu button:hover{ background:var(--g100); }
+  .lk-lang-menu button.on{ font-weight:700; }
+  .lk-lang-menu button.on::after{ content:'\2713'; float:right; color:var(--g400); margin-left:14px; }
+
+  .wrap{ max-width:40rem; margin:0 auto; width:100%; padding:2rem 1rem 4rem; display:flex; flex-direction:column; align-items:center; }
+
+  .bar{ display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:.5rem 1.25rem; margin-bottom:1.25rem; }
+  .stats{ display:flex; align-items:center; gap:1.25rem; font-size:.68rem; color:var(--g400); }
+  .stat b{ font-weight:600; color:var(--g900); }
+  .stat.k b{ color:var(--ok); } .stat.u b{ color:var(--no); }
+  .order{ display:inline-flex; border:1px solid var(--g200); border-radius:2px; overflow:hidden; }
+  .obtn{ min-height:32px; padding:.3rem .7rem; background:#fff; border:none; font-family:var(--sans);
+         font-size:.68rem; font-weight:600; color:var(--g400); cursor:pointer; transition:all .2s; }
+  .obtn + .obtn{ border-left:1px solid var(--g200); }
+  .obtn.on{ background:#111827; color:#fff; }
+
+  /* ---- card ---- */
+  .card{ width:100%; perspective:1200px; cursor:pointer; margin-bottom:1.25rem; }
+  .inner{ position:relative; width:100%; transition:transform .5s; transform-style:preserve-3d; }
+  .inner.flip{ transform:rotateY(180deg); }
+  .face{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between;
+         padding:1.25rem; box-shadow:var(--sh); backface-visibility:hidden; -webkit-backface-visibility:hidden;
+         background:#fff; border:1px solid var(--g100); overflow:hidden; }
+  /* 앞면이 문서 흐름을 차지해 카드 높이를 결정. 뒷면은 absolute로 겹침 */
+  .front{ position:relative; }
+  .back{ transform:rotateY(180deg); overflow-y:auto; }
+  .card:hover .front{ border-color:var(--g300); }
+
+  .row{ display:flex; justify-content:space-between; align-items:center; gap:.5rem; }
+  .tag{ font-family:var(--sans); font-size:.68rem; font-weight:700; color:var(--g400); letter-spacing:.02em; }
+  .tag .lk-en{ font-weight:500; color:var(--g300); }
+  .count{ font-family:var(--mono); font-size:.75rem; font-weight:500; color:var(--g300); }
+
+  /* 16:9 미디어 */
+  .media-box{ width:100%; aspect-ratio:16/9; background:var(--g50); overflow:hidden; border-radius:2px; margin:.5rem 0; }
+  .media-box img, .media-box video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  .cue{ text-align:center; font-size:.75rem; color:var(--g500); line-height:1.5; }
+  .cue b{ color:var(--g900); }
+  .prog{ width:100%; height:.25rem; background:var(--g100); margin-top:.5rem; }
+  .prog i{ display:block; height:100%; background:#000; transition:width .3s; }
+
+  /* ---- back ---- */
+  .back .vocab{ text-align:center; font-family:var(--sans); font-size:.8rem; font-weight:700; color:var(--g400); letter-spacing:.02em; }
+  .back-body{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; padding:.5rem 0; min-height:0; }
+  .back-img{ width:100%; max-width:22rem; aspect-ratio:16/9; object-fit:cover; border-radius:2px; background:var(--g50); }
+  .sentence{ font-family:var(--serif); font-size:1.5rem; font-weight:400; line-height:1.6; color:var(--g700); text-align:center; margin:0; }
+  .sentence .hl{ font-weight:700; color:var(--g900); }
+  @media (max-width:480px){ .sentence{ font-size:1.25rem; } }
+  .trans{ font-family:var(--sans); font-size:.9rem; color:var(--g500); text-align:center; margin:0; min-height:1.2em; }
+  .back-actions{ display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; }
+  .bbtn{ display:inline-flex; align-items:center; gap:.4rem; min-height:40px; padding:.5rem .9rem; background:#fff;
+         border:1px solid var(--g200); font-family:var(--sans); font-size:.75rem; font-weight:500; color:var(--g600);
+         cursor:pointer; transition:all .2s; border-radius:2px; }
+  .bbtn:hover{ border-color:#000; color:#000; }
+  .bbtn.on{ background:#111827; color:#fff; border-color:#111827; }
+  .bbtn svg{ width:.9rem; height:.9rem; display:block; }
+  .foot{ text-align:center; font-size:10px; color:var(--g300); letter-spacing:.02em; text-transform:uppercase; }
+
+  /* ---- self-assess (카드 밖) ---- */
+  .judge{ display:flex; gap:.5rem; width:100%; margin-bottom:1.25rem; }
+  .jbtn{ flex:1; min-height:48px; padding:.75rem .5rem; background:#fff; border:1px solid var(--g100);
+         font-family:var(--sans); font-size:.85rem; font-weight:500; cursor:pointer; transition:all .2s; color:var(--g500); border-radius:2px; }
+  .jbtn.k:hover{ border-color:var(--ok); color:var(--ok); background:#ecfdf5; }
+  .jbtn.u:hover{ border-color:var(--no); color:var(--no); background:#fef2f2; }
+
+  /* ---- controls ---- */
+  .ctrls{ display:flex; align-items:center; gap:1rem; justify-content:center; }
+  .ibtn{ min-width:44px; min-height:44px; padding:.6rem; background:transparent; border:none; color:var(--g300);
+         cursor:pointer; transition:color .2s; display:inline-flex; align-items:center; justify-content:center; }
+  .ibtn:hover{ color:var(--g900); }
+  .ibtn svg{ width:1.1rem; height:1.1rem; display:block; }
+  .fbtn{ min-height:44px; padding:.6rem 1.4rem; background:transparent; color:var(--g500); border:1px solid var(--g200);
+         font-family:var(--eng); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase;
+         cursor:pointer; transition:all .2s; border-radius:2px; }
+  .fbtn:hover{ color:var(--g900); border-color:var(--g400); }
+
+  /* ---- summary ---- */
+  .sum{ width:100%; text-align:center; padding:3rem 1.25rem; border:1px solid var(--g100); background:#fff; border-radius:2px; }
+  .sum h3{ font-family:var(--serif); font-size:1.25rem; font-weight:600; color:var(--g900); margin:0 0 .5rem; }
+  .sum .line{ font-size:.8rem; color:var(--g500); margin-bottom:2rem; }
+  .sum .acts{ display:flex; flex-direction:column; gap:.5rem; max-width:20rem; margin:0 auto; }
+  .sbtn{ min-height:44px; padding:.7rem 1rem; background:#fff; border:1px solid var(--g200); font-family:var(--sans);
+         font-size:.8rem; font-weight:500; cursor:pointer; transition:all .2s; color:var(--g700); border-radius:2px; }
+  .sbtn:hover{ border-color:#000; color:#000; }
+  .sbtn.pri{ background:#000; color:#fff; border-color:#000; }
+  .sbtn.pri:hover{ background:var(--g800); }
+
+  .hint{ margin-top:1.5rem; font-size:.68rem; color:var(--g300); text-align:center; line-height:1.7; }
+  kbd{ font-family:var(--mono); font-size:.65rem; background:var(--g50); border:1px solid var(--g200); border-radius:3px; padding:.05rem .3rem; color:var(--g500); }
+  /* 터치 기기(물리 키보드 없음): 키보드 힌트 숨김 → 오버플로·잡음 제거 */
+  @media (hover:none){ .hint{ display:none; } }
+
+  noscript .ns{ display:block; max-width:34rem; margin:2rem auto; padding:1rem; border:1px solid var(--g200);
+                text-align:center; font-size:.875rem; color:var(--g500); }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="brand">OpenKoreanLearningLab</div>
+  <h1>아침밥 먹어요?</h1>
+  <span class="sub">핵심 어휘 플래시 카드<span class="lk-en"> · Key Vocabulary Flash Cards</span></span>
+  <a class="full-link" href="b1-breakfast.html">전체 학습 자료<span class="lk-en"> · Full lesson</span> &rarr;</a>
+</header>
+
+<noscript><span class="ns">이 학습 자료를 보려면 자바스크립트를 켜 주세요. / Please enable JavaScript.</span></noscript>
+
+<main id="app"></main>
+
+<script>
+'use strict';
+(function () {
+
+  /* =========================================================================
+     콘텐츠 데이터 — 이 배열만 바꾸면 새 덱이 된다.
+     media.type: 'image' | 'video'  /  media.sound: 동영상에 음성 있으면 true
+     back.img : 뒷면 이미지(오해·결론 같은 빈 말풍선 카드)
+     ========================================================================= */
+  /* 미디어 위치(BASE) — GitHub raw에서 로드(HTML 위치와 무관).
+     로컬 미디어 옆에서 열 땐 ''(상대경로)로 바꾸면 됨. */
+  var BASE = 'https://github.com/openkoreanlearninglab/hub/raw/refs/heads/main/flashcards/b1-breakfast/';
+  var IMG = BASE + 'images/', VID = BASE + 'videos/', AUD = BASE + 'audio/';
+
+  var CARDS = [
+    { vocab:'아침 먹다', ko:'저는 아침을 먹어요.', hl:'아침을 먹어요', en:'I eat breakfast.',
+      media:{type:'image', src:IMG+'01_eat_breakfast.jpeg'}, audio:AUD+'01_eat_breakfast.wav' },
+    { vocab:'굶다', ko:'저는 오늘 아침을 굶었어요.', hl:'굶었어요', en:'I skipped breakfast today.',
+      media:{type:'image', src:IMG+'02_skip_meal.jpeg'}, audio:AUD+'02_skip_meal.wav' },
+    { vocab:'끼', ko:'저는 하루에 세 끼 먹어요.', hl:'세 끼', en:'I eat three meals a day.',
+      media:{type:'video', src:VID+'03_meals_count.mp4'}, audio:AUD+'03_meals_count.wav' },
+    { vocab:'챙겨 먹다', ko:'저는 매일 아침을 챙겨 먹어요.', hl:'챙겨 먹어요', en:'I make sure to eat breakfast every day.',
+      media:{type:'video', src:VID+'04_eat_properly.mp4'}, audio:AUD+'04_eat_properly.wav' },
+    { vocab:'입맛이 없다', ko:'저는 입맛이 없어요.', hl:'입맛이 없어요', en:'I have no appetite.',
+      media:{type:'image', src:IMG+'05_no_appetit.jpeg'}, audio:AUD+'05_no_appetit.wav' },
+    { vocab:'힘이 없다', ko:'저는 힘이 없어요.', hl:'힘이 없어요', en:'I have no energy.',
+      media:{type:'image', src:IMG+'06_no_energy.jpeg'}, audio:AUD+'06_no_energy.wav' },
+    { vocab:'살이 빠지다', ko:'저는 살이 빠졌어요.', hl:'살이 빠졌어요', en:'I have lost weight.',
+      media:{type:'image', src:IMG+'07_lose_weight.jpeg'}, audio:AUD+'07_lose_weight.wav' },
+    { vocab:'단백질', ko:'달걀에는 단백질이 많아요.', hl:'단백질', en:'Eggs have a lot of protein.',
+      media:{type:'image', src:IMG+'08_protein.jpeg'}, audio:AUD+'08_protein.wav' },
+    { vocab:'집중하다', ko:'저는 게임에 집중해요.', hl:'집중해요', en:'I concentrate on the game.',
+      media:{type:'image', src:IMG+'09_focus.jpeg'}, audio:AUD+'09_focus.wav' },
+    { vocab:'규칙적으로', ko:'저는 규칙적으로 운동해요.', hl:'규칙적으로', en:'I exercise regularly.',
+      media:{type:'video', src:VID+'10_regularly.mp4'}, audio:AUD+'10_regularly.wav' },
+    { vocab:'피곤해 보이다', ko:'우디는 피곤해 보여요.', hl:'피곤해 보여요', en:'Woody looks tired.',
+      media:{type:'image', src:IMG+'11_look_tired.jpeg'}, audio:AUD+'11_look_tired.wav' },
+    { vocab:'중요하다', ko:'저에게 커피는 중요해요.', hl:'중요해요', en:'Coffee is important to me.',
+      media:{type:'image', src:IMG+'12_important.jpeg'}, audio:AUD+'12_important.wav' },
+    { vocab:'제일', ko:'저는 라면을 제일 좋아해요.', hl:'제일', en:'I like ramen the most.',
+      media:{type:'image', src:IMG+'13_the_most.jpeg'}, audio:AUD+'13_the_most.wav' },
+    { vocab:'꼭', ko:'저는 아침을 꼭 먹어요.', hl:'꼭', en:'I always eat breakfast without fail.',
+      media:{type:'image', src:IMG+'14_for_sure.jpeg'}, audio:AUD+'14_for_sure.wav' },
+    { vocab:'금방', ko:'저는 시리얼을 먹으면 금방 배고파져요.', hl:'금방', en:'When I eat cereal, I get hungry again soon.',
+      media:{type:'video', src:VID+'15_soon.mp4'}, audio:AUD+'15_soon.wav' },
+    { vocab:'대신', ko:'저는 시리얼 대신 사과를 먹어요.', hl:'대신', en:'I eat an apple instead of cereal.',
+      media:{type:'video', src:VID+'16_instead.mp4'}, audio:AUD+'16_instead.wav' },
+    { vocab:'머리가 안 돌아가다', ko:'저는 아침에 머리가 안 돌아가요.', hl:'머리가 안 돌아가요', en:"In the morning, my brain doesn't work.",
+      media:{type:'image', src:IMG+'17_brain_not_working.jpeg'}, audio:AUD+'17_brain_not_working.wav' },
+    { vocab:'오해', ko:'그건 오해예요.', hl:'오해', en:"That's a misunderstanding.",
+      media:{type:'video', src:VID+'18_misunderstanding_front.mp4', sound:true},
+      back:{img:IMG+'18_misunderstanding_back.jpeg'}, audio:AUD+'18_misunderstanding.wav' },
+    { vocab:'결론', ko:'결론이 뭐예요?', hl:'결론', en:"What's the conclusion?",
+      media:{type:'video', src:VID+'19_conclusion_front.mp4', sound:true},
+      back:{img:IMG+'19_conclusion_back.jpeg'}, audio:AUD+'19_conclusion.wav' },
+    { vocab:'-마다 다르다', ko:'아침밥은 나라마다 달라요.', hl:'나라마다 달라요', en:'Breakfast is different in every country.',
+      media:{type:'image', src:IMG+'20_varies_by.jpeg'}, audio:AUD+'20_varies_by.wav' }
+  ];
+
+  /* ========================= 유틸 ========================= */
+  function esc(s){ return String(s==null?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  /* 문장에서 학습 타겟 어휘만 굵게 강조 */
+  function boldTarget(ko, hl){
+    var s = esc(ko); if(!hl) return s;
+    var h = esc(hl), i = s.indexOf(h);
+    if(i<0) return s;
+    return s.slice(0,i) + '<strong class="hl">' + h + '</strong>' + s.slice(i+h.length);
+  }
+  function shuffle(a){ var n=a.slice(),i,j,t; for(i=n.length-1;i>0;i--){ j=Math.floor(Math.random()*(i+1)); t=n[i];n[i]=n[j];n[j]=t; } return n; }
+
+  var ICON = {
+    prev:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>',
+    next:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>',
+    shuf:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>',
+    spk:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5L6 9H2v6h4l5 4V5z"/><path stroke-linecap="round" stroke-width="1.8" d="M15.5 8.5a5 5 0 010 7"/></svg>',
+    eye:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>'
+  };
+
+  /* ========================= 오디오 (전역 1개) ========================= */
+  var audioEl = null;
+  function playAudio(src){
+    try{
+      if(!audioEl){ audioEl = new Audio(); }
+      if(audioEl.src !== src){ audioEl.src = src; }
+      audioEl.currentTime = 0;
+      var p = audioEl.play();
+      if(p && p.catch){ p.catch(function(){}); }
+    }catch(_){}
+  }
+  function stopAudio(){ try{ if(audioEl){ audioEl.pause(); } }catch(_){} }
+
+  /* ========================= 상태 ========================= */
+  var state = { queue:[], pos:0, flipped:false, showTrans:false, status:{}, done:false, shuffled:false, lang:'auto', langOpen:false };
+
+  /* 언어: null = 한국어만(영어 병기 숨김), 'en' = 영어 병기 표시 */
+  function secLang(){
+    if(state.lang==='ko') return null;
+    if(state.lang!=='auto') return 'en';
+    var prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language||''];
+    for(var k=0;k<prefs.length;k++){ var p=(prefs[k]||'').toLowerCase(); if(!p) continue; return (p.indexOf('ko')===0)?null:'en'; }
+    return 'en';
+  }
+  function applyLang(){ document.body.classList.toggle('lk-ko', !secLang()); }
+  function langCtrlHTML(){
+    var opts=[{v:'auto',l:'자동 · Auto'},{v:'ko',l:'한국어'},{v:'en',l:'English'}];
+    var menu = state.langOpen
+      ? '<div class="lk-lang-menu">'+opts.map(function(o){return '<button type="button" data-act="lang-set" data-lang="'+o.v+'" class="'+(state.lang===o.v?'on':'')+'">'+o.l+'</button>';}).join('')+'</div>'
+      : '';
+    return '<div class="lk-lang"><button type="button" class="lk-lang-btn" data-act="lang-toggle" aria-haspopup="true" aria-expanded="'+(state.langOpen?'true':'false')+'">Language <span class="lk-lang-chev">▾</span></button>'+menu+'</div>';
+  }
+
+  function startRound(list){
+    var base = (list && list.length ? list : CARDS.map(function(_,i){return i;})).slice();
+    state.queue = state.shuffled ? shuffle(base) : base;
+    state.pos=0; state.flipped=false; state.showTrans=false; state.done=false; state.status={};
+  }
+  function curIdx(){ return state.queue[state.pos]; }
+  function curCard(){ return CARDS[curIdx()]; }
+  function countOf(k){ return Object.keys(state.status).filter(function(x){return state.status[x]===k;}).length; }
+  function unknownIdx(){ return Object.keys(state.status).filter(function(x){return state.status[x]==='unknown';}).map(Number); }
+  /* 이미지 프리로드: 다음·이전 카드 이미지를 미리 받아 전환 시 검정 화면 제거 */
+  var fcPre={};
+  function preloadOne(url){ if(!url||fcPre[url])return; fcPre[url]=true; var im=new Image(); im.src=url; }
+  function preloadIdx(qp){ if(qp<0||qp>=state.queue.length)return; var c=CARDS[state.queue[qp]]; if(!c)return; if(c.media&&c.media.type==='image')preloadOne(c.media.src); if(c.back&&c.back.img)preloadOne(c.back.img); }
+  function preloadAround(){ var c=curCard(); if(c&&c.back&&c.back.img)preloadOne(c.back.img); preloadIdx(state.pos+1); preloadIdx(state.pos+2); preloadIdx(state.pos-1); }
+
+  /* ========================= 뷰 ========================= */
+  function mediaHTML(c){
+    if(c.media.type==='video'){
+      var attrs = c.media.sound
+        ? 'controls playsinline preload="metadata"'
+        : 'autoplay muted loop playsinline preload="metadata"';
+      return '<video class="fc-video" src="'+esc(c.media.src)+'" '+attrs+'></video>';
+    }
+    return '<img src="'+esc(c.media.src)+'" alt="'+esc(c.vocab)+' 상황 그림">';
+  }
+  function frontHTML(c){
+    return '<div class="row"><span class="tag">그림<span class="lk-en"> · Picture</span></span><span class="count" id="count"></span></div>'
+      + '<div class="media-box">'+mediaHTML(c)+'</div>'
+      + '<p class="cue"><b>이 장면을 한국어 문장으로 말해 보세요.</b><span class="lk-en"><br>Say this scene as a Korean sentence.</span>'
+        + '<br>말한 뒤에 카드를 뒤집으세요.<span class="lk-en"><br>Then flip the card.</span></p>'
+      + '<div class="prog"><i id="bar"></i></div>';
+  }
+  function backHTML(c){
+    var img = (c.back && c.back.img) ? '<img class="back-img" src="'+esc(c.back.img)+'" alt="'+esc(c.vocab)+' 정답 장면">' : '';
+    return '<div class="row"><span class="tag">정답<span class="lk-en"> · Answer</span></span><span class="vocab">'+esc(c.vocab)+'</span></div>'
+      + '<div class="back-body">'
+        + img
+        + '<p class="sentence">'+boldTarget(c.ko, c.hl)+'</p>'
+        + '<p class="trans" id="trans"></p>'
+        + '<div class="back-actions">'
+          + '<button type="button" class="bbtn" data-act="audio" aria-label="문장 듣기">'+ICON.spk+' 듣기<span class="lk-en"> · Listen</span></button>'
+          + '<button type="button" class="bbtn" data-act="trans" aria-pressed="false">'+ICON.eye+' 번역<span class="lk-en"> · Translation</span></button>'
+        + '</div>'
+      + '</div>'
+      + '<div class="foot">카드 밖 버튼으로 스스로 평가하세요<span class="lk-en"> · Rate yourself with the buttons below</span></div>';
+  }
+
+  function cardHTML(){
+    var c = curCard(); if(!c) return '';
+    return '<div class="card" data-act="flip"><div class="inner'+(state.flipped?' flip':'')+'" id="inner">'
+      + '<div class="face front" id="front">'+frontHTML(c)+'</div>'
+      + '<div class="face back" id="back">'+backHTML(c)+'</div>'
+      + '</div></div>';
+  }
+  function summaryHTML(){
+    var k=countOf('known'), u=countOf('unknown');
+    return '<div class="sum"><h3>한 바퀴 끝!<span class="lk-en"> · Round complete</span></h3>'
+      + '<p class="line">알아요<span class="lk-en"> · Got it</span> <b style="color:#047857">'+k+'</b> · 모르겠어요<span class="lk-en"> · Not yet</span> <b style="color:#b91c1c">'+u+'</b> / 전체 '+CARDS.length+'</p>'
+      + '<div class="acts">'
+        + (u?'<button type="button" class="sbtn pri" data-act="again-u">모르는 카드만 다시 ('+u+'장, 섞어서)<span class="lk-en"> · Review missed, shuffled</span></button>':'')
+        + '<button type="button" class="sbtn" data-act="again-all">전체 다시 하기 (섞어서)<span class="lk-en"> · Restart all, shuffled</span></button>'
+      + '</div></div>';
+  }
+  function statsHTML(){
+    return '<div class="bar">'
+      + '<div class="stats">'
+        + '<span class="stat k">알아요<span class="lk-en"> · Got it</span> <b id="sk">'+countOf('known')+'</b></span>'
+        + '<span class="stat u">모르겠어요<span class="lk-en"> · Not yet</span> <b id="su">'+countOf('unknown')+'</b></span>'
+      + '</div>'
+      + '<div class="order" role="group" aria-label="카드 순서">'
+        + '<button type="button" class="obtn'+(state.shuffled?'':' on')+'" data-act="order-fixed">순서대로<span class="lk-en"> · In order</span></button>'
+        + '<button type="button" class="obtn'+(state.shuffled?' on':'')+'" data-act="order-shuffle">섞기<span class="lk-en"> · Shuffle</span></button>'
+      + '</div></div>';
+  }
+  function shellHTML(){
+    if(state.done) return langCtrlHTML()+'<section class="wrap fade" id="wrap">'+statsHTML()+summaryHTML()+'</section>';
+    return langCtrlHTML()+'<section class="wrap fade" id="wrap">'
+      + statsHTML()
+      + cardHTML()
+      + '<div class="judge">'
+        + '<button type="button" class="jbtn k" data-act="know">알아요<span class="lk-en"> · Got it</span></button>'
+        + '<button type="button" class="jbtn u" data-act="dont">모르겠어요<span class="lk-en"> · Not yet</span></button>'
+      + '</div>'
+      + '<div class="ctrls">'
+        + '<button type="button" class="ibtn" data-act="prev" aria-label="이전 카드">'+ICON.prev+'</button>'
+        + '<button type="button" class="fbtn" data-act="flip">뒤집기<span class="lk-en"> · Flip</span></button>'
+        + '<button type="button" class="ibtn" data-act="next" aria-label="다음 카드">'+ICON.next+'</button>'
+      + '</div>'
+      + '<p class="hint">'
+        + '<span class="lk-ko-only"><kbd>Space</kbd> 뒤집기 · <kbd>&larr;</kbd><kbd>&rarr;</kbd> 이전/다음 · '
+          + '<kbd>1</kbd> 알아요 · <kbd>2</kbd> 모르겠어요 · <kbd>S</kbd> 순서/섞기</span>'
+        + '<span class="lk-en"><kbd>Space</kbd> Flip · <kbd>&larr;</kbd><kbd>&rarr;</kbd> Prev/Next · '
+          + '<kbd>1</kbd> Got it · <kbd>2</kbd> Not yet · <kbd>S</kbd> Order/Shuffle</span></p>'
+      + '</section>';
+  }
+
+  /* ========================= 렌더 ========================= */
+  var root = document.getElementById('app');
+  var q = function(s){ return root.querySelector(s); };
+
+  function syncCard(){
+    var el = q('#inner'); if(!el) return;
+    var c = curCard(); var total = state.queue.length;
+    q('#front').innerHTML = frontHTML(c);
+    q('#back').innerHTML = backHTML(c);
+    q('#count').textContent = (state.pos+1)+' / '+total;
+    q('#bar').style.width = (((state.pos+1)/total)*100)+'%';
+    applyFlipState();
+    preloadAround();
+  }
+  function mount(){ root.innerHTML = shellHTML(); applyLang(); if(!state.done) syncCard(); }
+  function refreshStats(){ var k=q('#sk'),u=q('#su'); if(k)k.textContent=countOf('known'); if(u)u.textContent=countOf('unknown'); }
+
+  function applyFlipState(){
+    var el=q('#inner'); if(!el) return;
+    el.classList.toggle('flip', state.flipped);
+    // 뒷면 번역 표시
+    var tr=q('#trans'); if(tr) tr.textContent = state.showTrans ? curCard().en : '';
+    var tb=q('#back [data-act="trans"]'); if(tb){ tb.classList.toggle('on', state.showTrans); tb.setAttribute('aria-pressed', state.showTrans?'true':'false'); }
+  }
+  function setFlipped(v){
+    state.flipped = v;
+    applyFlipState();
+    if(v){ playAudio(curCard().audio); }   // 뒤집으면 문장 음성 자동 재생
+    else { stopAudio(); }
+  }
+  function goCard(fn){
+    stopAudio();
+    state.flipped=false; state.showTrans=false;
+    fn();
+    if(state.done){ mount(); } else { syncCard(); }
+  }
+  function mark(kind){
+    state.status[curIdx()] = kind;
+    refreshStats();
+    goCard(function(){ if(state.pos+1>=state.queue.length) state.done=true; else state.pos+=1; });
+  }
+
+  /* ========================= 액션 ========================= */
+  /* 현재 큐(멤버십 유지)를 순서/셔플로 재배열 */
+  function setOrder(sh){
+    if(sh===state.shuffled) return;
+    state.shuffled = sh;
+    var members = state.queue.slice();
+    state.queue = sh ? shuffle(members) : members.slice().sort(function(a,b){return a-b;});
+    stopAudio(); state.pos=0; state.flipped=false; state.showTrans=false;
+    mount();
+  }
+  var ACT = {
+    flip:    function(){ setFlipped(!state.flipped); },
+    know:    function(){ mark('known'); },
+    dont:    function(){ mark('unknown'); },
+    prev:    function(){ goCard(function(){ state.pos=(state.pos-1+state.queue.length)%state.queue.length; }); },
+    next:    function(){ goCard(function(){ state.pos=(state.pos+1)%state.queue.length; }); },
+    'order-fixed':   function(){ setOrder(false); },
+    'order-shuffle': function(){ setOrder(true); },
+    audio:   function(){ playAudio(curCard().audio); },
+    trans:   function(){ state.showTrans=!state.showTrans; applyFlipState(); },
+    'lang-toggle':   function(){ state.langOpen=!state.langOpen; mount(); },
+    'lang-set':      function(el){ state.lang = el.dataset.lang; state.langOpen=false; mount(); },
+    'again-u':   function(){ state.shuffled=true; startRound(unknownIdx()); mount(); },
+    'again-all': function(){ state.shuffled=true; startRound(null); mount(); }
+  };
+
+  /* ========================= 이벤트 위임 (루트 1회) ========================= */
+  root.addEventListener('click', function(e){
+    var t = e.target.closest('[data-act]');
+    var a = t ? t.dataset.act : null;
+    // 언어 메뉴 열려있고 바깥(언어 관련 아님)을 클릭하면 먼저 닫는다
+    if(state.langOpen && a!=='lang-toggle' && a!=='lang-set'){ state.langOpen=false; mount(); }
+    if(!t || !root.contains(t)) return;
+    // 뒷면 컨트롤(음성/번역)·동영상 클릭은 카드 뒤집기로 전파되지 않게
+    if(a==='audio' || a==='trans'){ e.stopPropagation(); }
+    if(ACT[a]) ACT[a](t);
+  });
+  // 동영상 컨트롤 조작 시 카드가 뒤집히지 않도록
+  root.addEventListener('click', function(e){
+    if(e.target.closest('.fc-video')) e.stopPropagation();
+  }, true);
+
+  /* ========================= 키보드 ========================= */
+  window.addEventListener('keydown', function(e){
+    var ae = document.activeElement;
+    if(ae && (['INPUT','TEXTAREA','SELECT'].includes(ae.tagName) || ae.isContentEditable)) return;
+    if(e.key==='Escape' && state.langOpen){ state.langOpen=false; mount(); return; }
+    if(state.done) return;
+    if(e.code==='Space' || e.code==='Enter'){ e.preventDefault(); ACT.flip(); }
+    else if(e.key==='ArrowRight'){ e.preventDefault(); ACT.next(); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); ACT.prev(); }
+    else if(e.key==='1'){ ACT.know(); }
+    else if(e.key==='2'){ ACT.dont(); }
+    else if(e.key==='s' || e.key==='S'){ setOrder(!state.shuffled); }
+    else if(e.key==='t' || e.key==='T'){ if(state.flipped) ACT.trans(); }
+  });
+
+  startRound(null);
+  mount();
+})();
+</script>
+</body>
+</html>

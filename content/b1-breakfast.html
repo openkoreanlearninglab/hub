@@ -195,6 +195,9 @@ body.pw-printing #print-root{display:block}
         #app:not(.lk-ko) .lk-ko-only{ display:none !important; }
         /* 터치 기기(물리 키보드 없음): 키보드 힌트 숨김 */
         @media (hover:none){ .fc-hint{ display:none !important; } }
+        .fc-focus{ display:block; text-align:center; margin-top:1.25rem; }
+        .fc-focus a{ font-family:'Noto Sans KR',sans-serif; font-size:.68rem; color:#9ca3af; text-decoration:none; border-bottom:1px solid #e5e7eb; padding-bottom:1px; transition:color .2s,border-color .2s; }
+        .fc-focus a:hover{ color:#374151; border-color:#9ca3af; }
     </style>
 </head>
 
@@ -3269,6 +3272,7 @@ body.pw-printing #print-root{display:block}
             + '<div class="fc-judge"><button type="button" class="fc-jbtn k" data-action="fc-know">알아요<span class="lk-en"> · Got it</span></button><button type="button" class="fc-jbtn u" data-action="fc-dont">모르겠어요<span class="lk-en"> · Not yet</span></button></div>'
             + '<div class="fc-ctrls"><button type="button" class="fc-ibtn" data-action="fc-prev" aria-label="이전 카드">'+FC_ICON.prev+'</button><button type="button" class="fc-fbtn" data-action="fc-flip">뒤집기<span class="lk-en"> · Flip</span></button><button type="button" class="fc-ibtn" data-action="fc-next" aria-label="다음 카드">'+FC_ICON.next+'</button></div>'
             + '<p class="fc-hint"><span class="lk-ko-only"><kbd>Space</kbd> 뒤집기 · <kbd>&larr;</kbd><kbd>&rarr;</kbd> 이전/다음 · <kbd>1</kbd> 알아요 · <kbd>2</kbd> 모르겠어요 · <kbd>S</kbd> 순서/섞기</span><span class="lk-en"><kbd>Space</kbd> Flip · <kbd>&larr;</kbd><kbd>&rarr;</kbd> Prev/Next · <kbd>1</kbd> Got it · <kbd>2</kbd> Not yet · <kbd>S</kbd> Order/Shuffle</span></p>'
+            + '<div class="fc-focus print:hidden"><a href="b1-breakfast-flashcards.html">집중 모드로<span class="lk-en"> · Focus mode</span> &rarr;</a></div>'
             + '</div>'; }
         function fcSync(){ const root=viewRoot(); if(!root)return; const c=fcCur(); if(!c)return; const f=qs('#fc-front',root),b=qs('#fc-back',root); if(f)f.innerHTML=fcFrontHTML(c); if(b)b.innerHTML=fcBackHTML(c); fcApplyFlip(); fcPreloadAround(); }
         function fcApplyFlip(){ const root=viewRoot(); if(!root)return; const el=qs('#fc-inner',root); if(el)el.classList.toggle('flip',fc.flipped); const tr=qs('#fc-trans',root); if(tr)tr.textContent=fc.showTrans?fcCur().en:''; const tb=qs('#fc-back [data-action="fc-trans"]',root); if(tb)tb.classList.toggle('on',fc.showTrans); }
