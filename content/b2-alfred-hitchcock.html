@@ -177,19 +177,6 @@ body.pw-printing #print-root{display:block}
                 display: none !important;
             }
         }
-    
-.lk-lang{ position:relative; display:inline-flex; align-items:center; }
-.lk-lang-btn{ font-family:inherit; font-size:14px; font-weight:500; color:#6b7280; background:transparent; border:0; border-radius:0; padding:0; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:color .15s; white-space:nowrap; }
-.lk-lang-btn:hover{ color:#111; }
-.lk-lang-chev{ font-size:9px; color:#9ca3af; }
-.lk-lang-menu{ position:fixed; top:60px; right:16px; background:#fff; border:1px solid #e5e7eb; border-radius:10px; box-shadow:0 10px 26px -12px rgba(0,0,0,.25); padding:5px; min-width:150px; z-index:60; display:flex; flex-direction:column; }
-.lk-lang-menu button{ font-family:inherit; font-size:12.5px; text-align:left; background:transparent; border:0; padding:8px 11px; border-radius:7px; cursor:pointer; color:#111; white-space:nowrap; }
-.lk-lang-menu button:hover{ background:#f3f4f6; }
-.lk-lang-menu button.on{ font-weight:700; }
-.lk-lang-menu button.on::after{ content:'\2713'; float:right; color:#9ca3af; margin-left:14px; }
-.lk-lang-spacer{ width:74px; }
-#app.lk-ko .lk-en{ display:none !important; }
-@media print{ .lk-lang{ display:none !important; } }
     </style>
 </head>
 
@@ -837,16 +824,16 @@ body.pw-printing #print-root{display:block}
         const transBtn = (action, isShowing, extra) => `<button type="button" data-action="${action}" class="flex items-center gap-1 text-[8px] font-normal text-gray-300 hover:text-gray-500 font-sans transition-colors cursor-pointer border-none p-0 bg-transparent tracking-widest uppercase ${extra || ''}">${transIcon('w-2.5 h-2.5 opacity-80')}${isShowing ? 'HIDE' : 'ENG'}</button>`;
 
         const NAV_ITEMS = [
-            { id: 'home', label: '시작 페이지', en: 'Home', icon: 'home' },
-            { id: 'video', label: '동영상 자료', en: 'Video', icon: 'video' },
-            { id: 'vocab', label: '핵심 어휘', en: 'Key Vocabulary', icon: 'vocab' },
-            { id: 'quiz', label: '내용 확인 퀴즈', en: 'Comprehension Quiz', icon: 'quiz' },
-            { id: 'discuss', label: '생각해 보기', en: 'Food For Thought', icon: 'discuss' }
+            { id: 'home', label: '시작 페이지', icon: 'home' },
+            { id: 'video', label: '동영상 자료', icon: 'video' },
+            { id: 'vocab', label: '핵심 어휘', icon: 'vocab' },
+            { id: 'quiz', label: '내용 확인 퀴즈', icon: 'quiz' },
+            { id: 'discuss', label: '생각해 보기', icon: 'discuss' }
         ];
         const HOME_CARDS = [
-            { tag: 'Vocab', title: '핵심 어휘', en: 'Key Vocabulary', engDesc: 'Learn new words and expressions from the text.', description: '본문에 나온 단어와 표현을 <br>학습해 보세요.', target: 'vocab' },
-            { tag: 'Quiz', title: '내용 퀴즈', en: 'Comprehension Quiz', engDesc: 'Check your understanding of the content and vocabulary.', description: '본문을 제대로 이해했는지 <br>확인해 보세요.', target: 'quiz' },
-            { tag: 'Discuss', title: '생각해 보기', en: 'Food For Thought', engDesc: 'Think deeply about the topic and form your own opinion.', description: '본문에 대해 깊게 생각하고 <br>표현해 보세요.', target: 'discuss' }
+            { tag: 'Vocab', title: '핵심 어휘', description: '본문에 나온 단어와 표현을 <br>학습해 보세요.', target: 'vocab' },
+            { tag: 'Quiz', title: '내용 퀴즈', description: '본문을 제대로 이해했는지 <br>확인해 보세요.', target: 'quiz' },
+            { tag: 'Discuss', title: '생각해 보기', description: '본문에 대해 깊게 생각하고 <br>표현해 보세요.', target: 'discuss' }
         ];
 
         const callGeminiWithBackoff = async (payload, maxRetries = 5) => {
@@ -863,7 +850,7 @@ body.pw-printing #print-root{display:block}
         };
 
         // ---------- 전역 상태 ----------
-        const app = { activeTab: 'home', userLevel: 'B2', headerExpanded: true, lang: 'auto', langOpen: false };
+        const app = { activeTab: 'home', userLevel: 'B2', headerExpanded: true };
         const learn = { player: null, currentTime: 0, duration: 0, isPlaying: false, activeLine: null, layout: 'split', autoScroll: true, showVocab: false, rate: 1.0, trans: {}, intervalId: null, speedMenu: false, loading: true };
         const vocabState = { query: '', globalTrans: false, itemTrans: {} };
         const quizState = { attempts: {}, shuffled: ANSWER_CHOICES.slice(), q: {} };
@@ -880,47 +867,21 @@ body.pw-printing #print-root{display:block}
         // ---------- 셸 ----------
         function shellHTML() {
             const isVideo = app.activeTab === 'video';
-            const navBtns = NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" class="text-sm font-medium transition-colors font-sans relative ${app.activeTab === m.id ? 'text-black' : 'text-gray-500 hover:text-gray-600'}">${esc(m.label)}${m.en ? `<span class="lk-en"> · ${esc(m.en)}</span>` : ''}${app.activeTab === m.id ? '<div class="absolute -bottom-6 left-0 w-full h-0.5 bg-black"></div>' : ''}</button>`).join('');
+            const navBtns = NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" class="text-sm font-medium transition-colors font-sans relative ${app.activeTab === m.id ? 'text-black' : 'text-gray-500 hover:text-gray-600'}">${esc(m.label)}${app.activeTab === m.id ? '<div class="absolute -bottom-6 left-0 w-full h-0.5 bg-black"></div>' : ''}</button>`).join('');
             const header = `<nav class="sticky top-0 z-50 bg-white border-b border-gray-100 hidden lg:flex items-center justify-between px-8 overflow-hidden transition-all duration-500 ease-in-out ${app.headerExpanded ? 'h-16 opacity-100' : 'h-0 opacity-0 border-none'} print:hidden">
                 <div class="flex items-center cursor-pointer text-left" data-tab="home"><span class="text-lg font-bold font-sans tracking-tighter text-black whitespace-nowrap">OpenKoreanLearningLab</span></div>
-                <div class="flex items-center justify-end gap-8 pr-12 flex-1">${navBtns}${langCtrlHTML(false)}<button type="button" data-action="print-open" aria-label="학습지 인쇄" class="text-gray-500 hover:text-black print:hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></div>
+                <div class="flex items-center justify-end gap-8 pr-12 flex-1">${navBtns}<button type="button" data-action="print-open" aria-label="학습지 인쇄" class="text-gray-500 hover:text-black print:hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></div>
             </nav>
             <button type="button" data-action="toggle-header" aria-label="상단 메뉴 펼치기/접기" class="fixed top-0 right-0 z-[60] hidden lg:flex items-center justify-center w-10 h-16 bg-white hover:bg-gray-50 transition-colors ${app.headerExpanded ? 'border-b border-gray-100' : 'border-transparent'} print:hidden">${svgIcon('menu', 'w-5 h-5 text-black')}</button>`;
-            const mobileTop = `<div class="lg:hidden h-14 border-b border-gray-100 flex items-center justify-center sticky top-0 bg-white z-40 print:hidden"><span class="lk-lang-spacer"></span><span class="text-lg font-bold font-sans tracking-tighter">OpenKoreanLearningLab</span>${langCtrlHTML(true)}</div>`;
+            const mobileTop = `<div class="lg:hidden h-14 border-b border-gray-100 flex items-center justify-center sticky top-0 bg-white z-40 print:hidden"><span class="text-lg font-bold font-sans tracking-tighter">OpenKoreanLearningLab</span></div>`;
             const mobileNav = `<nav class="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-100 flex justify-around p-3 z-50 print:hidden">${NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" aria-label="${m.label}" class="p-2 ${app.activeTab === m.id ? 'text-black' : 'text-gray-300'}">${svgIcon(m.icon, 'w-6 h-6')}</button>`).join('')}<button type="button" data-action="print-open" aria-label="학습지 인쇄" class="p-2 text-gray-500"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></nav>`;
             return `${header}${mobileTop}<main id="view-root" class="flex-1 relative flex flex-col ${isVideo ? 'overflow-x-hidden lg:overflow-hidden lg:h-full' : ''}"></main>${mobileNav}`;
         }
-        function secLang(){
-            if (app.lang === 'ko') return null;
-            if (app.lang !== 'auto') return 'en';
-            const prefs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
-            for (let k=0;k<prefs.length;k++){ const p=(prefs[k]||'').toLowerCase(); if(!p) continue; return (p.indexOf('ko')===0) ? null : 'en'; }
-            return 'en';
-        }
-        function langCtrlHTML(mobile){
-            const opts=[{v:'auto',l:'자동 · Auto'},{v:'ko',l:'한국어'},{v:'en',l:'English'}];
-            const cur=app.lang;
-            const menu = app.langOpen ? '<div class="lk-lang-menu">' + opts.map(o => `<button type="button" data-setlang="${o.v}" class="${cur===o.v?'on':''}">${o.l}</button>`).join('') + '</div>' : '';
-            return `<div class="lk-lang${mobile?' lk-lang-m':''}"><button type="button" data-action="lang-toggle" class="lk-lang-btn" aria-haspopup="true" aria-expanded="${app.langOpen?'true':'false'}" title="언어 / Language">Language <span class="lk-lang-chev">\u25be</span></button>${menu}</div>`;
-        }
-        function positionLangMenu(){
-            const wraps = document.querySelectorAll('.lk-lang');
-            for (let i=0;i<wraps.length;i++){
-                const menu = wraps[i].querySelector('.lk-lang-menu');
-                const btn = wraps[i].querySelector('[data-action="lang-toggle"]');
-                if (!menu || !btn) continue;
-                const r = btn.getBoundingClientRect();
-                if (r.width === 0 && r.height === 0) continue;
-                menu.style.position='fixed'; menu.style.top=(r.bottom+6)+'px';
-                menu.style.right=Math.max(8,(window.innerWidth-r.right))+'px'; menu.style.left='auto';
-            }
-        }
         function buildApp() {
             const isVideo = app.activeTab === 'video';
-            appEl.className = `flex flex-col bg-white text-gray-900 selection:bg-gray-200 selection:text-black font-sans ${isVideo ? 'h-screen overflow-hidden' : 'min-h-screen'} ${secLang() ? '' : 'lk-ko'}`;
+            appEl.className = `flex flex-col bg-white text-gray-900 selection:bg-gray-200 selection:text-black font-sans ${isVideo ? 'h-screen overflow-hidden' : 'min-h-screen'}`;
             appEl.innerHTML = shellHTML();
             paint();
-            if (app.langOpen) positionLangMenu();
         }
         function paint() {
             const root = viewRoot(); if (!root) return;
@@ -938,12 +899,12 @@ body.pw-printing #print-root{display:block}
         function homeTagsHTML(){ var __hb=(typeof HOME_SERIES_BADGE!=="undefined" && HOME_SERIES_BADGE)?HOME_SERIES_BADGE:""; return __hb+(HOME_TAGS||[]).map(t=>`<span class="px-3 py-1 bg-gray-900 text-white text-[10px] font-sans font-bold tracking-widest uppercase">${esc(t)}</span>`).join(""); }
         function homeHTML() {
             const lvl = app.userLevel, info = LEVEL_DEFINITIONS[lvl] || { title: 'Unknown' };
-            const cards = HOME_CARDS.map(c => `<div class="cursor-pointer group flex flex-col items-center text-center p-8 border border-transparent hover:bg-gray-50 transition-all rounded-sm" data-tab="${c.target}"><h2 class="text-xl font-bold text-[#1a1a1a] mb-3 font-serif group-hover:text-gray-600 transition-colors">${esc(c.title)}${c.en ? `<span class="lk-en"> · ${c.en}</span>` : ''}</h2><p class="text-sm text-[#444444] leading-relaxed font-serif">${c.description}${c.engDesc ? `<span class="lk-en"><br>${c.engDesc}</span>` : ''}</p></div>`).join('');
+            const cards = HOME_CARDS.map(c => `<div class="cursor-pointer group flex flex-col items-center text-center p-8 border border-transparent hover:bg-gray-50 transition-all rounded-sm" data-tab="${c.target}"><h2 class="text-xl font-bold text-[#1a1a1a] mb-3 font-serif group-hover:text-gray-600 transition-colors">${esc(c.title)}</h2><p class="text-sm text-[#444444] leading-relaxed font-serif">${c.description}</p></div>`).join('');
             return `<div class="animate-fade-in max-w-5xl mx-auto w-full px-6 lg:px-0 pt-[3.75rem] pb-8 flex flex-col items-center h-full justify-center">
                 <div class="flex flex-col items-center justify-center text-center w-full mb-16">
                     <div class="flex items-center gap-3 mb-6">${homeTagsHTML()}<div class="flex items-center border border-gray-900 px-3 py-1 text-[10px] font-sans tracking-widest uppercase text-gray-900"><span class="font-bold">${esc(lvl)}</span><span class="mx-2 w-px h-2.5 bg-gray-300"></span><span class="font-medium">${esc(info.title)}</span></div></div>
                     <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-black leading-tight mb-4 font-bold">서스펜스의 거장,<br />알프레드 히치콕은 말했다</h1>
-                    <p class="lk-en font-serif text-gray-500 text-sm md:text-base italic mb-8 max-w-2xl leading-relaxed">소개팅 마음에 안 들 때</p>
+                    <p class="font-serif text-gray-500 text-sm md:text-base italic mb-8 max-w-2xl leading-relaxed">소개팅 마음에 안 들 때</p>
                     <div data-tab="video" class="group relative w-full max-w-lg aspect-video cursor-pointer overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 bg-black">
                         <img src="https://img.youtube.com/vi/${esc(VIDEO_CONFIG.YOUTUBE_VIDEO_ID)}/maxresdefault.jpg" alt="Video Thumbnail" fetchpriority="high" width="1280" height="720" class="w-full h-full object-cover opacity-90 group-hover:opacity-60 group-hover:scale-105 transition-all duration-500" />
                         <div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">${svgIcon('playSolid', 'w-6 h-6 text-black ml-1', { fill: 'currentColor' })}</div></div>
@@ -1058,8 +1019,8 @@ body.pw-printing #print-root{display:block}
         }
         function scriptListHTML() { return VIDEO_SCRIPT_DATA.map(lineHTML).join('') + '<div class="h-32 print:hidden"></div>'; }
         function toolbarHTML() {
-            const modes = [{ id: 'split', label: '동영상 & 스크립트', en: 'Video & Transcript' }, { id: 'video', label: '동영상만 보기', en: 'Video Only' }, { id: 'script', label: '스크립트만 보기', en: 'Transcript Only' }];
-            const modeBtns = modes.map(m => `<button type="button" data-layout="${m.id}" class="px-3 py-1.5 text-xs font-bold font-ui uppercase tracking-widest transition-colors ${m.id === 'split' ? 'block' : m.id === 'video' ? 'hidden md:block' : 'hidden sm:block'} ${learn.layout === m.id ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}">${m.label}${m.en ? `<span class="lk-en"> · ${m.en}</span>` : ''}</button>`).join('');
+            const modes = [{ id: 'split', label: '동영상 & 스크립트' }, { id: 'video', label: '동영상만 보기' }, { id: 'script', label: '스크립트만 보기' }];
+            const modeBtns = modes.map(m => `<button type="button" data-layout="${m.id}" class="px-3 py-1.5 text-xs font-bold font-ui uppercase tracking-widest transition-colors ${m.id === 'split' ? 'block' : m.id === 'video' ? 'hidden md:block' : 'hidden sm:block'} ${learn.layout === m.id ? 'bg-black text-white' : 'text-gray-400 hover:text-black'}">${m.label}</button>`).join('');
             const speedMenu = learn.speedMenu ? `<div class="absolute top-full right-0 mt-2 bg-white border border-gray-200 shadow-xl p-1 z-50 w-20 animate-fade-in">${[0.5, 0.75, 1.0, 1.25, 1.5, 2.0].map(s => `<button type="button" data-rate="${s}" class="w-full text-center py-1.5 text-[10px] font-bold font-ui hover:bg-gray-50 ${learn.rate === s ? 'text-black' : 'text-gray-400'}">${s}x</button>`).join('')}</div>` : '';
             return `<div class="sticky top-0 z-40 h-16 flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shadow-sm pr-14 print:hidden">
                 <div class="flex items-center gap-1 shrink-0">${modeBtns}</div>
@@ -1077,8 +1038,8 @@ body.pw-printing #print-root{display:block}
                     </div>
                     <div class="h-4 w-px bg-gray-200 hidden sm:block"></div>
                     <div class="relative shrink-0 hidden sm:flex"><button type="button" data-action="speed-menu" class="flex items-center gap-1.5 text-xs font-bold font-ui uppercase tracking-wider text-gray-500 hover:text-black">${learn.rate.toFixed(1)}x</button>${speedMenu}</div>
-                    <button type="button" data-action="autoscroll" class="hidden sm:flex items-center gap-2 text-[10px] font-bold font-ui uppercase tracking-widest transition-colors ${learn.autoScroll ? 'text-black' : 'text-gray-300 hover:text-gray-500'}"><span class="w-2 h-2 rounded-full ${learn.autoScroll ? 'bg-black' : 'border border-gray-300'}"></span><span class="hidden md:inline">자동 스크롤<span class="lk-en"> · Auto Scroll</span></span><span class="md:hidden">스크롤<span class="lk-en"> · Scroll</span></span></button>
-                    <button type="button" data-action="learn-vocab" class="hidden xl:flex items-center gap-2 px-3 py-1.5 border transition-all text-[10px] font-bold font-ui uppercase tracking-widest ${learn.showVocab ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-500 hover:border-black hover:text-black'}">어휘<span class="lk-en"> · Vocabulary</span></button>
+                    <button type="button" data-action="autoscroll" class="hidden sm:flex items-center gap-2 text-[10px] font-bold font-ui uppercase tracking-widest transition-colors ${learn.autoScroll ? 'text-black' : 'text-gray-300 hover:text-gray-500'}"><span class="w-2 h-2 rounded-full ${learn.autoScroll ? 'bg-black' : 'border border-gray-300'}"></span><span class="hidden md:inline">자동 스크롤</span><span class="md:hidden">스크롤</span></button>
+                    <button type="button" data-action="learn-vocab" class="hidden xl:flex items-center gap-2 px-3 py-1.5 border transition-all text-[10px] font-bold font-ui uppercase tracking-widest ${learn.showVocab ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-500 hover:border-black hover:text-black'}">어휘</button>
                 </div>
             </div>`;
         }
@@ -1176,7 +1137,7 @@ body.pw-printing #print-root{display:block}
         }
         function vocabGridHTML() { const list = vocabFiltered(); if (!list.length) return '<div class="text-center py-20 text-gray-400 font-serif">검색 결과에 맞는 어휘가 없습니다.</div>'; return `<div class="grid grid-cols-1 md:grid-cols-2 gap-6">${list.map(({ w, i }) => vocabItemHTML(w, i, vocabState.itemTrans[i] != null ? vocabState.itemTrans[i] : vocabState.globalTrans)).join('')}</div>`; }
         function vocabHTML() {
-            return `<div class="max-w-4xl mx-auto w-full px-6 py-16 animate-fade-in"><div class="mb-16 flex flex-col items-center text-center"><h2 class="text-[32px] md:text-[36px] font-bold text-[#1a1a1a] leading-tight font-serif mb-3 tracking-tight">핵심 어휘</h2><p class="text-[16px] text-[#444444] font-serif leading-relaxed mt-2 max-w-2xl">학습 자료에 등장하는 주요 어휘를 쉬운 한국어로 학습해 보세요.</p><div class="w-[1px] h-6 bg-gray-200 mt-8"></div></div><div class="mb-8 flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 rounded-xl border border-gray-100"><div class="relative w-full sm:max-w-xs"><input type="text" id="vocab-search" value="${esc(vocabState.query)}" placeholder="${secLang() ? '단어, 뜻, 영어 검색... / Search words...' : '단어, 뜻, 영어 검색...'}" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all" />${vocabState.query ? '<button type="button" data-action="vocab-clear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-bold">✕</button>' : ''}</div><div class="flex items-center gap-4 w-full sm:w-auto justify-end"><span class="text-xs text-gray-500 font-sans">검색 결과: <strong id="vocab-count">${vocabFiltered().length}</strong>개 / 전체 ${VOCAB_DATA.length}개</span><button type="button" data-action="vocab-global" class="px-4 py-2 text-xs font-semibold rounded-lg border transition-all ${vocabState.globalTrans ? 'bg-gray-900 text-white border-gray-900 hover:bg-black' : 'bg-white text-gray-800 border-gray-300 hover:border-gray-500'}">${vocabState.globalTrans ? '영어 일괄 숨기기<span class="lk-en"> · Hide English</span>' : '영어 일괄 표시<span class="lk-en"> · Show English</span>'}</button></div></div><div id="vocab-grid">${vocabGridHTML()}</div></div>`;
+            return `<div class="max-w-4xl mx-auto w-full px-6 py-16 animate-fade-in"><div class="mb-16 flex flex-col items-center text-center"><h2 class="text-[32px] md:text-[36px] font-bold text-[#1a1a1a] leading-tight font-serif mb-3 tracking-tight">핵심 어휘</h2><p class="text-[16px] text-[#444444] font-serif leading-relaxed mt-2 max-w-2xl">학습 자료에 등장하는 주요 어휘를 쉬운 한국어로 학습해 보세요.</p><div class="w-[1px] h-6 bg-gray-200 mt-8"></div></div><div class="mb-8 flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 rounded-xl border border-gray-100"><div class="relative w-full sm:max-w-xs"><input type="text" id="vocab-search" value="${esc(vocabState.query)}" placeholder="단어, 뜻, 영어 검색..." class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all" />${vocabState.query ? '<button type="button" data-action="vocab-clear" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-bold">✕</button>' : ''}</div><div class="flex items-center gap-4 w-full sm:w-auto justify-end"><span class="text-xs text-gray-500 font-sans">검색 결과: <strong id="vocab-count">${vocabFiltered().length}</strong>개 / 전체 ${VOCAB_DATA.length}개</span><button type="button" data-action="vocab-global" class="px-4 py-2 text-xs font-semibold rounded-lg border transition-all ${vocabState.globalTrans ? 'bg-gray-900 text-white border-gray-900 hover:bg-black' : 'bg-white text-gray-800 border-gray-300 hover:border-gray-500'}">${vocabState.globalTrans ? '영어 일괄 숨기기' : '영어 일괄 표시'}</button></div></div><div id="vocab-grid">${vocabGridHTML()}</div></div>`;
         }
         function refreshVocabGrid() { const g = qs('#vocab-grid', viewRoot()); if (g) g.innerHTML = vocabGridHTML(); const c = qs('#vocab-count', viewRoot()); if (c) c.textContent = vocabFiltered().length; }
 
@@ -1187,7 +1148,7 @@ body.pw-printing #print-root{display:block}
             const st = quizState.q[quiz.id] || (quizState.q[quiz.id] = { input: '', result: null, hint: false, trans: false });
             const w = Math.max(100, Math.max(st.input.length, quiz.answer ? quiz.answer.length : 0) * 25);
             const inpCls = st.result === 'correct' ? 'border-green-500 text-green-700' : st.result === 'incorrect' ? 'border-red-500 text-red-700' : 'border-gray-300 text-black bg-transparent focus:border-black';
-            return `<div class="quiz-q mb-10 pb-10 border-b border-gray-200 last:border-0" data-qid="${quiz.id}"><div class="flex items-baseline gap-4 mb-4"><span class="text-xs font-bold font-sans text-black border border-black px-1.5 py-0.5">Q.${quiz.id}</span></div><div class="text-xl font-serif text-gray-900 leading-loose mb-6"><span>${esc((quiz.textParts||quiz.parts)[0])}</span><input type="text" class="quiz-input mx-2 px-2 py-0 border-b-2 font-bold text-center outline-none transition-colors font-serif ${inpCls}" style="width:${w}px" value="${esc(st.input)}" /><span>${esc((quiz.textParts||quiz.parts)[1])}</span></div><div class="flex flex-wrap gap-3 items-center print:hidden"><button type="button" data-q="check" class="px-4 py-2 bg-black text-white text-xs font-bold font-sans hover:bg-gray-800 transition-colors">정답 확인<span class="lk-en"> · Check Answer</span></button><button type="button" data-q="show" class="px-4 py-2 bg-white border border-gray-300 text-gray-600 text-xs font-bold font-sans hover:border-black hover:text-black transition-colors">정답 보기<span class="lk-en"> · Show Answer</span></button><button type="button" data-q="hint" class="text-xs font-bold font-sans text-gray-400 hover:text-gray-600 underline">힌트<span class="lk-en"> · Hint</span></button>${transBtn('q-trans', st.trans)}</div>${st.trans ? `<p class="mt-4 text-sm font-sans text-gray-500 bg-gray-50 p-3">${esc(quiz.textParts_eng ? quiz.textParts_eng.join(' ... ') : (quiz.trans||''))}</p>` : ''}${st.hint ? `<p class="mt-4 text-sm font-sans text-gray-500 italic">💡 힌트<span class="lk-en"> · Hint</span>: ${esc(quiz.hint)}</p>` : ''}${quiz.explanation && st.result === 'correct' ? `<p class="mt-4 text-sm font-sans text-green-700 font-medium">✓ Correct. ${esc(quiz.explanation)}</p>` : ''}${quiz.explanation && st.result === 'incorrect' ? '<p class="mt-4 text-sm font-sans text-red-600 font-medium">✕ Try again.</p>' : ''}</div>`;
+            return `<div class="quiz-q mb-10 pb-10 border-b border-gray-200 last:border-0" data-qid="${quiz.id}"><div class="flex items-baseline gap-4 mb-4"><span class="text-xs font-bold font-sans text-black border border-black px-1.5 py-0.5">Q.${quiz.id}</span></div><div class="text-xl font-serif text-gray-900 leading-loose mb-6"><span>${esc((quiz.textParts||quiz.parts)[0])}</span><input type="text" class="quiz-input mx-2 px-2 py-0 border-b-2 font-bold text-center outline-none transition-colors font-serif ${inpCls}" style="width:${w}px" value="${esc(st.input)}" /><span>${esc((quiz.textParts||quiz.parts)[1])}</span></div><div class="flex flex-wrap gap-3 items-center print:hidden"><button type="button" data-q="check" class="px-4 py-2 bg-black text-white text-xs font-bold font-sans hover:bg-gray-800 transition-colors">정답 확인</button><button type="button" data-q="show" class="px-4 py-2 bg-white border border-gray-300 text-gray-600 text-xs font-bold font-sans hover:border-black hover:text-black transition-colors">정답 보기</button><button type="button" data-q="hint" class="text-xs font-bold font-sans text-gray-400 hover:text-gray-600 underline">힌트</button>${transBtn('q-trans', st.trans)}</div>${st.trans ? `<p class="mt-4 text-sm font-sans text-gray-500 bg-gray-50 p-3">${esc(quiz.textParts_eng ? quiz.textParts_eng.join(' ... ') : (quiz.trans||''))}</p>` : ''}${st.hint ? `<p class="mt-4 text-sm font-sans text-gray-500 italic">💡 Hint: ${esc(quiz.hint)}</p>` : ''}${quiz.explanation && st.result === 'correct' ? `<p class="mt-4 text-sm font-sans text-green-700 font-medium">✓ Correct. ${esc(quiz.explanation)}</p>` : ''}${quiz.explanation && st.result === 'incorrect' ? '<p class="mt-4 text-sm font-sans text-red-600 font-medium">✕ Try again.</p>' : ''}</div>`;
         }
         function quizChoicesHTML() { return quizState.shuffled.map(c => `<span class="text-xs font-serif text-gray-600 bg-white border border-gray-200 px-2 py-1 select-all">${esc(c)}</span>`).join(''); }
         function quizHTML() {
@@ -1208,7 +1169,7 @@ body.pw-printing #print-root{display:block}
                 fb = `<div class="mt-8 relative animate-fade-in"><div class="flex items-center gap-2 mb-4">${svgIcon('sparkles', 'w-4 h-4 text-black', { fill: 'currentColor' })}<h4 class="text-base font-bold font-sans text-black">AI 한국어 피드백</h4></div><div class="bg-gray-50 p-5 mb-6"><span class="text-xs font-bold font-sans text-gray-500 uppercase block mb-2">총평 및 잘한 점</span><p class="text-[15px] font-serif text-gray-900 leading-relaxed">${esc(st.feedback.overallPraise)}</p>${st.fbTrans && st.feedback.overallPraiseTrans ? `<p class="text-[13px] font-serif text-gray-500 mt-2 pt-2 border-t border-gray-200 animate-fade-in">${esc(st.feedback.overallPraiseTrans)}</p>` : ''}</div><div class="space-y-4"><span class="text-xs font-bold font-sans text-gray-500 uppercase block mb-1">문장별 교정 및 설명</span>${corr}</div><div class="flex justify-end mt-4">${transBtn('discuss-fbtrans', st.fbTrans)}</div></div>`;
             }
             const disabled = (!st.text.trim() || st.loading);
-            return `<div class="discuss-q mb-16 group" data-did="${item.id}"><div class="flex items-center gap-4 mb-6"><span class="text-4xl font-serif font-bold text-gray-200 group-hover:text-gray-900 transition-colors duration-300">${String(item.id).padStart(2, '0')}</span><h3 class="text-xl font-serif font-bold text-gray-900 leading-normal">${esc(item.questionKor)}</h3></div><div class="pl-0 md:pl-14"><div class="flex gap-2 mb-4">${transBtn('discuss-qtrans', st.showTrans)}${st.showTrans ? `<p class="text-sm font-sans text-gray-500 animate-fade-in">${esc(item.questionEng)}</p>` : ''}</div><div class="bg-gray-50 p-5 mb-6 border-l-2 border-black"><span class="text-xs font-bold font-sans text-gray-400 uppercase mb-2 block">핵심 문법/어휘</span><div class="space-y-2">${vocab}</div></div><textarea data-action="discuss-text" placeholder="${secLang() ? '여기에 한국어로 생각을 적어보세요... / Write your thoughts in Korean here...' : '여기에 한국어로 생각을 적어보세요...'}" class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea><div class="flex justify-end"><button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '생성 중<span class="lk-en"> · Generating</span>...' : 'AI 피드백 받기<span class="lk-en"> · Get AI Feedback</span>'}</button></div>${fb}</div></div>`;
+            return `<div class="discuss-q mb-16 group" data-did="${item.id}"><div class="flex items-center gap-4 mb-6"><span class="text-4xl font-serif font-bold text-gray-200 group-hover:text-gray-900 transition-colors duration-300">${String(item.id).padStart(2, '0')}</span><h3 class="text-xl font-serif font-bold text-gray-900 leading-normal">${esc(item.questionKor)}</h3></div><div class="pl-0 md:pl-14"><div class="flex gap-2 mb-4">${transBtn('discuss-qtrans', st.showTrans)}${st.showTrans ? `<p class="text-sm font-sans text-gray-500 animate-fade-in">${esc(item.questionEng)}</p>` : ''}</div><div class="bg-gray-50 p-5 mb-6 border-l-2 border-black"><span class="text-xs font-bold font-sans text-gray-400 uppercase mb-2 block">핵심 문법/어휘</span><div class="space-y-2">${vocab}</div></div><textarea data-action="discuss-text" placeholder="여기에 한국어로 생각을 적어보세요..." class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea><div class="flex justify-end"><button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '생성 중...' : 'AI 피드백 받기'}</button></div>${fb}</div></div>`;
         }
         function discussHTML() {
             return `<div class="max-w-3xl mx-auto w-full px-6 py-12 animate-fade-in"><div class="mb-6 pb-6 text-center"><h2 class="text-[32px] md:text-[36px] font-serif font-bold text-gray-900 mb-2">생각해 보기</h2><p class="text-sm font-sans text-gray-500">학습 질문에 대해 심층적으로 생각을 작성하고 AI 피드백을 받아보세요.</p></div><div class="bg-gray-50 border border-gray-200 p-4 mb-10 flex items-start gap-3"><div class="shrink-0 mt-0.5">${svgIcon('sparkles', 'w-4 h-4 text-gray-400', { fill: 'currentColor' })}</div><p class="text-xs font-sans text-gray-600 leading-relaxed">AI 피드백은 현재 Gemini 웹에서만 가능합니다. <a href="https://gemini.google.com/share/1a070c3dde7d" target="_blank" rel="noreferrer" class="underline decoration-gray-400 underline-offset-2 hover:text-black inline-flex items-center gap-1">Gemini에서 열기 ${svgIcon('externalLink', 'w-3 h-3')}</a></p></div><div id="discuss-list">${DISCUSS_DATA.map(discussItemHTML).join('')}</div></div>`;
@@ -1324,11 +1285,6 @@ body.pw-printing #print-root{display:block}
             const tabBtn = e.target.closest('[data-tab]'); if (tabBtn) { setTab(tabBtn.dataset.tab); return; }
             if (e.target.closest('[data-action="toggle-header"]')) { app.headerExpanded = !app.headerExpanded; buildApp(); return; }
             if (e.target.closest('[data-action="print-open"]')) { pwOpenModal(); return; }
-            const _sl = e.target.closest('[data-setlang]');
-            if (_sl) { app.lang = _sl.getAttribute('data-setlang'); app.langOpen = false; buildApp(); return; }
-            if (e.target.closest('[data-action="lang-toggle"]')) { app.langOpen = !app.langOpen; buildApp(); return; }
-            const _wasLangOpen = app.langOpen; app.langOpen = false;
-            if (_wasLangOpen && !e.target.closest('[data-tab],[data-action],[data-line-play],[data-line-seek],[data-vocab-idx],[data-layout]')) { buildApp(); return; }
             const tab = app.activeTab;
 
             if (tab === 'video') {
