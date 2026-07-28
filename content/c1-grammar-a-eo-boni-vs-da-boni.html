@@ -425,12 +425,10 @@ body.pw-printing #print-root{display:block}
             rows: [
                 { form: "-아/어 보니", core: "시도한 뒤에 알게 됨",
                   desc: "어떤 행동을 한 차례 시도하거나 끝낸 다음, 그 결과로 몰랐던 사실을 새로 알게 될 때 써요. '시도 → 발견'의 순서예요.",
-                  ex: "나중에 이야기를 <b>들어 보니</b> 오해였다.",
-                  en: "after trying / doing something, I found out that…" },
+                  ex: "나중에 이야기를 <b>들어 보니</b> 오해였다." },
                 { form: "-다 보니", core: "지속한 끝에 그런 상태가 됨",
                   desc: "어떤 행동이나 상태가 일정 기간 반복·지속되고, 그 결과로 어떤 상황에 이르렀을 때 써요. '지속 → 귀결'의 순서예요.",
-                  ex: "계속 실패만 <b>하다 보니</b> 더 이상 쌓을 실패가 없었다.",
-                  en: "as I kept doing something, it ended up that…" }
+                  ex: "계속 실패만 <b>하다 보니</b> 더 이상 쌓을 실패가 없었다." }
             ],
             tips: [
                 "뒤에 오는 말이 다릅니다. '-아/어 보니' 뒤에는 새로 <b>알게 된 사실</b>이, '-다 보니' 뒤에는 그렇게 <b>도달한 상태</b>가 옵니다.",
@@ -957,7 +955,7 @@ body.pw-printing #print-root{display:block}
             </div>`;
         }
         function grammarNoteHTML() {
-            const cells = GRAMMAR_NOTE.rows.map(r => `<div class="gx-cell"><div><span class="gx-form">${esc(r.form)}</span><span class="gx-core">${esc(r.core)}</span></div><p class="gx-desc">${esc(r.desc)}</p><div class="gx-ex">${r.ex}</div><div class="gx-en">${esc(r.en)}</div></div>`).join('');
+            const cells = GRAMMAR_NOTE.rows.map(r => `<div class="gx-cell"><div><span class="gx-form">${esc(r.form)}</span><span class="gx-core">${esc(r.core)}</span></div><p class="gx-desc">${esc(r.desc)}</p><div class="gx-ex">${r.ex}</div>${r.en ? `<div class="gx-en">${esc(r.en)}</div>` : ''}</div>`).join('');
             const tips = GRAMMAR_NOTE.tips.map(t => `<li>${t}</li>`).join('');
             return `<div class="gx-note print:hidden"><h3>${esc(GRAMMAR_NOTE.title)}</h3><p class="gx-sub">${esc(GRAMMAR_NOTE.subtitle)}</p><div class="gx-grid">${cells}</div><ul class="gx-tips">${tips}</ul></div>`;
         }
