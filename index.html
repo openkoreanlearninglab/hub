@@ -167,6 +167,7 @@
   var esc = function(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); };
 
   var MATERIALS = [
+    {level: "C1", tags: ["문법"], title: "-아/어 보니 vs. -다 보니", thumb: "https://raw.githubusercontent.com/openkoreanlearninglab/hub/refs/heads/main/thumbnails/grammar.webp", en: "Telling '-a/eo boni' and '-da boni' apart in context", link: "content/c1-grammar-a-eo-boni-vs-da-boni.html", date: "2026-07-28"},
     {level: "B1", tags: ["일상"], title: "아침밥 먹어요?", type: "flashcard", series: "이 주제로 이야기해 봐요", thumb: "thumbnails/flashcards.webp", en: "Do you eat breakfast?", link: "content/b1-breakfast-flashcards.html", date: "2026-07-20"},
     {level: "B1", tags: ["일상"], title: "아침밥 먹어요?", type: "video", series: "이 주제로 이야기해 봐요", thumb: "https://i.ytimg.com/vi/338dU6jP3tk/hqdefault.jpg", en: "Do you eat breakfast?", link: "content/b1-breakfast.html", date: "2026-07-20"},
     {level: "B1+", tags: ["일상","문화"], title: "여러분들의 원래 꿈은 무엇인가요?", thumb: "thumbnails/b1plus-original-dream.webp", link: "content/b1plus-original-dream.html", date: "2025-11-14"},
@@ -473,7 +474,7 @@
       d_intermediate:'Try studying with the videos and articles Koreans actually enjoy. Work on understanding them accurately, then use that as a springboard to talk about your own experiences and ideas naturally in Korean.',
       d_upint:'Ready to move past everyday conversation and start thinking and speaking critically in Korean? Dig deeper into native content and practice laying out your ideas and expressing them logically.',
       d_advanced:'Go beyond just learning the language itself. Critically analyze articles and videos on all kinds of topics in Korean, and practice organizing your opinions and expressing them logically.',
-      'tag_전체':'All','tag_최신':'Latest','tag_일상':'Daily','tag_건강':'Health','tag_문화':'Culture','tag_음식':'Food','tag_사회':'Society','tag_과학':'Science','tag_예술':'Art','tag_경제':'Economy','tag_역사':'History','tag_정치':'Politics','tag_교육':'Education','tag_문학':'Literature','tag_음악':'Music','tag_언어':'Language',
+      'tag_전체':'All','tag_최신':'Latest','tag_일상':'Daily','tag_건강':'Health','tag_문화':'Culture','tag_음식':'Food','tag_사회':'Society','tag_과학':'Science','tag_예술':'Art','tag_경제':'Economy','tag_역사':'History','tag_정치':'Politics','tag_교육':'Education','tag_문학':'Literature','tag_음악':'Music','tag_언어':'Language','tag_문법':'Grammar',
       'tag_철학':'Philosophy','tag_스케치 코미디':'Sketch Comedy','tag_기술':'Technology','tag_미디어':'Media','tag_심리':'Psychology','tag_시사':'Current Affairs','tag_에세이':'Essay','tag_여행':'Travel','tag_환경':'Environment','tag_생활':'Life','tag_스포츠':'Sports','tag_예능':'Variety','tag_인문':'Liberal Arts','tag_인문학':'Humanities','tag_경영':'Business','tag_국제':'International','tag_국제관계':'International Relations','tag_수학':'Math','tag_법':'Law','tag_윤리':'Ethics','tag_영화':'Film',
       'tag_이 주제로 이야기해 봐요':"Let's Talk About It",'tag_쉬운 한국어로 이야기해 봐요':"Let's Chat in Easy Korean",
       'ser_이 주제로 이야기해 봐요':"LET'S TALK ABOUT IT",'ser_쉬운 한국어로 이야기해 봐요':"LET'S CHAT IN EASY KOREAN",
