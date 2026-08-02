@@ -1937,8 +1937,8 @@ body.pw-printing #print-root{display:block}
         function afterVideoPaint() { learn.sbTrans = learn.sbTrans || {}; learn.loading = true; createPlayer(); const seek = qs('#seek', viewRoot()); if (seek) seek.addEventListener('input', (e) => { const t = parseFloat(e.target.value); if (learn.player && learn.player.seekTo) { learn.player.seekTo(t, true); } learn.currentTime = t; updateSeekUI(); }); }
 
         function createPlayer() {
-            const make = () => {
-                if (!(window.YT && window.YT.Player)) return;
+            let made = false; const make = () => {
+                if (made || !(window.YT && window.YT.Player)) return; made = true;
                 new window.YT.Player('youtube-player', {
                     videoId: VIDEO_CONFIG.YOUTUBE_VIDEO_ID, width: '100%', height: '100%',
                     playerVars: { autoplay: 0, controls: 1, rel: 0, disablekb: 1 },

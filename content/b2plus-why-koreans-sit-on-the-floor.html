@@ -977,8 +977,8 @@ button, a, [role="button"], input[type=range] { touch-action: manipulation; }
 
         function createPlayer() {
             if (!isYT()) { const s = qs('#video-loading'); if (s) s.style.display = 'none'; learn.player = null; learn.isPlaying = false; return; } // 인스타: 정적 임베드, YT API 미사용
-            const make = () => {
-                if (!(window.YT && window.YT.Player)) return;
+            let made = false; const make = () => {
+                if (made || !(window.YT && window.YT.Player)) return; made = true;
                 new window.YT.Player('youtube-player', {
                     videoId: curVideo().videoId, width: '100%', height: '100%',
                     playerVars: { autoplay: 0, controls: 1, rel: 0, disablekb: 1 },
