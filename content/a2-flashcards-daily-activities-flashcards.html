@@ -465,8 +465,33 @@
     'again-all': function(){ state.shuffled=true; startRound(null); mount(); }
   };
 
+  /* ========================= 스와이프 (터치, 카드 넘기기) =========================
+     좌우로 스와이프하면 다음/이전 카드로 넘어간다(탭=뒤집기와 구분). 스와이프로 판정되면
+     뒤이어 발생하는 click(카드 뒤집기)을 한 번 무시해 오작동을 막는다. */
+  var swipeStart = null, suppressClick = false;
+  var SWIPE_MIN_DX = 50, SWIPE_MAX_DY = 60, SWIPE_MAX_MS = 600;
+  root.addEventListener('touchstart', function(e){
+    if(state.done) return;
+    if(!e.target.closest('.card')) return;
+    var t = e.touches[0];
+    swipeStart = { x:t.clientX, y:t.clientY, time:Date.now() };
+  }, { passive:true });
+  root.addEventListener('touchend', function(e){
+    if(!swipeStart) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - swipeStart.x, dy = t.clientY - swipeStart.y;
+    var dt = Date.now() - swipeStart.time;
+    swipeStart = null;
+    if(Math.abs(dx) >= SWIPE_MIN_DX && Math.abs(dy) <= SWIPE_MAX_DY && dt <= SWIPE_MAX_MS){
+      suppressClick = true;
+      setTimeout(function(){ suppressClick = false; }, 400);
+      if(dx < 0){ ACT.next(); } else { ACT.prev(); }
+    }
+  }, { passive:true });
+
   /* ========================= 이벤트 위임 (루트 1회) ========================= */
   root.addEventListener('click', function(e){
+    if(suppressClick){ suppressClick = false; return; }
     var t = e.target.closest('[data-act]');
     var a = t ? t.dataset.act : null;
     // 언어 메뉴 열려있고 바깥(언어 관련 아님)을 클릭하면 먼저 닫는다
