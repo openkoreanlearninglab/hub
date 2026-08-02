@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>플래시 카드 | 일상 생활</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,8 @@
     --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     --sh:0 1px 2px 0 rgb(0 0 0 / .05);
   }
-  *,*::before,*::after{ box-sizing:border-box; }
+  *,*::before,*::after{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html{ -webkit-text-size-adjust:100%; }
   body{ margin:0; background:#fff; color:#1a1a1a; font-family:var(--sans); -webkit-font-smoothing:antialiased; }
   button, a, [role="button"]{ touch-action:manipulation; }
   ::selection{ background:var(--g100); color:#000; }
@@ -78,7 +79,7 @@
   .tag .lk-en{ font-weight:500; color:var(--g300); }
   .count{ font-family:var(--mono); font-size:.75rem; font-weight:500; color:var(--g300); }
 
-  /* 16:9 미디어 */
+  /* 데스크톱 기본: 16:9 미디어. 태블릿·모바일(≤1024px)에서는 아래 미디어 쿼리가 3:4로 전환 */
   .media-box{ width:100%; aspect-ratio:16/9; background:var(--g50); overflow:hidden; border-radius:2px; margin:.5rem 0; }
   .media-box img, .media-box video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
   .cue{ text-align:center; font-size:.75rem; color:var(--g500); line-height:1.5; }
@@ -92,7 +93,6 @@
   .back-img{ width:100%; max-width:22rem; aspect-ratio:16/9; object-fit:cover; border-radius:2px; background:var(--g50); }
   .sentence{ font-family:var(--serif); font-size:1.5rem; font-weight:400; line-height:1.6; color:var(--g700); text-align:center; margin:0; }
   .sentence .hl{ font-weight:700; color:var(--g900); }
-  @media (max-width:480px){ .sentence{ font-size:1.25rem; } }
   .trans{ font-family:var(--sans); font-size:.9rem; color:var(--g500); text-align:center; margin:0; min-height:1.2em; }
   .back-actions{ display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; }
   .bbtn{ display:inline-flex; align-items:center; gap:.4rem; min-height:40px; padding:.5rem .9rem; background:#fff;
@@ -137,6 +137,26 @@
   /* 터치 기기(물리 키보드 없음): 키보드 힌트 숨김 → 오버플로·잡음 제거 */
   @media (hover:none){ .hint{ display:none; } }
 
+  /* ---- 태블릿·모바일 (≤1024px): 미디어 3:4 세로 전환 + UI/UX 모바일 최적화 ----
+     (JS의 매체 전환 기준(1024px)과 반드시 동일하게 맞춘다) */
+  @media (max-width:1024px){
+    .media-box{ aspect-ratio:3/4; max-height:62vh; margin:.4rem 0; }
+    .back-img{ aspect-ratio:3/4; }
+    .head{ padding:1.75rem 1rem 0; }
+    .head h1{ font-size:1.3rem; }
+    .wrap{ padding:1.1rem .75rem 3rem; }
+    .face{ padding:1rem; }
+    .judge{ gap:.4rem; }
+    .ctrls{ gap:.5rem; }
+  }
+  @media (max-width:480px){
+    .sentence{ font-size:1.15rem; }
+  }
+  @media (max-width:480px) and (max-height:700px){
+    .head{ padding:1.1rem 1rem 0; }
+    .media-box{ max-height:52vh; }
+  }
+
   noscript .ns{ display:block; max-width:34rem; margin:2rem auto; padding:1rem; border:1px solid var(--g200);
                 text-align:center; font-size:.875rem; color:var(--g500); }
 </style>
@@ -159,56 +179,59 @@
 
   var BASE = 'https://github.com/openkoreanlearninglab/hub/raw/refs/heads/main/flashcards/a2-flashcards-daily-activities/';
   var IMG = BASE + 'images/', VID = BASE + 'videos/', AUD = BASE + 'audio/';
+  /* 태블릿·모바일(≤1024px)용 3:4 세로 이미지. 카드3(회사에 다니다)은 9:16 세로 동영상이 아직
+     없어서 모바일에서도 이 3:4 정지 이미지로 대체한다(임시 대응 — 추후 9:16 동영상 실험 예정). */
+  var IMG3X4 = BASE + 'images-3x4/';
 
   var CARDS = [
     { vocab:'잘하다', ko:'저는 노래를 잘해요.', hl:'잘해요', en:"I'm good at singing.",
-      media:{type:'image', src:IMG+'01_good_at_singing.jpeg'}, audio:AUD+'01_good_at_singing.mp3' },
+      media:{type:'image', src:IMG+'01_good_at_singing.jpeg', src3x4:IMG3X4+'01_good_at_singing-3x4.jpeg'}, audio:AUD+'01_good_at_singing.mp3' },
     { vocab:'못하다', ko:'저는 노래를 못해요.', hl:'못해요', en:"I'm not good at singing.",
-      media:{type:'image', src:IMG+'02_bad_at_singing.jpeg'}, audio:AUD+'02_bad_at_singing.mp3' },
+      media:{type:'image', src:IMG+'02_bad_at_singing.jpeg', src3x4:IMG3X4+'02_bad_at_singing-3x4.jpeg'}, audio:AUD+'02_bad_at_singing.mp3' },
     { vocab:'회사에 다니다', ko:'저는 매일 회사에 다녀요.', hl:'회사에 다녀요', en:'I go to work every day.',
-      media:{type:'video', src:VID+'03_go_to_work.mp4'}, audio:AUD+'03_go_to_work.mp3' },
+      media:{type:'video', src:VID+'03_go_to_work.mp4', src3x4:IMG3X4+'03_go_to_work-3x4.jpeg'}, audio:AUD+'03_go_to_work.mp3' },
     { vocab:'계획', ko:'저는 여행 계획을 세워요.', hl:'계획', en:'I make travel plans.',
-      media:{type:'image', src:IMG+'04_make_plan.jpeg'}, audio:AUD+'04_make_plan.mp3' },
+      media:{type:'image', src:IMG+'04_make_plan.jpeg', src3x4:IMG3X4+'04_make_plan-3x4.jpeg'}, audio:AUD+'04_make_plan.mp3' },
     { vocab:'메일을 보내다', ko:'저는 회사 동료에게 이메일을 보내요.', hl:'메일을 보내요', en:'I send an email to my coworker.',
-      media:{type:'image', src:IMG+'05_send_email.jpeg'}, audio:AUD+'05_send_email.mp3' },
+      media:{type:'image', src:IMG+'05_send_email.jpeg', src3x4:IMG3X4+'05_send_email-3x4.jpeg'}, audio:AUD+'05_send_email.mp3' },
     { vocab:'메일을 받다', ko:'저는 밤에 이메일을 받았어요.', hl:'메일을 받았어요', en:'I received an email at night.',
-      media:{type:'image', src:IMG+'06_receive_email.jpeg'}, audio:AUD+'06_receive_email.mp3' },
+      media:{type:'image', src:IMG+'06_receive_email.jpeg', src3x4:IMG3X4+'06_receive_email-3x4.jpeg'}, audio:AUD+'06_receive_email.mp3' },
     { vocab:'열심히', ko:'저는 열심히 공부해요.', hl:'열심히', en:'I study hard.',
-      media:{type:'image', src:IMG+'07_study_hard.jpeg'}, audio:AUD+'07_study_hard.mp3' },
+      media:{type:'image', src:IMG+'07_study_hard.jpeg', src3x4:IMG3X4+'07_study_hard-3x4.jpeg'}, audio:AUD+'07_study_hard.mp3' },
     { vocab:'제일', ko:'세상에서 누가 제일 예쁘니?', hl:'제일', en:'Who is the most beautiful in the world?',
-      media:{type:'image', src:IMG+'08_mirror_mirror.jpeg'}, audio:AUD+'08_mirror_mirror.mp3' },
+      media:{type:'image', src:IMG+'08_mirror_mirror.jpeg', src3x4:IMG3X4+'08_mirror_mirror-3x4.jpeg'}, audio:AUD+'08_mirror_mirror.mp3' },
     { vocab:'오전', ko:'지금 오전 10시예요.', hl:'오전', en:"It's 10 AM now.",
-      media:{type:'image', src:IMG+'09_morning.jpeg'}, audio:AUD+'09_morning.mp3' },
+      media:{type:'image', src:IMG+'09_morning.jpeg', src3x4:IMG3X4+'09_morning-3x4.jpeg'}, audio:AUD+'09_morning.mp3' },
     { vocab:'오후', ko:'지금 오후 5시예요.', hl:'오후', en:"It's 5 PM now.",
-      media:{type:'image', src:IMG+'10_afternoon.jpeg'}, audio:AUD+'10_afternoon.mp3' },
+      media:{type:'image', src:IMG+'10_afternoon.jpeg', src3x4:IMG3X4+'10_afternoon-3x4.jpeg'}, audio:AUD+'10_afternoon.mp3' },
     { vocab:'피아노를 치다', ko:'저는 피아노를 쳐요.', hl:'피아노를 쳐요', en:'I play the piano.',
-      media:{type:'image', src:IMG+'11_play_piano.jpeg'}, audio:AUD+'11_play_piano.mp3' },
+      media:{type:'image', src:IMG+'11_play_piano.jpeg', src3x4:IMG3X4+'11_play_piano-3x4.jpeg'}, audio:AUD+'11_play_piano.mp3' },
     { vocab:'기타를 치다', ko:'저는 기타를 쳐요.', hl:'기타를 쳐요', en:'I play the guitar.',
-      media:{type:'image', src:IMG+'12_play_guitar.jpeg'}, audio:AUD+'12_play_guitar.mp3' },
+      media:{type:'image', src:IMG+'12_play_guitar.jpeg', src3x4:IMG3X4+'12_play_guitar-3x4.jpeg'}, audio:AUD+'12_play_guitar.mp3' },
     { vocab:'게임을 하다', ko:'저는 게임을 해요.', hl:'게임을 해요', en:'I play games.',
-      media:{type:'image', src:IMG+'13_play_game.jpeg'}, audio:AUD+'13_play_game.mp3' },
+      media:{type:'image', src:IMG+'13_play_game.jpeg', src3x4:IMG3X4+'13_play_game-3x4.jpeg'}, audio:AUD+'13_play_game.mp3' },
     { vocab:'그림을 그리다', ko:'저는 그림을 그려요.', hl:'그림을 그려요', en:'I draw a picture.',
-      media:{type:'image', src:IMG+'14_draw_picture.jpeg'}, audio:AUD+'14_draw_picture.mp3' },
+      media:{type:'image', src:IMG+'14_draw_picture.jpeg', src3x4:IMG3X4+'14_draw_picture-3x4.jpeg'}, audio:AUD+'14_draw_picture.mp3' },
     { vocab:'자전거를 타다', ko:'저는 자전거를 타요.', hl:'자전거를 타요', en:'I ride a bicycle.',
-      media:{type:'image', src:IMG+'15_ride_bicycle.jpeg'}, audio:AUD+'15_ride_bicycle.mp3' },
+      media:{type:'image', src:IMG+'15_ride_bicycle.jpeg', src3x4:IMG3X4+'15_ride_bicycle-3x4.jpeg'}, audio:AUD+'15_ride_bicycle.mp3' },
     { vocab:'스키를 타다', ko:'저는 스키를 타요.', hl:'스키를 타요', en:'I ski.',
-      media:{type:'image', src:IMG+'16_ski.jpeg'}, audio:AUD+'16_ski.mp3' },
+      media:{type:'image', src:IMG+'16_ski.jpeg', src3x4:IMG3X4+'16_ski-3x4.jpeg'}, audio:AUD+'16_ski.mp3' },
     { vocab:'친구를 사귀다', ko:'저는 새로운 친구를 사귀었어요.', hl:'친구를 사귀었어요', en:'I made a new friend.',
-      media:{type:'image', src:IMG+'17_make_friends.jpeg'}, audio:AUD+'17_make_friends.mp3' },
+      media:{type:'image', src:IMG+'17_make_friends.jpeg', src3x4:IMG3X4+'17_make_friends-3x4.jpeg'}, audio:AUD+'17_make_friends.mp3' },
     { vocab:'연습하다', ko:'저는 노래를 연습해요.', hl:'연습해요', en:'I practice singing.',
-      media:{type:'image', src:IMG+'18_practice_singing.jpeg'}, audio:AUD+'18_practice_singing.mp3' },
+      media:{type:'image', src:IMG+'18_practice_singing.jpeg', src3x4:IMG3X4+'18_practice_singing-3x4.jpeg'}, audio:AUD+'18_practice_singing.mp3' },
     { vocab:'작년', ko:'작년에 저는 일본에 여행 갔어요.', hl:'작년', en:'Last year, I traveled to Japan.',
-      media:{type:'image', src:IMG+'19_last_year_japan.jpeg'}, audio:AUD+'19_last_year_japan.mp3' },
+      media:{type:'image', src:IMG+'19_last_year_japan.jpeg', src3x4:IMG3X4+'19_last_year_japan-3x4.jpeg'}, audio:AUD+'19_last_year_japan.mp3' },
     { vocab:'올해', ko:'올해는 2026년이에요.', hl:'올해', en:'This year is 2026.',
-      media:{type:'image', src:IMG+'20_this_year_2026.jpeg'}, audio:AUD+'20_this_year_2026.mp3' },
+      media:{type:'image', src:IMG+'20_this_year_2026.jpeg', src3x4:IMG3X4+'20_this_year_2026-3x4.jpeg'}, audio:AUD+'20_this_year_2026.mp3' },
     { vocab:'내년', ko:'내년에 저는 중국에 여행 갈 거예요.', hl:'내년', en:'Next year, I will travel to China.',
-      media:{type:'image', src:IMG+'21_next_year_china.jpeg'}, audio:AUD+'21_next_year_china.mp3' },
+      media:{type:'image', src:IMG+'21_next_year_china.jpeg', src3x4:IMG3X4+'21_next_year_china-3x4.jpeg'}, audio:AUD+'21_next_year_china.mp3' },
     { vocab:'지난달', ko:'지난달에 저는 바다에 갔어요.', hl:'지난달', en:'Last month, I went to the beach.',
-      media:{type:'image', src:IMG+'22_last_month_beach.jpeg'}, audio:AUD+'22_last_month_beach.mp3' },
+      media:{type:'image', src:IMG+'22_last_month_beach.jpeg', src3x4:IMG3X4+'22_last_month_beach-3x4.jpeg'}, audio:AUD+'22_last_month_beach.mp3' },
     { vocab:'이번 달', ko:'이번 달은 7월이에요.', hl:'이번 달', en:'This month is July.',
-      media:{type:'image', src:IMG+'23_this_month_july.jpeg'}, audio:AUD+'23_this_month_july.mp3' },
+      media:{type:'image', src:IMG+'23_this_month_july.jpeg', src3x4:IMG3X4+'23_this_month_july-3x4.jpeg'}, audio:AUD+'23_this_month_july.mp3' },
     { vocab:'다음 달', ko:'다음 달에 저는 바다에 갈 거예요.', hl:'다음 달', en:'Next month, I will go to the beach.',
-      media:{type:'image', src:IMG+'24_next_month_beach.jpeg'}, audio:AUD+'24_next_month_beach.mp3' }
+      media:{type:'image', src:IMG+'24_next_month_beach.jpeg', src3x4:IMG3X4+'24_next_month_beach-3x4.jpeg'}, audio:AUD+'24_next_month_beach.mp3' }
   ];
 
   /* ========================= 유틸 ========================= */
@@ -277,11 +300,24 @@
   /* 이미지 프리로드: 다음·이전 카드 이미지를 미리 받아 전환 시 검정 화면 제거 */
   var fcPre={};
   function preloadOne(url){ if(!url||fcPre[url])return; fcPre[url]=true; var im=new Image(); im.src=url; }
-  function preloadIdx(qp){ if(qp<0||qp>=state.queue.length)return; var c=CARDS[state.queue[qp]]; if(!c)return; if(c.media&&c.media.type==='image')preloadOne(c.media.src); if(c.back&&c.back.img)preloadOne(c.back.img); }
+  function preloadIdx(qp){ if(qp<0||qp>=state.queue.length)return; var c=CARDS[state.queue[qp]]; if(!c)return;
+    if(isMobileMode() && c.media && c.media.src3x4){ preloadOne(c.media.src3x4); }
+    else if(c.media && c.media.type==='image'){ preloadOne(c.media.src); }
+    if(c.back&&c.back.img)preloadOne(c.back.img); }
   function preloadAround(){ var c=curCard(); if(c&&c.back&&c.back.img)preloadOne(c.back.img); preloadIdx(state.pos+1); preloadIdx(state.pos+2); preloadIdx(state.pos-1); }
+
+  /* ========================= 반응형 미디어(데스크톱 16:9 / 태블릿·모바일 3:4) =========================
+     CSS 브레이크포인트(≤1024px, 위 스타일 참고)와 반드시 동일하게 맞춘다.
+     동영상 카드(카드3)는 9:16 세로 동영상이 없어 모바일에서는 3:4 정지 이미지(src3x4)로 대체한다. */
+  var MOBILE_MQ = window.matchMedia('(max-width:1024px)');
+  function isMobileMode(){ return MOBILE_MQ.matches; }
+  function mediaSrcFor(c){ return (isMobileMode() && c.media.src3x4) ? c.media.src3x4 : c.media.src; }
 
   /* ========================= 뷰 ========================= */
   function mediaHTML(c){
+    if(isMobileMode() && c.media.src3x4){
+      return '<img src="'+esc(c.media.src3x4)+'" alt="'+esc(c.vocab)+' 상황 그림">';
+    }
     if(c.media.type==='video'){
       var attrs = c.media.sound
         ? 'controls playsinline preload="metadata"'
@@ -459,6 +495,11 @@
     else if(e.key==='s' || e.key==='S'){ setOrder(!state.shuffled); }
     else if(e.key==='t' || e.key==='T'){ if(state.flipped) ACT.trans(); }
   });
+
+  /* 데스크톱 ↔ 태블릿·모바일 전환(리사이즈·회전) 시 미디어(16:9↔3:4)를 다시 그림 */
+  function onBreakpointChange(){ if(state.done){ mount(); } else { syncCard(); } }
+  if(MOBILE_MQ.addEventListener){ MOBILE_MQ.addEventListener('change', onBreakpointChange); }
+  else if(MOBILE_MQ.addListener){ MOBILE_MQ.addListener(onBreakpointChange); }
 
   startRound(null);
   mount();
