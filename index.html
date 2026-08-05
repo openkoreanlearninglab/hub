@@ -598,7 +598,7 @@
     return '<a class="card" href="'+esc(m.link)+'"'+props+'>'
       + thumbHTML(m)
       + '<div class="cbody"><div class="meta"><span class="lv">'+esc(m.level)+'</span>'+flashcardBadge(m, bi)+seriesBadge(m, bi)+tags+'</div>'
-      + '<h3>'+esc(m.title)+'</h3>'+(m.en?'<div class="en">'+esc(m.en)+'</div>':'')+'</div></a>';
+      + '<h3>'+esc(m.title)+'</h3>'+(bi && m.en?'<div class="en">'+esc(m.en)+'</div>':'')+'</div></a>';
   }
   function levelOrder(){
     if(state.group!=='all') return GROUPS[state.group].levels;
