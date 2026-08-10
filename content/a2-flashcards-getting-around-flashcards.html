@@ -143,6 +143,7 @@
     .media-box{ aspect-ratio:3/4; max-height:62vh; margin:.4rem 0; }
     .media-box.mb-9x16{ aspect-ratio:9/16; }
     .back-img{ aspect-ratio:3/4; }
+    .back-img.bi-9x16{ aspect-ratio:9/16; max-width:14rem; max-height:42vh; }
     .head{ padding:1.75rem 1rem 0; }
     .head h1{ font-size:1.3rem; }
     .wrap{ padding:1.1rem .75rem 3rem; }
@@ -182,9 +183,12 @@
   var IMG = BASE + 'images/', VID = BASE + 'videos/', AUD = BASE + 'audio/';
   /* 태블릿·모바일(≤1024px)용 3:4 세로 이미지 */
   var IMG3X4 = BASE + 'images-3x4/';
-  /* 실험: 카드13·15는 모바일에서 3:4 정지 이미지 대신 9:16 세로 동영상을 시도한다.
-     결과가 이상하면 media.src9x16을 지우고 src3x4로 되돌린다(3x4 파일은 그대로 남겨둠). */
+  /* 카드13·15 실험 결과가 좋아서, 데스크톱에서 동영상인 카드는 모두 모바일에서도
+     3:4 정지 이미지 대신 9:16 세로 동영상을 사용한다(카드23은 9:16 소재가 아직 없어 예외 — 3:4 유지). */
   var VID9X16 = BASE + 'videos-9x16/';
+  /* 뒷면(답) 이미지의 9:16 세로 버전. 3:4 버전도 준비돼 있지만(images-3x4에 _back-3x4로 저장됨)
+     우선 9:16을 사용해 본다 — 이상하면 img9x16을 지우고 back.img(16:9, CSS로 3:4 크롭)로 되돌아간다. */
+  var IMG9X16 = BASE + 'images-9x16/';
 
   var CARDS = [
     { vocab:'지하철을 타고 가다', ko:'회사에 지하철을 타고 가요.', hl:'지하철을 타고', en:'I go to work by subway.',
@@ -218,32 +222,32 @@
     { vocab:'갈아타다', ko:'버스를 갈아타요.', hl:'갈아타요', en:'I transfer buses.',
       media:{type:'video', src:VID+'15_transfer_buses.mp4', src3x4:IMG3X4+'15_transfer_buses-3x4.jpeg', src9x16:VID9X16+'15_transfer_buses-9x16.mp4'}, audio:AUD+'15_transfer_buses.mp3' },
     { vocab:'가깝다', ko:'카페가 집에서 가까워요.', hl:'가까워요', en:'The cafe is close to my house.',
-      media:{type:'video', src:VID+'16_cafe_close.mp4', src3x4:IMG3X4+'16_cafe_close-3x4.jpeg', sound:true},
-      back:{img:IMG+'16_cafe_close_back.jpeg'}, audio:AUD+'16_cafe_close.mp3' },
+      media:{type:'video', src:VID+'16_cafe_close.mp4', src3x4:IMG3X4+'16_cafe_close-3x4.jpeg', src9x16:VID9X16+'16_cafe_close-9x16.mp4', sound:true},
+      back:{img:IMG+'16_cafe_close_back.jpeg', img9x16:IMG9X16+'16_cafe_close_back-9x16.jpeg'}, audio:AUD+'16_cafe_close.mp3' },
     { vocab:'멀다', ko:'병원이 집에서 멀어요.', hl:'멀어요', en:'The hospital is far from my house.',
-      media:{type:'video', src:VID+'17_hospital_far.mp4', src3x4:IMG3X4+'17_hospital_far-3x4.jpeg', sound:true},
-      back:{img:IMG+'17_hospital_far_back.jpeg'}, audio:AUD+'17_hospital_far.mp3' },
+      media:{type:'video', src:VID+'17_hospital_far.mp4', src3x4:IMG3X4+'17_hospital_far-3x4.jpeg', src9x16:VID9X16+'17_hospital_far-9x16.mp4', sound:true},
+      back:{img:IMG+'17_hospital_far_back.jpeg', img9x16:IMG9X16+'17_hospital_far_back-9x16.jpeg'}, audio:AUD+'17_hospital_far.mp3' },
     { vocab:'어떻게 가요?', ko:'박물관에 어떻게 가요?', hl:'어떻게 가요', en:'How do I get to the museum?',
-      media:{type:'video', src:VID+'18_how_to_museum.mp4', src3x4:IMG3X4+'18_how_to_museum-3x4.jpeg', sound:true},
-      back:{img:IMG+'18_how_to_museum_back.jpeg'}, audio:AUD+'18_how_to_museum.mp3' },
+      media:{type:'video', src:VID+'18_how_to_museum.mp4', src3x4:IMG3X4+'18_how_to_museum-3x4.jpeg', src9x16:VID9X16+'18_how_to_museum-9x16.mp4', sound:true},
+      back:{img:IMG+'18_how_to_museum_back.jpeg', img9x16:IMG9X16+'18_how_to_museum_back-9x16.jpeg'}, audio:AUD+'18_how_to_museum.mp3' },
     { vocab:'오른쪽', ko:'길을 건너서 오른쪽으로 가세요.', hl:'오른쪽으로 가세요', en:'Cross the street and go right.',
-      media:{type:'video', src:VID+'19_cross_right_museum.mp4', src3x4:IMG3X4+'19_cross_right_museum-3x4.jpeg', sound:true},
-      back:{img:IMG+'19_cross_right_museum_back.jpeg'}, audio:AUD+'19_cross_right_museum.mp3' },
+      media:{type:'video', src:VID+'19_cross_right_museum.mp4', src3x4:IMG3X4+'19_cross_right_museum-3x4.jpeg', src9x16:VID9X16+'19_cross_right_museum-9x16.mp4', sound:true},
+      back:{img:IMG+'19_cross_right_museum_back.jpeg', img9x16:IMG9X16+'19_cross_right_museum_back-9x16.jpeg'}, audio:AUD+'19_cross_right_museum.mp3' },
     { vocab:'왼쪽', ko:'길을 건너서 왼쪽으로 가세요.', hl:'왼쪽으로 가세요', en:'Cross the street and go left.',
-      media:{type:'video', src:VID+'20_cross_left_artmuseum.mp4', src3x4:IMG3X4+'20_cross_left_artmuseum-3x4.jpeg', sound:true},
-      back:{img:IMG+'20_cross_left_artmuseum_back.jpeg'}, audio:AUD+'20_cross_left_artmuseum.mp3' },
+      media:{type:'video', src:VID+'20_cross_left_artmuseum.mp4', src3x4:IMG3X4+'20_cross_left_artmuseum-3x4.jpeg', src9x16:VID9X16+'20_cross_left_artmuseum-9x16.mp4', sound:true},
+      back:{img:IMG+'20_cross_left_artmuseum_back.jpeg', img9x16:IMG9X16+'20_cross_left_artmuseum_back-9x16.jpeg'}, audio:AUD+'20_cross_left_artmuseum.mp3' },
     { vocab:'이쪽', ko:'이쪽으로 가세요.', hl:'이쪽으로 가세요', en:'Go this way.',
-      media:{type:'video', src:VID+'21_this_way_restroom.mp4', src3x4:IMG3X4+'21_this_way_restroom-3x4.jpeg', sound:true},
-      back:{img:IMG+'21_this_way_restroom_back.jpeg'}, audio:AUD+'21_this_way_restroom.mp3' },
+      media:{type:'video', src:VID+'21_this_way_restroom.mp4', src3x4:IMG3X4+'21_this_way_restroom-3x4.jpeg', src9x16:VID9X16+'21_this_way_restroom-9x16.mp4', sound:true},
+      back:{img:IMG+'21_this_way_restroom_back.jpeg', img9x16:IMG9X16+'21_this_way_restroom_back-9x16.jpeg'}, audio:AUD+'21_this_way_restroom.mp3' },
     { vocab:'건너편', ko:'서점은 카페 건너편에 있어요.', hl:'건너편에 있어요', en:'The bookstore is across from the cafe.',
-      media:{type:'video', src:VID+'22_bookstore_across_cafe.mp4', src3x4:IMG3X4+'22_bookstore_across_cafe-3x4.jpeg', sound:true},
-      back:{img:IMG+'22_bookstore_across_cafe_back.jpeg'}, audio:AUD+'22_bookstore_across_cafe.mp3' },
+      media:{type:'video', src:VID+'22_bookstore_across_cafe.mp4', src3x4:IMG3X4+'22_bookstore_across_cafe-3x4.jpeg', src9x16:VID9X16+'22_bookstore_across_cafe-9x16.mp4', sound:true},
+      back:{img:IMG+'22_bookstore_across_cafe_back.jpeg', img9x16:IMG9X16+'22_bookstore_across_cafe_back-9x16.jpeg'}, audio:AUD+'22_bookstore_across_cafe.mp3' },
     { vocab:'부터~까지', ko:'박물관은 10시부터 7시까지 열어요.', hl:'10시부터 7시까지', en:'The museum is open from 10 to 7.',
       media:{type:'video', src:VID+'23_museum_hours.mp4', src3x4:IMG3X4+'23_museum_hours-3x4.jpeg', sound:true},
       back:{img:IMG+'23_museum_hours_back.jpeg'}, audio:AUD+'23_museum_hours.mp3' },
     { vocab:'얼마나 걸려요?', ko:'지하철역에서 박물관까지 얼마나 걸려요?', hl:'얼마나 걸려요', en:'How long does it take from the subway station to the museum?',
-      media:{type:'video', src:VID+'24_how_long_to_museum.mp4', src3x4:IMG3X4+'24_how_long_to_museum-3x4.jpeg', sound:true},
-      back:{img:IMG+'24_how_long_to_museum_back.jpeg'}, audio:AUD+'24_how_long_to_museum.mp3' },
+      media:{type:'video', src:VID+'24_how_long_to_museum.mp4', src3x4:IMG3X4+'24_how_long_to_museum-3x4.jpeg', src9x16:VID9X16+'24_how_long_to_museum-9x16.mp4', sound:true},
+      back:{img:IMG+'24_how_long_to_museum_back.jpeg', img9x16:IMG9X16+'24_how_long_to_museum_back-9x16.jpeg'}, audio:AUD+'24_how_long_to_museum.mp3' },
     { vocab:'끄다 / -아야 되다', ko:'영화관에서는 핸드폰을 꺼야 돼요.', hl:'꺼야 돼요', en:'You have to turn off your phone in the movie theater.',
       media:{type:'image', src:IMG+'25_turn_off_phone_cinema.jpeg', src3x4:IMG3X4+'25_turn_off_phone_cinema-3x4.jpeg'}, audio:AUD+'25_turn_off_phone_cinema.mp3' },
     { vocab:'-으려고 하다', ko:'이번 주말에 서점에 가려고 해요.', hl:'가려고 해요', en:"I'm planning to go to the bookstore this weekend.",
@@ -320,8 +324,10 @@
     if(isMobileMode() && c.media && c.media.src9x16){ /* 세로 동영상은 프리로드 생략 */ }
     else if(isMobileMode() && c.media && c.media.src3x4){ preloadOne(c.media.src3x4); }
     else if(c.media && c.media.type==='image'){ preloadOne(c.media.src); }
-    if(c.back&&c.back.img)preloadOne(c.back.img); }
-  function preloadAround(){ var c=curCard(); if(c&&c.back&&c.back.img)preloadOne(c.back.img); preloadIdx(state.pos+1); preloadIdx(state.pos+2); preloadIdx(state.pos-1); }
+    if(c.back){ var bi = (isMobileMode() && c.back.img9x16) ? c.back.img9x16 : c.back.img; if(bi) preloadOne(bi); } }
+  function preloadAround(){ var c=curCard();
+    if(c&&c.back){ var bi=(isMobileMode()&&c.back.img9x16)?c.back.img9x16:c.back.img; if(bi)preloadOne(bi); }
+    preloadIdx(state.pos+1); preloadIdx(state.pos+2); preloadIdx(state.pos-1); }
 
   /* ========================= 반응형 미디어(데스크톱 16:9 / 태블릿·모바일 3:4, 일부 카드는 9:16 세로 동영상 실험) =========================
      CSS 브레이크포인트(≤1024px, 위 스타일 참고)와 반드시 동일하게 맞춘다.
@@ -357,7 +363,9 @@
       + '<div class="prog"><i id="bar"></i></div>';
   }
   function backHTML(c){
-    var img = (c.back && c.back.img) ? '<img class="back-img" src="'+esc(c.back.img)+'" alt="'+esc(c.vocab)+' 정답 장면">' : '';
+    var use9x16 = isMobileMode() && c.back && c.back.img9x16;
+    var backSrc = use9x16 ? c.back.img9x16 : (c.back && c.back.img);
+    var img = backSrc ? '<img class="back-img'+(use9x16?' bi-9x16':'')+'" src="'+esc(backSrc)+'" alt="'+esc(c.vocab)+' 정답 장면">' : '';
     return '<div class="row"><span class="tag">정답<span class="lk-en"> · Answer</span></span><span class="vocab">'+esc(c.vocab)+'</span></div>'
       + '<div class="back-body">'
         + img
