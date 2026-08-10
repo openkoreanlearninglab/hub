@@ -81,7 +81,10 @@
 
   /* 데스크톱 기본: 16:9 미디어. 태블릿·모바일(≤1024px)에서는 아래 미디어 쿼리가 3:4로 전환 */
   .media-box{ width:100%; aspect-ratio:16/9; background:var(--g50); overflow:hidden; border-radius:2px; margin:.5rem 0; }
-  .media-box img, .media-box video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  .media-box img{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  /* 동영상은 상단 기준으로 크롭한다 — 말풍선이 보통 인물 머리 위(프레임 상단)에 생기므로,
+     세로(9:16) 동영상을 3:4 박스에 채울 때 중앙 크롭 대신 위쪽을 유지하고 아래쪽을 더 잘라낸다. */
+  .media-box video{ width:100%; height:100%; object-fit:cover; object-position:center top; display:block; background:#000; }
   .cue{ text-align:center; font-size:.75rem; color:var(--g500); line-height:1.5; }
   .cue b{ color:var(--g900); }
   .prog{ width:100%; height:.25rem; background:var(--g100); margin-top:.5rem; }
