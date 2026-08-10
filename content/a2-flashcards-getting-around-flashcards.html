@@ -184,7 +184,7 @@
   /* 태블릿·모바일(≤1024px)용 3:4 세로 이미지 */
   var IMG3X4 = BASE + 'images-3x4/';
   /* 카드13·15 실험 결과가 좋아서, 데스크톱에서 동영상인 카드는 모두 모바일에서도
-     3:4 정지 이미지 대신 9:16 세로 동영상을 사용한다(카드23은 9:16 소재가 아직 없어 예외 — 3:4 유지). */
+     3:4 정지 이미지 대신 9:16 세로 동영상을 사용한다. */
   var VID9X16 = BASE + 'videos-9x16/';
   /* 뒷면(답) 이미지의 9:16 세로 버전. 3:4 버전도 준비돼 있지만(images-3x4에 _back-3x4로 저장됨)
      우선 9:16을 사용해 본다 — 이상하면 img9x16을 지우고 back.img(16:9, CSS로 3:4 크롭)로 되돌아간다. */
@@ -243,8 +243,8 @@
       media:{type:'video', src:VID+'22_bookstore_across_cafe.mp4', src3x4:IMG3X4+'22_bookstore_across_cafe-3x4.jpeg', src9x16:VID9X16+'22_bookstore_across_cafe-9x16.mp4', sound:true},
       back:{img:IMG+'22_bookstore_across_cafe_back.jpeg', img9x16:IMG9X16+'22_bookstore_across_cafe_back-9x16.jpeg'}, audio:AUD+'22_bookstore_across_cafe.mp3' },
     { vocab:'부터~까지', ko:'박물관은 10시부터 7시까지 열어요.', hl:'10시부터 7시까지', en:'The museum is open from 10 to 7.',
-      media:{type:'video', src:VID+'23_museum_hours.mp4', src3x4:IMG3X4+'23_museum_hours-3x4.jpeg', sound:true},
-      back:{img:IMG+'23_museum_hours_back.jpeg'}, audio:AUD+'23_museum_hours.mp3' },
+      media:{type:'video', src:VID+'23_museum_hours.mp4', src3x4:IMG3X4+'23_museum_hours-3x4.jpeg', src9x16:VID9X16+'23_museum_hours-9x16.mp4', sound:true},
+      back:{img:IMG+'23_museum_hours_back.jpeg', img9x16:IMG9X16+'23_museum_hours_back-9x16.jpeg'}, audio:AUD+'23_museum_hours.mp3' },
     { vocab:'얼마나 걸려요?', ko:'지하철역에서 박물관까지 얼마나 걸려요?', hl:'얼마나 걸려요', en:'How long does it take from the subway station to the museum?',
       media:{type:'video', src:VID+'24_how_long_to_museum.mp4', src3x4:IMG3X4+'24_how_long_to_museum-3x4.jpeg', src9x16:VID9X16+'24_how_long_to_museum-9x16.mp4', sound:true},
       back:{img:IMG+'24_how_long_to_museum_back.jpeg', img9x16:IMG9X16+'24_how_long_to_museum_back-9x16.jpeg'}, audio:AUD+'24_how_long_to_museum.mp3' },
@@ -339,7 +339,10 @@
   /* ========================= 뷰 ========================= */
   function mediaHTML(c){
     if(isMobileMode() && c.media.src9x16){
-      return '<video class="fc-video" src="'+esc(c.media.src9x16)+'" autoplay muted loop playsinline preload="metadata"></video>';
+      var attrs9 = c.media.sound
+        ? 'controls playsinline preload="metadata"'
+        : 'autoplay muted loop playsinline preload="metadata"';
+      return '<video class="fc-video" src="'+esc(c.media.src9x16)+'" '+attrs9+'></video>';
     }
     if(isMobileMode() && c.media.src3x4){
       return '<img src="'+esc(c.media.src3x4)+'" alt="'+esc(c.vocab)+' 상황 그림">';
