@@ -312,7 +312,7 @@ button, a, [role="button"], input[type=range] { touch-action: manipulation; }
         const curVideo = () => VIDEOS[learn.videoIdx] || VIDEOS[0];
         const curProvider = () => (curVideo().provider || 'youtube'); // 미지정 → 유튜브 (하위 호환)
         const isYT = () => curProvider() === 'youtube';
-        const HOME_TAGS = ["아이 키우기", "프랑스 vs 미국"];
+        const HOME_TAGS = ["일상"];
         const HOME_SERIES_BADGE = '<span class="px-3 py-1 bg-gray-900 text-white text-[10px] font-sans font-bold tracking-wide">이 주제로 이야기해 봐요! <span class="lk-en ml-1 font-eng-header font-medium tracking-widest opacity-90 uppercase">Let\'s Talk About It</span></span>';
 
         const LEVEL_DEFINITIONS = { "A1":{title:"Novice",desc:""},"A1+":{title:"Pre-Beginner",desc:""},"A2":{title:"Beginner",desc:""},"A2+":{title:"Upper Beginner",desc:""},"B1":{title:"Pre-Intermediate",desc:""},"B1+":{title:"Lower Intermediate",desc:""},"B2":{title:"Intermediate",desc:""},"B2+":{title:"Upper Intermediate",desc:""},"C1":{title:"Advanced",desc:""},"C1+":{title:"Upper Advanced",desc:""},"C2":{title:"Proficient",desc:""} };
@@ -535,7 +535,7 @@ button, a, [role="button"], input[type=range] { touch-action: manipulation; }
             return `<div class="animate-fade-in max-w-5xl mx-auto w-full px-6 lg:px-0 pt-[3.75rem] pb-8 flex flex-col items-center h-full justify-center">
                 <div class="flex flex-col items-center justify-center text-center w-full mb-16">
                     <div class="flex flex-wrap items-center justify-center gap-3 mb-6">${homeTagsHTML()}${levelBadgeHTML(lvl)}</div>
-                    <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-black leading-tight mb-4 font-bold">아이를 어떻게 키워요? — 프랑스 스타일 vs 미국 스타일</h1>
+                    <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-black leading-tight mb-4 font-bold">아이를 어떻게 키워요?<br class="hidden md:block"> 프랑스 스타일 vs 미국 스타일</h1>
                     <p class="font-serif text-gray-500 text-sm md:text-base italic mb-8 max-w-2xl leading-relaxed">How Do You Raise Kids? — French Style vs American Style</p>
                     ${VIDEOS.length > 1 ? videoCardsGridHTML() : `<div data-tab="video" class="group relative w-full max-w-lg aspect-video cursor-pointer overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 bg-black">${homeThumbHTML()}<div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">${svgIcon('playSolid', 'w-6 h-6 text-black ml-1', { fill: 'currentColor' })}</div></div><div class="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><div class="bg-black px-5 py-2 flex items-center gap-2.5"><span class="text-white text-xs font-bold font-sans tracking-widest">동영상 보기</span><div class="w-px h-2.5 bg-gray-500"></div><span class="lk-en text-gray-300 text-[10px] font-eng-header tracking-widest uppercase mt-px">Watch Video</span></div></div></div>`}
                 </div>
