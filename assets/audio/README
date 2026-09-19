@@ -1,0 +1,5 @@
+읽기 자료(content/*.html)에 붙는 오디오 파일을 둔다.
+- 파일명은 자료 슬러그와 같게: <레벨>-<슬러그>.m4a  예) a2plus-michelin-stars.m4a
+- HTML에서 참조: https://openkoreanlearninglab.github.io/hub/assets/audio/<파일명>
+- 플래시카드용 음성은 여기가 아니라 flashcards/<세트>/audio/ 에 둔다.
+- 직접 만든 낭독·팟캐스트만 올린다(저작권 있는 남의 음원은 자체 호스팅하지 않는다).
