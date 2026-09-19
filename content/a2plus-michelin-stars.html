@@ -315,6 +315,18 @@ body.pw-printing #print-root{display:block}
         .lk-ap-fb a{ text-decoration:underline; font-weight:600; }
         .lk-ap-fb a:hover{ color:#111827; }
         .lk-ap-fb + .lk-ap-fb{ margin-top:.125rem; }
+        .lk-ap-rate{ display:flex; align-items:center; gap:.375rem; }
+        .lk-ap-step{ width:24px; height:24px; flex:0 0 auto; display:flex; align-items:center; justify-content:center; border:1px solid #d1d5db; border-radius:4px; background:#fff; color:#374151; font-size:13px; font-weight:700; line-height:1; cursor:pointer; transition:border-color .15s ease, color .15s ease; }
+        .lk-ap-step:hover:not(:disabled){ border-color:#111827; color:#111827; }
+        .lk-ap-step:disabled{ color:#d1d5db; border-color:#ededf0; cursor:default; }
+        .lk-ap-val{ min-width:3.2rem; text-align:center; font-family:ui-monospace,Menlo,monospace; font-size:12px; font-weight:700; color:#111827; font-variant-numeric:tabular-nums; }
+        .lk-ap-rbar{ display:block; width:116px; flex:0 0 auto; padding:.25rem 0 0; margin-left:.25rem; cursor:pointer; touch-action:none; outline:none; }
+        .lk-ap-rbar:focus-visible .lk-ap-rtrack{ box-shadow:0 0 0 2px #111827; }
+        .lk-ap-rtrack{ position:relative; display:block; height:4px; border-radius:9999px; background:#e5e7eb; }
+        .lk-ap-rfill{ position:absolute; left:0; top:0; bottom:0; width:0; border-radius:9999px; background:#9ca3af; }
+        .lk-ap-rknob{ position:absolute; top:50%; left:0; width:11px; height:11px; margin:-5.5px 0 0 -5.5px; border-radius:9999px; background:#111827; }
+        .lk-ap-rends{ display:flex; justify-content:space-between; margin-top:2px; font-family:ui-monospace,Menlo,monospace; font-size:9px; color:#d1d5db; font-variant-numeric:tabular-nums; }
+        @media (max-width:640px){ .lk-ap-rbar{ width:96px; } }
         @media (max-width:640px){
             .lk-ap{ padding:.875rem; }
             .lk-ap-main{ gap:.75rem; }
@@ -695,11 +707,12 @@ body.pw-printing #print-root{display:block}
         //   · 라벨은 코드에 하드코딩하지 말고 READING_DATA[].audioLabel 로 넣는다(기본값 '오디오').
         //   · 재생 위치·배속은 탭을 옮겼다 돌아와도 유지된다(자동 재생은 하지 않는다).
         //   · playbar는 직접 그린다(브라우저 기본 컨트롤 미사용) — 크롬·사파리·모바일에서 모양이 같다.
-        //   · 배속은 초급 학습자용이라 1.00배를 넘지 않는다(AUDIO_CFG.rates). 건너뛰기 폭은 AUDIO_CFG.skip(초).
+        //   · 배속은 AUDIO_CFG.rate 로 정한다(min·max·step·def). 기본 0.75~1.25, 0.05 단위, 시작값 1.00.
+        //     − / + 버튼과 슬라이더 바 둘 다로 조절하며, 두 조작 모두 step 단위로 스냅된다. 건너뛰기 폭은 AUDIO_CFG.skip(초).
         //   · 안내문·버튼 라벨의 영문은 <span class="lk-en">…</span> 으로 넣는다(상단바 언어 설정이 한국어만이면 자동으로 숨는다).
         //   · 저작권이 있는 남의 음원은 자체 호스팅하지 않는다. 직접 만든 낭독·팟캐스트에만 쓴다.
-        const AUDIO_CFG = { src: 'https://openkoreanlearninglab.github.io/hub/assets/audio/a2plus-michelin-stars.m4a', rates: [0.75, 0.8, 0.85, 0.9, 0.95, 1], skip: 2 };
-        const audioState = { rate: 1, time: 0, playing: false, seeking: false, bound: false };
+        const AUDIO_CFG = { src: 'https://openkoreanlearninglab.github.io/hub/assets/audio/a2plus-michelin-stars.m4a', rate: { min: 0.75, max: 1.25, step: 0.05, def: 1 }, skip: 2 };
+        const audioState = { rate: AUDIO_CFG.rate.def, time: 0, playing: false, seeking: false, dragging: null, bound: false };
         let audioEl = null;
 
         function fmtTime(s) {
@@ -709,20 +722,48 @@ body.pw-printing #print-root{display:block}
             const mm = h ? String(m).padStart(2, '0') : String(m);
             return (h ? h + ':' : '') + mm + ':' + String(x).padStart(2, '0');
         }
-        function audioRateBtnsHTML() {
-            return AUDIO_CFG.rates.map(function (r) {
-                const on = Math.abs(audioState.rate - r) < 0.001 ? ' on' : '';
-                return '<button type="button" data-action="audio-rate" data-rate="' + r + '" class="lk-ap-btn' + on + '">' + r.toFixed(2) + '×</button>';
-            }).join('');
+        // 배속: AUDIO_CFG.rate 의 min~max 를 step 단위로 오르내린다. 버튼(− +)과 슬라이더 바 둘 다로 조절.
+        function audioSnapRate(v) {
+            const c = AUDIO_CFG.rate;
+            const n = Math.round((v - c.min) / c.step);
+            const steps = Math.round((c.max - c.min) / c.step);
+            return c.min + Math.min(steps, Math.max(0, n)) * c.step;
+        }
+        function audioRateCtrlHTML() {
+            const c = AUDIO_CFG.rate, r = audioState.rate;
+            const atMin = r <= c.min + 0.001, atMax = r >= c.max - 0.001;
+            const pct = ((r - c.min) / (c.max - c.min)) * 100;
+            return '<button type="button" data-action="audio-rate-step" data-delta="-' + c.step + '" class="lk-ap-step" aria-label="배속 낮추기"' + (atMin ? ' disabled' : '') + '>&#8722;</button>'
+                + '<span id="lk-ap-rval" class="lk-ap-val" role="status" aria-live="polite">' + r.toFixed(2) + '×</span>'
+                + '<button type="button" data-action="audio-rate-step" data-delta="' + c.step + '" class="lk-ap-step" aria-label="배속 높이기"' + (atMax ? ' disabled' : '') + '>+</button>'
+                + '<span id="lk-ap-rbar" class="lk-ap-rbar" role="slider" tabindex="0" aria-label="재생 속도"'
+                +   ' aria-valuemin="' + c.min + '" aria-valuemax="' + c.max + '" aria-valuenow="' + r.toFixed(2) + '" aria-valuetext="' + r.toFixed(2) + '×">'
+                +   '<span class="lk-ap-rtrack"><span id="lk-ap-rfill" class="lk-ap-rfill" style="width:' + pct + '%"></span>'
+                +   '<span id="lk-ap-rknob" class="lk-ap-rknob" style="left:' + pct + '%"></span></span>'
+                +   '<span class="lk-ap-rends"><span>' + c.min.toFixed(2) + '</span><span>' + c.max.toFixed(2) + '</span></span>'
+                + '</span>';
         }
         function audioRefreshRates() {
-            const w = qs('#lk-ap-rates', viewRoot()); if (w) w.innerHTML = audioRateBtnsHTML();
+            const w = qs('#lk-ap-rate', viewRoot()); if (w) w.innerHTML = audioRateCtrlHTML();
         }
         function audioSetRate(rate) {
-            const r = parseFloat(rate); if (!r) return;
+            const v = parseFloat(rate); if (!isFinite(v)) return;
+            const r = audioSnapRate(v);
             audioState.rate = r;
             if (audioEl) { try { audioEl.playbackRate = r; } catch (_) {} }
             audioRefreshRates();
+        }
+        function audioStepRate(delta) {
+            const d = parseFloat(delta); if (!isFinite(d)) return;
+            audioSetRate(audioState.rate + d);
+        }
+        function audioRateFromEvent(e) {
+            const bar = qs('#lk-ap-rbar', viewRoot()); if (!bar) return;
+            const c = AUDIO_CFG.rate;
+            const box = bar.getBoundingClientRect();
+            const x = (e.clientX != null ? e.clientX : 0) - box.left;
+            const ratio = Math.min(1, Math.max(0, x / (box.width || 1)));
+            audioSetRate(c.min + ratio * (c.max - c.min));
         }
         function audioRefreshPlayBtn() {
             const b = qs('#lk-ap-play', viewRoot()); if (!b) return;
@@ -774,19 +815,28 @@ body.pw-printing #print-root{display:block}
         function audioBindDrag() {
             if (audioState.bound) return;
             audioState.bound = true;
-            const move = function (e) { if (audioState.seeking) { e.preventDefault(); audioSeekToEvent(e); } };
+            const move = function (e) {
+                if (!audioState.dragging) return;
+                e.preventDefault();
+                if (audioState.dragging === 'seek') audioSeekToEvent(e); else audioRateFromEvent(e);
+            };
             const up = function () {
-                if (!audioState.seeking) return;
+                if (!audioState.dragging) return;
+                audioState.dragging = null;
                 audioState.seeking = false;
                 document.removeEventListener('pointermove', move);
                 document.removeEventListener('pointerup', up);
                 document.removeEventListener('pointercancel', up);
             };
             document.addEventListener('pointerdown', function (e) {
-                const bar = e.target.closest ? e.target.closest('#lk-ap-bar') : null;
-                if (!bar || !audioEl) return;
-                audioState.seeking = true;
-                audioSeekToEvent(e);
+                if (!e.target.closest) return;
+                const seekBar = e.target.closest('#lk-ap-bar');
+                const rateBar = e.target.closest('#lk-ap-rbar');
+                if (!seekBar && !rateBar) return;
+                if (seekBar && !audioEl) return;
+                audioState.dragging = seekBar ? 'seek' : 'rate';
+                audioState.seeking = !!seekBar;
+                if (seekBar) audioSeekToEvent(e); else audioRateFromEvent(e);
                 document.addEventListener('pointermove', move);
                 document.addEventListener('pointerup', up);
                 document.addEventListener('pointercancel', up);
@@ -810,7 +860,7 @@ body.pw-printing #print-root{display:block}
                 +     '<button type="button" data-action="audio-skip" data-sec="-' + skip + '" class="lk-ap-btn">&#8722;' + skip + '초</button>'
                 +     '<button type="button" data-action="audio-skip" data-sec="' + skip + '" class="lk-ap-btn">+' + skip + '초</button>'
                 +   '</div>'
-                +   '<div class="lk-ap-seg"><span class="lk-ap-lab">속도<span class="lk-en"> · Speed</span></span><span id="lk-ap-rates" class="lk-ap-seg">' + audioRateBtnsHTML() + '</span></div>'
+                +   '<div class="lk-ap-seg"><span class="lk-ap-lab">속도<span class="lk-en"> · Speed</span></span><span id="lk-ap-rate" class="lk-ap-rate">' + audioRateCtrlHTML() + '</span></div>'
                 +   '<a href="' + src + '" download class="lk-ap-dl">내려받기<span class="lk-en"> · Download</span></a>'
                 + '</div>'
                 + '</div>';
@@ -856,6 +906,14 @@ body.pw-printing #print-root{display:block}
                 if (k === 'ArrowRight') { e.preventDefault(); audioSkip(5); }
                 else if (k === 'ArrowLeft') { e.preventDefault(); audioSkip(-5); }
                 else if (k === ' ' || k === 'Enter') { e.preventDefault(); audioToggle(); }
+            });
+            mount.addEventListener('keydown', function (e) {
+                if (!e.target.closest || !e.target.closest('#lk-ap-rbar')) return;
+                const k = e.key, st = AUDIO_CFG.rate.step;
+                if (k === 'ArrowRight' || k === 'ArrowUp') { e.preventDefault(); audioStepRate(st); qs('#lk-ap-rbar', viewRoot()).focus(); }
+                else if (k === 'ArrowLeft' || k === 'ArrowDown') { e.preventDefault(); audioStepRate(-st); qs('#lk-ap-rbar', viewRoot()).focus(); }
+                else if (k === 'Home') { e.preventDefault(); audioSetRate(AUDIO_CFG.rate.min); qs('#lk-ap-rbar', viewRoot()).focus(); }
+                else if (k === 'End') { e.preventDefault(); audioSetRate(AUDIO_CFG.rate.max); qs('#lk-ap-rbar', viewRoot()).focus(); }
             });
             audioRefreshPlayBtn();
             audioRefreshProgress();
@@ -1140,7 +1198,7 @@ body.pw-printing #print-root{display:block}
                     else if (act === 'para-trans') { const i = +a.dataset.idx; reading.trans[i] = !reading.trans[i]; rerenderReadingBlocks(); }
                     else if (act === 'audio-toggle') { audioToggle(); }
                     else if (act === 'audio-skip') { audioSkip(parseFloat(a.dataset.sec)); }
-                    else if (act === 'audio-rate') { audioSetRate(a.dataset.rate); }
+                    else if (act === 'audio-rate-step') { audioStepRate(a.dataset.delta); }
                     return;
                 }
             } else if (tab === 'vocab') {
