@@ -314,6 +314,7 @@ body.pw-printing #print-root{display:block}
         .lk-ap-fb{ margin-top:.5rem; font-family:'Noto Sans KR',sans-serif; font-size:12px; color:#9ca3af; }
         .lk-ap-fb a{ text-decoration:underline; font-weight:600; }
         .lk-ap-fb a:hover{ color:#111827; }
+        .lk-ap-fb + .lk-ap-fb{ margin-top:.125rem; }
         @media (max-width:640px){
             .lk-ap{ padding:.875rem; }
             .lk-ap-main{ gap:.75rem; }
@@ -694,8 +695,10 @@ body.pw-printing #print-root{display:block}
         //   · 라벨은 코드에 하드코딩하지 말고 READING_DATA[].audioLabel 로 넣는다(기본값 '오디오').
         //   · 재생 위치·배속은 탭을 옮겼다 돌아와도 유지된다(자동 재생은 하지 않는다).
         //   · playbar는 직접 그린다(브라우저 기본 컨트롤 미사용) — 크롬·사파리·모바일에서 모양이 같다.
+        //   · 배속은 초급 학습자용이라 1.00배를 넘지 않는다(AUDIO_CFG.rates). 건너뛰기 폭은 AUDIO_CFG.skip(초).
+        //   · 안내문·버튼 라벨의 영문은 <span class="lk-en">…</span> 으로 넣는다(상단바 언어 설정이 한국어만이면 자동으로 숨는다).
         //   · 저작권이 있는 남의 음원은 자체 호스팅하지 않는다. 직접 만든 낭독·팟캐스트에만 쓴다.
-        const AUDIO_CFG = { src: 'https://openkoreanlearninglab.github.io/hub/assets/audio/a2plus-michelin-stars.m4a', rates: [0.75, 1, 1.25, 1.5], skip: 15 };
+        const AUDIO_CFG = { src: 'https://openkoreanlearninglab.github.io/hub/assets/audio/a2plus-michelin-stars.m4a', rates: [0.75, 0.8, 0.85, 0.9, 0.95, 1], skip: 2 };
         const audioState = { rate: 1, time: 0, playing: false, seeking: false, bound: false };
         let audioEl = null;
 
@@ -709,7 +712,7 @@ body.pw-printing #print-root{display:block}
         function audioRateBtnsHTML() {
             return AUDIO_CFG.rates.map(function (r) {
                 const on = Math.abs(audioState.rate - r) < 0.001 ? ' on' : '';
-                return '<button type="button" data-action="audio-rate" data-rate="' + r + '" class="lk-ap-btn' + on + '">' + r + '×</button>';
+                return '<button type="button" data-action="audio-rate" data-rate="' + r + '" class="lk-ap-btn' + on + '">' + r.toFixed(2) + '×</button>';
             }).join('');
         }
         function audioRefreshRates() {
@@ -822,7 +825,8 @@ body.pw-printing #print-root{display:block}
                 '<div class="mb-2 flex items-center gap-2 text-xs font-bold font-sans uppercase tracking-widest text-gray-400">'
                 + svgIcon('audio', 'w-4 h-4') + '<span>' + esc(cr.audioLabel || '오디오') + '</span></div>'
                 + audioPlayerHTML(src)
-                + '<p class="lk-ap-fb">재생이 안 되면 <a href="' + src + '" target="_blank" rel="noreferrer">오디오 파일 직접 열기</a> · 그래도 안 되면 다른 웹브라우저(Chrome)로 열어 보세요.</p>';
+                + '<p class="lk-ap-fb">재생이 안 되면 <a href="' + src + '" target="_blank" rel="noreferrer">오디오 파일 직접 열기</a> · 그래도 안 되면 다른 웹브라우저(Chrome)로 열어 보세요.</p>'
+                + '<p class="lk-ap-fb lk-en">If it won\'t play, <a href="' + src + '" target="_blank" rel="noreferrer">open the audio file directly</a> · if that still doesn\'t work, try another browser (Chrome).</p>';
 
             audioEl = qs('#lk-ap-el', mount);
             if (!audioEl) return;
