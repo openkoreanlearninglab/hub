@@ -1318,8 +1318,9 @@ button, a, [role="button"], input[type=range] { touch-action: manipulation; }
         function quizScore() { const v = Object.values(quizState.q); const c = v.filter(x => x.solved).length; return Math.round((c / QUIZ_LIST.length) * 100); }
         function quizItemHTML(quiz) {
             const st = quizState.q[quiz.id] || (quizState.q[quiz.id] = { selectedKey: null, solved: false, showHint: false, showTrans: false });
+            if (!st.order) st.order = shuffleArr(quiz.optionKeys || []);
             const sel = st.selectedKey;
-            const opts = (quiz.optionKeys || []).map(key => {
+            const opts = st.order.map(key => {
                 const o = IMG_POOL[key]; if (!o) return '';
                 const isCorrect = key === quiz.correctKey; const isSel = sel === key;
                 let cls = 'border-gray-200 hover:border-gray-400 hover:shadow-md';
