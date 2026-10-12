@@ -287,6 +287,85 @@ body.pw-printing #print-root{display:block}
         .dq-sub:hover .dq-num{ color:#111827; }
         .dq-eng{ font-size:13px; line-height:1.6; font-weight:400; }
     </style>
+    <style>
+        /* ===== AI 피드백 · AI 사전 (모든 규칙은 .aifb 안에서만 적용) ===== */
+        .aifb{ --ai-ink:#111; --ai-muted:#6b7280; --ai-line:#e5e7eb; --ai-soft:#f9fafb; --ai-red:#dc2626; --ai-red-bg:#fef2f2; --ai-orange:#ea580c; --ai-orange-bg:#fff7ed; --ai-green:#15803d; font-family:'Noto Sans KR',sans-serif; font-size:14px; line-height:1.6; color:#111; }
+        .aifb select, .aifb input[type=password]{ font:inherit; font-size:13px; border:1px solid #d1d5db; padding:7px 9px; background:#fff; color:#111; border-radius:0; }
+        .aifb input[type=password]{ flex:1; min-width:0; width:100%; }
+        .aifb-btn{ font:inherit; font-size:12px; font-weight:700; padding:7px 12px; border:1px solid #111; background:#fff; color:#111; cursor:pointer; border-radius:0; white-space:nowrap; }
+        .aifb-btn:disabled{ opacity:.4; cursor:default; }
+        .aifb-slim{ padding:6px 10px; border-color:#d1d5db; font-weight:500; }
+        .aifb-row{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:8px; }
+        .aifb-end{ justify-content:flex-end; margin-top:2px; }
+        .aifb-f{ font-size:12px; color:var(--ai-muted); min-width:56px; }
+        .aifb-note{ font-size:12px; color:var(--ai-muted); margin:6px 0 0; }
+        .aifb-ok{ font-size:12px; color:var(--ai-green); }
+        .aifb-top{ margin-bottom:56px; }
+        .aifb-topbar{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+        .aifb-box{ border:1px solid var(--ai-line); background:#fff; padding:16px; margin-top:10px; }
+        .aifb-keybox{ background:var(--ai-soft); }
+        .aifb-kbt{ margin:0 0 10px; font-weight:700; font-size:13px; }
+        .aifb-dict .aifb-row{ flex-direction:column; align-items:stretch; }
+        .aifb-dict .aifb-f{ min-width:0; }
+        .aifb-toggle{ width:100%; text-align:left; border:1px dashed #d1d5db; background:#fff; font:inherit; font-size:14px; font-weight:500; color:#374151; padding:10px 14px; cursor:pointer; }
+        .aifb-toggle:hover{ border-color:#111; }
+        .aifb-saved{ color:var(--ai-muted); font-size:12px; }
+        .aifb-sub{ color:var(--ai-muted); font-weight:400; }
+        .aifb-block{ display:block; color:var(--ai-muted); font-size:.92em; margin-top:2px; }
+        .aifb-fbwrap{ margin-top:16px; }
+        .aifb .err{ color:var(--ai-red); font-size:13px; margin-top:10px; }
+        .aifb .err .aifb-block{ color:var(--ai-red); opacity:.8; }
+        .aifb .err-m{ margin:0; }
+        .aifb .err-fix{ margin-top:8px; padding:10px 12px; background:#fff7f7; border:1px solid #fecaca; color:#374151; }
+        .aifb .err-fix-t{ font-size:12px; font-weight:700; display:block; margin-bottom:4px; }
+        .aifb .err-fix ul{ margin:0; padding-left:18px; list-style:disc; }
+        .aifb .err-fix li{ margin:3px 0; }
+        .aifb .err-fix .aifb-block{ color:var(--ai-muted); }
+        .aifb .err-d summary{ font-size:11px; color:var(--ai-muted); margin-top:4px; cursor:pointer; }
+        .aifb .err-d pre{ white-space:pre-wrap; max-height:120px; overflow:auto; font-size:11px; color:var(--ai-muted); background:var(--ai-soft); padding:8px; }
+        .aifb .loading{ color:var(--ai-muted); font-size:13px; padding:16px 0; }
+        .aifb .fb{ border:1px solid var(--ai-line); padding:24px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+        .aifb .fb-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+        .aifb .fb-top h3{ font-family:'Noto Serif KR',serif; font-size:18px; font-weight:700; margin:0; }
+        .aifb .eng{ font-size:11px; letter-spacing:.08em; padding:5px 10px; border:1px solid #d1d5db; background:#fff; color:var(--ai-muted); cursor:pointer; }
+        .aifb .eng.on{ background:#111; color:#fff; border-color:#111; }
+        .aifb .en{ font-size:13px; color:var(--ai-muted); margin:4px 0 0; }
+        .aifb .fb-sec{ margin-bottom:24px; }
+        .aifb .fb-label{ font-size:12px; font-weight:700; color:var(--ai-muted); margin-bottom:8px; display:block; }
+        .aifb .rel{ padding:12px 16px; border-left:3px solid var(--ai-orange); background:var(--ai-orange-bg); margin-bottom:22px; }
+        .aifb .rel.off{ border-color:var(--ai-red); background:var(--ai-red-bg); }
+        .aifb .rel.on{ border-color:var(--ai-green); background:#f0fdf4; padding:10px 16px; }
+        .aifb .rel p{ margin:4px 0; font-family:'Noto Serif KR',serif; font-size:15px; }
+        .aifb .model{ margin-top:10px; padding:12px 14px; background:#fff; border:1px dashed #d1d5db; font-family:'Noto Serif KR',serif; font-size:15px; }
+        .aifb .praise{ padding:12px 16px; background:var(--ai-soft); border-left:3px solid #111; font-family:'Noto Serif KR',serif; font-size:15px; }
+        .aifb .text{ font-family:'Noto Serif KR',serif; font-size:16px; line-height:2.1; padding:16px; border:1px solid var(--ai-line); word-break:keep-all; }
+        .aifb .m-del{ color:var(--ai-red); text-decoration:line-through; text-decoration-thickness:2px; }
+        .aifb .m-ins{ color:var(--ai-red); font-weight:700; }
+        .aifb .m-sug{ text-decoration:underline dotted var(--ai-orange); text-decoration-thickness:2px; text-underline-offset:4px; }
+        .aifb .n{ display:inline-block; font-family:'Noto Sans KR',sans-serif; font-size:11px; font-weight:700; line-height:1; padding:2px 4px; margin:0 2px; vertical-align:super; color:#fff; }
+        .aifb .n.r{ background:var(--ai-red); }
+        .aifb .n.o{ background:var(--ai-orange); }
+        .aifb .legend{ font-size:12px; color:var(--ai-muted); margin-top:8px; display:flex; gap:14px; flex-wrap:wrap; }
+        .aifb .status{ font-family:'Noto Serif KR',serif; font-size:15px; padding:8px 0; margin:0; }
+        .aifb .card{ border:1px solid var(--ai-line); padding:14px 16px; margin-bottom:10px; }
+        .aifb .card.r{ border-left:3px solid var(--ai-red); }
+        .aifb .card.o{ border-left:3px solid var(--ai-orange); }
+        .aifb .card-h{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+        .aifb .chip{ font-size:11px; font-weight:700; padding:2px 8px; }
+        .aifb .chip.r{ color:var(--ai-red); background:var(--ai-red-bg); }
+        .aifb .chip.o{ color:var(--ai-orange); background:var(--ai-orange-bg); }
+        .aifb .kind{ font-size:11px; color:var(--ai-muted); }
+        .aifb .pair{ font-family:'Noto Serif KR',serif; font-size:15px; margin-bottom:8px; }
+        .aifb .pair .arrow{ color:var(--ai-muted); margin:0 6px; }
+        .aifb .to-r{ color:var(--ai-red); font-weight:700; }
+        .aifb .to-o{ color:var(--ai-orange); font-weight:700; }
+        .aifb .exp{ font-size:14px; color:#374151; margin:0; }
+        .aifb .ex{ font-size:13px; color:var(--ai-muted); margin:6px 0 0; }
+        .aifb .word{ margin-top:8px; font-size:13px; padding:6px 10px; background:var(--ai-orange-bg); }
+        .aifb .stale{ padding:10px 14px; background:#fffbeb; border:1px solid #fde68a; font-size:13px; margin-bottom:18px; }
+        .aifb .ask{ margin-top:24px; padding-top:16px; border-top:1px dashed #d1d5db; font-size:13px; color:#374151; }
+        @media print{ .aifb-top, .aifb-toggle{ display:none !important; } }
+    </style>
 </head>
 
 <body>
@@ -308,7 +387,67 @@ body.pw-printing #print-root{display:block}
            ===================================================================== */
 
         /* ===== 데이터 (임시 플레이스홀더 — 실제 콘텐츠로 교체) ===== */
-        const CONFIG = { GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent', API_RETRY_DELAYS: [1000, 2000, 4000] };
+        /* ===== AI 설정 (학습자가 자기 API 키로 사용 · 키는 저장하지 않음) =====
+           모델 이름은 여기만 바꾸면 됨. '모델 불러오기'를 누르면 학습자 키 기준 실제 목록으로 바뀜. */
+        const AI_PROVIDERS = {
+            gemini: {
+                label: 'Google Gemini', keySite: 'Google AI Studio',
+                keyHint: 'Google AI Studio에서 무료로 발급', keyHintEn: 'Free key from Google AI Studio',
+                models: ['gemini-3.6-flash', 'gemini-3.8-flash', 'gemini-3.5-flash-lite'],
+                request: (model, key, sys, user) => ({
+                    url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
+                    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+                    body: { systemInstruction: { parts: [{ text: sys }] }, contents: [{ role: 'user', parts: [{ text: user }] }], generationConfig: { responseMimeType: 'application/json' } }
+                }),
+                readText: (r) => ((r.candidates && r.candidates[0] && r.candidates[0].content && r.candidates[0].content.parts) || []).map(p => p.text || '').join(''),
+                listModels: (key) => ({ url: 'https://generativelanguage.googleapis.com/v1beta/models?pageSize=200', headers: { 'x-goog-api-key': key } }),
+                readModels: (r) => (r.models || []).filter(m => (m.supportedGenerationMethods || []).includes('generateContent') && /gemini/.test(m.name) && !/(embedding|image|tts|audio|live)/.test(m.name)).map(m => m.name.replace(/^models\//, ''))
+            },
+            anthropic: {
+                label: 'Anthropic Claude', keySite: 'Claude Console',
+                keyHint: 'Claude Console에서 발급 (선불 결제 필요)', keyHintEn: 'From Claude Console (prepaid)',
+                models: ['claude-sonnet-5-5', 'claude-haiku-5-5', 'claude-opus-5-5'],
+                request: (model, key, sys, user) => ({
+                    url: 'https://api.anthropic.com/v1/messages',
+                    headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+                    body: { model, max_tokens: 4096, temperature: 0.3, system: sys, messages: [{ role: 'user', content: user }] }
+                }),
+                readText: (r) => (r.content || []).filter(c => c.type === 'text').map(c => c.text).join(''),
+                listModels: (key) => ({ url: 'https://api.anthropic.com/v1/models?limit=100', headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' } }),
+                readModels: (r) => (r.data || []).map(m => m.id)
+            },
+            openai: {
+                label: 'OpenAI', keySite: 'OpenAI Platform',
+                keyHint: 'OpenAI Platform에서 발급 (선불 결제 필요)', keyHintEn: 'From OpenAI Platform (prepaid)',
+                models: ['gpt-5.6-terra', 'gpt-6.1-sol', 'gpt-6-luna'],   // 확인 필요: '모델 불러오기' 권장
+                request: (model, key, sys, user) => ({
+                    url: 'https://api.openai.com/v1/chat/completions',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+                    body: { model, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: sys }, { role: 'user', content: user }] }
+                }),
+                readText: (r) => (r.choices && r.choices[0] && r.choices[0].message && r.choices[0].message.content) || '',
+                listModels: (key) => ({ url: 'https://api.openai.com/v1/models', headers: { 'Authorization': `Bearer ${key}` } }),
+                readModels: (r) => (r.data || []).map(m => m.id).filter(id => /^(gpt-|o\d)/.test(id) && !/(audio|realtime|image|tts|transcribe|search)/.test(id)).sort()
+            }
+        };
+
+        /* ===== AI 첨삭 설정 — 모드는 자료 레벨(app.userLevel)로 정함 =====
+           A: A1~A2+ (설명 영어) · B: B1~B2 (쉬운 한국어 + 영어 번역) · C: B2+~C2 (한국어만) */
+        const FEEDBACK_CONFIG = {
+            MODE_BY_LEVEL: { 'A1': 'A', 'A1+': 'A', 'A2': 'A', 'A2+': 'A', 'B1': 'B', 'B1+': 'B', 'B2': 'B', 'B2+': 'C', 'C1': 'C', 'C1+': 'C', 'C2': 'C' },
+            EXPLAIN_LEVEL: { 'B1': 'A2+', 'B1+': 'B1', 'B2': 'B1', 'B2+': 'B1+', 'C1': 'B2', 'C1+': 'B2', 'C2': 'B2' },
+            MAX_SUGGESTIONS: { A: 1, B: 2, C: 3 },
+            RED_TAGS: ['맞춤법', '오타', '띄어쓰기', '조사', '활용', '문법', '주어·서술어 호응', '단어 조합', '문맥상 어색한 표현', '문체', '빠진 말'],
+            ORANGE_TAGS: { A: ['더 좋은 표현'], B: ['더 좋은 표현', '일관성'], C: ['더 좋은 표현', '일관성', '고급 표현', '대체 표현', '문어체'] },
+            RED_FALLBACK_TAG: '문법', ORANGE_FALLBACK_TAG: '더 좋은 표현',
+            TAG_LABEL_EN: {
+                '맞춤법': 'Spelling', '오타': 'Typo', '띄어쓰기': 'Spacing', '조사': 'Wrong 이/가 · 을/를 · 에 …', '활용': 'Word form',
+                '문법': 'Grammar', '주어·서술어 호응': "Parts don't match", '단어 조합': "Words that don't go together", '문맥상 어색한 표현': "Doesn't fit here",
+                '문체': 'Mixed speech styles', '빠진 말': 'Missing word', '더 좋은 표현': 'More natural', '일관성': 'Consistency'
+            },
+            // 나중에 채우면 '선생님께 물어보세요' 안내 아래에 자동 표시
+            CONTACT: { email: '', url: '', urlLabel: '' }
+        };
         const LEVEL_DEFINITIONS = { "A1":{title:"Novice",desc:""},"A1+":{title:"Pre-Beginner",desc:""},"A2":{title:"Beginner",desc:""},"A2+":{title:"Upper Beginner",desc:""},"B1":{title:"Pre-Intermediate",desc:""},"B1+":{title:"Lower Intermediate",desc:""},"B2":{title:"Intermediate",desc:""},"B2+":{title:"Upper Intermediate",desc:""},"C1":{title:"Advanced",desc:""},"C1+":{title:"Upper Advanced",desc:""},"C2":{title:"Proficient",desc:""} };
         const HOME_TAGS = ["사회","문화"];
         const HOME_SERIES_BADGE = "";
@@ -523,15 +662,15 @@ body.pw-printing #print-root{display:block}
         // explanation, textParts_eng:[pre_e,post_e], answer_eng.
         // verbHint/particleHint는 필요한 문항에만 넣으면 되고, 없으면 버튼이 자동으로 표시되지 않습니다.
         const QUIZ_LIST = [
-            { id:1, textParts:["중고등 남학생 무리의 출입을 막는 카페 안내문이 알려지자, 인터넷에서 큰 ","."], answer:"논란이 됐어요", hint:"어떤 일을 두고 사람들이 옳다, 그르다 하며 크게 다투게 돼요.", verbHint:"기본형 '논란이 되다'를 문장을 끝맺는 과거형(-았/었어요)으로 바꾸세요.", explanation:"정답! 원형 '논란이 되다'가 과거형 어미와 만나 '논란이 됐어요'가 됐어요. 카페 안내문 하나를 두고 찬성과 반대가 크게 부딪쳤다는 뜻이에요.", textParts_eng:["Once the café's notice banning groups of middle- and high-school boys became known, it "," online."], answer_eng:"became controversial" },
+            { id:1, textParts:["중고등 남학생 무리의 출입을 막는 카페 안내문이 알려지자, 인터넷에서 큰 ","."], answer:"논란이 됐어요", altAnswers:["논란이 되었어요"], hint:"어떤 일을 두고 사람들이 옳다, 그르다 하며 크게 다투게 돼요.", verbHint:"기본형 '논란이 되다'를 문장을 끝맺는 과거형(-았/었어요)으로 바꾸세요.", explanation:"정답! 원형 '논란이 되다'가 과거형 어미와 만나 '논란이 됐어요'가 됐어요. 줄이지 않은 '논란이 되었어요'도 정답이에요. 카페 안내문 하나를 두고 찬성과 반대가 크게 부딪쳤다는 뜻이에요.", textParts_eng:["Once the café's notice banning groups of middle- and high-school boys became known, it "," online."], answer_eng:"became controversial" },
             { id:2, textParts:["안내문에는 남학생들이 욕설을 하고 매장을 어지럽혀 다른 손님에게 ","을 준다는 이유가 적혀 있었어요."], answer:"불쾌감", hint:"기분이 좋지 않고 싫은 느낌이에요.", explanation:"맞아요! 기본형 '불쾌감'이 그대로 들어가 뒤의 '을 주다'와 이어져요. 다른 손님들이 불편했다는 것이 카페가 내세운 이유였어요.", textParts_eng:["The notice said the reason was that the boys swore and made a mess, giving other customers a feeling of ","."], answer_eng:"discomfort" },
-            { id:3, textParts:["몇몇 사람의 잘못을 나이나 성별 같은 무리 전체의 특징으로 "," 버리면 누구든 언젠가 밀려나는 쪽이 될 수 있어요."], answer:"일반화해", hint:"몇 가지 예만 보고 모두가 다 그렇다고 생각해요.", verbHint:"뒤에 오는 '버리다'와 이어지도록 기본형 '일반화하다'를 '-아/어' 형태로 바꾸세요.", explanation:"정확해요! 원형 '일반화하다'가 '-아/어 버리다' 앞에서 '일반화해'가 되어 '일반화해 버리면'이 됐어요. '-아/어 버리다'가 붙어서 한 번 그렇게 생각하면 되돌리기 어렵다는 느낌이 더해져요. 노○○존을 반대하는 쪽의 핵심 논리예요.", textParts_eng:["If you end up "," a few people's mistakes as a trait of a whole group, defined by age or gender, anyone could one day end up on the excluded side."], answer_eng:"generalizing" },
+            { id:3, textParts:["몇몇 사람의 잘못을 나이나 성별 같은 무리 전체의 특징으로 "," 버리면 누구든 언젠가 밀려나는 쪽이 될 수 있어요."], answer:"일반화해", altAnswers:["일반화하여"], hint:"몇 가지 예만 보고 모두가 다 그렇다고 생각해요.", verbHint:"뒤에 오는 '버리다'와 이어지도록 기본형 '일반화하다'를 '-아/어' 형태로 바꾸세요.", explanation:"정확해요! 원형 '일반화하다'가 '-아/어 버리다' 앞에서 '일반화해'가 되어 '일반화해 버리면'이 됐어요. '일반화하여'도 정답이에요. '-아/어 버리다'가 붙어서 한 번 그렇게 생각하면 되돌리기 어렵다는 느낌이 더해져요. 노○○존을 반대하는 쪽의 핵심 논리예요.", textParts_eng:["If you end up "," a few people's mistakes as a trait of a whole group, defined by age or gender, anyone could one day end up on the excluded side."], answer_eng:"generalizing" },
             { id:4, textParts:["노키즈존은 식당 주인에게 배상 책임이 있다는 2014년 판결 이후 "," 늘어나기 시작한 것으로 보여요."], answer:"본격적으로", hint:"준비 단계를 지나 제대로 크게 시작되는 모양이에요.", particleHint:"명사 '본격적'에 부사를 만드는 조사 '-으로'를 붙이세요.", explanation:"딩동댕! '본격적'에 조사 '으로'가 붙어 '늘어나다'를 꾸미는 부사가 됐어요. 2014년 판결이 노키즈존이 크게 퍼진 계기였다는 뜻이에요.", textParts_eng:["No-kids zones seem to have started increasing "," after a 2014 ruling that held a restaurant owner liable for damages."], answer_eng:"in earnest" },
             { id:5, textParts:["사장님이 어떤 손님을 받을지 스스로 정할 권리와 ","을 어디까지 인정해야 할지를 두고 의견이 엇갈려요."], answer:"자율성", hint:"남의 간섭 없이 스스로 정하고 해 나갈 수 있는 힘이에요.", explanation:"그렇죠! 기본형 '자율성'이 그대로 들어가요. 가게 운영을 스스로 결정할 자유를 얼마나 인정할지가 논쟁의 한 축이에요.", textParts_eng:["Opinions are divided over how far to recognize an owner's right and "," to decide for themselves which customers to serve."], answer_eng:"autonomy" },
             { id:6, textParts:["노키즈존이 늘어나면 아이들이 자기를 반기지 않는 곳이 있다는 것을 느끼며 "," 수 있다는 걱정도 있어요."], answer:"위축될", hint:"겁이 나거나 기가 죽어서 자신 있게 행동하지 못하게 돼요.", verbHint:"기본형 '위축되다'를 가능성을 나타내는 '-(으)ㄹ 수 있다'에 맞게 관형형(-ㄹ)으로 바꾸세요.", explanation:"퍼펙트! 원형 '위축되다'가 '-ㄹ 수 있다'와 만나 '위축될'로 바뀌었어요. 노키즈존이 아이들의 마음에 남기는 상처를 걱정하는 말이에요.", textParts_eng:["There's also concern that as no-kids zones increase, children may "," as they sense there are places that don't welcome them."], answer_eng:"shrink back" },
             { id:7, textParts:["안전 문제나 손님끼리의 마찰 때문에 출입을 막는다면, 그건 사장님이 스스로 판단할 수 있는 영업 ","의 범위 안이라는 의견도 있어요."], answer:"재량", hint:"스스로 판단해서 알맞게 정할 수 있는 힘이에요.", explanation:"잘하셨어요! 기본형 '재량'이 그대로 쓰였어요. '영업 재량'은 장사하는 방식을 사장님이 알아서 정할 수 있는 폭을 뜻해요.", textParts_eng:["Some say that if entry is restricted for safety or because of friction between customers, it falls within the owner's business ","."], answer_eng:"discretion" },
             { id:8, textParts:["가게에 피해를 주면 제대로 벌을 받는다는 인식이 생기면, 같은 일의 ","을/를 막는 효과도 있을 거예요."], answer:"재발", hint:"한 번 있었던 나쁜 일이 다시 생기는 것이에요.", explanation:"정답! 명사 '재발'이 그대로 들어가요. 받침이 있으니 뒤에는 '을'이 붙어 '재발을 막다'가 돼요. 무리 전체를 막는 대신 처벌 제도를 발전시키자는 혜진 님의 의견이에요.", textParts_eng:["If people understood that damaging a shop really gets punished, it would also help prevent ","of the same problem."], answer_eng:"a recurrence" },
-            { id:9, textParts:["외국에도 성인 전용 공간은 있지만, 한국처럼 여러 무리의 출입을 이렇게 "," 막는 곳이 다양한 나라는 드물어요."], answer:"공공연하게", hint:"숨기지 않고 누구나 알 수 있게 드러나 있어요.", verbHint:"기본형 '공공연하다'를 동사 '막다'를 꾸미는 부사형(-게)으로 바꾸세요.", explanation:"훌륭해요! 원형 '공공연하다'에 부사형 어미 '-게'가 붙어 '공공연하게'가 됐어요. 한국의 노○○존은 드러내 놓고 사람을 가린다는 점에서 외신의 관심을 받았어요.", textParts_eng:["There are adult-only spaces abroad too, but it's rare to find a country with as many places as Korea that "," keep out so many groups."], answer_eng:"openly" },
+            { id:9, textParts:["외국에도 성인 전용 공간은 있지만, 한국처럼 여러 무리의 출입을 이렇게 "," 막는 곳이 다양한 나라는 드물어요."], answer:"공공연하게", altAnswers:["공공연히"], hint:"숨기지 않고 누구나 알 수 있게 드러나 있어요.", verbHint:"기본형 '공공연하다'를 동사 '막다'를 꾸미는 부사 형태로 바꾸세요.", explanation:"훌륭해요! 원형 '공공연하다'에 부사형 어미 '-게'가 붙어 '공공연하게'가 됐어요. 부사 '공공연히'도 정답이에요. 한국의 노○○존은 드러내 놓고 사람을 가린다는 점에서 외신의 관심을 받았어요.", textParts_eng:["There are adult-only spaces abroad too, but it's rare to find a country with as many places as Korea that "," keep out so many groups."], answer_eng:"openly" },
             { id:10, textParts:["전문가들은 안전사고가 걱정된다고 어린이 모두를 막는 것은 위험을 해결하는 게 아니라 "," 것이라고 말해요."], answer:"회피하는", hint:"부딪치지 않으려고 피해요.", verbHint:"기본형 '회피하다'를 뒤에 오는 의존명사 '것'을 꾸미는 현재 관형형(-는)으로 바꾸세요.", explanation:"정확해요! 원형 '회피하다'가 '것'을 꾸미도록 '회피하는'으로 바뀌었어요. 문제를 풀지 않고 피하기만 하면, 같은 논리로 다른 무리도 막을 수 있다는 경고예요.", textParts_eng:["Experts say barring all children because of worries about accidents doesn't solve the risk but "," it."], answer_eng:"avoids" }
         ];
         // DISCUSS_DATA 항목 필드: id, questionKor, questionEng, vocab[]
@@ -608,31 +747,615 @@ body.pw-printing #print-root{display:block}
             if (left + width > ww - pad) return ww - width - pad;
             return left;
         };
-        const callGeminiWithBackoff = async (payload) => {
-            const apiKey = ''; const apiUrl = `${CONFIG.GEMINI_API_URL}?key=${apiKey}`; const delays = CONFIG.API_RETRY_DELAYS;
-            for (let i = 0; i <= delays.length; i++) {
-                try {
-                    const r = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                    if (!r.ok) {
-                        const t = await r.text();
-                        if (r.status === 400 || r.status === 401 || r.status === 403) throw new Error(`API 인증/요청 오류(HTTP ${r.status}): ${t}`);
-                        if (r.status === 429 || r.status >= 500) throw new Error(`Server error: ${r.status} - ${t}`);
-                        throw new Error(`API error: ${r.statusText} - ${t}`);
-                    }
-                    return await r.json();
-                } catch (e) {
-                    if (i === delays.length || e.message.includes('API 인증/요청 오류')) throw e;
-                    await new Promise(res => setTimeout(res, delays[i]));
-                }
-            }
-        };
-        const getAIDictionaryData = async (term, contextData) => {
-            const articleText = contextData.map(p => p.text).filter(Boolean).join('\n');
-            const systemPrompt = `당신은 친절한 한국어 선생님입니다. '본문 맥락'을 참고하여 '검색어'를 '-요' 체로 간결히 설명해주세요.\n\n본문 맥락:\n---${articleText}\n---`;
-            const payload = { contents: [{ parts: [{ text: `검색어: "${term}"` }] }], systemInstruction: { parts: [{ text: systemPrompt }] }, generationConfig: { responseMimeType: 'application/json' } };
-            const result = await callGeminiWithBackoff(payload);
-            return JSON.parse(result.candidates[0].content.parts[0].text);
-        };
+        /* ===================== AI 피드백 · AI 사전 모듈 =====================
+           학습자 자신의 API 키로 동작 (서버 없음 · 키 저장 안 함)
+           ===================================================================== */
+const UI_TEXT = {
+  ko: {
+    title: 'AI 한국어 도우미', relOn: '질문에 맞게 답했어요.', relOff: '질문과 다른 내용을 썼어요', relPartial: '질문에 일부만 답했어요',
+    model: '모범 답안', praise: '잘한 점', myText: '내가 쓴 글', oldText: '첨삭받은 글 (이전 글)',
+    legendRed: '틀린 부분', legendOrange: '더 좋은 표현 제안', wrong: '틀린 부분', noWrong: '틀린 부분은 없어요.', better: '더 좋은 표현',
+    none: '수정할 부분이 없어요. 아주 잘 썼어요!', fix: '수정', sug: '제안', ex: '예', newWord: '새 어휘',
+    stale: "글을 고쳤어요. 아래 첨삭은 이전 글에 대한 것이에요. 고친 글로 다시 받으려면 'AI 피드백 받기'를 누르세요.",
+    ask: 'AI의 첨삭은 정확하지 않을 수 있어요. 왜 고쳤는지 헷갈리거나 AI가 잘못 고쳤다고 생각하면 한국어 수업 시간에 꼭 선생님께 물어보세요.',
+    loading: 'AI가 글을 읽고 있어요…'
+  },
+  en: {
+    title: 'AI Korean Helper', relOn: 'You answered the question.', relOff: "Your answer doesn't match the question", relPartial: 'You answered only part of the question',
+    model: 'Example answer', praise: 'What you did well', myText: 'Your writing', oldText: 'Checked writing (earlier version)',
+    legendRed: 'mistake', legendOrange: 'a more natural way', wrong: 'Mistakes', noWrong: 'No mistakes found.', better: 'A more natural way to say it',
+    none: 'Nothing to fix. Great job!', fix: 'Fix', sug: 'Tip', ex: 'e.g.', newWord: 'New word',
+    stale: "You changed your writing. The feedback below is for the earlier version. Press 'AI 피드백 받기' to check the new version.",
+    ask: "AI feedback is not always right. If you're not sure why something was changed, or you think the AI made a mistake, please ask your teacher in Korean class.",
+    loading: 'The AI is reading your writing…'
+  }
+};
+
+
+const modeOf = (level) => FEEDBACK_CONFIG.MODE_BY_LEVEL[level || app.userLevel] || 'C';
+const uiOf = (mode) => UI_TEXT[mode === 'A' ? 'en' : 'ko'];
+// 상단 언어 메뉴(a·b 템플릿의 secLang) 연동. C 모드는 언제나 한국어만
+function effLang() {
+  if (modeOf() === 'C') return 'ko';
+  return (typeof secLang === 'function' && secLang()) ? 'en' : 'ko';
+}
+const koOnly = () => modeOf() === 'C';
+const bi = (ko, en) => koOnly() ? esc(ko) : `${esc(ko)}<span class="lk-en aifb-sub"> · ${esc(en)}</span>`;
+const biBlock = (ko, en) => koOnly() ? esc(ko) : `${esc(ko)}<span class="lk-en aifb-block">${esc(en)}</span>`;
+const sw = (ko, en) => koOnly() ? esc(ko) : `<span class="lk-ko-only">${esc(ko)}</span><span class="lk-en">${esc(en)}</span>`;
+const SWAP_KEYS = new Set(['fix', 'sug', 'legendRed', 'legendOrange', 'ex', 'newWord', 'loading']);
+const BLOCK_KEYS = new Set(['stale', 'ask']);
+function L(mode, key) {
+  const ko = UI_TEXT.ko[key], en = UI_TEXT.en[key];
+  if (mode === 'A') return esc(en);
+  if (mode === 'C') return esc(ko);
+  return SWAP_KEYS.has(key) ? sw(ko, en) : BLOCK_KEYS.has(key) ? biBlock(ko, en) : bi(ko, en);
+}
+
+// ---- 오류 문구: 메뉴와 상관없이 모드로 정함 (A 영어만 / B 한국어+영어 병기 / C 한국어만) ----
+const ERR_TEXT = {
+  feedbackFail: { ko: '첨삭을 받지 못했어요.', en: "Couldn't get feedback." },
+  modelsFail:   { ko: '모델 목록을 불러오지 못했어요.', en: "Couldn't load the model list." },
+  dictFail:     { ko: '단어 설명을 받지 못했어요.', en: "Couldn't get the word explanation." },
+  network: { ko: '인터넷 연결에 문제가 있어요.', en: 'There is a problem with the internet connection.',
+    fixKo: ['인터넷(와이파이)이 연결되어 있는지 확인해 주세요.', '학교나 회사 인터넷은 AI 사이트를 막는 경우가 있어요. 다른 인터넷(휴대폰 핫스팟 등)으로 해 보세요.'],
+    fixEn: ['Check that you are connected to the internet (Wi-Fi).', 'School or office networks sometimes block AI sites. Try another connection, such as your phone hotspot.'] },
+  key: { ko: 'API 키가 맞지 않아요.', en: 'The API key is not correct.',
+    fixKo: ['키를 처음부터 끝까지 다시 복사해서 붙여 넣어 주세요. 앞뒤에 빈칸이 들어가지 않게 해 주세요.', 'AI 설정에서 고른 AI 회사가 키를 만든 회사와 같은지 확인해 주세요. (예: Gemini 키는 Google Gemini에서만 써요.)', '그래도 안 되면 {ai} 사이트에서 새 키를 만들어서 넣어 주세요.'],
+    fixEn: ['Copy the whole key again and paste it. Make sure there are no spaces before or after it.', 'Check that the AI company chosen in AI settings is the one that made your key. (For example, a Gemini key works only with Google Gemini.)', 'If it still fails, make a new key in {ai} and enter it.'] },
+  perm: { ko: '이 API 키로는 사용할 수 없어요.', en: "This API key can't be used here.",
+    fixKo: ['키를 만들 때 "사용할 수 있는 웹사이트"를 정해 두었다면, 이 학습자료 주소를 허용 목록에 넣어 주세요.', '키를 만든 계정에서 이 AI 서비스를 쓸 수 있는지 확인해 주세요. 나라나 나이에 따라 막혀 있을 수 있어요.', '잘 모르겠으면 {ai} 사이트에서 제한이 없는 새 키를 만들어서 넣어 주세요.'],
+    fixEn: ['If you limited the key to certain websites, add this page\'s address to the allowed list.', 'Check that your account is allowed to use this AI service. It may be blocked in some countries or for some ages.', "If you're not sure, make a new key with no limits in {ai} and enter it."] },
+  badRequest: { ko: 'AI가 요청을 받지 않았어요.', en: "The AI didn't accept the request.",
+    fixKo: ["AI 설정에서 '모델 불러오기'를 누르고 목록에서 모델을 다시 골라 주세요.", '글이 아주 길면 조금 줄여서 다시 해 보세요.'],
+    fixEn: ["In AI settings, press 'Load models' and choose a model from the list again.", 'If your writing is very long, make it a little shorter and try again.'] },
+  model: { ko: '고른 모델을 찾을 수 없어요.', en: "The model you chose wasn't found.",
+    fixKo: ["AI 설정에서 '모델 불러오기'를 누르고 목록에 있는 모델을 골라 주세요."],
+    fixEn: ["In AI settings, press 'Load models' and choose a model from the list."] },
+  limit: { ko: '사용할 수 있는 양을 넘었어요.', en: "You've gone over your usage limit.",
+    fixKo: ['1분쯤 기다렸다가 다시 해 보세요. 짧은 시간에 너무 많이 요청하면 생기는 일이에요.', '계속 같은 오류가 나면 오늘 쓸 수 있는 무료 사용량을 다 쓴 거예요. 내일 다시 하거나, AI 설정에서 다른 모델을 골라 보세요.'],
+    fixEn: ['Wait about a minute and try again. This happens when you send too many requests in a short time.', "If the same error keeps coming, you've used up today's free amount. Try again tomorrow, or choose a different model in AI settings."] },
+  credit: { ko: 'AI 계정에 남은 크레딧(이용 금액)이 없어요.', en: 'Your AI account has no credit left.',
+    fixKo: ['{ai} 계정에 크레딧을 충전해 주세요.', '무료로 쓰고 싶으면 AI 설정에서 Google Gemini를 고르고 Gemini 키를 넣어 주세요.'],
+    fixEn: ['Add credit to your {ai} account.', 'To use it for free, choose Google Gemini in AI settings and enter a Gemini key.'] },
+  busy: { ko: '지금 이 모델에 사용자가 많아 응답하지 못했어요.', en: 'This model is busy right now.',
+    fixKo: ['잠시 기다렸다가 다시 해 보세요. 보통 금방 괜찮아져요.', 'AI 설정에서 다른 모델을 골라 보세요.'],
+    fixEn: ['Wait a moment and try again. It usually gets better soon.', 'Choose a different model in AI settings.'] },
+  http: { ko: '오류가 발생했어요 (HTTP {n}).', en: 'Something went wrong (HTTP {n}).',
+    fixKo: ['잠시 후 다시 해 보세요.', '계속 같은 오류가 나면 한국어 수업 시간에 선생님께 알려 주세요.'],
+    fixEn: ['Try again in a little while.', 'If the same error keeps coming, please tell your teacher in Korean class.'] },
+  format: { ko: 'AI의 답을 읽지 못했어요.', en: "Couldn't read the AI's answer.",
+    fixKo: ['한 번 더 해 보세요.', '계속 안 되면 AI 설정에서 다른 모델을 골라 보세요. 작은 모델은 답을 정해진 모양으로 못 보낼 때가 있어요.'],
+    fixEn: ['Try once more.', "If it keeps failing, choose a different model in AI settings. Smaller models sometimes can't send the answer in the right shape."] }
+};
+// 오류 객체: { code, status, detail } — 문구는 그릴 때 모드에 맞춰 만듦
+function AppError(code, status, detail) { const e = new Error(String(code)); e.code = code; e.status = status || 0; e.detail = detail || ''; return e; }
+// HTTP 상태 + 서버 메시지로 오류 종류를 정함 (회사마다 같은 문제를 다른 번호로 보내기도 함)
+function classifyError(e) {
+  if (!e) return 'format';
+  if (typeof e.code === 'string' && ERR_TEXT[e.code] && e.code !== 'http') return e.code;
+  const st = e.status, d = (e.detail || '').toLowerCase();
+  if (/credit balance|insufficient_quota|billing/.test(d)) return 'credit';
+  if (st === 401 || (st === 400 && /api[ _]?key|api_key_invalid|authentication|invalid x-api-key/.test(d))) return 'key';
+  if (st === 403) return 'perm';
+  if (st === 404) return 'model';
+  if (st === 400) return 'badRequest';
+  if (st === 429) return 'limit';
+  if ([500, 502, 503, 504, 529].includes(st)) return 'busy';
+  return st ? 'http' : 'format';
+}
+function errText(code, lang, n) { const t = ERR_TEXT[code] || ERR_TEXT.http; return t[lang].replace('{n}', n || ''); }
+function errHTML(mode, prefix, e) {
+  if (!e) return '';
+  const code = classifyError(e), t = ERR_TEXT[code];
+  const P = AI_PROVIDERS[aiState.provider];
+  const fill = (x) => x.replace('{n}', e.status || '').replace('{ai} 사이트', P.keySite).replace('{ai} 사이트', P.keySite).replace(/{ai}(?= and)/, P.keySite).replace('{ai}', P.label);
+  const ko = fill(`${ERR_TEXT[prefix].ko} ${t.ko}`), en = fill(`${ERR_TEXT[prefix].en} ${t.en}`);
+  const msg = mode === 'A' ? esc(en) : mode === 'C' ? esc(ko) : `${esc(ko)}<span class="lk-block">${esc(en)}</span>`;
+  const fixKo = (t.fixKo || []).map(fill), fixEn = (t.fixEn || []).map(fill);
+  const items = fixKo.map((k, i) => `<li>${mode === 'A' ? esc(fixEn[i]) : mode === 'C' ? esc(k) : `${esc(k)}<span class="lk-block">${esc(fixEn[i] || '')}</span>`}</li>`).join('');
+  const label = mode === 'A' ? 'Try this' : mode === 'C' ? '이렇게 해 보세요' : '이렇게 해 보세요 · Try this';
+  const fix = items ? `<div class="err-fix"><span class="err-fix-t">${label}</span><ul>${items}</ul></div>` : '';
+  const detail = e.detail ? `<details class="err-d"><summary>${mode === 'C' ? '자세히' : mode === 'A' ? 'Details' : '자세히 · Details'}</summary><pre>${esc(e.detail)}</pre></details>` : '';
+  return `<div class="err"><p class="err-m">${msg}</p>${fix}${detail}</div>`;
+}
+
+
+/* =====================================================================
+   2. 프롬프트 (모든 AI 회사·모델에 똑같이 보냄. 모드별 규칙만 다름)
+   ===================================================================== */
+const SCHEMA_LINE = '{"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"","praiseEn":"","corrections":[{"original":"","corrected":"","tag":"","explanation":"","explanationEn":"","example":""}],"suggestions":[{"original":"","suggested":"","tag":"","explanation":"","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}}]}';
+
+const COMMON_RULES = (mode, level) => `[공통 규칙]
+- original은 학습자 글에서 한 글자도 바꾸지 않고 그대로 복사한 연속된 부분입니다. 고칠 곳을 포함한 가장 짧은 구절(보통 1~6어절)로 씁니다.
+- 같은 오류가 여러 번 나오면 각각 따로 씁니다.
+- 학습자의 주장이나 내용은 바꾸지 않고, 표현만 고칩니다. 글 전체를 다시 쓰지 않습니다.
+- 틀리지 않은 것을 틀렸다고 하지 않습니다. 틀린 곳이 없으면 corrections는 빈 배열, 제안할 것이 없으면 suggestions는 빈 배열입니다.
+- 종결어미(-다, -어요/-아요, -ㅂ니다/-습니다, 반말)는 무엇을 골랐는지 지적하지 않습니다. 단, 한 글 안에서 서로 섞여 있으면 corrections에 tag "문체"로 지적하고, "어느 것을 써도 괜찮지만 한 글에서는 하나로 맞춰 쓰라"는 뜻을 설명합니다.
+- 맞춤법에서 허용하는 띄어쓰기(예: "먹어 봤어요"를 "먹어봤어요"로 붙여 쓴 경우)는 지적하지 않습니다.${mode !== 'C' ? `
+- 띄어쓰기는 띄어쓰기 때문에 뜻이 헷갈리거나 달라지는 경우에만 지적합니다. 뜻에 영향이 없는 사소한 띄어쓰기는 넘어갑니다.` : ''}
+- 이미 corrections에서 고친 부분에 대안을 제시할 때는, suggestions의 original에 고친 표현(corrected)을 그대로 쓰고 그것을 바탕으로 제안합니다.
+
+[질문에 맞는 답인지 확인 — 가장 중요]
+- relevance.status: 질문에 맞게 답했으면 "on", 일부만 답했으면 "partial", 질문과 관계없는 답이면 "off". 한국어가 완벽해도 질문과 관계없으면 "off"입니다.
+- "partial"이나 "off"이면 comment에 무엇이 부족한지 1~2문장으로 쓰고, modelAnswer에 ${level} 수준의 짧은 한국어 모범 답안(${mode === 'A' ? '2~3' : '3~4'}문장)을 씁니다. 가능하면 [핵심 어휘]를 활용합니다.
+- "on"이면 comment, commentEn, modelAnswer, modelAnswerEn은 모두 빈 문자열입니다.
+
+[잘한 점]
+- praise: 이 글에서 실제로 잘한 점 한 가지를 구체적으로 한 문장으로 씁니다.`;
+
+const MODE_RULES = {
+  A: (level) => `[설명 언어 — A 모드]
+- 학습자는 초급(${level})이라 한국어 설명을 이해하지 못합니다. explanation, praise, comment는 모두 쉬운 일상 영어로 씁니다. original, corrected, suggested, example, modelAnswer는 한국어입니다.
+- modelAnswer를 쓸 때는 modelAnswerEn에 자연스러운 영어 번역을 씁니다. explanationEn, praiseEn, commentEn은 빈 문자열입니다.
+- 문법 용어를 쓰지 않습니다. 금지: particle, marker(단독 용어로), subject, object, topic, conjugation, conjugate, stem, honorific, connective, ending(문법 용어로), irregular, collocation, modifier, adnominal, nominalizer, tense, clause, predicate.
+- 대신 한국어 형태를 그대로 부르고, 그 형태가 하는 일을 일상 영어로 풀어서 설명합니다. 예: "이/가 points at who does the action. 을/를 points at the thing the action happens to."
+- 설명은 1~2문장으로 짧게 씁니다. example에는 맞는 문장과 틀린 문장을 "(O)"/"(X)"로 짝지어 보여 줍니다.
+
+[corrections — 틀린 부분 (빨간색)]
+특히 다음을 찾아 고칩니다.
+- 이/가, 은/는, 을/를, 에/에서, 도, 만 같은 조사를 잘못 쓴 경우 (tag: 조사)
+- 동사·형용사 모양을 잘못 바꾼 경우. 예: 맵어요 → 매워요, 듣어요 → 들어요 (tag: 활용)
+- 함께 쓰지 않는 단어 조합. 예: 옷을 쓰다 → 옷을 입다 (tag: 단어 조합)
+- 기본 문법 오류, 시제, 어순 (tag: 문법)
+- 맞춤법·오타, 빠진 말, 종결어미 섞임
+tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
+
+[suggestions — 더 좋은 표현 (주황색)]
+- 문법은 맞지만 한국 사람이 그렇게 말하지 않는 경우에만, 최대 ${FEEDBACK_CONFIG.MAX_SUGGESTIONS.A}개 제안합니다. 더 어려운 표현으로 바꾸는 제안은 하지 않습니다.
+- tag: 더 좋은 표현. word는 모두 빈 문자열입니다.`,
+
+  B: (level) => `[설명 언어 — B 모드]
+- 모든 설명(explanation, praise, comment)은 한국어 해요체로 쓰고, 문장 끝은 반드시 "-요"로 끝냅니다.
+- 설명 문장의 어휘·문법은 ${FEEDBACK_CONFIG.EXPLAIN_LEVEL[level] || 'B1'} 수준으로 씁니다(최고 B1, 최저 A2+). 짧은 문장으로 씁니다.
+- 각 한국어 설명의 자연스러운 영어 번역을 explanationEn, praiseEn, commentEn에 씁니다. modelAnswer가 있으면 modelAnswerEn에 영어 번역을 씁니다. 영어 번역에도 어려운 문법 용어를 쓰지 않습니다.
+- 고칠 대상(original)은 학습자가 쓴 그대로 인용합니다.
+- '주어, 서술어, 조사' 같은 기본 문법 용어는 써도 되지만, 어려운 언어학 용어는 쓰지 않고 풀어서 설명합니다.
+- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. 필요하면 짧은 예문을 example에 1개 씁니다.
+
+[corrections — 틀린 부분 (빨간색) — B 모드의 중심]
+이 레벨 학습자는 문장 오류가 많습니다. 문장을 바르게 완성하는 데 집중해서 다음을 모두 찾아 고칩니다.
+- 조사 오류, 동사·형용사 활용 오류, 시제, 연결어미(-아서/-어서, -는데, -니까, -고 등) 오류
+- 주어와 서술어가 맞지 않는 문장, 어순, 꼭 필요한 말이 빠진 경우
+- 함께 쓰지 않는 단어 조합, 문맥상 어색한 표현, 맞춤법·오타, 종결어미 섞임
+tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
+
+[suggestions — 더 좋은 표현 (주황색)]
+- 문법은 맞지만 어색한 문장이 있을 때만, 최대 ${FEEDBACK_CONFIG.MAX_SUGGESTIONS.B}개 제안합니다. 더 어려운 표현으로 바꾸는 제안은 하지 않습니다.
+- 학습자가 구어체로 써도 지적하지 않습니다. 대안 문장은 한국 사람이 실제로 말하는 자연스러운 구어체로 제시합니다. 종결어미는 학습자가 고른 것(반말/해요체 등)에 맞춥니다.
+- tag: 더 좋은 표현, 일관성. word는 모두 빈 문자열입니다.`,
+
+  C: (level) => `[설명 언어 — C 모드]
+- 모든 설명(explanation, praise, comment)은 한국어 해요체로 쓰고, 문장 끝은 반드시 "-요"로 끝냅니다. 영어는 쓰지 않습니다. explanationEn, praiseEn, commentEn, modelAnswerEn은 빈 문자열입니다.
+- 설명 문장의 어휘·문법·문장 구조는 ${FEEDBACK_CONFIG.EXPLAIN_LEVEL[level] || 'B2'} 이하 수준으로 쉽고 짧게 씁니다.
+- 단, 고칠 대상(original)은 학습자가 쓴 그대로 인용하고, 고친 표현(corrected, suggested)은 레벨을 고려하지 않고 가장 자연스러운 표현으로 씁니다.
+- '주어, 서술어, 조사, 조건절, 안긴문장' 같은 기본 문법 용어는 써도 되지만, '연어'처럼 어려운 언어학 용어는 쓰지 말고 "'옷'과 '쓰다'는 함께 쓰지 않아요"처럼 풀어서 설명합니다.
+- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. 필요하면 짧은 예문을 example에 1개 씁니다.
+- 학습자가 일부러 그렇게 썼을 수도 있는 경우에는 단정하지 말고 "~을 말하고 싶었다면 ~가 더 자연스러워요"처럼 씁니다.
+- 오타처럼 이유가 분명한 경우에는 explanation을 빈 문자열로 둡니다.
+
+[corrections — 틀린 부분 (빨간색)]
+다음은 모두 찾아서 고칩니다.
+- 맞춤법, 오타, 띄어쓰기, 조사 오류, 활용 오류, 문법 오류
+- 주어와 서술어가 맞지 않는 문장
+- 함께 쓰지 않는 단어 조합 (예: "옷을 쓰다")
+- 문맥상 어색한 표현: 다른 문맥에서는 괜찮아도 이 글의 문맥에서는 어색한 표현
+- 종결어미가 섞인 경우, 꼭 필요한 말이 빠진 경우
+tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
+
+[suggestions — 틀리지 않았지만 더 좋은 대안 (주황색)]
+- 일관성이 떨어지는 문장이나 표현 (tag: 일관성)
+- 더 분명하거나 자연스럽게 쓸 수 있는 문장 (tag: 더 좋은 표현 / 대체 표현)
+- 문장 구조가 지나치게 구어체인 경우, 글에서는 문어체로 쓸 수 있다고 알려 줍니다 (tag: 문어체). 예: "근데, 되게, 막, 진짜" 같은 말, "거/건/게" 같은 줄인 형태, 말할 때만 쓰는 문장 구조. 종결어미(-다/-요/-니다) 자체는 이 대상이 아닙니다. 가장 대표적인 1~2곳만 제안합니다.
+- 학습 자료 레벨(${level})에 비해 너무 쉬운 표현을 반 단계~한 단계 높은 어휘나 문장 구조로 바꿀 수 있는 경우 (tag: 고급 표현)
+  · 쉬운 표현을 모두 고치지 않습니다. 문맥상 고급 어휘가 자연스럽게 들어갈 수 있을 때만 제안합니다.
+  · 가능하면 [핵심 어휘]나 [본문]에 나온 어휘를 쓰도록 유도하고, explanation에 본문에서 나온 표현이라고 알려 줍니다.
+- 제안에 새 어휘를 썼으면 word에 그 어휘(term), 한자어이면 한자(hanja), 쉬운 뜻(meaning)을 씁니다. 없으면 모두 빈 문자열입니다.
+- 가장 도움이 되는 순서로 최대 ${FEEDBACK_CONFIG.MAX_SUGGESTIONS.C}개까지만 씁니다.
+tag는 다음 중 하나: ${FEEDBACK_CONFIG.ORANGE_TAGS.C.join(', ')}`
+};
+
+const FEW_SHOT = {
+  A: `질문: 어제 뭐 먹었어요?
+학습자 글: 저는 어제 밥이 먹었어요. 한국 음식은 맵어요.
+출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"You clearly said what you ate and how it tasted.","praiseEn":"","corrections":[{"original":"밥이 먹었어요","corrected":"밥을 먹었어요","tag":"조사","explanation":"Use 을/를 here, not 이/가. 이/가 points at who does the action, but 밥 is the thing being eaten.","explanationEn":"","example":"저는 빵을 먹어요. (O) / 저는 빵이 먹어요. (X)"},{"original":"맵어요","corrected":"매워요","tag":"활용","explanation":"맵다 changes to 매워요, not 맵어요. When a word ends in ㅂ, the ㅂ turns into 우 before -어요.","explanationEn":"","example":"춥다 → 추워요 (O) / 춥어요 (X)"}],"suggestions":[]}`,
+  B: `질문: 주말에 뭐 했어요?
+학습자 글: 어제 친구랑 영화를 봤어. 영화가 너무 재미있어서 또 보고 싶어요.
+출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"무엇을 했는지와 어떻게 느꼈는지를 같이 써서 좋아요.","praiseEn":"It's good that you wrote both what you did and how you felt.","corrections":[{"original":"봤어","corrected":"봤어요","tag":"문체","explanation":"반말(-어)과 해요체(-어요)를 같이 썼어요. 어느 쪽을 써도 괜찮지만 한 글에서는 하나로 맞춰 써요.","explanationEn":"You mixed casual speech (-어) and polite speech (-어요). Either one is fine, but use only one in the same piece of writing.","example":""}],"suggestions":[]}`,
+  C: `질문: 배양육이 주류 시장에서 성공할 수 있을까?
+학습자 글: 배양육은 가격이 훨씬 더 비싸면 상업적으로 성공하기가 어려울 것 같다. 근데 맛은 실제 고기와 비슷하고 가격은 너무 비싸지 않으면 된다.
+출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"성공의 조건을 맛과 가격 두 가지로 나누어 분명하게 정리했어요.","praiseEn":"","corrections":[{"original":"배양육은 가격이","corrected":"배양육의 가격이","tag":"조사","explanation":"'-면' 앞의 조건 부분에서 주어에는 보통 '-이/가'를 써요. 그리고 이 문장에서 비싼 것은 '배양육'이 아니라 '배양육의 가격'이에요.","explanationEn":"","example":"날씨가 좋으면 저는 등산을 갈 거예요."}],"suggestions":[{"original":"근데","suggested":"그러나","tag":"문어체","explanation":"'근데'는 말할 때 주로 써요. 글에서는 '그러나'나 '하지만'을 쓰면 더 자연스러워요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"비슷하고","suggested":"비슷하면서","tag":"더 좋은 표현","explanation":"'-고'는 두 가지를 나열해요. 두 조건이 동시에 필요하다는 뜻을 보여 주고 싶다면 '-면서'가 더 분명해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}}]}`
+};
+
+function buildSystemPrompt(level) {
+  const mode = modeOf(level);
+  return `당신은 외국인 학습자의 한국어 글쓰기를 첨삭하는 한국어 선생님입니다.
+학습자는 ${level} 수준의 학습 자료를 읽고, 주어진 질문에 대해 글을 썼습니다.
+
+${MODE_RULES[mode](level)}
+
+${COMMON_RULES(mode, level)}
+
+[예시] (출력 형식을 보여 주는 예시예요. 내용을 따라 하지 마세요.)
+${FEW_SHOT[mode]}
+
+[출력]
+아래 JSON 하나만 출력합니다. 모든 필드를 빠짐없이 쓰고, 해당 없는 필드는 빈 문자열로 둡니다. 마크다운, 코드 블록, 다른 설명은 쓰지 않습니다. 강조가 필요하면 **단어**만 씁니다.
+${SCHEMA_LINE}`;
+}
+
+function buildUserMessage(ctx) {
+  const vocab = (ctx.vocab || []).map(v => `- ${v.term}: ${v.def}`).join('\n') || '없음';
+  return `[학습 자료 레벨]\n${ctx.level}\n\n[본문]\n${ctx.article || '없음'}\n\n[핵심 어휘]\n${vocab}\n\n[질문]\n${ctx.question}\n\n[학습자 글]\n${ctx.learnerText}`;
+}
+
+
+const str = (v) => (typeof v === 'string' ? v : (v == null ? '' : String(v))).trim();
+const arr = (v) => (Array.isArray(v) ? v : []);
+// 허용 강조(**단어**)만 <b>로, 나머지 마크다운 기호는 제거
+const richText = (s) => esc(str(s).replace(/`/g, '').replace(/^#+\s*/gm, '')).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\*/g, '');
+const numMark = (n) => (n <= 20 ? String.fromCharCode(0x2460 + n - 1) : `(${n})`);
+
+/* =====================================================================
+   5. 응답 정리 (어느 모델이든 같은 모양으로)
+   ===================================================================== */
+function extractJSON(text) {
+  let t = str(text).replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
+  const a = t.indexOf('{'), b = t.lastIndexOf('}');
+  if (a === -1 || b === -1) throw AppError('format');
+  return JSON.parse(t.slice(a, b + 1));
+}
+
+function normalizeFeedback(o, mode) {
+  const C = FEEDBACK_CONFIG;
+  if (!o || typeof o !== 'object' || !Array.isArray(o.corrections) || !Array.isArray(o.suggestions)) throw AppError('format');
+  mode = ['A', 'B', 'C'].includes(o.mode) ? o.mode : (mode || 'C');
+  const oTags = C.ORANGE_TAGS[mode];
+  const rel = o.relevance && typeof o.relevance === 'object' ? o.relevance : {};
+  const status = ['on', 'partial', 'off'].includes(rel.status) ? rel.status : 'on';
+  const keepEn = (v) => (mode === 'B' ? str(v) : '');           // 설명 번역은 B 모드만
+  const corrections = arr(o.corrections).map(c => ({
+    original: str(c.original),
+    corrected: str(c.corrected || c.correction || c.fixed),
+    tag: C.RED_TAGS.includes(str(c.tag)) ? str(c.tag) : C.RED_FALLBACK_TAG,
+    explanation: str(c.explanation),
+    explanationEn: keepEn(c.explanationEn),
+    example: str(c.example)
+  })).filter(c => c.original && c.corrected && c.original !== c.corrected);
+  const suggestions = arr(o.suggestions).map(s => {
+    const w = s.word && typeof s.word === 'object' && mode === 'C' ? s.word : {};
+    return {
+      original: str(s.original),
+      suggested: str(s.suggested || s.suggestion || s.corrected),
+      tag: oTags.includes(str(s.tag)) ? str(s.tag) : C.ORANGE_FALLBACK_TAG,
+      explanation: str(s.explanation),
+      explanationEn: keepEn(s.explanationEn),
+      example: str(s.example),
+      word: { term: str(w.term), hanja: str(w.hanja), meaning: str(w.meaning) }
+    };
+  }).filter(s => s.original && s.suggested && s.original !== s.suggested).slice(0, C.MAX_SUGGESTIONS[mode]);
+  const on = status === 'on';
+  return {
+    mode,
+    relevance: {
+      status,
+      comment: on ? '' : str(rel.comment),
+      commentEn: on ? '' : keepEn(rel.commentEn),
+      modelAnswer: on ? '' : str(rel.modelAnswer),
+      modelAnswerEn: on || mode === 'C' ? '' : str(rel.modelAnswerEn)   // 모범 답안 번역은 A·B 모드
+    },
+    praise: str(o.praise),
+    praiseEn: keepEn(o.praiseEn),
+    corrections,
+    suggestions
+  };
+}
+
+/* =====================================================================
+   6. 학습자 글에서 위치 찾기 + 번호 매기기
+   ===================================================================== */
+function aiOverlaps(a, b) { return a.start < b.end && b.start < a.end; }
+
+function placeItems(text, items, taken) {
+  // taken: 같은 색끼리 겹치지 않도록 이미 차지한 구간
+  items.forEach(it => {
+    it.start = -1; it.end = -1;
+    let from = 0, idx;
+    while ((idx = text.indexOf(it.original, from)) !== -1) {
+      const span = { start: idx, end: idx + it.original.length };
+      if (!taken.some(t => aiOverlaps(t, span))) { it.start = span.start; it.end = span.end; taken.push(span); break; }
+      from = idx + 1;
+    }
+  });
+  return items;
+}
+
+function layoutFeedback(text, fb) {
+  const reds = placeItems(text, fb.corrections.map(c => ({ ...c, color: 'r' })), []);
+  const oranges = placeItems(text, fb.suggestions.map(s => ({ ...s, color: 'o' })), []);
+  const byPos = (a, b) => (a.start === -1 ? 1e9 : a.start) - (b.start === -1 ? 1e9 : b.start);
+  reds.sort(byPos); oranges.sort(byPos);
+  let n = 0;
+  reds.forEach(r => { r.num = ++n; r.extra = []; });
+  oranges.forEach(o => {
+    o.num = ++n;
+    if (o.start === -1) {
+      // 빨강에서 고친 표현을 바탕으로 한 제안이면 그 빨강 표시에 번호를 붙임
+      const host = reds.find(r => r.start !== -1 && r.corrected.indexOf(o.original) !== -1);
+      if (host) host.extra.push(o.num);
+      return;
+    }
+    const host = reds.find(r => r.start !== -1 && aiOverlaps(r, o));
+    if (host) { host.extra.push(o.num); o.start = -1; }
+  });
+  return { reds, oranges };
+}
+
+
+
+// ---------- AI 상태 (키·모델은 메모리에만) ----------
+const aiState = { provider: 'gemini', apiKey: '', models: {}, model: AI_PROVIDERS.gemini.models[0], loadingModels: false, settingsOpen: false, modelsError: null };
+const modelList = () => aiState.models[aiState.provider] || AI_PROVIDERS[aiState.provider].models;
+const newDiscussSt = () => ({ text: '', showTrans: false, open: null, feedback: null, feedbackFor: '', loading: false, error: null, keyPanel: false, confirmClear: false, showEn: null });
+const isStale = (st) => !!st.feedback && st.text.trim() !== st.feedbackFor.trim();
+const aiIsOpen = (st) => (st.open !== null ? st.open : !!(aiState.apiKey || st.text || st.feedback));
+
+// ---------- 저장: 학습자 글 + 첨삭 결과만 (이 브라우저 localStorage, 키는 저장 안 함) ----------
+const AI_STORE_KEY = 'okll:discuss:v1:' + location.pathname;
+function aiLoadStore() {
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(AI_STORE_KEY) || 'null'); } catch (e) { data = null; }
+  DISCUSS_DATA.forEach(d => {
+    const st = discussState[d.id] || (discussState[d.id] = newDiscussSt());
+    const s = data && data[d.id]; if (!s || typeof s !== 'object') return;
+    st.text = typeof s.text === 'string' ? s.text : '';
+    if (s.feedback) {
+      try { st.feedback = normalizeFeedback(s.feedback, s.feedback.mode); st.feedbackFor = typeof s.feedbackFor === 'string' ? s.feedbackFor : ''; }
+      catch (e) { st.feedback = null; st.feedbackFor = ''; }
+    }
+  });
+}
+let aiSaveTimer = null;
+function aiSaveStore() {
+  clearTimeout(aiSaveTimer);
+  aiSaveTimer = setTimeout(() => {
+    const data = {};
+    Object.keys(discussState).forEach(id => {
+      const st = discussState[id];
+      if (st.text || st.feedback) data[id] = { text: st.text, feedback: st.feedback, feedbackFor: st.feedbackFor, savedAt: Date.now() };
+    });
+    try { if (Object.keys(data).length) localStorage.setItem(AI_STORE_KEY, JSON.stringify(data)); else localStorage.removeItem(AI_STORE_KEY); }
+    catch (e) { /* 저장 불가(시크릿 모드 등): 메모리로만 동작 */ }
+  }, 300);
+}
+
+// ---------- AI 호출 (회사·모델과 무관하게 같은 경로) ----------
+async function httpJSON(url, opts) {
+  let r;
+  try { r = await fetch(url, opts); } catch (e) { throw AppError('network'); }
+  if (!r.ok) { const t = await r.text().catch(() => ''); throw AppError('http', r.status, t.slice(0, 600)); }
+  return r.json();
+}
+const RETRY_STATUSES = [429, 500, 502, 503, 504];
+const RETRY_DELAYS = [2000, 5000];   // 서버가 바쁘면 최대 2번 더 자동 시도
+async function callAI(sys, user) {
+  const P = AI_PROVIDERS[aiState.provider];
+  const q = P.request(aiState.model, aiState.apiKey, sys, user);
+  for (let i = 0; ; i++) {
+    try { return P.readText(await httpJSON(q.url, { method: 'POST', headers: q.headers, body: JSON.stringify(q.body) })); }
+    catch (e) {
+      if (i >= RETRY_DELAYS.length || !RETRY_STATUSES.includes(e.status) || classifyError(e) === 'credit') throw e;
+      await new Promise(res => setTimeout(res, RETRY_DELAYS[i]));
+    }
+  }
+}
+async function callAIJSON(sys, user, parse) {
+  let lastErr = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try { return parse(extractJSON(await callAI(sys, attempt === 0 ? user : user + '\n\n(반드시 지정한 JSON 형식 하나만 출력하세요.)'))); }
+    catch (e) { lastErr = e; if (e.status) throw e; }
+  }
+  throw lastErr || AppError('format');
+}
+async function aiLoadModels() {
+  const P = AI_PROVIDERS[aiState.provider];
+  aiState.loadingModels = true; aiState.modelsError = null; aiRepaintKeyFields();
+  try {
+    const q = P.listModels(aiState.apiKey);
+    const list = P.readModels(await httpJSON(q.url, { headers: q.headers }));
+    if (list.length) { aiState.models[aiState.provider] = list; if (!list.includes(aiState.model)) aiState.model = list[0]; }
+  } catch (e) { aiState.modelsError = e.code ? e : AppError('format'); }
+  finally { aiState.loadingModels = false; aiRepaintKeyFields(); }
+}
+const articleText = () => READING_DATA.map(r => (r.content || []).map(p => p.text || '').filter(Boolean).join('\n')).join('\n\n');
+
+// ---------- 생각해 보기: AI 첨삭 ----------
+async function runDiscussFeedback(id) {
+  const st = discussState[id]; const d = DISCUSS_DATA.find(x => x.id === id);
+  if (!st || !d || st.loading || !st.text.trim()) return;
+  if (!aiState.apiKey) { st.keyPanel = true; rerenderDiscussItem(id); return; }
+  st.keyPanel = false; st.loading = true; st.error = null; rerenderDiscussItem(id);
+  const level = app.userLevel, text = st.text;
+  const question = [d.questionKor].concat((d.sub || []).map((q, i) => `${d.id}-${i + 1}. ${q}`)).join('\n');
+  const vocab = (d.vocab || []).map(v => ({ term: v.term, def: v.def }));
+  try {
+    st.feedback = await callAIJSON(buildSystemPrompt(level), buildUserMessage({ level, article: articleText(), vocab, question, learnerText: text }), (o) => normalizeFeedback(o, modeOf(level)));
+    st.feedbackFor = text; aiSaveStore();
+  } catch (e) { st.error = e.code ? e : AppError('format'); }
+  finally { st.loading = false; rerenderDiscussItem(id); }
+}
+
+// ---------- 읽기: AI 문맥 사전 ----------
+const getAIDictionaryData = async (term) => {
+  const mode = modeOf();
+  const how = mode === 'A'
+    ? '설명(definition)은 쉬운 일상 영어로 1~2문장 씁니다. 문법 용어를 쓰지 않습니다.'
+    : `설명(definition)은 한국어 해요체로, ${FEEDBACK_CONFIG.EXPLAIN_LEVEL[app.userLevel] || 'B1'} 수준의 쉬운 말로 1~2문장 씁니다. 문장 끝은 "-요"로 끝냅니다.`;
+  const sys = `당신은 한국어 선생님입니다. [본문]을 참고하여 [검색어]가 이 본문에서 어떤 뜻으로 쓰였는지 설명합니다.
+${how}
+example에는 검색어를 쓴 짧고 쉬운 한국어 예문 1개를 씁니다. 본문 문장을 그대로 옮기지 않습니다.
+아래 JSON 하나만 출력합니다. 마크다운이나 다른 설명은 쓰지 않습니다.
+{"term":"","definition":"","example":""}`;
+  return callAIJSON(sys, `[본문]\n${articleText()}\n\n[검색어]\n${term}`, (o) => {
+    const r = { term: str(o && o.term) || term, definition: str(o && o.definition), example: str(o && o.example) };
+    if (!r.definition) throw AppError('format');
+    return r;
+  });
+};
+
+// ---------- 렌더: AI 설정 · 키 입력 ----------
+function keyFieldsHTML() {
+  const P = AI_PROVIDERS[aiState.provider];
+  const opts = Object.keys(AI_PROVIDERS).map(k => `<option value="${esc(k)}"${k === aiState.provider ? ' selected' : ''}>${esc(AI_PROVIDERS[k].label)}</option>`).join('');
+  const mopts = modelList().map(m => `<option value="${esc(m)}"${m === aiState.model ? ' selected' : ''}>${esc(m)}</option>`).join('');
+  return `<div class="aifb-row"><label class="aifb-f">AI</label><select data-ai-field="provider">${opts}</select></div>
+    <div class="aifb-row"><label class="aifb-f">${sw('API 키', 'API key')}</label><input type="password" autocomplete="off" spellcheck="false" data-ai-field="apiKey" value="${esc(aiState.apiKey)}" placeholder="${esc(effLang() === 'en' ? P.keyHintEn : P.keyHint)}"><button type="button" class="aifb-btn" data-action="aifb-clear-key">${sw('키 지우기', 'Clear key')}</button></div>
+    <div class="aifb-row"><label class="aifb-f">${sw('모델', 'Model')}</label><select data-ai-field="model">${mopts}</select><button type="button" class="aifb-btn" data-action="aifb-load-models"${aiState.apiKey && !aiState.loadingModels ? '' : ' disabled'}>${aiState.loadingModels ? sw('불러오는 중…', 'Loading…') : sw('모델 불러오기', 'Load models')}</button></div>
+    ${errHTML(modeOf(), 'modelsFail', aiState.modelsError)}
+    <p class="aifb-note">${biBlock(`API 키는 저장되지 않아요. 새로고침하거나 탭을 닫으면 다시 입력해야 해요. 요청은 내 브라우저에서 ${P.label}로 바로 가요.`, `Your API key is not saved. You need to enter it again after refreshing or closing the tab. Requests go straight from your browser to ${P.label}.`)}</p>`;
+}
+function aiTopHTML() {
+  const status = aiState.apiKey ? `<span class="aifb-ok">● ${esc(AI_PROVIDERS[aiState.provider].label)} · ${esc(aiState.model)}</span>` : `<span class="aifb-note" style="margin:0">${sw('API 키 없음', 'No API key')}</span>`;
+  return `<div class="aifb aifb-top" id="aifb-top"><div class="aifb-topbar"><button type="button" class="aifb-btn aifb-slim" data-action="aifb-toggle-settings" aria-expanded="${aiState.settingsOpen}">⚙ ${sw('AI 설정', 'AI settings')} ${aiState.settingsOpen ? '▴' : '▾'}</button>${status}</div>${aiState.settingsOpen ? `<div class="aifb-box">${keyFieldsHTML()}</div>` : ''}</div>`;
+}
+function aiRepaintKeyFields() {
+  const top = qs('#aifb-top', viewRoot()); if (top) top.outerHTML = aiTopHTML();
+  Object.keys(discussState).forEach(id => { if (discussState[id].keyPanel) rerenderDiscussItem(+id); });
+  if (app.activeTab === 'reading' && reading.showDict && !aiState.apiKey) paint();
+}
+
+// ---------- 렌더: 생각해 보기 글쓰기 칸 ----------
+function aiWriteHTML(item, st) {
+  const open = aiIsOpen(st), hasText = !!st.text.trim();
+  const toggle = `<button type="button" class="aifb-toggle" data-action="aifb-toggle-write" aria-expanded="${open}">✎ ${bi('내 생각 써 보기', 'Write your thoughts')} ${open ? '▴' : '▾'}${!open && (hasText || st.feedback) ? ` <span class="aifb-saved">· ${sw('저장된 글 있음', 'saved')}</span>` : ''}</button>`;
+  if (!open) return `<div class="aifb">${toggle}</div>`;
+  const disabled = (!hasText || st.loading);
+  const clear = st.confirmClear
+    ? `<span class="aifb-note" style="margin:0">${sw('쓴 글과 첨삭을 모두 지울까요?', 'Delete your writing and feedback?')}</span><button type="button" class="aifb-btn" data-action="aifb-clear-yes">${sw('지우기', 'Delete')}</button><button type="button" class="aifb-btn" data-action="aifb-clear-no">${sw('취소', 'Cancel')}</button>`
+    : `<button type="button" class="aifb-btn" data-action="aifb-clear-ask"${hasText || st.feedback ? '' : ' disabled'}>${sw('지우기', 'Clear')}</button>`;
+  return `<div class="aifb">${toggle}</div>
+    <textarea data-action="discuss-text" placeholder="${effLang() === 'en' ? 'Write your thoughts here…' : '여기에 생각을 적어 보세요…'}" class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 mt-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea>
+    <div class="aifb"><div class="aifb-row aifb-end">${clear}<button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '<div class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>' : ''}${st.loading ? sw('첨삭 중…', 'Checking…') : sw('AI 피드백 받기', 'Get AI feedback')}</button></div>
+    <p class="aifb-note">${biBlock("쓴 글과 첨삭은 이 브라우저에 자동 저장돼요. 공용 컴퓨터라면 다 쓴 뒤 '지우기'를 눌러 주세요.", "Your writing and feedback are saved in this browser automatically. On a shared computer, press 'Clear' when you're done.")}</p>
+    ${st.keyPanel && !aiState.apiKey ? `<div class="aifb-box aifb-keybox"><p class="aifb-kbt">${biBlock('AI 피드백을 받으려면 API 키가 필요해요.', 'You need an API key to get AI feedback.')}</p>${keyFieldsHTML()}</div>` : ''}
+    <div class="aifb-fbwrap" data-aifb-fb>${feedbackHTML(st, item.id)}</div></div>`;
+}
+
+// ---------- 이벤트 처리 (기존 #app 위임 리스너 안에서 호출) ----------
+function aiHandleClick(a) {
+  const act = a.dataset.action;
+  if (!act || act.indexOf('aifb-') !== 0) return false;
+  if (act === 'aifb-toggle-settings') { aiState.settingsOpen = !aiState.settingsOpen; aiRepaintKeyFields(); return true; }
+  if (act === 'aifb-clear-key') { aiState.apiKey = ''; paint(); return true; }
+  if (act === 'aifb-load-models') { if (!a.disabled) aiLoadModels(); return true; }
+  const qEl = a.closest('.discuss-q'); if (!qEl) return true;
+  const id = +qEl.dataset.did, st = discussState[id];
+  if (act === 'aifb-toggle-write') { st.open = !aiIsOpen(st); rerenderDiscussItem(id); if (st.open) { const t = qs(`.discuss-q[data-did="${id}"] textarea`, viewRoot()); if (t) t.focus(); } }
+  else if (act === 'aifb-toggle-en') { st.showEn = !(st.showEn === null ? effLang() === 'en' : st.showEn); rerenderDiscussItem(id); }
+  else if (act === 'aifb-clear-ask') { st.confirmClear = true; rerenderDiscussItem(id); }
+  else if (act === 'aifb-clear-no') { st.confirmClear = false; rerenderDiscussItem(id); }
+  else if (act === 'aifb-clear-yes') { Object.assign(st, { text: '', feedback: null, feedbackFor: '', error: null, confirmClear: false }); aiSaveStore(); rerenderDiscussItem(id); }
+  return true;
+}
+function aiHandleInput(t) {
+  if (t.matches('[data-ai-field="apiKey"]')) {
+    aiState.apiKey = t.value.trim();
+    document.querySelectorAll('[data-ai-field="apiKey"]').forEach(x => { if (x !== t) x.value = t.value; });
+    document.querySelectorAll('[data-action="aifb-load-models"]').forEach(b => { b.disabled = !aiState.apiKey || aiState.loadingModels; });
+    return true;
+  }
+  if (app.activeTab === 'discuss' && t.matches('[data-action="discuss-text"]')) {
+    const qEl = t.closest('.discuss-q'); const id = +qEl.dataset.did; const st = discussState[id];
+    const wasStale = isStale(st);
+    st.text = t.value; st.confirmClear = false; aiSaveStore();
+    const run = qs('[data-action="discuss-feedback"]', qEl);
+    if (run) { const dis = st.loading || !st.text.trim(); run.disabled = dis; run.className = run.className.replace(/border-gray-200 text-gray-300 cursor-not-allowed|border-black bg-black text-white hover:bg-white hover:text-black/, dis ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'); }
+    const clr = qs('[data-action="aifb-clear-ask"]', qEl); if (clr) clr.disabled = !st.text.trim() && !st.feedback;
+    if (isStale(st) !== wasStale) { const w = qs('[data-aifb-fb]', qEl); if (w) w.innerHTML = feedbackHTML(st, id); }
+    return true;
+  }
+  return false;
+}
+function aiHandleChange(t) {
+  const k = t.dataset.aiField; if (!k) return;
+  if (k === 'provider') { aiState.provider = t.value; aiState.model = modelList()[0]; aiState.modelsError = null; aiRepaintKeyFields(); }
+  else if (k === 'model') { aiState.model = t.value; aiRepaintKeyFields(); }
+  else if (k === 'apiKey') { paint(); }   // 키 입력이 끝나면 글쓰기 칸 기본 펼침 등 반영
+}
+
+function markedTextHTML(text, reds, oranges) {
+  const spans = reds.filter(r => r.start !== -1).concat(oranges.filter(o => o.start !== -1)).sort((a, b) => a.start - b.start);
+  let out = '', pos = 0;
+  spans.forEach(s => {
+    if (s.start < pos) return;
+    out += esc(text.slice(pos, s.start));
+    const orig = esc(text.slice(s.start, s.end));
+    if (s.color === 'r') {
+      out += `<del class="m-del">${orig}</del> <span class="m-ins">${esc(s.corrected)}</span><span class="n r">${numMark(s.num)}</span>` + s.extra.map(x => `<span class="n o">${numMark(x)}</span>`).join('');
+    } else {
+      out += `<span class="m-sug">${orig}</span><span class="n o">${numMark(s.num)}</span>`;
+    }
+    pos = s.end;
+  });
+  out += esc(text.slice(pos));
+  return out;
+}
+
+function cardHTML(it, mode, showEn) {
+  const T = uiOf(mode);
+  const isR = it.color === 'r';
+  const to = isR ? it.corrected : it.suggested;
+  const tagEn = FEEDBACK_CONFIG.TAG_LABEL_EN[it.tag] || it.tag;
+  const tagHTML = mode === 'A' ? esc(tagEn) : mode === 'B' ? sw(it.tag, tagEn) : esc(it.tag);
+  const word = !isR && it.word && it.word.term ? `<div class="word"><b>${L(mode, 'newWord')}</b> · ${esc(it.word.term)}${it.word.hanja ? `(${esc(it.word.hanja)})` : ''}${it.word.meaning ? `: ${esc(it.word.meaning)}` : ''}</div>` : '';
+  return `<div class="card ${it.color}">
+    <div class="card-h"><span class="n ${it.color}" style="vertical-align:baseline">${numMark(it.num)}</span><span class="chip ${it.color}">${tagHTML}</span><span class="kind">${isR ? L(mode, 'fix') : L(mode, 'sug')}</span></div>
+    <div class="pair">${isR ? `<span class="m-del">${esc(it.original)}</span>` : `<span>${esc(it.original)}</span>`}<span class="arrow">→</span><span class="${isR ? 'to-r' : 'to-o'}">${esc(to)}</span></div>
+    ${it.explanation ? `<p class="exp">${richText(it.explanation)}</p>` : ''}
+    ${showEn && it.explanationEn ? `<p class="en">${richText(it.explanationEn)}</p>` : ''}
+    ${it.example ? `<p class="ex">${L(mode, 'ex')} ${richText(it.example)}</p>` : ''}
+    ${word}
+  </div>`;
+}
+
+function askHTML(mode) {
+  const C = FEEDBACK_CONFIG.CONTACT;
+  const links = [];
+  if (C.email) links.push(`<a href="mailto:${esc(C.email)}">${esc(C.email)}</a>`);
+  if (C.url) links.push(`<a href="${esc(C.url)}" target="_blank" rel="noopener">${esc(C.urlLabel || C.url)}</a>`);
+  return `<div class="ask">${L(mode, 'ask')}${links.length ? `<div style="margin-top:6px">${links.join(' · ')}</div>` : ''}</div>`;
+}
+
+function feedbackHTML(st, id) {
+  const curMode = modeOf();
+  if (st.loading) return `<div class="loading">${L(curMode, 'loading')}</div>`;
+  const errBox = errHTML(curMode, 'feedbackFail', st.error);
+  const fb = st.feedback; if (!fb) return errBox;
+  const mode = fb.mode, T = uiOf(mode);
+  const showEn = mode === 'B' && (st.showEn === null ? effLang() === 'en' : st.showEn);   // 영어 메뉴면 번역 펼침이 기본
+  const en = (v) => (showEn && v ? `<p class="en">${richText(v)}</p>` : '');
+  const src = st.feedbackFor;
+  const { reds, oranges } = layoutFeedback(src, fb);
+  const rel = fb.relevance;
+  const relHTML = rel.status === 'on'
+    ? `<div class="rel on"><p>✓ ${L(mode, 'relOn')}</p></div>`
+    : `<div class="rel ${rel.status}"><span class="fb-label">${(rel.status === 'off' ? L(mode, 'relOff') : L(mode, 'relPartial'))}</span>${rel.comment ? `<p>${richText(rel.comment)}</p>` : ''}${en(rel.commentEn)}${rel.modelAnswer ? `<div class="model"><span class="fb-label">${L(mode, 'model')}</span>${richText(rel.modelAnswer)}${rel.modelAnswerEn && (mode === 'A' || showEn) ? `<p class="en">${richText(rel.modelAnswerEn)}</p>` : ''}</div>` : ''}</div>`;
+  const none = !reds.length && !oranges.length;
+  const body = none
+    ? `<p class="status">${L(mode, 'none')}</p>`
+    : `<div class="fb-sec"><span class="fb-label">${(isStale(st) ? L(mode, 'oldText') : L(mode, 'myText'))}</span><div class="text">${markedTextHTML(src, reds, oranges)}</div>
+        <div class="legend"><span><span class="m-del">${L(mode, 'legendRed')}</span></span><span><span class="m-sug">${L(mode, 'legendOrange')}</span></span></div></div>
+      <div class="fb-sec"><span class="fb-label">${L(mode, 'wrong')}</span>${reds.length ? reds.map(r => cardHTML(r, mode, showEn)).join('') : `<p class="status">${L(mode, 'noWrong')}</p>`}</div>
+      ${oranges.length ? `<div class="fb-sec"><span class="fb-label">${L(mode, 'better')}</span>${oranges.map(o => cardHTML(o, mode, showEn)).join('')}</div>` : ''}`;
+  const engBtn = mode === 'B' ? `<button type="button" class="slim eng${showEn ? ' on' : ''}" data-action="aifb-toggle-en" aria-pressed="${showEn}">ENG</button>` : '';
+  return `${errBox}<div class="fb fb-${mode}"><div class="fb-top"><h3>${L(mode, 'title')}</h3>${engBtn}</div>
+    ${isStale(st) ? `<div class="stale">${L(mode, 'stale')}</div>` : ''}
+    ${relHTML}
+    ${fb.praise ? `<div class="fb-sec"><span class="fb-label">${L(mode, 'praise')}</span><div class="praise">${richText(fb.praise)}${en(fb.praiseEn)}</div></div>` : ''}
+    ${body}
+    ${askHTML(mode)}
+  </div>`;
+}
         const hanjaBtn = (action, isShowing, extra) => `<button type="button" data-action="${action}" class="inline-flex items-center gap-0.5 text-[9px] font-normal text-gray-300 hover:text-gray-500 font-sans transition-colors cursor-pointer border-none p-0 bg-transparent tracking-widest uppercase ${extra || ''}">\ud55c\uc790<svg viewBox="0 0 24 24" fill="currentColor" class="w-2 h-2 opacity-70 transition-transform duration-200 ${isShowing ? 'rotate-180' : ''}"><path d="M7 10l5 5 5-5z"/></svg></button>`;
         const transBtn = (action, isShowing, extra) =>
             `<button type="button" data-action="${action}" class="inline-flex items-center gap-1 text-[8px] font-bold font-sans uppercase tracking-widest text-gray-500 opacity-40 hover:opacity-100 transition-opacity cursor-pointer border-none p-0 bg-transparent ${extra || ''}">${svgIcon('externalLink', 'w-2.5 h-2.5')}${isShowing ? 'Hide Eng' : 'Eng'}</button>`;
@@ -643,7 +1366,7 @@ body.pw-printing #print-root{display:block}
 
         // ---------- 3. 전역 상태 ----------
         const app = { activeTab: 'home', userLevel: 'B2+', showVocab: false, headerExpanded: true };
-        const reading = { activeId: 1, highlightMode: false, color: 'yellow', highlights: {}, trans: {}, showDict: false, dictTerm: '', dictResult: null, dictLoading: false };
+        const reading = { activeId: 1, highlightMode: false, color: 'yellow', highlights: {}, trans: {}, showDict: false, dictTerm: '', dictResult: null, dictLoading: false, dictError: null };
         const vocabState = { query: '', globalTrans: false, itemTrans: {}, itemHanja: {} };
         const quizState = { attempts: {}, shuffled: ANSWER_CHOICES.slice(), q: {} };
         const discussState = {};
@@ -820,7 +1543,7 @@ body.pw-printing #print-root{display:block}
         function readingHeaderRightHTML() {
             const colorBtns = reading.highlightMode ? `<div class="flex items-center gap-2 pl-2 border-l border-gray-200 animate-fade-in"><button type="button" data-hcolor="yellow" class="w-3 h-3 rounded-full bg-yellow-300 ring-1 ring-gray-200 ${reading.color === 'yellow' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="red" class="w-3 h-3 rounded-full bg-red-300 ring-1 ring-gray-200 ${reading.color === 'red' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="green" class="w-3 h-3 rounded-full bg-green-300 ring-1 ring-gray-200 ${reading.color === 'green' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="eraser" class="text-gray-400 hover:text-black ${reading.color === 'eraser' ? 'text-black' : ''}">${svgIcon('eraser', 'w-4 h-4', { fill: 'currentColor' })}</button></div>` : '';
             const hex = reading.highlightMode ? (reading.color === 'yellow' ? '#facc15' : reading.color === 'red' ? '#f87171' : reading.color === 'green' ? '#4ade80' : '#9ca3af') : 'currentColor';
-            const dictPanel = reading.showDict ? `<div class="absolute top-full right-0 mt-4 w-80 bg-white border border-gray-200 shadow-xl p-5 rounded-lg z-50 animate-fade-in font-sans"><div class="flex justify-between items-center mb-3"><h3 class="text-sm font-bold text-gray-900">AI 문맥 사전 <span class="font-normal text-xs text-gray-500">(AI Context Dictionary)</span></h3><button type="button" data-action="dict-close" class="text-gray-400 hover:text-gray-600">${svgIcon('close', 'w-4 h-4')}</button></div><form data-action="dict-search" class="flex gap-2 mb-4"><input type="text" id="dict-input" value="${esc(reading.dictTerm)}" placeholder="단어를 입력하세요..." class="flex-1 min-w-0 bg-gray-50 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500" /><button type="submit" class="bg-black text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-800 shrink-0 whitespace-nowrap">검색</button></form>${reading.dictLoading ? '<div class="flex justify-center py-6"><div class="animate-spin rounded-full h-6 w-6 border-2 border-gray-200 border-t-blue-600"></div></div>' : reading.dictResult ? `<div class="space-y-3 animate-fade-in"><h3 class="text-lg font-bold text-gray-900 font-serif">${esc(reading.dictResult.term)}</h3><div class="text-sm text-gray-800 leading-relaxed font-serif border-l-2 border-blue-500 pl-3">${esc(reading.dictResult.definition)}</div>${reading.dictResult.example ? `<div class="pt-3 mt-3 border-t border-gray-100 bg-gray-50 p-3 rounded"><p class="text-xs font-bold text-gray-500 mb-1 font-sans uppercase">Example</p><p class="text-sm text-gray-800 font-serif">${esc(reading.dictResult.example)}</p></div>` : ''}</div>` : `<p class="text-xs text-gray-400 text-center py-4 leading-relaxed">본문의 내용을 바탕으로 단어를 설명해드립니다.<br/>현재 Gemini 웹에서만 가능합니다. <a href="https://gemini.google.com/share/d2347dbc1c24" target="_blank" rel="noreferrer" class="underline hover:text-black inline-flex items-center gap-1">Gemini에서 열기 ${svgIcon('externalLink', 'w-3 h-3')}</a></p>`}</div>` : '';
+            const dictPanel = reading.showDict ? `<div class="absolute top-full right-0 mt-4 w-80 bg-white border border-gray-200 shadow-xl p-5 rounded-lg z-50 animate-fade-in font-sans"><div class="flex justify-between items-center mb-3"><h3 class="text-sm font-bold text-gray-900">AI 문맥 사전 <span class="font-normal text-xs text-gray-500">(AI Context Dictionary)</span></h3><button type="button" data-action="dict-close" class="text-gray-400 hover:text-gray-600">${svgIcon('close', 'w-4 h-4')}</button></div><form data-action="dict-search" class="flex gap-2 mb-4"><input type="text" id="dict-input" value="${esc(reading.dictTerm)}" placeholder="단어를 입력하세요..." class="flex-1 min-w-0 bg-gray-50 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500" /><button type="submit" class="bg-black text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-800 shrink-0 whitespace-nowrap">검색</button></form>${reading.dictLoading ? '<div class="flex justify-center py-6"><div class="animate-spin rounded-full h-6 w-6 border-2 border-gray-200 border-t-blue-600"></div></div>' : reading.dictError ? `<div class="aifb aifb-dict">${errHTML(modeOf(), 'dictFail', reading.dictError)}</div>` : reading.dictResult ? `<div class="space-y-3 animate-fade-in"><h3 class="text-lg font-bold text-gray-900 font-serif">${esc(reading.dictResult.term)}</h3><div class="text-sm text-gray-800 leading-relaxed font-serif border-l-2 border-blue-500 pl-3">${esc(reading.dictResult.definition)}</div>${reading.dictResult.example ? `<div class="pt-3 mt-3 border-t border-gray-100 bg-gray-50 p-3 rounded"><p class="text-xs font-bold text-gray-500 mb-1 font-sans uppercase">Example</p><p class="text-sm text-gray-800 font-serif">${esc(reading.dictResult.example)}</p></div>` : ''}</div>` : (aiState.apiKey ? `<p class="text-xs text-gray-400 text-center py-4 leading-relaxed">${biBlock('본문의 내용을 바탕으로 단어를 설명해 드려요.', 'Explains words based on the reading.')}</p>` : `<div class="aifb aifb-dict"><p class="aifb-kbt">${biBlock('AI 사전을 쓰려면 API 키가 필요해요.', 'You need an API key to use the AI dictionary.')}</p>${keyFieldsHTML()}</div>`)}</div>` : '';
             return `<div class="flex items-center gap-4"><div class="flex items-center gap-2"><button type="button" data-action="toggle-highlight" class="p-1 ${reading.highlightMode ? 'text-black' : 'text-gray-300 hover:text-gray-500'}">${svgIcon('highlighter', 'w-5 h-5', { style: `color:${hex}` })}</button>${colorBtns}</div><div class="w-px h-3 bg-gray-200"></div><div class="relative"><button type="button" data-action="toggle-dict" class="flex items-center gap-2 text-xs font-bold font-sans uppercase tracking-wider transition-colors ${reading.showDict ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}">${svgIcon('search', 'w-4 h-4')}<span>사전</span></button>${dictPanel}</div><div class="w-px h-3 bg-gray-200"></div><button type="button" data-action="toggle-vocab" class="flex items-center gap-2 text-xs font-bold font-sans uppercase ${app.showVocab ? 'text-black' : 'text-gray-400 hover:text-gray-600'}">${svgIcon('openbook', 'w-4 h-4')} <span>어휘 목록</span></button></div>`;
         }
         function readingHTML() {
@@ -970,18 +1693,12 @@ body.pw-printing #print-root{display:block}
 
         // ---------- 11. DISCUSS ----------
         function discussItemHTML(item) {
-            const st = discussState[item.id] || (discussState[item.id] = { text: '', showTrans: false, feedback: null, loading: false, fbTrans: false });
+            const st = discussState[item.id] || (discussState[item.id] = newDiscussSt());
             const vocab = item.vocab.map(v => `<div><p class="text-sm font-serif text-gray-700"><span class="font-bold text-black mr-2">${esc(v.term)}</span>${esc(v.def)}</p>${st.showTrans ? `<p class="text-[13px] font-sans text-gray-500 mt-1 animate-fade-in"><span class="font-bold mr-2">${esc(v.termEng)}</span>${esc(v.defEng)}</p>` : ''}</div>`).join('');
-            let fb = '';
-            if (st.feedback) {
-                const corr = (st.feedback.corrections || []).map(c => `<div class="border border-gray-100 p-5 bg-white"><div class="flex items-start gap-4 mb-3"><span class="shrink-0 text-[11px] font-bold px-2 py-0.5 bg-gray-100 text-gray-400 mt-0.5">수정 전</span><p class="text-[15px] font-serif text-gray-400 line-through leading-relaxed">${esc(c.original)}</p></div><div class="flex items-start gap-4 mb-5"><span class="shrink-0 text-[11px] font-bold px-2 py-0.5 bg-blue-50 text-blue-600 mt-0.5">수정 후</span><p class="text-[15px] font-serif text-gray-900 font-bold leading-relaxed">${esc(c.corrected)}</p></div><div class="pt-4 border-t border-gray-100 border-dashed"><span class="font-bold text-gray-400 text-[11px] mr-2 font-sans">💡 설명</span><span class="text-[14px] font-serif text-gray-700 leading-relaxed">${esc(c.explanation)}</span>${st.fbTrans ? `<p class="text-[13px] font-sans text-gray-500 mt-2 ml-6 animate-fade-in">${esc(c.explanationTrans)}</p>` : ''}</div></div>`).join('');
-                fb = `<div class="mt-8 border border-gray-100 rounded-sm p-6 bg-white animate-fade-in shadow-sm"><h4 class="text-lg font-bold font-serif flex items-center gap-2 mb-6 text-gray-900">${svgIcon('sparkles', 'w-5 h-5 text-gray-700', { fill: 'currentColor' })} AI 한국어 도우미</h4><div class="bg-gray-50 px-5 py-4 mb-8 border-l-[3px] border-gray-800"><span class="text-xs font-bold text-gray-500 mb-2 block font-sans">총평 및 잘한 점</span><p class="text-[15px] font-serif text-gray-800 leading-relaxed">${esc(st.feedback.overallComment)}</p>${st.fbTrans && st.feedback.overallCommentTrans ? `<p class="text-[13px] font-sans text-gray-500 mt-2 pt-2 border-t border-gray-200 animate-fade-in">${esc(st.feedback.overallCommentTrans)}</p>` : ''}</div>${corr ? `<h5 class="text-xs font-bold text-gray-500 mb-4 font-sans">문장별 교정 및 설명</h5><div class="space-y-6">${corr}</div>` : ''}<div class="flex justify-end mt-4">${transBtn('discuss-fbtrans', st.fbTrans)}</div></div>`;
-            }
-            const disabled = (!st.text.trim() || st.loading);
-            return `<div class="discuss-q mb-16 group" data-did="${item.id}"><div class="flex items-center gap-4 mb-6"><span class="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900">${String(item.id).padStart(2, '0')}</span><h3 class="text-xl font-serif font-bold text-gray-900 leading-normal">${esc(item.questionKor)}</h3></div><div class="pl-0 md:pl-14">${st.showTrans ? `<p class="text-sm font-sans text-gray-500 mb-5 animate-fade-in">${esc(item.questionEng)}</p>` : ''}${(item.sub||[]).length ? `<ul class="mb-4 space-y-2.5 list-none pl-0">${item.sub.map((sq, si) => `<li class="dq-sub flex gap-2 font-serif"><span class="dq-num shrink-0 font-sans">${item.id}-${si + 1}</span><span>${esc(sq)}${st.showTrans && item.subEng && item.subEng[si] ? `<span class="dq-eng block font-sans text-gray-400 mt-1 animate-fade-in">${esc(item.subEng[si])}</span>` : ''}</span></li>`).join('')}</ul>` : ''}<div class="flex justify-end mb-5">${transBtn('discuss-qtrans', st.showTrans)}</div><div class="bg-gray-50 p-5 mb-6 border-l-2 border-black"><span class="text-xs font-bold font-sans text-gray-400 uppercase mb-3 block">핵심 어휘${st.showTrans ? ' <span class="font-normal normal-case ml-1">(Key Vocabulary)</span>' : ''}</span><div class="space-y-4">${vocab}</div></div><textarea data-action="discuss-text" placeholder="여기에 생각을 적어보세요..." class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea><div class="flex justify-end"><button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '<div class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>' : ''}AI 피드백 받기</button></div>${fb}</div></div>`;
+            return `<div class="discuss-q mb-16 group" data-did="${item.id}"><div class="flex items-center gap-4 mb-6"><span class="text-4xl font-serif font-bold text-gray-200 transition-colors duration-300 group-hover:text-gray-900">${String(item.id).padStart(2, '0')}</span><h3 class="text-xl font-serif font-bold text-gray-900 leading-normal">${esc(item.questionKor)}</h3></div><div class="pl-0 md:pl-14">${st.showTrans ? `<p class="text-sm font-sans text-gray-500 mb-5 animate-fade-in">${esc(item.questionEng)}</p>` : ''}${(item.sub||[]).length ? `<ul class="mb-4 space-y-2.5 list-none pl-0">${item.sub.map((sq, si) => `<li class="dq-sub flex gap-2 font-serif"><span class="dq-num shrink-0 font-sans">${item.id}-${si + 1}</span><span>${esc(sq)}${st.showTrans && item.subEng && item.subEng[si] ? `<span class="dq-eng block font-sans text-gray-400 mt-1 animate-fade-in">${esc(item.subEng[si])}</span>` : ''}</span></li>`).join('')}</ul>` : ''}<div class="flex justify-end mb-5">${transBtn('discuss-qtrans', st.showTrans)}</div><div class="bg-gray-50 p-5 mb-6 border-l-2 border-black"><span class="text-xs font-bold font-sans text-gray-400 uppercase mb-3 block">핵심 어휘${st.showTrans ? ' <span class="font-normal normal-case ml-1">(Key Vocabulary)</span>' : ''}</span><div class="space-y-4">${vocab}</div></div>${aiWriteHTML(item, st)}</div></div>`;
         }
         function discussHTML() {
-            return `<div class="max-w-3xl mx-auto w-full px-6 pt-40 pb-20 animate-fade-in"><div class="mb-6 pb-6 text-center"><h2 class="text-[32px] md:text-[36px] font-serif font-bold text-[#1a1a1a] mb-2">생각해 보기</h2><p class="text-sm font-sans text-gray-500">학습 자료에 대해 심층적으로 생각해 보세요.</p></div><div class="bg-gray-50 border border-gray-200 p-4 mb-10 flex items-start gap-3"><div class="shrink-0 mt-0.5">${svgIcon('sparkles', 'w-4 h-4 text-gray-400', { fill: 'currentColor' })}</div><p class="text-xs font-sans text-gray-600 leading-relaxed">AI 피드백은 현재 Gemini 웹에서만 가능합니다. <a href="https://gemini.google.com/share/d2347dbc1c24" target="_blank" rel="noreferrer" class="underline decoration-gray-400 underline-offset-2 hover:text-black inline-flex items-center gap-1">Gemini에서 열기 ${svgIcon('externalLink', 'w-3 h-3')}</a></p></div><div id="discuss-list">${DISCUSS_DATA.map(discussItemHTML).join('')}</div></div>`;
+            return `<div class="max-w-3xl mx-auto w-full px-6 pt-40 pb-20 animate-fade-in"><div class="mb-6 pb-6 text-center"><h2 class="text-[32px] md:text-[36px] font-serif font-bold text-[#1a1a1a] mb-2">생각해 보기</h2><p class="text-sm font-sans text-gray-500">학습 자료에 대해 심층적으로 생각해 보세요.</p></div>${aiTopHTML()}<div id="discuss-list">${DISCUSS_DATA.map(discussItemHTML).join('')}</div></div>`;
         }
         function rerenderDiscussItem(id) { const el = qs(`.discuss-q[data-did="${id}"]`, viewRoot()); if (el) el.outerHTML = discussItemHTML(DISCUSS_DATA.find(d => d.id === id)); }
 
@@ -1096,6 +1813,7 @@ body.pw-printing #print-root{display:block}
             const hdr = e.target.closest('[data-action="toggle-header"]'); if (hdr) { app.headerExpanded = !app.headerExpanded; buildApp(); return; }
             if (e.target.closest('[data-action="print-open"]')) { pwOpenModal(); return; }
             const a = e.target.closest('[data-action]');
+            if (a && aiHandleClick(a)) return;
             const tab = app.activeTab;
 
             if (tab === 'reading') {
@@ -1145,7 +1863,7 @@ body.pw-printing #print-root{display:block}
                 const btn = e.target.closest('[data-q]'); if (!btn) return;
                 const qEl = btn.closest('.quiz-q'); const qid = +qEl.dataset.qid; const quiz = QUIZ_LIST.find(q => q.id === qid); const st = quizState.q[qid];
                 const inp = qs('.quiz-input', qEl); if (inp) st.input = inp.value;
-                if (btn.dataset.q === 'check') { const t = st.input.trim(); const ok = t === quiz.answer || (quiz.altAnswer && t === quiz.altAnswer); st.result = ok ? 'correct' : 'incorrect'; st.hint = false; if (!quizState.attempts.hasOwnProperty(qid)) quizState.attempts[qid] = ok; shuffleChoices(); rerenderQuizQ(qid); refreshQuizSidebar(); }
+                if (btn.dataset.q === 'check') { const t = st.input.trim(); const ok = [quiz.answer].concat(quiz.altAnswers || [], quiz.altAnswer ? [quiz.altAnswer] : []).indexOf(t) !== -1; st.result = ok ? 'correct' : 'incorrect'; st.hint = false; if (!quizState.attempts.hasOwnProperty(qid)) quizState.attempts[qid] = ok; shuffleChoices(); rerenderQuizQ(qid); refreshQuizSidebar(); }
                 else if (btn.dataset.q === 'show') { st.input = quiz.answer; st.result = null; st.hint = false; shuffleChoices(); rerenderQuizQ(qid); refreshQuizSidebar(); }
                 else if (btn.dataset.q === 'hint') { st.hint = !st.hint; rerenderQuizQ(qid); }
                 else if (btn.dataset.q === 'hint-verb') { st.hintVerb = !st.hintVerb; rerenderQuizQ(qid); }
@@ -1176,24 +1894,23 @@ body.pw-printing #print-root{display:block}
             else if ((e.key === 't' || e.key === 'T') && fc.flipped) { fc.showTrans = !fc.showTrans; fcApplyFlip(); }
         });
         appEl.addEventListener('input', (e) => {
+            if (aiHandleInput(e.target)) return;
             const tab = app.activeTab;
             if (tab === 'vocab' && e.target.id === 'vocab-search') { vocabState.query = e.target.value; vocabState.itemTrans = {}; refreshVocabGrid(); }
             else if (tab === 'quiz' && e.target.classList.contains('quiz-input')) { const qid = +e.target.closest('.quiz-q').dataset.qid; const st = quizState.q[qid]; st.input = e.target.value; st.result = null; }
-            else if (tab === 'discuss' && e.target.matches('[data-action="discuss-text"]')) {
-                const id = +e.target.closest('.discuss-q').dataset.did; const st = discussState[id];
-                const wasDisabled = !st.text.trim(); st.text = e.target.value;
-                if (wasDisabled !== !st.text.trim()) { const pos = e.target.selectionStart; rerenderDiscussItem(id); const ta = qs(`.discuss-q[data-did="${id}"] [data-action="discuss-text"]`, viewRoot()); if (ta) { ta.focus(); try { ta.setSelectionRange(pos, pos); } catch (_) {} } }
-            }
         });
+
+        appEl.addEventListener('change', (e) => { aiHandleChange(e.target); });
 
         appEl.addEventListener('submit', async (e) => {
             const form = e.target.closest('[data-action="dict-search"]'); if (!form) return;
             e.preventDefault();
             const inp = qs('#dict-input', viewRoot()); reading.dictTerm = inp ? inp.value : '';
             if (!reading.dictTerm.trim()) return;
-            reading.dictLoading = true; reading.dictResult = null; paint();
-            try { reading.dictResult = await getAIDictionaryData(reading.dictTerm, currentReading().content); }
-            catch (err) { reading.dictResult = { term: reading.dictTerm, definition: '검색 중 오류가 발생했습니다. (API 키 없음/요청 오류)', example: '' }; }
+            if (!aiState.apiKey) { reading.dictResult = null; reading.dictError = null; paint(); return; }
+            reading.dictLoading = true; reading.dictResult = null; reading.dictError = null; paint();
+            try { reading.dictResult = await getAIDictionaryData(reading.dictTerm); }
+            catch (err) { reading.dictError = err && err.code ? err : AppError('format'); }
             finally { reading.dictLoading = false; paint(); }
         });
 
@@ -1236,20 +1953,8 @@ body.pw-printing #print-root{display:block}
             rerenderReadingBlocks();
         }
 
-        async function runDiscussFeedback(id) {
-            const st = discussState[id]; if (!st.text.trim() || st.loading) return;
-            st.loading = true; st.feedback = null; rerenderDiscussItem(id);
-            try {
-                const prompt = `당신은 친절한 'AI 한국어 도우미'입니다. 학습자의 한국어 문장을 교정하고 설명하세요. 반드시 JSON으로만 응답하세요. 형식: {"overallComment":"","overallCommentTrans":"","corrections":[{"original":"","corrected":"","explanation":"","explanationTrans":""}]}`;
-                const payload = { contents: [{ role: 'user', parts: [{ text: prompt + `\n\n질문: ${DISCUSS_DATA.find(d => d.id === id).questionKor}\n학습자 작성 문장: ${st.text}` }] }], generationConfig: { responseMimeType: 'application/json' } };
-                const result = await callGeminiWithBackoff(payload);
-                let jt = result.candidates[0].content.parts[0].text; jt = jt.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-                st.feedback = JSON.parse(jt);
-            } catch (err) { st.feedback = { overallComment: '피드백을 받아오는 중 오류가 발생했습니다. (API 키가 없거나 요청 형식 오류)', overallCommentTrans: err.message, corrections: [] }; }
-            finally { st.loading = false; rerenderDiscussItem(id); }
-        }
-
         // ---------- 13. 시작 ----------
+        aiLoadStore();
         buildApp();
     })();
     </script>
