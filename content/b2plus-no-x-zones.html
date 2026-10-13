@@ -339,6 +339,11 @@ body.pw-printing #print-root{display:block}
         .aifb .fb{ border:1px solid var(--ai-line); padding:24px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.04); }
         .aifb .fb-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
         .aifb .fb-top h3{ font-family:'Noto Serif KR',serif; font-size:18px; font-weight:700; margin:0; }
+        .aifb .fb-tools{ display:flex; align-items:center; gap:14px; }
+        .aifb-tool{ display:inline-flex; align-items:center; gap:5px; background:none; border:0; padding:2px 0; font:inherit; font-size:12px; color:var(--ai-muted); cursor:pointer; }
+        .aifb-tool:hover{ color:#111; }
+        .aifb-tool svg{ width:15px; height:15px; }
+        @media print{ .aifb .fb-tools{ display:none !important; } }
         .aifb .eng{ font-size:11px; letter-spacing:.08em; padding:5px 10px; border:1px solid #d1d5db; background:#fff; color:var(--ai-muted); cursor:pointer; }
         .aifb .eng.on{ background:#111; color:#fff; border-color:#111; }
         .aifb .en{ font-size:13px; color:var(--ai-muted); margin:4px 0 0; }
@@ -405,7 +410,7 @@ body.pw-printing #print-root{display:block}
             gemini: {
                 label: 'Google Gemini', keySite: 'Google AI Studio',
                 keyHint: 'Google AI Studio에서 무료로 발급', keyHintEn: 'Free key from Google AI Studio',
-                models: ['gemini-3.6-flash', 'gemini-3.8-flash', 'gemini-3.5-flash-lite'],
+                models: ['gemini-3.8-flash', 'gemini-3.6-flash', 'gemini-3.5-flash-lite'],
                 request: (model, key, sys, user) => ({
                     url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,
                     headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
@@ -449,13 +454,15 @@ body.pw-printing #print-root{display:block}
             MODE_BY_LEVEL: { 'A1': 'A', 'A1+': 'A', 'A2': 'A', 'A2+': 'A', 'B1': 'B', 'B1+': 'B', 'B2': 'B', 'B2+': 'C', 'C1': 'C', 'C1+': 'C', 'C2': 'C' },
             EXPLAIN_LEVEL: { 'B1': 'A2+', 'B1+': 'B1', 'B2': 'B1', 'B2+': 'B1+', 'C1': 'B2', 'C1+': 'B2', 'C2': 'B2' },
             MAX_SUGGESTIONS: { A: 1, B: 2, C: 3 },
-            RED_TAGS: ['맞춤법', '오타', '띄어쓰기', '조사', '활용', '문법', '주어·서술어 호응', '단어 조합', '문맥상 어색한 표현', '문체', '빠진 말'],
-            ORANGE_TAGS: { A: ['더 좋은 표현'], B: ['더 좋은 표현', '일관성'], C: ['더 좋은 표현', '일관성', '고급 표현', '대체 표현', '문어체'] },
+            RED_TAGS: ['맞춤법', '오타', '띄어쓰기', '조사', '활용', '문법', '시제', '주어·서술어 호응', '단어 조합', '단어 선택', '연결 표현', '불필요한 반복', '문맥상 어색한 표현', '문체', '빠진 말'],
+            // C 모드 주황 태그: 선생님 첨삭 기준(2025 범례: 더 좋은 표현 / 다른 글쓰기 스타일 / 의도에 따라 달라지는 표현)에서 정리
+            ORANGE_TAGS: { A: ['더 좋은 표현'], B: ['더 좋은 표현', '일관성'], C: ['더 좋은 표현', '정확한 어휘', '고급 표현', '문어체', '번역투', '일관성', '논리 연결', '대체 표현', '다른 글쓰기 스타일', '의도에 따라 달라요'] },
             RED_FALLBACK_TAG: '문법', ORANGE_FALLBACK_TAG: '더 좋은 표현',
             TAG_LABEL_EN: {
                 '맞춤법': 'Spelling', '오타': 'Typo', '띄어쓰기': 'Spacing', '조사': 'Wrong 이/가 · 을/를 · 에 …', '활용': 'Word form',
                 '문법': 'Grammar', '주어·서술어 호응': "Parts don't match", '단어 조합': "Words that don't go together", '문맥상 어색한 표현': "Doesn't fit here",
-                '문체': 'Mixed speech styles', '빠진 말': 'Missing word', '더 좋은 표현': 'More natural', '일관성': 'Consistency'
+                '문체': 'Mixed speech styles', '빠진 말': 'Missing word', '더 좋은 표현': 'More natural', '일관성': 'Consistency',
+                '시제': 'Time form', '단어 선택': 'Wrong word here', '연결 표현': 'Linking word', '불필요한 반복': 'Repeated words'
             },
             // 나중에 채우면 '선생님께 물어보세요' 안내 아래에 자동 표시
             CONTACT: { email: '', url: '', urlLabel: '' }
@@ -769,7 +776,7 @@ const UI_TEXT = {
     legendRed: '틀린 부분', legendOrange: '더 좋은 표현 제안', wrong: '틀린 부분', noWrong: '틀린 부분은 없어요.', better: '더 좋은 표현',
     none: '수정할 부분이 없어요. 아주 잘 썼어요!', fix: '수정', sug: '제안', ex: '예', newWord: '새 어휘',
     stale: "글을 고쳤어요. 아래 첨삭은 이전 글에 대한 것이에요. 고친 글로 다시 받으려면 'AI 피드백 받기'를 누르세요.",
-    ask: 'AI의 첨삭은 정확하지 않을 수 있어요. 왜 고쳤는지 헷갈리거나 AI가 잘못 고쳤다고 생각하면 한국어 수업 시간에 꼭 선생님께 물어보세요.',
+    ask: "AI의 첨삭은 정확하지 않을 수 있어요. 특히 '더 좋은 표현'(주황색)은 정답이 하나가 아니라서, 사람이나 AI에 따라 다르게 제안할 수 있어요. 왜 고쳤는지 헷갈리거나, AI가 잘못 고쳤다고 생각하거나, 제안을 더 자세히 알고 싶으면 글쓰기 수업을 통해 선생님께 물어보세요.",
     loading: 'AI가 글을 읽고 있어요…'
   },
   en: {
@@ -778,7 +785,7 @@ const UI_TEXT = {
     legendRed: 'mistake', legendOrange: 'a more natural way', wrong: 'Mistakes', noWrong: 'No mistakes found.', better: 'A more natural way to say it',
     none: 'Nothing to fix. Great job!', fix: 'Fix', sug: 'Tip', ex: 'e.g.', newWord: 'New word',
     stale: "You changed your writing. The feedback below is for the earlier version. Press 'AI 피드백 받기' to check the new version.",
-    ask: "AI feedback is not always right. If you're not sure why something was changed, or you think the AI made a mistake, please ask your teacher in Korean class.",
+    ask: "AI feedback is not always right. The 'more natural way' suggestions (orange) in particular have no single right answer, so people and AIs may suggest different things. If you're not sure why something was changed, think the AI made a mistake, or want to know more about a suggestion, please ask your teacher in your writing class.",
     loading: 'The AI is reading your writing…'
   }
 };
@@ -883,9 +890,18 @@ const COMMON_RULES = (mode, level) => `[공통 규칙]
 - 같은 오류가 여러 번 나오면 각각 따로 씁니다.
 - 학습자의 주장이나 내용은 바꾸지 않고, 표현만 고칩니다. 글 전체를 다시 쓰지 않습니다.
 - 틀리지 않은 것을 틀렸다고 하지 않습니다. 틀린 곳이 없으면 corrections는 빈 배열, 제안할 것이 없으면 suggestions는 빈 배열입니다.
-- 종결어미(-다, -어요/-아요, -ㅂ니다/-습니다, 반말)는 무엇을 골랐는지 지적하지 않습니다. 단, 한 글 안에서 서로 섞여 있으면 corrections에 tag "문체"로 지적하고, "어느 것을 써도 괜찮지만 한 글에서는 하나로 맞춰 쓰라"는 뜻을 설명합니다.
+- 종결어미(-다, -어요/-아요, -ㅂ니다/-습니다, 반말)는 무엇을 골랐는지 지적하지 않습니다.
+- 학습자 글에서 가장 많이 쓴 종결어미를 먼저 확인합니다. corrected와 suggested의 문장 끝도 반드시 그 종결어미로 씁니다. 학습자가 '-다'로 썼으면 '-다'로, '-ㅂ니다/-습니다'로 썼으면 '-ㅂ니다/-습니다'로, '-요'로 썼으면 '-요'로 끝냅니다. '-다'를 '-요'로 바꾸는 것처럼 종결어미만 바꾸는 제안은 절대 하지 않습니다.
+- 단, 한 글 안에서 종결어미가 섞여 있으면 corrections에 tag "문체"로 지적하고, 가장 많이 쓴 종결어미로 맞춥니다. 설명에는 "어느 것을 써도 괜찮지만 한 글에서는 하나로 맞춰 쓰라"는 뜻을 씁니다.
+
+[글의 종류에 맞는 제안]
+- 먼저 학습자 글이 주장하는 글(의견을 밝히고 근거를 드는 글)인지, 경험이나 느낌을 나누는 글인지 판단합니다.
+- 주장하는 글에서는 표현을 부드럽게 하거나 주장을 약하게 만드는 제안을 하지 않습니다. 예: '~것 같다', '~수도 있다', '~라고 생각한다'를 덧붙이거나 단정을 흐리게 만드는 제안은 하지 않습니다. 오히려 주장이 더 분명하고 확실하게 드러나는 표현, 근거와 주장의 관계가 명확해지는 연결 표현을 제안합니다. 근거 없이 지나치게 단정한 부분만 예외로 지적할 수 있습니다.
+- 경험이나 느낌을 나누는 글에서는 더 자연스럽고 부드러운 표현을 제안해도 됩니다.
+- 제안은 문장의 뜻과 주장의 강도를 바꾸지 않습니다. 예: '~해서는 안 된다'(그러면 안 된다는 주장)를 '~할 수 없다'(가능하지 않다는 판단)로 바꾸면 뜻이 달라지므로 하지 않습니다.
 - 맞춤법에서 허용하는 띄어쓰기(예: "먹어 봤어요"를 "먹어봤어요"로 붙여 쓴 경우)는 지적하지 않습니다.${mode !== 'C' ? `
 - 띄어쓰기는 띄어쓰기 때문에 뜻이 헷갈리거나 달라지는 경우에만 지적합니다. 뜻에 영향이 없는 사소한 띄어쓰기는 넘어갑니다.` : ''}
+- corrected나 suggested를 학습자 글의 original 자리에 그대로 넣었을 때 앞뒤 말과 자연스럽게 이어져야 합니다. 바로 앞이나 뒤에 이미 있는 말을 corrected·suggested에 다시 쓰지 않습니다. 예: '근본적인 해결책들 중에 하나가'에서 original이 '해결책들 중에 하나가'이면 suggested는 '해결책이'입니다('근본적인 해결책이'가 아님).
 - 이미 corrections에서 고친 부분에 대안을 제시할 때는, suggestions의 original에 고친 표현(corrected)을 그대로 쓰고 그것을 바탕으로 제안합니다.
 
 [질문에 맞는 답인지 확인 — 가장 중요]
@@ -946,22 +962,44 @@ tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 - 학습자가 일부러 그렇게 썼을 수도 있는 경우에는 단정하지 말고 "~을 말하고 싶었다면 ~가 더 자연스러워요"처럼 씁니다.
 - 오타처럼 이유가 분명한 경우에는 explanation을 빈 문자열로 둡니다.
 
-[corrections — 틀린 부분 (빨간색)]
-다음은 모두 찾아서 고칩니다.
-- 맞춤법, 오타, 띄어쓰기, 조사 오류, 활용 오류, 문법 오류
-- 주어와 서술어가 맞지 않는 문장
-- 함께 쓰지 않는 단어 조합 (예: "옷을 쓰다")
-- 문맥상 어색한 표현: 다른 문맥에서는 괜찮아도 이 글의 문맥에서는 어색한 표현
-- 종결어미가 섞인 경우, 꼭 필요한 말이 빠진 경우
+[corrections — 고쳐야 하는 부분 (빨간색)]
+빨간색에는 두 종류가 있습니다. (1) 문법적으로 틀린 것, (2) 문법은 맞지만 이 문맥에서는 틀린 것(어색한 표현). 둘 다 corrections에 씁니다.
+(1) 문법적 오류
+- 맞춤법, 오타, 띄어쓰기, 조사, 활용(예: 힘든다 → 힘들다, 창조적은 → 창조적인), 문법 형태가 섞인 경우(예: -는지 아닌지와 -나를 함께 씀)
+- 주어와 서술어가 맞지 않는 문장. 특히 능동/피동이 맞지 않는 경우(예: 사람들이 누군가를 살인자라고 불리다 → 부르다)
+- 종결어미가 섞인 경우
+(2) 문맥상 어색한 표현 — 선생님 첨삭에서 가장 많이 나오는 순서대로 꼼꼼히 확인합니다.
+- 은/는과 이/가: 문단의 주제인지, 조건절·안긴문장 안의 주어인지, 대조인지에 따라 맞는지 확인합니다. (tag: 조사)
+- 단어 선택: 뜻이 비슷하지만 이 문맥에 맞지 않는 단어. 예: 동기를 악화하다 → 약화하다, 일시성 → 한시성, 교육 방식을 검수하다 → 검토하다, 해를 보다 → 해를 입다 (tag: 단어 선택)
+- 함께 쓰지 않는 단어 조합. 예: 명암을 하다 → 명암을 표현하다, 어떤 일반 물건 → 평범한 물건 (tag: 단어 조합)
+- 시제와 상: 가정하는 상황인데 과거형을 쓴 경우, 일반적인 사실인데 '-은'을 쓴 경우(만족한 → 만족하는) 등 (tag: 시제)
+- '-는 것이다'를 묘사·서술 문장에 쓴 경우. '-는 것이다'는 본질이나 정의를 규정할 때 씁니다. 묘사는 '-ㄴ다'로 끝냅니다. (tag: 문맥상 어색한 표현)
+- 접속어와 연결어미의 논리: 따라서(결과)를 이유가 필요한 자리에 쓴 경우, 약한 대조 '그런데'를 강한 역접 자리에 쓴 경우, '-고'(나열)와 '-며/-아서'(긴밀한 관계·인과)를 잘못 고른 경우, '때'(특정 순간)와 '-면'(일반 조건) (tag: 연결 표현)
+- 영어를 직역한 서술어. 예: 질문이 생기지 못한다 → 질문을 떠올릴 겨를이 없다 (tag: 문맥상 어색한 표현)
+- 불필요한 반복이나 중복. 예: 녹화하기 가능한 → 녹화 가능한 (tag: 불필요한 반복)
+- 능동과 피동: 주어가 그 일을 당하는 쪽이면 피동을 씁니다. 예: 그런 시설이 지방에 잘 갖추면 → 갖춰지면, 결국 약한 사람들만 사회에서 밀어낸다(밀려나는 쪽이 주어) → 밀려난다 (tag: 주어·서술어 호응)
+- 'A가 아니고 B이다'처럼 앞을 부정하고 뒤를 바로잡는 문장은 '-아니라'를 씁니다. 예: 문제는 돈이 아니고 시간이다 → 돈이 아니라 (tag: 연결 표현)
+- 과거와 현재, 이것과 저것을 대조할 때 대조하는 말에 '-은/는'이 빠진 경우. 예: 처음 시작했을 때 어려웠지만 지금은 쉽다 → 시작했을 때는 (tag: 조사)
+- 꼭 필요한 말이 빠진 경우: 글에서 생략하면 안 되는 주어·조사, 가리키는 대상이 분명해야 하는 지시어('이' 배), 무엇의 김이 빠지는지 같은 대상 (tag: 빠진 말)
 tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 
 [suggestions — 틀리지 않았지만 더 좋은 대안 (주황색)]
-- 일관성이 떨어지는 문장이나 표현 (tag: 일관성)
-- 더 분명하거나 자연스럽게 쓸 수 있는 문장 (tag: 더 좋은 표현 / 대체 표현)
-- 문장 구조가 지나치게 구어체인 경우, 글에서는 문어체로 쓸 수 있다고 알려 줍니다 (tag: 문어체). 예: "근데, 되게, 막, 진짜" 같은 말, "거/건/게" 같은 줄인 형태, 말할 때만 쓰는 문장 구조. 종결어미(-다/-요/-니다) 자체는 이 대상이 아닙니다. 가장 대표적인 1~2곳만 제안합니다.
-- 학습 자료 레벨(${level})에 비해 너무 쉬운 표현을 반 단계~한 단계 높은 어휘나 문장 구조로 바꿀 수 있는 경우 (tag: 고급 표현)
-  · 쉬운 표현을 모두 고치지 않습니다. 문맥상 고급 어휘가 자연스럽게 들어갈 수 있을 때만 제안합니다.
-  · 가능하면 [핵심 어휘]나 [본문]에 나온 어휘를 쓰도록 유도하고, explanation에 본문에서 나온 표현이라고 알려 줍니다.
+선생님이 '더 좋은 표현'을 제안하는 기준입니다. 이 기준에 해당할 때만 제안합니다.
+- 문체 일관성 (tag: 문어체): 글의 어조에 비해 지나치게 구어적인 표현을 문어체로 바꿉니다. 예: 인생의 의미가 뭐냐는 → 삶의 의미는 무엇인가라는, 권태를 이기다 → 극복하다, 우리가 알든 모르든 상관없이 → 우리의 인식과 무관하게, 글에서 생략한 조사 살리기. "근데, 되게, 막, 진짜", "거/건/게" 같은 줄인 형태도 해당합니다. 종결어미(-다/-요/-니다) 자체는 대상이 아닙니다. 구어체를 문어체로 바꾸는 제안에만 이 태그를 씁니다.
+- 더 정확한 어휘 (tag: 정확한 어휘): 틀리지는 않았지만 뜻이 더 정확하게 맞는 단어. 예: 기준을 쓰다 → 기준을 적용하다, 공상과 현실의 사이 → 관계, 오랫동안 → 오래전부터(과거부터 지금까지 이어짐), 잘 알고 있다 → 인지하고 있다
+- 고급 표현 (tag: 고급 표현): 같은 뜻을 더 간결하고 글에 맞는 어휘(주로 한자어)나 압축된 구조로 바꿀 수 있을 때. 예: 그림 그리기 → 회화(繪畵), 한쪽이 다른 쪽 없이 생존할 수 없는 관계 → 불가분의 관계, 육체 노동으로 → 노동집약적 산업으로
+  · 레벨(${level})보다 반 단계~한 단계 높은 수준이어야 합니다. 말을 늘이거나 조사·어미만 바꾼 것은 고급 표현이 아닙니다.
+  · 가능하면 [핵심 어휘]나 [본문]에 나온 어휘를 씁니다. explanation에 "본문에서 나온 표현"이라고 쓰는 것은 그 표현이 실제로 [본문]이나 [핵심 어휘]에 있을 때만입니다.
+- 번역투 (tag: 번역투): 영어 구조를 옮긴 듯한 문장. 예: ~ 중에 하나는 ~이다(One of ~ is) → ~ 중에는 ~이 있다, 모양을 가지고 있다 → 모양이다, '-의'가 여러 번 이어지는 구조, 불필요한 피동 → 능동
+- 문장 구조와 일관성 (tag: 일관성): 첫 번째는 / 두 번째 이유는처럼 나열 형식이 다른 경우, 너무 긴 안긴문장의 주어를 바꾸면 쉽게 읽히는 경우
+- 논리 연결 (tag: 논리 연결): 두 사실의 관계를 더 분명하게 보여 주는 표현. 예: 두 사건을 따로 나열(상류층이 늘었고 신흥 부자가 생겼다) → 인과로 연결(신흥 부자들이 생겨나면서 상류층이 확대되었다), 의미가 모호하고 약한 주장(관련이 있다) → 정확한 강도의 주장(영향을 미쳤을 가능성이 있다)
+- 대체 표현 (tag: 대체 표현): 원래 표현도 좋지만 함께 알아 두면 좋은 다른 표현. suggested에 "A / B"처럼 1~2개를 씁니다.
+- 다른 글쓰기 스타일 (tag: 다른 글쓰기 스타일): 문장은 문법적으로 알맞고 자연스럽지만, 다른 전개 방식이 글의 설득력을 높이는 경우. 예: '따라서'로 바로 주장하는 대신 '특히'로 이유나 사례를 먼저 제시하기
+- 의도에 따라 달라요 (tag: 의도에 따라 달라요): 학습자가 무슨 뜻으로 썼는지에 따라 맞는 표현이 다른 경우. explanation에 "~라는 뜻이면 원래 표현이 맞고, ~라는 뜻이면 ~가 더 자연스러워요"처럼 두 해석을 모두 씁니다.
+[주황색 설명 방식]
+- explanation은 원래 표현이 틀리지 않았다는 점을 먼저 인정합니다(예: "틀린 표현은 아니지만"). 그다음 두 표현의 뜻이나 느낌이 어떻게 다른지, 이 문맥에서는 왜 제안한 표현이 더 맞는지 씁니다.
+- 학습자가 일부러 그렇게 썼을 수도 있으면 "특별한 이유가 있어서 그렇게 썼을 수 있지만"처럼 단정하지 않습니다.
+- 쉬운 표현을 모두 고치지 않습니다. 제안할 만한 곳이 없으면 suggestions는 빈 배열입니다.
 - 제안에 새 어휘를 썼으면 word에 그 어휘(term), 한자어이면 한자(hanja), 쉬운 뜻(meaning)을 씁니다. 없으면 모두 빈 문자열입니다.
 - 가장 도움이 되는 순서로 최대 ${FEEDBACK_CONFIG.MAX_SUGGESTIONS.C}개까지만 씁니다.
 tag는 다음 중 하나: ${FEEDBACK_CONFIG.ORANGE_TAGS.C.join(', ')}`
@@ -974,9 +1012,9 @@ const FEW_SHOT = {
   B: `질문: 주말에 뭐 했어요?
 학습자 글: 어제 친구랑 영화를 봤어. 영화가 너무 재미있어서 또 보고 싶어요.
 출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"무엇을 했는지와 어떻게 느꼈는지를 같이 써서 좋아요.","praiseEn":"It's good that you wrote both what you did and how you felt.","corrections":[{"original":"봤어","corrected":"봤어요","tag":"문체","explanation":"반말(-어)과 해요체(-어요)를 같이 썼어요. 어느 쪽을 써도 괜찮지만 한 글에서는 하나로 맞춰 써요.","explanationEn":"You mixed casual speech (-어) and polite speech (-어요). Either one is fine, but use only one in the same piece of writing.","example":""}],"suggestions":[]}`,
-  C: `질문: 배양육이 주류 시장에서 성공할 수 있을까?
-학습자 글: 배양육은 가격이 훨씬 더 비싸면 상업적으로 성공하기가 어려울 것 같다. 근데 맛은 실제 고기와 비슷하고 가격은 너무 비싸지 않으면 된다.
-출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"성공의 조건을 맛과 가격 두 가지로 나누어 분명하게 정리했어요.","praiseEn":"","corrections":[{"original":"배양육은 가격이","corrected":"배양육의 가격이","tag":"조사","explanation":"'-면' 앞의 조건 부분에서 주어에는 보통 '-이/가'를 써요. 그리고 이 문장에서 비싼 것은 '배양육'이 아니라 '배양육의 가격'이에요.","explanationEn":"","example":"날씨가 좋으면 저는 등산을 갈 거예요."}],"suggestions":[{"original":"근데","suggested":"그러나","tag":"문어체","explanation":"'근데'는 말할 때 주로 써요. 글에서는 '그러나'나 '하지만'을 쓰면 더 자연스러워요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"비슷하고","suggested":"비슷하면서","tag":"더 좋은 표현","explanation":"'-고'는 두 가지를 나열해요. 두 조건이 동시에 필요하다는 뜻을 보여 주고 싶다면 '-면서'가 더 분명해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}}]}`
+  C: `질문: 판타지 소설은 독자가 사회를 바꾸도록 이끌 수 있을까?
+학습자 글: 공상과 현실의 사이는 매우 복잡하다. 이런 소설은 삶을 개선하려는 동기를 악화할까? 졸라의 소설은 광부들의 투쟁을 아름답게 보여 주는 것이다. 근데 그런 소설은 노동조합 증가와 관련이 있었다고 할 수 있다.
+출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"질문을 던진 뒤 구체적인 소설을 예로 들어 주장을 뒷받침했어요.","praiseEn":"","corrections":[{"original":"동기를 악화할까","corrected":"동기를 약화할까","tag":"단어 선택","explanation":"'악화(惡化)'는 상황이 나빠지는 것이고, '약화(弱化)'는 힘이 약해지는 것이에요. 동기는 약해지는 것이라서 '약화'가 맞아요.","explanationEn":"","example":"운동을 안 하면 근력이 약화된다."},{"original":"보여 주는 것이다","corrected":"보여 준다","tag":"문맥상 어색한 표현","explanation":"'-는 것이다'는 어떤 대상의 본질이나 정의를 말할 때 써요. 소설의 내용을 묘사할 때는 '-ㄴ다'로 끝내는 것이 자연스러워요.","explanationEn":"","example":""}],"suggestions":[{"original":"근데","suggested":"그러나","tag":"문어체","explanation":"'근데'는 주로 말할 때 써요. 이 글의 어조에 맞추려면 '그러나'나 '하지만'이 자연스러워요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"공상과 현실의 사이는","suggested":"공상과 현실의 관계는","tag":"정확한 어휘","explanation":"틀린 표현은 아니지만, '사이'는 거리나 공간의 느낌이 있어요. '공상'과 '현실' 같은 추상적인 개념 두 가지를 말할 때는 '관계'가 더 정확해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"관련이 있었다고 할 수 있다","suggested":"영향을 미쳤을 가능성이 있다","tag":"논리 연결","explanation":"틀린 표현은 아니지만, '관련이 있다'는 뜻이 모호하고 약해요. 확실하지는 않지만 그럴 가능성이 있다는 주장을 하려면 '영향을 미쳤을 가능성이 있다'가 더 분명해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}}]}`
 };
 
 function buildSystemPrompt(level) {
@@ -998,7 +1036,9 @@ ${SCHEMA_LINE}`;
 
 function buildUserMessage(ctx) {
   const vocab = (ctx.vocab || []).map(v => `- ${v.term}: ${v.def}`).join('\n') || '없음';
-  return `[학습 자료 레벨]\n${ctx.level}\n\n[본문]\n${ctx.article || '없음'}\n\n[핵심 어휘]\n${vocab}\n\n[질문]\n${ctx.question}\n\n[학습자 글]\n${ctx.learnerText}`;
+  const mixed = mixedEndingSentences(ctx.learnerText);
+  const endCheck = mixed.list.length ? `\n\n[종결어미 확인 — 코드가 미리 찾은 것]\n이 글은 주로 ${ENDING_LABEL[mixed.dom]}로 끝나요. 다음 문장은 다른 종결어미로 끝나므로 반드시 corrections에 tag "문체"로 지적하고, corrected는 ${ENDING_LABEL[mixed.dom]}로 끝냅니다.\n${mixed.list.map(x => '- ' + x).join('\n')}` : '';
+  return `[학습 자료 레벨]\n${ctx.level}\n\n[본문]\n${ctx.article || '없음'}\n\n[핵심 어휘]\n${vocab}\n\n[질문]\n${ctx.question}\n\n[학습자 글]\n${ctx.learnerText}${endCheck}`;
 }
 
 
@@ -1018,7 +1058,86 @@ function extractJSON(text) {
   return JSON.parse(t.slice(a, b + 1));
 }
 
-function normalizeFeedback(o, mode) {
+// 문장 끝 종결어미 종류: 'nida' | 'yo' | 'da' | ''  (따옴표·괄호·문장부호는 무시)
+function endingStyle(t) {
+  const x = str(t).replace(/[\s"'”’」』)\].,!?…~]+$/u, '');
+  if (/(니다|니까)$/.test(x)) return 'nida';
+  if (/요$/.test(x)) return 'yo';
+  if (/다$/.test(x)) return 'da';
+  return '';
+}
+// 학습자 글에서 가장 많이 쓴 종결어미
+function dominantEnding(text) {
+  const count = { nida: 0, yo: 0, da: 0 };
+  str(text).split(/(?<=[.!?])\s+|\n+/).forEach(sen => { const k = endingStyle(sen); if (k) count[k]++; });
+  const top = Object.keys(count).sort((a, b) => count[b] - count[a])[0];
+  return count[top] ? top : '';
+}
+// 가장 많이 쓴 종결어미와 다르게 끝난 문장 (AI에게 미리 알려 줌 — 모델이 놓치지 않도록)
+const ENDING_LABEL = { da: "'-다'", yo: "'-요'", nida: "'-ㅂ니다/-습니다'" };
+function splitSentences(text) { return str(text).split(/(?<=[.!?])\s+|\n+/).map(x => x.trim()).filter(Boolean); }
+function mixedEndingSentences(text) {
+  const dom = dominantEnding(text);
+  if (!dom) return { dom, list: [] };
+  return { dom, list: splitSentences(text).filter(sen => { const k = endingStyle(sen); return k && k !== dom; }) };
+}
+// AI가 학습자의 종결어미를 바꾸는 제안을 하면 걸러 냄 (모델과 상관없이 코드가 보장)
+function keepEndingStyle(items, key, dom, isStyleFix) {
+  if (!dom) return items;
+  return items.filter(it => {
+    const before = endingStyle(it.original), after = endingStyle(it[key]);
+    if (!before || !after) return true;          // 문장 끝이 아닌 부분 수정은 그대로
+    if (isStyleFix(it)) return after === dom;    // 종결어미 섞임 수정은 많이 쓴 쪽으로만
+    return after === before;                     // 그 밖의 제안은 원래 종결어미를 유지할 때만
+  });
+}
+// ---- 추가 검사 (모델과 상관없이 코드가 보장) ----
+const PARTICLES = ['', '은', '는', '이', '가', '을', '를', '에', '에서', '에게', '의', '도', '만', '로', '으로', '와', '과', '랑', '이랑', '하고', '께서'];
+const eojeols = (t) => str(t).split(/\s+/).filter(Boolean);
+// 조사 하나만 바꾼 주황 제안인가 (조사 문제는 빨강에서 이유와 함께 다룸)
+function isParticleOnlyChange(a, b) {
+  const x = eojeols(a.replace(/[.!?,]$/, '')), y = eojeols(b.replace(/[.!?,]$/, ''));
+  if (x.length !== y.length) return false;
+  const diff = x.map((w, i) => i).filter(i => x[i] !== y[i]);
+  if (diff.length !== 1) return false;
+  const p = x[diff[0]], q = y[diff[0]];
+  let k = 0; while (k < p.length && k < q.length && p[k] === q[k]) k++;
+  return k > 0 && PARTICLES.includes(p.slice(k)) && PARTICLES.includes(q.slice(k));
+}
+// 고친 말을 원래 자리에 넣었을 때 바로 앞뒤 말과 겹치면 겹친 부분을 뺌 (예: '근본적인 근본적인')
+function trimOverlap(item, key, text, fixedText) {
+  // 고친 부분에 대한 제안이면 original이 고친 글(fixedText)에 있음
+  if (text.indexOf(item.original) < 0 && fixedText && fixedText.indexOf(item.original) >= 0) text = fixedText;
+  const pos = text.indexOf(item.original);
+  if (pos < 0) return item;
+  let v = item[key];
+  const before = eojeols(text.slice(0, pos)), after = eojeols(text.slice(pos + item.original.length));
+  for (let n = 3; n >= 1; n--) {
+    const head = eojeols(v).slice(0, n).join(' '), tail = before.slice(-n).join(' ');
+    if (before.length >= n && head && head === tail && !item.original.startsWith(head)) { v = eojeols(v).slice(n).join(' '); break; }
+  }
+  for (let n = 3; n >= 1; n--) {
+    const t = eojeols(v), end = t.slice(-n).join(' ').replace(/[.!?,]$/, ''), next = after.slice(0, n).join(' ').replace(/[.!?,]$/, '');
+    if (after.length >= n && t.length > n && end && end === next && !item.original.replace(/[.!?,]$/, '').endsWith(end)) { v = t.slice(0, -n).join(' '); break; }
+  }
+  return v && v !== item.original ? { ...item, [key]: v } : null;
+}
+// "본문에 나온 ~"이라고 했는데 실제로 본문·핵심 어휘에 없으면 그 문장을 지움
+function checkSourceClaim(item, refText) {
+  let ex = item.explanation.replace(/\[본문\]/g, '본문').replace(/\[핵심 어휘\]/g, '핵심 어휘');
+  if (!/본문|핵심 어휘/.test(ex) || !refText) return { ...item, explanation: ex };
+  const quoted = (ex.match(/[‘'"“]([^’'"”]{1,20})[’'"”]/g) || []).map(q => q.slice(1, -1));
+  const cands = [item.word && item.word.term, ...quoted, item.suggested].filter(Boolean)
+    .map(t => str(t).replace(/\s+/g, '').replace(/(하다|되다|하는|되는|한다|된다|하기|되기|이다|다)$/, ''))
+    .filter(t => t.length >= 2);
+  const ref = refText.replace(/\s+/g, '');
+  if (cands.some(t => ref.includes(t))) return { ...item, explanation: ex };
+  const kept = ex.split(/(?<=[.!?])\s+/).filter(sen => !/본문|핵심 어휘/.test(sen)).join(' ');
+  return { ...item, explanation: kept };
+}
+const MAX_SUG_EOJEOL = 8;   // 주황 제안 원문이 이보다 길면 버림 (문장 전체를 다시 쓰는 제안 방지)
+
+function normalizeFeedback(o, mode, learnerText, refText) {
   const C = FEEDBACK_CONFIG;
   if (!o || typeof o !== 'object' || !Array.isArray(o.corrections) || !Array.isArray(o.suggestions)) throw AppError('format');
   mode = ['A', 'B', 'C'].includes(o.mode) ? o.mode : (mode || 'C');
@@ -1045,7 +1164,15 @@ function normalizeFeedback(o, mode) {
       example: str(s.example),
       word: { term: str(w.term), hanja: str(w.hanja), meaning: str(w.meaning) }
     };
-  }).filter(s => s.original && s.suggested && s.original !== s.suggested).slice(0, C.MAX_SUGGESTIONS[mode]);
+  }).filter(s => s.original && s.suggested && s.original !== s.suggested);
+  const text = str(learnerText);
+  const correctionsOk = corrections.map(c => trimOverlap(c, 'corrected', text)).filter(Boolean);
+  const fixedText = correctionsOk.reduce((t, c) => t.replace(c.original, c.corrected), text);
+  const suggestionsOk = suggestions
+    .filter(s => eojeols(s.original).length <= MAX_SUG_EOJEOL)
+    .filter(s => !isParticleOnlyChange(s.original, s.suggested))
+    .map(s => trimOverlap(s, 'suggested', text, fixedText)).filter(Boolean)
+    .map(s => checkSourceClaim(s, refText));
   const on = status === 'on';
   return {
     mode,
@@ -1058,8 +1185,8 @@ function normalizeFeedback(o, mode) {
     },
     praise: str(o.praise),
     praiseEn: keepEn(o.praiseEn),
-    corrections,
-    suggestions
+    corrections: keepEndingStyle(correctionsOk, 'corrected', dominantEnding(learnerText), it => it.tag === '문체'),
+    suggestions: keepEndingStyle(suggestionsOk, 'suggested', dominantEnding(learnerText), () => false).slice(0, C.MAX_SUGGESTIONS[mode])   // 걸러 낸 뒤 개수 제한
   };
 }
 
@@ -1122,7 +1249,7 @@ function aiLoadStore() {
     const s = data && data[d.id]; if (!s || typeof s !== 'object') return;
     st.text = typeof s.text === 'string' ? s.text : '';
     if (s.feedback) {
-      try { st.feedback = normalizeFeedback(s.feedback, s.feedback.mode); st.feedbackFor = typeof s.feedbackFor === 'string' ? s.feedbackFor : ''; }
+      try { st.feedback = normalizeFeedback(s.feedback, s.feedback.mode, s.feedbackFor); st.feedbackFor = typeof s.feedbackFor === 'string' ? s.feedbackFor : ''; }
       catch (e) { st.feedback = null; st.feedbackFor = ''; }
     }
   });
@@ -1191,7 +1318,7 @@ async function runDiscussFeedback(id) {
   const question = [d.questionKor].concat((d.sub || []).map((q, i) => `${d.id}-${i + 1}. ${q}`)).join('\n');
   const vocab = (d.vocab || []).map(v => ({ term: v.term, def: v.def }));
   try {
-    st.feedback = await callAIJSON(buildSystemPrompt(level), buildUserMessage({ level, article: articleText(), vocab, question, learnerText: text }), (o) => normalizeFeedback(o, modeOf(level)));
+    st.feedback = await callAIJSON(buildSystemPrompt(level), buildUserMessage({ level, article: articleText(), vocab, question, learnerText: text }), (o) => normalizeFeedback(o, modeOf(level), text, articleText() + '\n' + vocab.map(v => v.term).join('\n')));
     st.feedbackFor = text; aiSaveStore();
   } catch (e) { st.error = e.code ? e : AppError('format'); }
   finally { st.loading = false; rerenderDiscussItem(id); }
@@ -1282,7 +1409,7 @@ function aiWriteHTML(item, st) {
   return `<div class="aifb">${toggle}</div>
     <textarea data-action="discuss-text" placeholder="${effLang() === 'en' ? 'Write your thoughts here…' : '여기에 생각을 적어 보세요…'}" class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 mt-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea>
     <div class="aifb"><div class="aifb-row aifb-end">${clear}<button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '<div class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>' : ''}${st.loading ? sw('첨삭 중…', 'Checking…') : sw('AI 피드백 받기', 'Get AI feedback')}</button></div>
-    <p class="aifb-note aifb-right">${biBlock("쓴 글과 첨삭은 이 브라우저에 자동 저장돼요. 공용 컴퓨터라면 다 쓴 뒤 '지우기'를 눌러 주세요.", "Your writing and feedback are saved in this browser automatically. On a shared computer, press 'Clear' when you're done.")}</p>
+    
     ${st.keyPanel && !aiState.apiKey ? `<div class="aifb-box aifb-keybox"><p class="aifb-kbt">${biBlock('AI 피드백을 받으려면 API Key가 필요해요.', 'You need an API Key to get AI feedback.')}</p>${keyFieldsHTML()}${aiKeyHowHTML()}</div>` : ''}
     <div class="aifb-fbwrap" data-aifb-fb>${feedbackHTML(st, item.id)}</div></div>`;
 }
@@ -1297,6 +1424,8 @@ function aiHandleClick(a) {
   const qEl = a.closest('.discuss-q'); if (!qEl) return true;
   const id = +qEl.dataset.did, st = discussState[id];
   if (act === 'aifb-toggle-write') { st.open = !aiIsOpen(st); rerenderDiscussItem(id); if (st.open) { const t = qs(`.discuss-q[data-did="${id}"] textarea`, viewRoot()); if (t) t.focus(); } }
+  else if (act === 'aifb-copy') { if (st.feedback) aiCopy(st, DISCUSS_DATA.find(x => x.id === id), a); }
+  else if (act === 'aifb-download') { if (st.feedback) aiDownload(st, DISCUSS_DATA.find(x => x.id === id)); }
   else if (act === 'aifb-toggle-en') { st.showEn = !(st.showEn === null ? effLang() === 'en' : st.showEn); rerenderDiscussItem(id); }
   else if (act === 'aifb-clear-ask') { st.confirmClear = true; rerenderDiscussItem(id); }
   else if (act === 'aifb-clear-no') { st.confirmClear = false; rerenderDiscussItem(id); }
@@ -1394,13 +1523,138 @@ function feedbackHTML(st, id) {
       <div class="fb-sec"><span class="fb-label">${L(mode, 'wrong')}</span>${reds.length ? reds.map(r => cardHTML(r, mode, showEn)).join('') : `<p class="status">${L(mode, 'noWrong')}</p>`}</div>
       ${oranges.length ? `<div class="fb-sec"><span class="fb-label">${L(mode, 'better')}</span>${oranges.map(o => cardHTML(o, mode, showEn)).join('')}</div>` : ''}`;
   const engBtn = mode === 'B' ? `<button type="button" class="slim eng${showEn ? ' on' : ''}" data-action="aifb-toggle-en" aria-pressed="${showEn}">ENG</button>` : '';
-  return `${errBox}<div class="fb fb-${mode}"><div class="fb-top"><h3>${L(mode, 'title')}</h3>${engBtn}</div>
+  return `${errBox}<div class="fb fb-${mode}"><div class="fb-top"><h3>${L(mode, 'title')}</h3><div class="fb-tools">${engBtn}${toolBtn('aifb-copy', ICON_COPY, '복사', 'Copy', mode)}${toolBtn('aifb-download', ICON_SAVE, '저장', 'Save', mode)}</div></div>
     ${isStale(st) ? `<div class="stale">${L(mode, 'stale')}</div>` : ''}
     ${relHTML}
     ${fb.praise ? `<div class="fb-sec"><span class="fb-label">${L(mode, 'praise')}</span><div class="praise">${richText(fb.praise)}${en(fb.praiseEn)}</div></div>` : ''}
     ${body}
     ${askHTML(mode)}
   </div>`;
+}
+
+// ---------- 내보내기: 복사(서식 + 글자만) · 저장(.html) ----------
+// 붙여 넣는 곳(Google Docs·Word·메일)에는 이 페이지의 CSS가 없으므로, 서식은 모두 인라인 스타일로 넣는다.
+const EXP = {
+  red: '#dc2626', orange: '#ea580c', muted: '#6b7280', line: '#e5e7eb',
+  serif: "'Noto Serif KR','Apple SD Gothic Neo','Malgun Gothic',serif", sans: "'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif"
+};
+const expDel = (t) => `<span style="color:${EXP.red};text-decoration:line-through;">${esc(t)}</span>`;
+const expIns = (t) => `<span style="color:${EXP.red};font-weight:700;">${esc(t)}</span>`;
+const expSug = (t) => `<span style="text-decoration:underline;text-decoration-style:dotted;text-decoration-color:${EXP.orange};">${esc(t)}</span>`;
+const expNum = (n, c) => `<sup style="color:${c === 'r' ? EXP.red : EXP.orange};font-weight:700;">${numMark(n)}</sup>`;
+const expLabel = (t) => `<p style="margin:18px 0 6px;font-family:${EXP.sans};font-size:12px;font-weight:700;color:${EXP.muted};">${t}</p>`;
+const expText = (s) => richText(s);   // **굵게**만 <b>로
+function exportQuestion(d) { return [d.questionKor].concat((d.sub || []).map((q, i) => `${d.id}-${i + 1}. ${q}`)); }
+function exportMarked(text, reds, oranges) {
+  const spans = reds.filter(r => r.start !== -1).concat(oranges.filter(o => o.start !== -1)).sort((a, b) => a.start - b.start);
+  let out = '', pos = 0;
+  spans.forEach(s => {
+    if (s.start < pos) return;
+    out += esc(text.slice(pos, s.start));
+    const orig = text.slice(s.start, s.end);
+    out += s.color === 'r' ? `${expDel(orig)} ${expIns(s.corrected)}${expNum(s.num, 'r')}${s.extra.map(x => expNum(x, 'o')).join('')}` : `${expSug(orig)}${expNum(s.num, 'o')}`;
+    pos = s.end;
+  });
+  return out + esc(text.slice(pos));
+}
+// 내보낼 때 쓰는 고정 문구: A 영어, B 한국어(+영어), C 한국어
+const expT = (mode, key) => mode === 'A' ? UI_TEXT.en[key] : UI_TEXT.ko[key];
+const expTEn = (mode, key) => mode === 'B' ? UI_TEXT.en[key] : '';
+function exportParts(st, d) {
+  const fb = st.feedback, mode = fb.mode, src = st.feedbackFor;
+  const { reds, oranges } = layoutFeedback(src, fb);
+  const rel = fb.relevance;
+  const lab = (k) => esc(expT(mode, k)) + (expTEn(mode, k) ? ` · ${esc(expTEn(mode, k))}` : '');
+  const enLine = (v) => (mode === 'B' && v ? `<p style="margin:2px 0 0;font-family:${EXP.sans};font-size:13px;color:${EXP.muted};">${expText(v)}</p>` : '');
+  const tagText = (t) => mode === 'A' ? (FEEDBACK_CONFIG.TAG_LABEL_EN[t] || t) : t;
+  const item = (it) => {
+    const isR = it.color === 'r', to = isR ? it.corrected : it.suggested;
+    return `<div style="margin:0 0 12px;padding:10px 12px;border-left:3px solid ${isR ? EXP.red : EXP.orange};">
+      <p style="margin:0 0 4px;font-family:${EXP.sans};font-size:12px;"><b style="color:${isR ? EXP.red : EXP.orange};">${numMark(it.num)} ${esc(tagText(it.tag))}</b></p>
+      <p style="margin:0 0 4px;font-family:${EXP.serif};font-size:15px;">${isR ? expDel(it.original) : esc(it.original)} <span style="color:${EXP.muted};">→</span> <b style="color:${isR ? EXP.red : EXP.orange};">${esc(to)}</b></p>
+      ${it.explanation ? `<p style="margin:0;font-family:${EXP.sans};font-size:14px;">${expText(it.explanation)}</p>` : ''}${enLine(it.explanationEn)}
+      ${it.example ? `<p style="margin:4px 0 0;font-family:${EXP.sans};font-size:13px;color:${EXP.muted};">${esc(expT(mode, 'ex'))} ${expText(it.example)}</p>` : ''}
+      ${!isR && it.word && it.word.term ? `<p style="margin:4px 0 0;font-family:${EXP.sans};font-size:13px;">${esc(expT(mode, 'newWord'))} · ${esc(it.word.term)}${it.word.hanja ? `(${esc(it.word.hanja)})` : ''}${it.word.meaning ? `: ${esc(it.word.meaning)}` : ''}</p>` : ''}
+    </div>`;
+  };
+  const relHTML = rel.status === 'on' ? `<p style="margin:0;font-family:${EXP.sans};">✓ ${lab('relOn')}</p>`
+    : `<p style="margin:0;font-family:${EXP.sans};font-weight:700;">${lab(rel.status === 'off' ? 'relOff' : 'relPartial')}</p>${rel.comment ? `<p style="margin:4px 0 0;">${expText(rel.comment)}</p>` : ''}${enLine(rel.commentEn)}${rel.modelAnswer ? `<p style="margin:8px 0 0;font-family:${EXP.serif};"><b>${lab('model')}</b><br>${expText(rel.modelAnswer)}</p>${rel.modelAnswerEn && mode !== 'C' ? `<p style="margin:2px 0 0;color:${EXP.muted};">${expText(rel.modelAnswerEn)}</p>` : ''}` : ''}`;
+  const qLines = exportQuestion(d);
+  const html = `<div style="font-family:${EXP.sans};font-size:14px;line-height:1.7;color:#111;">
+    <p style="margin:0 0 4px;font-family:${EXP.sans};font-size:12px;color:${EXP.muted};">${esc(exportTitle())} · ${esc(L_DATE())}</p>
+    <p style="margin:0 0 4px;font-family:${EXP.serif};font-size:18px;font-weight:700;">${String(d.id).padStart(2, '0')}. ${esc(qLines[0])}</p>
+    ${qLines.slice(1).map(q => `<p style="margin:0;font-family:${EXP.serif};font-size:15px;">${esc(q)}</p>`).join('')}
+    ${expLabel(lab(isStale(st) ? 'oldText' : 'myText'))}<p style="margin:0;font-family:${EXP.serif};font-size:16px;line-height:2;">${reds.length || oranges.length ? exportMarked(src, reds, oranges) : esc(src)}</p>
+    ${expLabel(esc(mode === 'A' ? 'Answering the question' : '질문에 맞는 답') + (mode === 'B' ? ' · Answering the question' : ''))}${relHTML}
+    ${fb.praise ? `${expLabel(lab('praise'))}<p style="margin:0;font-family:${EXP.serif};">${expText(fb.praise)}</p>${enLine(fb.praiseEn)}` : ''}
+    ${expLabel(lab('wrong'))}${reds.length ? reds.map(item).join('') : `<p style="margin:0;">${lab('noWrong')}</p>`}
+    ${oranges.length ? `${expLabel(lab('better'))}${oranges.map(item).join('')}` : ''}
+    <p style="margin:20px 0 0;padding-top:10px;border-top:1px dashed #d1d5db;font-size:12px;color:#374151;">${esc(expT(mode, 'ask'))}${mode === 'B' ? `<br><span style="color:${EXP.muted};">${esc(UI_TEXT.en.ask)}</span>` : ''}</p>
+  </div>`;
+  // 글자만 있는 버전
+  const P = [], lb = (k) => expT(mode, k) + (expTEn(mode, k) ? ` · ${expTEn(mode, k)}` : '');
+  const plain = (s) => str(s).replace(/\*\*(.+?)\*\*/g, '$1');
+  P.push(`[${exportTitle()}] ${L_DATE()}`, `${String(d.id).padStart(2, '0')}. ${qLines.join('\n')}`, '');
+  P.push(`■ ${lb(isStale(st) ? 'oldText' : 'myText')}`, src, '');
+  P.push(`■ ${mode === 'A' ? 'Answering the question' : '질문에 맞는 답'}`, rel.status === 'on' ? `✓ ${lb('relOn')}` : lb(rel.status === 'off' ? 'relOff' : 'relPartial'));
+  if (rel.comment) P.push(plain(rel.comment)); if (mode === 'B' && rel.commentEn) P.push(plain(rel.commentEn));
+  if (rel.modelAnswer) { P.push(`${lb('model')}: ${plain(rel.modelAnswer)}`); if (rel.modelAnswerEn && mode !== 'C') P.push(plain(rel.modelAnswerEn)); }
+  P.push('');
+  if (fb.praise) { P.push(`■ ${lb('praise')}`, plain(fb.praise)); if (mode === 'B' && fb.praiseEn) P.push(plain(fb.praiseEn)); P.push(''); }
+  const pItem = (it) => {
+    const isR = it.color === 'r';
+    const lines = [`${numMark(it.num)} [${tagText(it.tag)}] ${it.original} → ${isR ? it.corrected : it.suggested}`];
+    if (it.explanation) lines.push('   ' + plain(it.explanation));
+    if (mode === 'B' && it.explanationEn) lines.push('   ' + plain(it.explanationEn));
+    if (it.example) lines.push(`   ${expT(mode, 'ex')} ${plain(it.example)}`);
+    if (!isR && it.word && it.word.term) lines.push(`   ${expT(mode, 'newWord')}: ${it.word.term}${it.word.hanja ? `(${it.word.hanja})` : ''}${it.word.meaning ? ` - ${it.word.meaning}` : ''}`);
+    return lines.join('\n');
+  };
+  P.push(`■ ${lb('wrong')}`, reds.length ? reds.map(pItem).join('\n') : lb('noWrong'), '');
+  if (oranges.length) P.push(`■ ${lb('better')}`, oranges.map(pItem).join('\n'), '');
+  P.push('---', expT(mode, 'ask')); if (mode === 'B') P.push(UI_TEXT.en.ask);
+  return { html, text: P.join('\n') };
+}
+function exportTitle() { return (document.title || '').split('|')[0].trim() || 'OpenKoreanLearningLab'; }
+function L_DATE() { const t = new Date(); return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`; }
+function flashBtn(btn, ok) {
+  const lab = btn.querySelector('.aifb-tool-l'); if (!lab) return;
+  const prev = lab.innerHTML; const mode = modeOf();
+  lab.innerHTML = ok ? (mode === 'A' ? 'Copied' : mode === 'B' ? sw('복사됨', 'Copied') : '복사됨') : (mode === 'A' ? 'Failed' : '실패');
+  setTimeout(() => { lab.innerHTML = prev; }, 1600);
+}
+async function aiCopy(st, d, btn) {
+  const { html, text } = exportParts(st, d);
+  try {
+    if (navigator.clipboard && window.ClipboardItem && window.isSecureContext) {
+      await navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) })]);
+      return flashBtn(btn, true);
+    }
+  } catch (e) { /* 아래 방법으로 */ }
+  // file:// 등 보안 컨텍스트가 아닐 때: copy 이벤트에서 두 형식을 직접 넣음
+  let done = false;
+  const onCopy = (ev) => { ev.preventDefault(); ev.clipboardData.setData('text/html', html); ev.clipboardData.setData('text/plain', text); done = true; };
+  document.addEventListener('copy', onCopy, { once: true });
+  try { document.execCommand('copy'); } catch (e) { done = false; }
+  document.removeEventListener('copy', onCopy);
+  flashBtn(btn, done);
+}
+function aiDownload(st, d) {
+  const { html } = exportParts(st, d);
+  const doc = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(exportTitle())} - ${String(d.id).padStart(2, '0')}</title><style>body{margin:0;background:#fff}main{max-width:760px;margin:0 auto;padding:32px 20px}@media print{main{padding:0}}</style></head><body><main>${html}</main></body></html>`;
+  // 파일명은 영문·숫자만 (일부 브라우저가 한글 파일명을 'download'로 바꿔 버리는 문제 방지)
+  const page = (location.pathname.split('/').pop() || 'material').replace(/\.html?$/i, '').replace(/[^A-Za-z0-9_-]/g, '') || 'material';
+  const name = `${page}_discuss-${String(d.id).padStart(2, '0')}_${L_DATE()}.html`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([doc], { type: 'text/html;charset=utf-8' }));
+  a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+const ICON_COPY = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg>';
+const ICON_SAVE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>';
+function toolBtn(action, icon, ko, en, mode) {
+  const label = mode === 'A' ? esc(en) : mode === 'B' ? sw(ko, en) : esc(ko);
+  return `<button type="button" class="aifb-tool" data-action="${action}">${icon}<span class="aifb-tool-l">${label}</span></button>`;
 }
         const hanjaBtn = (action, isShowing, extra) => `<button type="button" data-action="${action}" class="inline-flex items-center gap-0.5 text-[9px] font-normal text-gray-300 hover:text-gray-500 font-sans transition-colors cursor-pointer border-none p-0 bg-transparent tracking-widest uppercase ${extra || ''}">\ud55c\uc790<svg viewBox="0 0 24 24" fill="currentColor" class="w-2 h-2 opacity-70 transition-transform duration-200 ${isShowing ? 'rotate-180' : ''}"><path d="M7 10l5 5 5-5z"/></svg></button>`;
         const transBtn = (action, isShowing, extra) =>
