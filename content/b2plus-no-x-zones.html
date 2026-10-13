@@ -301,6 +301,18 @@ body.pw-printing #print-root{display:block}
         .aifb-note{ font-size:12px; color:var(--ai-muted); margin:6px 0 0; }
         .aifb-ok{ font-size:12px; color:var(--ai-green); }
         .aifb-top{ margin-bottom:56px; }
+        .aifb-right{ text-align:right; }
+        .aifb-intro{ border:1px solid var(--ai-line); background:var(--ai-soft); padding:16px 18px; margin-bottom:12px; }
+        .aifb-intro p{ margin:0 0 8px; font-size:13px; color:#374151; line-height:1.7; }
+        .aifb-intro .aifb-note{ font-size:12px; color:var(--ai-muted); }
+        .aifb-intro-t{ font-weight:700; color:#111 !important; font-size:14px !important; }
+        .aifb-how{ margin-top:6px; font-size:13px; color:#374151; }
+        .aifb-how summary{ cursor:pointer; font-weight:700; font-size:12px; color:#111; }
+        .aifb-how ol{ margin:8px 0 6px; padding-left:20px; list-style:decimal; }
+        .aifb-how li{ margin:3px 0; }
+        .aifb-link{ color:#111; text-decoration:underline; text-underline-offset:2px; }
+        .aifb-link:hover{ color:#000; }
+        .aifb-keybox .aifb-how{ margin-top:10px; }
         .aifb-topbar{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
         .aifb-box{ border:1px solid var(--ai-line); background:#fff; padding:16px; margin-top:10px; }
         .aifb-keybox{ background:var(--ai-soft); }
@@ -387,7 +399,7 @@ body.pw-printing #print-root{display:block}
            ===================================================================== */
 
         /* ===== 데이터 (임시 플레이스홀더 — 실제 콘텐츠로 교체) ===== */
-        /* ===== AI 설정 (학습자가 자기 API 키로 사용 · 키는 저장하지 않음) =====
+        /* ===== AI 설정 (학습자가 자기 API Key로 사용 · 키는 저장하지 않음) =====
            모델 이름은 여기만 바꾸면 됨. '모델 불러오기'를 누르면 학습자 키 기준 실제 목록으로 바뀜. */
         const AI_PROVIDERS = {
             gemini: {
@@ -748,7 +760,7 @@ body.pw-printing #print-root{display:block}
             return left;
         };
         /* ===================== AI 피드백 · AI 사전 모듈 =====================
-           학습자 자신의 API 키로 동작 (서버 없음 · 키 저장 안 함)
+           학습자 자신의 API Key로 동작 (서버 없음 · 키 저장 안 함)
            ===================================================================== */
 const UI_TEXT = {
   ko: {
@@ -800,10 +812,10 @@ const ERR_TEXT = {
   network: { ko: '인터넷 연결에 문제가 있어요.', en: 'There is a problem with the internet connection.',
     fixKo: ['인터넷(와이파이)이 연결되어 있는지 확인해 주세요.', '학교나 회사 인터넷은 AI 사이트를 막는 경우가 있어요. 다른 인터넷(휴대폰 핫스팟 등)으로 해 보세요.'],
     fixEn: ['Check that you are connected to the internet (Wi-Fi).', 'School or office networks sometimes block AI sites. Try another connection, such as your phone hotspot.'] },
-  key: { ko: 'API 키가 맞지 않아요.', en: 'The API key is not correct.',
+  key: { ko: 'API Key가 맞지 않아요.', en: 'The API Key is not correct.',
     fixKo: ['키를 처음부터 끝까지 다시 복사해서 붙여 넣어 주세요. 앞뒤에 빈칸이 들어가지 않게 해 주세요.', 'AI 설정에서 고른 AI 회사가 키를 만든 회사와 같은지 확인해 주세요. (예: Gemini 키는 Google Gemini에서만 써요.)', '그래도 안 되면 {ai} 사이트에서 새 키를 만들어서 넣어 주세요.'],
     fixEn: ['Copy the whole key again and paste it. Make sure there are no spaces before or after it.', 'Check that the AI company chosen in AI settings is the one that made your key. (For example, a Gemini key works only with Google Gemini.)', 'If it still fails, make a new key in {ai} and enter it.'] },
-  perm: { ko: '이 API 키로는 사용할 수 없어요.', en: "This API key can't be used here.",
+  perm: { ko: '이 API Key로는 사용할 수 없어요.', en: "This API Key can't be used here.",
     fixKo: ['키를 만들 때 "사용할 수 있는 웹사이트"를 정해 두었다면, 이 학습자료 주소를 허용 목록에 넣어 주세요.', '키를 만든 계정에서 이 AI 서비스를 쓸 수 있는지 확인해 주세요. 나라나 나이에 따라 막혀 있을 수 있어요.', '잘 모르겠으면 {ai} 사이트에서 제한이 없는 새 키를 만들어서 넣어 주세요.'],
     fixEn: ['If you limited the key to certain websites, add this page\'s address to the allowed list.', 'Check that your account is allowed to use this AI service. It may be blocked in some countries or for some ages.', "If you're not sure, make a new key with no limits in {ai} and enter it."] },
   badRequest: { ko: 'AI가 요청을 받지 않았어요.', en: "The AI didn't accept the request.",
@@ -1209,14 +1221,48 @@ function keyFieldsHTML() {
   const opts = Object.keys(AI_PROVIDERS).map(k => `<option value="${esc(k)}"${k === aiState.provider ? ' selected' : ''}>${esc(AI_PROVIDERS[k].label)}</option>`).join('');
   const mopts = modelList().map(m => `<option value="${esc(m)}"${m === aiState.model ? ' selected' : ''}>${esc(m)}</option>`).join('');
   return `<div class="aifb-row"><label class="aifb-f">AI</label><select data-ai-field="provider">${opts}</select></div>
-    <div class="aifb-row"><label class="aifb-f">${sw('API 키', 'API key')}</label><input type="password" autocomplete="off" spellcheck="false" data-ai-field="apiKey" value="${esc(aiState.apiKey)}" placeholder="${esc(effLang() === 'en' ? P.keyHintEn : P.keyHint)}"><button type="button" class="aifb-btn" data-action="aifb-clear-key">${sw('키 지우기', 'Clear key')}</button></div>
+    <div class="aifb-row"><label class="aifb-f">${sw('API Key', 'API Key')}</label><input type="password" autocomplete="off" spellcheck="false" data-ai-field="apiKey" value="${esc(aiState.apiKey)}" placeholder="${esc(effLang() === 'en' ? P.keyHintEn : P.keyHint)}"><button type="button" class="aifb-btn" data-action="aifb-clear-key">${sw('키 지우기', 'Clear key')}</button></div>
     <div class="aifb-row"><label class="aifb-f">${sw('모델', 'Model')}</label><select data-ai-field="model">${mopts}</select><button type="button" class="aifb-btn" data-action="aifb-load-models"${aiState.apiKey && !aiState.loadingModels ? '' : ' disabled'}>${aiState.loadingModels ? sw('불러오는 중…', 'Loading…') : sw('모델 불러오기', 'Load models')}</button></div>
     ${errHTML(modeOf(), 'modelsFail', aiState.modelsError)}
-    <p class="aifb-note">${biBlock(`API 키는 저장되지 않아요. 새로고침하거나 탭을 닫으면 다시 입력해야 해요. 요청은 내 브라우저에서 ${P.label}로 바로 가요.`, `Your API key is not saved. You need to enter it again after refreshing or closing the tab. Requests go straight from your browser to ${P.label}.`)}</p>`;
+    <p class="aifb-note">${biBlock(`API Key는 저장되지 않아요. 새로고침하거나 탭을 닫으면 다시 입력해야 해요. 요청은 내 브라우저에서 ${P.label}로 바로 가요.`, `Your API Key is not saved. You need to enter it again after refreshing or closing the tab. Requests go straight from your browser to ${P.label}.`)}</p>`;
+}
+// API Key가 무엇이고 어떻게 만드는지 (생각해 보기 상단 · API Key 입력 상자에서 함께 씀)
+// 공식 안내 링크 (회사가 주소를 바꾸면 여기만 고치면 됨)
+const AI_KEY_LINKS = {
+  geminiKeys:  'https://aistudio.google.com/apikey',
+  geminiGuide: 'https://ai.google.dev/gemini-api/docs/api-key',
+  claudeGuide: 'https://platform.claude.com/docs/ko/get-api-key',
+  openaiKeys:  'https://platform.openai.com/api-keys',
+  openaiGuide: 'https://developers.openai.com/api/docs/quickstart'
+};
+const aiLink = (url, label) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="aifb-link">${label}</a>`;
+function aiKeyHowHTML() {
+  const L_ = AI_KEY_LINKS;
+  const step1 = koOnly()
+    ? `${aiLink(L_.geminiKeys, 'Google AI Studio(aistudio.google.com)')}에 들어가서 Google 계정으로 로그인해요.`
+    : `${aiLink(L_.geminiKeys, 'Google AI Studio(aistudio.google.com)')}에 들어가서 Google 계정으로 로그인해요.<span class="lk-en aifb-block">Go to Google AI Studio and sign in with your Google account.</span>`;
+  return `<details class="aifb-how"><summary>${bi('API Key 만드는 방법', 'How to get an API Key')}</summary><ol>
+      <li>${step1}</li>
+      <li>${biBlock("'API 키 만들기(Create API key)'를 눌러 새 키를 만들어요.", "Press 'Create API key' to make a new key.")}</li>
+      <li>${biBlock("만든 키를 복사해서 아래 'AI 설정'의 API Key 칸에 붙여 넣어요.", "Copy the key and paste it into the API Key box in 'AI settings' below.")}</li>
+    </ol>
+    <p class="aifb-note">${bi('자세한 안내', 'More help')}: ${aiLink(L_.geminiGuide, 'Google 공식 안내 (Gemini API Key)')}</p>
+    <p class="aifb-note">${biBlock('Gemini 키는 무료로 쓸 수 있어요. 하루에 쓸 수 있는 양이 정해져 있어요. Claude나 OpenAI의 API Key는 이용 금액을 먼저 충전해야 해요.', 'A Gemini key is free to use, with a daily limit. API Keys from Claude or OpenAI need prepaid credit first.')}</p>
+    <p class="aifb-note">Claude: ${aiLink(L_.claudeGuide, bi('API Key 만드는 방법 (공식 안내)', 'How to get an API Key (official guide)'))}<br>OpenAI: ${aiLink(L_.openaiKeys, bi('API Key 페이지', 'API Keys page'))} · ${aiLink(L_.openaiGuide, bi('시작 안내 (공식)', 'Quickstart (official)'))}</p>
+  </details>`;
+}
+function aiIntroHTML() {
+  return `<div class="aifb-intro">
+    <p class="aifb-intro-t">${bi('AI 피드백 · AI 문맥 사전', 'AI feedback · AI context dictionary')}</p>
+    <p>${biBlock("'내 생각 써 보기'에 글을 쓰면 AI가 맞춤법·문법·어색한 표현을 고쳐 주고, 더 좋은 표현을 알려 줘요. 읽기 자료의 'AI 문맥 사전'에서는 모르는 단어를 이 글의 뜻에 맞게 설명해 줘요.", "When you write in 'Write your thoughts', the AI corrects spelling, grammar and awkward expressions, and suggests better ones. In the reading, the 'AI context dictionary' explains words as they are used in this text.")}</p>
+    <p>${biBlock('이 기능을 쓰려면 AI 회사의 API Key가 필요해요. API Key는 AI를 쓸 수 있게 해 주는 나만의 비밀번호 같은 거예요. 이 학습 자료에는 AI가 들어 있지 않아서, 학습자가 자기 키로 AI에 직접 연결해야 해요.', "To use these features, you need an API Key from an AI company. An API Key is like your own password for using an AI. This material doesn't include an AI, so you connect to one directly with your own key.")}</p>
+    <p class="aifb-note">${biBlock('API Key는 저장되지 않고, 내 글은 내가 고른 AI 회사에만 보내져요.', 'Your API Key is not saved, and your writing is sent only to the AI company you choose.')}<br>${biBlock('OpenKoreanLearningLab에는 데이터 서버가 없어서 보관되지 않아요.', 'OpenKoreanLearningLab has no data server, so nothing is stored there.')}</p>
+    ${aiKeyHowHTML()}
+  </div>`;
 }
 function aiTopHTML() {
-  const status = aiState.apiKey ? `<span class="aifb-ok">● ${esc(AI_PROVIDERS[aiState.provider].label)} · ${esc(aiState.model)}</span>` : `<span class="aifb-note" style="margin:0">${sw('API 키 없음', 'No API key')}</span>`;
-  return `<div class="aifb aifb-top" id="aifb-top"><div class="aifb-topbar"><button type="button" class="aifb-btn aifb-slim" data-action="aifb-toggle-settings" aria-expanded="${aiState.settingsOpen}">⚙ ${sw('AI 설정', 'AI settings')} ${aiState.settingsOpen ? '▴' : '▾'}</button>${status}</div>${aiState.settingsOpen ? `<div class="aifb-box">${keyFieldsHTML()}</div>` : ''}</div>`;
+  const status = aiState.apiKey ? `<span class="aifb-ok">● ${esc(AI_PROVIDERS[aiState.provider].label)} · ${esc(aiState.model)}</span>` : `<span class="aifb-note" style="margin:0">${sw('API Key를 넣으면 AI 기능을 쓸 수 있어요', 'Enter an API Key to use the AI features')}</span>`;
+  return `<div class="aifb aifb-top" id="aifb-top">${aiIntroHTML()}<div class="aifb-topbar"><button type="button" class="aifb-btn aifb-slim" data-action="aifb-toggle-settings" aria-expanded="${aiState.settingsOpen}">⚙ ${sw('AI 설정', 'AI settings')} ${aiState.settingsOpen ? '▴' : '▾'}</button>${status}</div>${aiState.settingsOpen ? `<div class="aifb-box">${keyFieldsHTML()}</div>` : ''}</div>`;
 }
 function aiRepaintKeyFields() {
   const top = qs('#aifb-top', viewRoot()); if (top) top.outerHTML = aiTopHTML();
@@ -1236,8 +1282,8 @@ function aiWriteHTML(item, st) {
   return `<div class="aifb">${toggle}</div>
     <textarea data-action="discuss-text" placeholder="${effLang() === 'en' ? 'Write your thoughts here…' : '여기에 생각을 적어 보세요…'}" class="w-full p-4 border border-gray-300 font-serif text-base text-gray-900 focus:border-black focus:ring-0 outline-none min-h-[150px] bg-white resize-y mb-3 mt-3 transition-colors placeholder:text-gray-300">${esc(st.text)}</textarea>
     <div class="aifb"><div class="aifb-row aifb-end">${clear}<button type="button" data-action="discuss-feedback" ${disabled ? 'disabled' : ''} class="px-6 py-2 text-xs font-bold font-sans uppercase tracking-widest border transition-colors flex items-center gap-2 ${disabled ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-black bg-black text-white hover:bg-white hover:text-black'}">${st.loading ? '<div class="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div>' : ''}${st.loading ? sw('첨삭 중…', 'Checking…') : sw('AI 피드백 받기', 'Get AI feedback')}</button></div>
-    <p class="aifb-note">${biBlock("쓴 글과 첨삭은 이 브라우저에 자동 저장돼요. 공용 컴퓨터라면 다 쓴 뒤 '지우기'를 눌러 주세요.", "Your writing and feedback are saved in this browser automatically. On a shared computer, press 'Clear' when you're done.")}</p>
-    ${st.keyPanel && !aiState.apiKey ? `<div class="aifb-box aifb-keybox"><p class="aifb-kbt">${biBlock('AI 피드백을 받으려면 API 키가 필요해요.', 'You need an API key to get AI feedback.')}</p>${keyFieldsHTML()}</div>` : ''}
+    <p class="aifb-note aifb-right">${biBlock("쓴 글과 첨삭은 이 브라우저에 자동 저장돼요. 공용 컴퓨터라면 다 쓴 뒤 '지우기'를 눌러 주세요.", "Your writing and feedback are saved in this browser automatically. On a shared computer, press 'Clear' when you're done.")}</p>
+    ${st.keyPanel && !aiState.apiKey ? `<div class="aifb-box aifb-keybox"><p class="aifb-kbt">${biBlock('AI 피드백을 받으려면 API Key가 필요해요.', 'You need an API Key to get AI feedback.')}</p>${keyFieldsHTML()}${aiKeyHowHTML()}</div>` : ''}
     <div class="aifb-fbwrap" data-aifb-fb>${feedbackHTML(st, item.id)}</div></div>`;
 }
 
@@ -1543,7 +1589,7 @@ function feedbackHTML(st, id) {
         function readingHeaderRightHTML() {
             const colorBtns = reading.highlightMode ? `<div class="flex items-center gap-2 pl-2 border-l border-gray-200 animate-fade-in"><button type="button" data-hcolor="yellow" class="w-3 h-3 rounded-full bg-yellow-300 ring-1 ring-gray-200 ${reading.color === 'yellow' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="red" class="w-3 h-3 rounded-full bg-red-300 ring-1 ring-gray-200 ${reading.color === 'red' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="green" class="w-3 h-3 rounded-full bg-green-300 ring-1 ring-gray-200 ${reading.color === 'green' ? 'ring-offset-1 ring-black' : ''}"></button><button type="button" data-hcolor="eraser" class="text-gray-400 hover:text-black ${reading.color === 'eraser' ? 'text-black' : ''}">${svgIcon('eraser', 'w-4 h-4', { fill: 'currentColor' })}</button></div>` : '';
             const hex = reading.highlightMode ? (reading.color === 'yellow' ? '#facc15' : reading.color === 'red' ? '#f87171' : reading.color === 'green' ? '#4ade80' : '#9ca3af') : 'currentColor';
-            const dictPanel = reading.showDict ? `<div class="absolute top-full right-0 mt-4 w-80 bg-white border border-gray-200 shadow-xl p-5 rounded-lg z-50 animate-fade-in font-sans"><div class="flex justify-between items-center mb-3"><h3 class="text-sm font-bold text-gray-900">AI 문맥 사전 <span class="font-normal text-xs text-gray-500">(AI Context Dictionary)</span></h3><button type="button" data-action="dict-close" class="text-gray-400 hover:text-gray-600">${svgIcon('close', 'w-4 h-4')}</button></div><form data-action="dict-search" class="flex gap-2 mb-4"><input type="text" id="dict-input" value="${esc(reading.dictTerm)}" placeholder="단어를 입력하세요..." class="flex-1 min-w-0 bg-gray-50 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500" /><button type="submit" class="bg-black text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-800 shrink-0 whitespace-nowrap">검색</button></form>${reading.dictLoading ? '<div class="flex justify-center py-6"><div class="animate-spin rounded-full h-6 w-6 border-2 border-gray-200 border-t-blue-600"></div></div>' : reading.dictError ? `<div class="aifb aifb-dict">${errHTML(modeOf(), 'dictFail', reading.dictError)}</div>` : reading.dictResult ? `<div class="space-y-3 animate-fade-in"><h3 class="text-lg font-bold text-gray-900 font-serif">${esc(reading.dictResult.term)}</h3><div class="text-sm text-gray-800 leading-relaxed font-serif border-l-2 border-blue-500 pl-3">${esc(reading.dictResult.definition)}</div>${reading.dictResult.example ? `<div class="pt-3 mt-3 border-t border-gray-100 bg-gray-50 p-3 rounded"><p class="text-xs font-bold text-gray-500 mb-1 font-sans uppercase">Example</p><p class="text-sm text-gray-800 font-serif">${esc(reading.dictResult.example)}</p></div>` : ''}</div>` : (aiState.apiKey ? `<p class="text-xs text-gray-400 text-center py-4 leading-relaxed">${biBlock('본문의 내용을 바탕으로 단어를 설명해 드려요.', 'Explains words based on the reading.')}</p>` : `<div class="aifb aifb-dict"><p class="aifb-kbt">${biBlock('AI 사전을 쓰려면 API 키가 필요해요.', 'You need an API key to use the AI dictionary.')}</p>${keyFieldsHTML()}</div>`)}</div>` : '';
+            const dictPanel = reading.showDict ? `<div class="absolute top-full right-0 mt-4 w-80 bg-white border border-gray-200 shadow-xl p-5 rounded-lg z-50 animate-fade-in font-sans"><div class="flex justify-between items-center mb-3"><h3 class="text-sm font-bold text-gray-900">AI 문맥 사전 <span class="font-normal text-xs text-gray-500">(AI Context Dictionary)</span></h3><button type="button" data-action="dict-close" class="text-gray-400 hover:text-gray-600">${svgIcon('close', 'w-4 h-4')}</button></div><form data-action="dict-search" class="flex gap-2 mb-4"><input type="text" id="dict-input" value="${esc(reading.dictTerm)}" placeholder="단어를 입력하세요..." class="flex-1 min-w-0 bg-gray-50 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500" /><button type="submit" class="bg-black text-white px-3 py-2 rounded text-sm font-bold hover:bg-gray-800 shrink-0 whitespace-nowrap">검색</button></form>${reading.dictLoading ? '<div class="flex justify-center py-6"><div class="animate-spin rounded-full h-6 w-6 border-2 border-gray-200 border-t-blue-600"></div></div>' : reading.dictError ? `<div class="aifb aifb-dict">${errHTML(modeOf(), 'dictFail', reading.dictError)}</div>` : reading.dictResult ? `<div class="space-y-3 animate-fade-in"><h3 class="text-lg font-bold text-gray-900 font-serif">${esc(reading.dictResult.term)}</h3><div class="text-sm text-gray-800 leading-relaxed font-serif border-l-2 border-blue-500 pl-3">${esc(reading.dictResult.definition)}</div>${reading.dictResult.example ? `<div class="pt-3 mt-3 border-t border-gray-100 bg-gray-50 p-3 rounded"><p class="text-xs font-bold text-gray-500 mb-1 font-sans uppercase">Example</p><p class="text-sm text-gray-800 font-serif">${esc(reading.dictResult.example)}</p></div>` : ''}</div>` : (aiState.apiKey ? `<p class="text-xs text-gray-400 text-center py-4 leading-relaxed">${biBlock('본문의 내용을 바탕으로 단어를 설명해 드려요.', 'Explains words based on the reading.')}</p>` : `<div class="aifb aifb-dict"><p class="aifb-kbt">${biBlock('AI 사전을 쓰려면 API Key가 필요해요.', 'You need an API Key to use the AI dictionary.')}</p>${keyFieldsHTML()}</div>`)}</div>` : '';
             return `<div class="flex items-center gap-4"><div class="flex items-center gap-2"><button type="button" data-action="toggle-highlight" class="p-1 ${reading.highlightMode ? 'text-black' : 'text-gray-300 hover:text-gray-500'}">${svgIcon('highlighter', 'w-5 h-5', { style: `color:${hex}` })}</button>${colorBtns}</div><div class="w-px h-3 bg-gray-200"></div><div class="relative"><button type="button" data-action="toggle-dict" class="flex items-center gap-2 text-xs font-bold font-sans uppercase tracking-wider transition-colors ${reading.showDict ? 'text-blue-600' : 'text-gray-400 hover:text-gray-600'}">${svgIcon('search', 'w-4 h-4')}<span>사전</span></button>${dictPanel}</div><div class="w-px h-3 bg-gray-200"></div><button type="button" data-action="toggle-vocab" class="flex items-center gap-2 text-xs font-bold font-sans uppercase ${app.showVocab ? 'text-black' : 'text-gray-400 hover:text-gray-600'}">${svgIcon('openbook', 'w-4 h-4')} <span>어휘 목록</span></button></div>`;
         }
         function readingHTML() {
