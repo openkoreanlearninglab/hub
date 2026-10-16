@@ -454,6 +454,8 @@ body.pw-printing #print-root{display:block}
             MODE_BY_LEVEL: { 'A1': 'A', 'A1+': 'A', 'A2': 'A', 'A2+': 'A', 'B1': 'B', 'B1+': 'B', 'B2': 'B', 'B2+': 'C', 'C1': 'C', 'C1+': 'C', 'C2': 'C' },
             EXPLAIN_LEVEL: { 'B1': 'A2+', 'B1+': 'B1', 'B2': 'B1', 'B2+': 'B1+', 'C1': 'B2', 'C1+': 'B2', 'C2': 'B2' },
             MAX_SUGGESTIONS: { A: 1, B: 2, C: 3 },
+            MAX_SUG_EOJEOL: { A: 4, B: 6, C: 8 },   // 주황 제안 원문이 이보다 길면 버림 (문장 전체를 다시 쓰는 제안 방지)
+            DICT_LANG: 'ko',   // AI 문맥 사전 설명 언어 — 템플릿 a(영어 뜻): 'en' · 템플릿 b·c(한국어 뜻): 'ko' · A 모드는 언제나 영어
             RED_TAGS: ['맞춤법', '오타', '띄어쓰기', '조사', '활용', '문법', '시제', '주어·서술어 호응', '단어 조합', '단어 선택', '연결 표현', '불필요한 반복', '문맥상 어색한 표현', '문체', '빠진 말'],
             // C 모드 주황 태그: 선생님 첨삭 기준(2025 범례: 더 좋은 표현 / 다른 글쓰기 스타일 / 의도에 따라 달라지는 표현)에서 정리
             ORANGE_TAGS: { A: ['더 좋은 표현'], B: ['더 좋은 표현', '일관성'], C: ['더 좋은 표현', '정확한 어휘', '고급 표현', '문어체', '번역투', '일관성', '논리 연결', '대체 표현', '다른 글쓰기 스타일', '의도에 따라 달라요'] },
@@ -784,7 +786,7 @@ const UI_TEXT = {
     model: 'Example answer', praise: 'What you did well', myText: 'Your writing', oldText: 'Checked writing (earlier version)',
     legendRed: 'mistake', legendOrange: 'a more natural way', wrong: 'Mistakes', noWrong: 'No mistakes found.', better: 'A more natural way to say it',
     none: 'Nothing to fix. Great job!', fix: 'Fix', sug: 'Tip', ex: 'e.g.', newWord: 'New word',
-    stale: "You changed your writing. The feedback below is for the earlier version. Press 'AI 피드백 받기' to check the new version.",
+    stale: "You changed your writing. The feedback below is for the earlier version. Press 'Get AI feedback' to check the new version.",
     ask: "AI feedback is not always right. The 'more natural way' suggestions (orange) in particular have no single right answer, so people and AIs may suggest different things. If you're not sure why something was changed, think the AI made a mistake, or want to know more about a suggestion, please ask your teacher in your writing class.",
     loading: 'The AI is reading your writing…'
   }
@@ -796,12 +798,14 @@ const uiOf = (mode) => UI_TEXT[mode === 'A' ? 'en' : 'ko'];
 // 상단 언어 메뉴(a·b 템플릿의 secLang) 연동. C 모드는 언제나 한국어만
 function effLang() {
   if (modeOf() === 'C') return 'ko';
+  if (modeOf() === 'A') return 'en';   // A 모드는 메뉴와 상관없이 AI 영역을 영어로만
   return (typeof secLang === 'function' && secLang()) ? 'en' : 'ko';
 }
 const koOnly = () => modeOf() === 'C';
-const bi = (ko, en) => koOnly() ? esc(ko) : `${esc(ko)}<span class="lk-en aifb-sub"> · ${esc(en)}</span>`;
-const biBlock = (ko, en) => koOnly() ? esc(ko) : `${esc(ko)}<span class="lk-en aifb-block">${esc(en)}</span>`;
-const sw = (ko, en) => koOnly() ? esc(ko) : `<span class="lk-ko-only">${esc(ko)}</span><span class="lk-en">${esc(en)}</span>`;
+const enOnly = () => modeOf() === 'A';
+const bi = (ko, en) => koOnly() ? esc(ko) : enOnly() ? esc(en) : `${esc(ko)}<span class="lk-en aifb-sub"> · ${esc(en)}</span>`;
+const biBlock = (ko, en) => koOnly() ? esc(ko) : enOnly() ? esc(en) : `${esc(ko)}<span class="lk-en aifb-block">${esc(en)}</span>`;
+const sw = (ko, en) => koOnly() ? esc(ko) : enOnly() ? esc(en) : `<span class="lk-ko-only">${esc(ko)}</span><span class="lk-en">${esc(en)}</span>`;
 const SWAP_KEYS = new Set(['fix', 'sug', 'legendRed', 'legendOrange', 'ex', 'newWord', 'loading']);
 const BLOCK_KEYS = new Set(['stale', 'ask']);
 function L(mode, key) {
@@ -870,9 +874,9 @@ function errHTML(mode, prefix, e) {
   const P = AI_PROVIDERS[aiState.provider];
   const fill = (x) => x.replace('{n}', e.status || '').replace('{ai} 사이트', P.keySite).replace('{ai} 사이트', P.keySite).replace(/{ai}(?= and)/, P.keySite).replace('{ai}', P.label);
   const ko = fill(`${ERR_TEXT[prefix].ko} ${t.ko}`), en = fill(`${ERR_TEXT[prefix].en} ${t.en}`);
-  const msg = mode === 'A' ? esc(en) : mode === 'C' ? esc(ko) : `${esc(ko)}<span class="lk-block">${esc(en)}</span>`;
+  const msg = mode === 'A' ? esc(en) : mode === 'C' ? esc(ko) : `${esc(ko)}<span class="aifb-block">${esc(en)}</span>`;
   const fixKo = (t.fixKo || []).map(fill), fixEn = (t.fixEn || []).map(fill);
-  const items = fixKo.map((k, i) => `<li>${mode === 'A' ? esc(fixEn[i]) : mode === 'C' ? esc(k) : `${esc(k)}<span class="lk-block">${esc(fixEn[i] || '')}</span>`}</li>`).join('');
+  const items = fixKo.map((k, i) => `<li>${mode === 'A' ? esc(fixEn[i]) : mode === 'C' ? esc(k) : `${esc(k)}<span class="aifb-block">${esc(fixEn[i] || '')}</span>`}</li>`).join('');
   const label = mode === 'A' ? 'Try this' : mode === 'C' ? '이렇게 해 보세요' : '이렇게 해 보세요 · Try this';
   const fix = items ? `<div class="err-fix"><span class="err-fix-t">${label}</span><ul>${items}</ul></div>` : '';
   const detail = e.detail ? `<details class="err-d"><summary>${mode === 'C' ? '자세히' : mode === 'A' ? 'Details' : '자세히 · Details'}</summary><pre>${esc(e.detail)}</pre></details>` : '';
@@ -909,6 +913,14 @@ const COMMON_RULES = (mode, level) => `[공통 규칙]
 - "partial"이나 "off"이면 comment에 무엇이 부족한지 1~2문장으로 쓰고, modelAnswer에 ${level} 수준의 짧은 한국어 모범 답안(${mode === 'A' ? '2~3' : '3~4'}문장)을 씁니다. 가능하면 [핵심 어휘]를 활용합니다.
 - "on"이면 comment, commentEn, modelAnswer, modelAnswerEn은 모두 빈 문자열입니다.
 
+[예문(example) 쓰는 법 — 선생님 첨삭 방식]
+- 빨간색 중 tag가 조사, 활용, 문법, 시제, 연결 표현, 주어·서술어 호응인 것에는 반드시 example을 1개 씁니다. 맞춤법, 오타, 띄어쓰기, 문체(종결어미 섞임)는 example을 빈 문자열로 둡니다. 주황색은 도움이 될 때만 씁니다.
+- example은 학습자 문장을 되풀이하지 않습니다. 같은 문법 구조에, 학습자가 쉽게 아는 다른 일상 단어를 넣은 짧은 문장을 씁니다. 예: '-면' 앞의 주어 → "날씨가 좋으면 저는 산책을 해요."
+- 차이를 보여 주고 싶으면 둘 다 맞는 대조 짝을 씁니다. 예: "저는 커피를 좋아해요. 그런데 친구는 차를 좋아해요."
+- "(X)"는 그 형태가 어떤 문맥에서도 틀린 경우에만 붙입니다. 예: "빵이 먹어요. (X)", "맵어요 (X)". 시제, 종결어미, 단어 선택처럼 다른 문맥에서는 맞을 수 있는 문장에는 "(X)"를 붙이지 않고, 맞는 문장만 씁니다.
+- 고치라고 한 표현이나 구조(예: 번역투 '~ 중에 하나')를 example에 다시 쓰지 않습니다.
+- example의 문장 끝은 학습자가 쓴 종결어미에 맞춥니다.
+
 [잘한 점]
 - praise: 이 글에서 실제로 잘한 점 한 가지를 구체적으로 한 문장으로 씁니다.`;
 
@@ -918,7 +930,7 @@ const MODE_RULES = {
 - modelAnswer를 쓸 때는 modelAnswerEn에 자연스러운 영어 번역을 씁니다. explanationEn, praiseEn, commentEn은 빈 문자열입니다.
 - 문법 용어를 쓰지 않습니다. 금지: particle, marker(단독 용어로), subject, object, topic, conjugation, conjugate, stem, honorific, connective, ending(문법 용어로), irregular, collocation, modifier, adnominal, nominalizer, tense, clause, predicate.
 - 대신 한국어 형태를 그대로 부르고, 그 형태가 하는 일을 일상 영어로 풀어서 설명합니다. 예: "이/가 points at who does the action. 을/를 points at the thing the action happens to."
-- 설명은 1~2문장으로 짧게 씁니다. example에는 맞는 문장과 틀린 문장을 "(O)"/"(X)"로 짝지어 보여 줍니다.
+- 설명은 1~2문장으로 짧게 씁니다. example은 [예문 쓰는 법]을 따릅니다. 형태가 늘 틀린 경우(조사·활용)에는 "(O)"/"(X)" 짝이 가장 알기 쉽습니다.
 
 [corrections — 틀린 부분 (빨간색)]
 특히 다음을 찾아 고칩니다.
@@ -939,13 +951,19 @@ tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 - 각 한국어 설명의 자연스러운 영어 번역을 explanationEn, praiseEn, commentEn에 씁니다. modelAnswer가 있으면 modelAnswerEn에 영어 번역을 씁니다. 영어 번역에도 어려운 문법 용어를 쓰지 않습니다.
 - 고칠 대상(original)은 학습자가 쓴 그대로 인용합니다.
 - '주어, 서술어, 조사' 같은 기본 문법 용어는 써도 되지만, 어려운 언어학 용어는 쓰지 않고 풀어서 설명합니다.
-- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. 필요하면 짧은 예문을 example에 1개 씁니다.
+- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. example은 [예문 쓰는 법]을 따릅니다.
+- '피동', '의존명사', '관형형' 같은 문법 용어를 쓰면 바로 뒤에 쉬운 말로 풀어 줍니다. 예: "피동(주어가 그 일을 당하는 쪽)"을 써요.
 
 [corrections — 틀린 부분 (빨간색) — B 모드의 중심]
 이 레벨 학습자는 문장 오류가 많습니다. 문장을 바르게 완성하는 데 집중해서 다음을 모두 찾아 고칩니다.
-- 조사 오류, 동사·형용사 활용 오류, 시제, 연결어미(-아서/-어서, -는데, -니까, -고 등) 오류
-- 주어와 서술어가 맞지 않는 문장, 어순, 꼭 필요한 말이 빠진 경우
+- 조사 오류. 특히 은/는과 이/가: '-면', '-ㄹ 때' 같은 조건 부분의 주어는 '-이/가', 두 가지를 대조할 때는 '-은/는' (예: 날씨가 좋으면 저는 산책을 해요)
+- 동사·형용사 활용 오류
+- 시제: 지난 일은 과거형, 늘 그런 일이나 일반적인 사실은 현재형
+- 연결어미: 이유·순서는 '-아서/-어서', 나열은 '-고', 대조는 '-지만', 배경은 '-는데'. 'A가 아니고 B예요'처럼 앞을 부정하고 바로잡을 때는 '-아니라'
+- 능동과 피동: 주어가 그 일을 당하는 쪽이면 피동 (예: 문이 갑자기 열었어요 → 열렸어요)
+- 주어와 서술어가 맞지 않는 문장, 어순, 꼭 필요한 말(주어·조사)이 빠진 경우
 - 함께 쓰지 않는 단어 조합, 문맥상 어색한 표현, 맞춤법·오타, 종결어미 섞임
+- 뜻이 비슷한 단어 중 더 정확한 것을 고르는 미묘한 차이는 지적하지 않습니다. 뜻이 잘못 전달될 때만 고칩니다.
 tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 
 [suggestions — 더 좋은 표현 (주황색)]
@@ -958,7 +976,8 @@ tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 - 설명 문장의 어휘·문법·문장 구조는 ${FEEDBACK_CONFIG.EXPLAIN_LEVEL[level] || 'B2'} 이하 수준으로 쉽고 짧게 씁니다.
 - 단, 고칠 대상(original)은 학습자가 쓴 그대로 인용하고, 고친 표현(corrected, suggested)은 레벨을 고려하지 않고 가장 자연스러운 표현으로 씁니다.
 - '주어, 서술어, 조사, 조건절, 안긴문장' 같은 기본 문법 용어는 써도 되지만, '연어'처럼 어려운 언어학 용어는 쓰지 말고 "'옷'과 '쓰다'는 함께 쓰지 않아요"처럼 풀어서 설명합니다.
-- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. 필요하면 짧은 예문을 example에 1개 씁니다.
+- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. example은 [예문 쓰는 법]을 따릅니다.
+- '피동', '의존명사', '관형형' 같은 문법 용어를 쓰면 바로 뒤에 쉬운 말로 풀어 줍니다. 예: "피동(주어가 그 일을 당하는 쪽)"을 써요.
 - 학습자가 일부러 그렇게 썼을 수도 있는 경우에는 단정하지 말고 "~을 말하고 싶었다면 ~가 더 자연스러워요"처럼 씁니다.
 - 오타처럼 이유가 분명한 경우에는 explanation을 빈 문자열로 둡니다.
 
@@ -1010,8 +1029,8 @@ const FEW_SHOT = {
 학습자 글: 저는 어제 밥이 먹었어요. 한국 음식은 맵어요.
 출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"You clearly said what you ate and how it tasted.","praiseEn":"","corrections":[{"original":"밥이 먹었어요","corrected":"밥을 먹었어요","tag":"조사","explanation":"Use 을/를 here, not 이/가. 이/가 points at who does the action, but 밥 is the thing being eaten.","explanationEn":"","example":"저는 빵을 먹어요. (O) / 저는 빵이 먹어요. (X)"},{"original":"맵어요","corrected":"매워요","tag":"활용","explanation":"맵다 changes to 매워요, not 맵어요. When a word ends in ㅂ, the ㅂ turns into 우 before -어요.","explanationEn":"","example":"춥다 → 추워요 (O) / 춥어요 (X)"}],"suggestions":[]}`,
   B: `질문: 주말에 뭐 했어요?
-학습자 글: 어제 친구랑 영화를 봤어. 영화가 너무 재미있어서 또 보고 싶어요.
-출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"무엇을 했는지와 어떻게 느꼈는지를 같이 써서 좋아요.","praiseEn":"It's good that you wrote both what you did and how you felt.","corrections":[{"original":"봤어","corrected":"봤어요","tag":"문체","explanation":"반말(-어)과 해요체(-어요)를 같이 썼어요. 어느 쪽을 써도 괜찮지만 한 글에서는 하나로 맞춰 써요.","explanationEn":"You mixed casual speech (-어) and polite speech (-어요). Either one is fine, but use only one in the same piece of writing.","example":""}],"suggestions":[]}`,
+학습자 글: 어제 친구랑 영화를 봤어. 극장 문이 늦게 열었어요. 영화가 너무 재미있어서 또 보고 싶어요.
+출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"무엇을 했는지와 어떻게 느꼈는지를 같이 써서 좋아요.","praiseEn":"It's good that you wrote both what you did and how you felt.","corrections":[{"original":"봤어","corrected":"봤어요","tag":"문체","explanation":"반말(-어)과 해요체(-어요)를 같이 썼어요. 어느 쪽을 써도 괜찮지만 한 글에서는 하나로 맞춰 써요.","explanationEn":"You mixed casual speech (-어) and polite speech (-어요). Either one is fine, but use only one in the same piece of writing.","example":""},{"original":"문이 늦게 열었어요","corrected":"문이 늦게 열렸어요","tag":"주어·서술어 호응","explanation":"문은 스스로 여는 것이 아니에요. 누가 열어서 문이 열린 거예요. 그래서 피동(주어가 그 일을 당하는 쪽)인 '열리다'를 써요.","explanationEn":"A door doesn't open things. Someone opens it, so the door 'gets opened': use 열리다.","example":"바람 때문에 창문이 닫혔어요."}],"suggestions":[]}`,
   C: `질문: 판타지 소설은 독자가 사회를 바꾸도록 이끌 수 있을까?
 학습자 글: 공상과 현실의 사이는 매우 복잡하다. 이런 소설은 삶을 개선하려는 동기를 악화할까? 졸라의 소설은 광부들의 투쟁을 아름답게 보여 주는 것이다. 근데 그런 소설은 노동조합 증가와 관련이 있었다고 할 수 있다.
 출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"질문을 던진 뒤 구체적인 소설을 예로 들어 주장을 뒷받침했어요.","praiseEn":"","corrections":[{"original":"동기를 악화할까","corrected":"동기를 약화할까","tag":"단어 선택","explanation":"'악화(惡化)'는 상황이 나빠지는 것이고, '약화(弱化)'는 힘이 약해지는 것이에요. 동기는 약해지는 것이라서 '약화'가 맞아요.","explanationEn":"","example":"운동을 안 하면 근력이 약화된다."},{"original":"보여 주는 것이다","corrected":"보여 준다","tag":"문맥상 어색한 표현","explanation":"'-는 것이다'는 어떤 대상의 본질이나 정의를 말할 때 써요. 소설의 내용을 묘사할 때는 '-ㄴ다'로 끝내는 것이 자연스러워요.","explanationEn":"","example":""}],"suggestions":[{"original":"근데","suggested":"그러나","tag":"문어체","explanation":"'근데'는 주로 말할 때 써요. 이 글의 어조에 맞추려면 '그러나'나 '하지만'이 자연스러워요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"공상과 현실의 사이는","suggested":"공상과 현실의 관계는","tag":"정확한 어휘","explanation":"틀린 표현은 아니지만, '사이'는 거리나 공간의 느낌이 있어요. '공상'과 '현실' 같은 추상적인 개념 두 가지를 말할 때는 '관계'가 더 정확해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"관련이 있었다고 할 수 있다","suggested":"영향을 미쳤을 가능성이 있다","tag":"논리 연결","explanation":"틀린 표현은 아니지만, '관련이 있다'는 뜻이 모호하고 약해요. 확실하지는 않지만 그럴 가능성이 있다는 주장을 하려면 '영향을 미쳤을 가능성이 있다'가 더 분명해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}}]}`
@@ -1037,8 +1056,8 @@ ${SCHEMA_LINE}`;
 function buildUserMessage(ctx) {
   const vocab = (ctx.vocab || []).map(v => `- ${v.term}: ${v.def}`).join('\n') || '없음';
   const mixed = mixedEndingSentences(ctx.learnerText);
-  const endCheck = mixed.list.length ? `\n\n[종결어미 확인 — 코드가 미리 찾은 것]\n이 글은 주로 ${ENDING_LABEL[mixed.dom]}로 끝나요. 다음 문장은 다른 종결어미로 끝나므로 반드시 corrections에 tag "문체"로 지적하고, corrected는 ${ENDING_LABEL[mixed.dom]}로 끝냅니다.\n${mixed.list.map(x => '- ' + x).join('\n')}` : '';
-  return `[학습 자료 레벨]\n${ctx.level}\n\n[본문]\n${ctx.article || '없음'}\n\n[핵심 어휘]\n${vocab}\n\n[질문]\n${ctx.question}\n\n[학습자 글]\n${ctx.learnerText}${endCheck}`;
+  const endCheck = mixed.list.length ? `\n\n[종결어미 확인 — 코드가 미리 찾은 것]\n이 글은 주로 ${ENDING_LABEL[mixed.dom]}로 끝나요. 다음 문장은 다른 종결어미로 끝나므로 반드시 corrections에 tag "문체"로 지적하고, corrected는 ${ENDING_LABEL[mixed.dom]}로 끝냅니다.\n${mixed.list.map(x => '- ' + x).join('\n')}\n이 문장 말고도 글 전체에서 다른 오류는 평소처럼 모두 찾습니다.` : '';
+  return `[학습 자료 레벨]\n${ctx.level}\n\n[본문]\n${ctx.article || '없음'}\n\n[핵심 어휘]\n${vocab}\n\n[질문]\n${ctx.question}${ctx.questionEn ? `\n(질문의 영어 번역: ${ctx.questionEn})` : ''}\n\n[학습자 글]\n${ctx.learnerText}${endCheck}`;
 }
 
 
@@ -1064,17 +1083,18 @@ function endingStyle(t) {
   if (/(니다|니까)$/.test(x)) return 'nida';
   if (/요$/.test(x)) return 'yo';
   if (/다$/.test(x)) return 'da';
+  if (/(어|아|해|야|지|래|네|게)$/.test(x)) return 'ban';   // 반말 (-어/-아/-야 …)
   return '';
 }
 // 학습자 글에서 가장 많이 쓴 종결어미
 function dominantEnding(text) {
-  const count = { nida: 0, yo: 0, da: 0 };
+  const count = { nida: 0, yo: 0, da: 0, ban: 0 };
   str(text).split(/(?<=[.!?])\s+|\n+/).forEach(sen => { const k = endingStyle(sen); if (k) count[k]++; });
   const top = Object.keys(count).sort((a, b) => count[b] - count[a])[0];
   return count[top] ? top : '';
 }
 // 가장 많이 쓴 종결어미와 다르게 끝난 문장 (AI에게 미리 알려 줌 — 모델이 놓치지 않도록)
-const ENDING_LABEL = { da: "'-다'", yo: "'-요'", nida: "'-ㅂ니다/-습니다'" };
+const ENDING_LABEL = { da: "'-다'", yo: "'-요'", nida: "'-ㅂ니다/-습니다'", ban: "반말('-어/-아/-야')" };
 function splitSentences(text) { return str(text).split(/(?<=[.!?])\s+|\n+/).map(x => x.trim()).filter(Boolean); }
 function mixedEndingSentences(text) {
   const dom = dominantEnding(text);
@@ -1135,8 +1155,18 @@ function checkSourceClaim(item, refText) {
   const kept = ex.split(/(?<=[.!?])\s+/).filter(sen => !/본문|핵심 어휘/.test(sen)).join(' ');
   return { ...item, explanation: kept };
 }
-const MAX_SUG_EOJEOL = 8;   // 주황 제안 원문이 이보다 길면 버림 (문장 전체를 다시 쓰는 제안 방지)
 
+// 예문 검사: 고친 표현을 그대로 되풀이하거나, 지적한 표현을 (X) 없이 다시 쓴 예문은 지움
+const NO_EXAMPLE_TAGS = ['맞춤법', '오타', '띄어쓰기', '문체'];
+function cleanExample(item, key) {
+  const ex = item.example; if (!ex) return item;
+  const bare = (t) => str(t).replace(/[\s.!?,"'“”‘’]/g, '');
+  const orig = bare(item.original);
+  const drop = NO_EXAMPLE_TAGS.includes(item.tag)
+    || bare(ex) === bare(item[key]) || bare(ex) === orig
+    || (orig.length >= 2 && bare(ex).includes(orig) && !/\(X\)/.test(ex));
+  return drop ? { ...item, example: '' } : item;
+}
 function normalizeFeedback(o, mode, learnerText, refText) {
   const C = FEEDBACK_CONFIG;
   if (!o || typeof o !== 'object' || !Array.isArray(o.corrections) || !Array.isArray(o.suggestions)) throw AppError('format');
@@ -1166,13 +1196,13 @@ function normalizeFeedback(o, mode, learnerText, refText) {
     };
   }).filter(s => s.original && s.suggested && s.original !== s.suggested);
   const text = str(learnerText);
-  const correctionsOk = corrections.map(c => trimOverlap(c, 'corrected', text)).filter(Boolean);
+  const correctionsOk = corrections.map(c => trimOverlap(c, 'corrected', text)).filter(Boolean).map(c => cleanExample(c, 'corrected'));
   const fixedText = correctionsOk.reduce((t, c) => t.replace(c.original, c.corrected), text);
   const suggestionsOk = suggestions
-    .filter(s => eojeols(s.original).length <= MAX_SUG_EOJEOL)
+    .filter(s => eojeols(s.original).length <= (C.MAX_SUG_EOJEOL[mode] || 8))
     .filter(s => !isParticleOnlyChange(s.original, s.suggested))
     .map(s => trimOverlap(s, 'suggested', text, fixedText)).filter(Boolean)
-    .map(s => checkSourceClaim(s, refText));
+    .map(s => checkSourceClaim(s, refText)).map(s => cleanExample(s, 'suggested'));
   const on = status === 'on';
   return {
     mode,
@@ -1316,9 +1346,10 @@ async function runDiscussFeedback(id) {
   st.keyPanel = false; st.loading = true; st.error = null; rerenderDiscussItem(id);
   const level = app.userLevel, text = st.text;
   const question = [d.questionKor].concat((d.sub || []).map((q, i) => `${d.id}-${i + 1}. ${q}`)).join('\n');
-  const vocab = (d.vocab || []).map(v => ({ term: v.term, def: v.def }));
+  const questionEn = modeOf(level) === 'C' ? '' : [d.questionEng].concat(d.subEn || []).filter(Boolean).join('\n');
+  const vocab = (d.vocab || []).map(v => ({ term: v.term, def: v.def || v.defEng || '' }));
   try {
-    st.feedback = await callAIJSON(buildSystemPrompt(level), buildUserMessage({ level, article: articleText(), vocab, question, learnerText: text }), (o) => normalizeFeedback(o, modeOf(level), text, articleText() + '\n' + vocab.map(v => v.term).join('\n')));
+    st.feedback = await callAIJSON(buildSystemPrompt(level), buildUserMessage({ level, article: articleText(), vocab, question, questionEn, learnerText: text }), (o) => normalizeFeedback(o, modeOf(level), text, articleText() + '\n' + vocab.map(v => v.term).join('\n')));
     st.feedbackFor = text; aiSaveStore();
   } catch (e) { st.error = e.code ? e : AppError('format'); }
   finally { st.loading = false; rerenderDiscussItem(id); }
@@ -1327,7 +1358,7 @@ async function runDiscussFeedback(id) {
 // ---------- 읽기: AI 문맥 사전 ----------
 const getAIDictionaryData = async (term) => {
   const mode = modeOf();
-  const how = mode === 'A'
+  const how = (mode === 'A' || FEEDBACK_CONFIG.DICT_LANG === 'en')
     ? '설명(definition)은 쉬운 일상 영어로 1~2문장 씁니다. 문법 용어를 쓰지 않습니다.'
     : `설명(definition)은 한국어 해요체로, ${FEEDBACK_CONFIG.EXPLAIN_LEVEL[app.userLevel] || 'B1'} 수준의 쉬운 말로 1~2문장 씁니다. 문장 끝은 "-요"로 끝냅니다.`;
   const sys = `당신은 한국어 선생님입니다. [본문]을 참고하여 [검색어]가 이 본문에서 어떤 뜻으로 쓰였는지 설명합니다.
@@ -1365,7 +1396,9 @@ const AI_KEY_LINKS = {
 const aiLink = (url, label) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="aifb-link">${label}</a>`;
 function aiKeyHowHTML() {
   const L_ = AI_KEY_LINKS;
-  const step1 = koOnly()
+  const step1 = enOnly()
+    ? `Go to ${aiLink(L_.geminiKeys, 'Google AI Studio (aistudio.google.com)')} and sign in with your Google account.`
+    : koOnly()
     ? `${aiLink(L_.geminiKeys, 'Google AI Studio(aistudio.google.com)')}에 들어가서 Google 계정으로 로그인해요.`
     : `${aiLink(L_.geminiKeys, 'Google AI Studio(aistudio.google.com)')}에 들어가서 Google 계정으로 로그인해요.<span class="lk-en aifb-block">Go to Google AI Studio and sign in with your Google account.</span>`;
   return `<details class="aifb-how"><summary>${bi('API Key 만드는 방법', 'How to get an API Key')}</summary><ol>
@@ -1373,7 +1406,7 @@ function aiKeyHowHTML() {
       <li>${biBlock("'API 키 만들기(Create API key)'를 눌러 새 키를 만들어요.", "Press 'Create API key' to make a new key.")}</li>
       <li>${biBlock("만든 키를 복사해서 아래 'AI 설정'의 API Key 칸에 붙여 넣어요.", "Copy the key and paste it into the API Key box in 'AI settings' below.")}</li>
     </ol>
-    <p class="aifb-note">${bi('자세한 안내', 'More help')}: ${aiLink(L_.geminiGuide, 'Google 공식 안내 (Gemini API Key)')}</p>
+    <p class="aifb-note">${bi('자세한 안내', 'More help')}: ${aiLink(L_.geminiGuide, enOnly() ? 'Official Google guide (Gemini API Key)' : 'Google 공식 안내 (Gemini API Key)')}</p>
     <p class="aifb-note">${biBlock('Gemini 키는 무료로 쓸 수 있어요. 하루에 쓸 수 있는 양이 정해져 있어요. Claude나 OpenAI의 API Key는 이용 금액을 먼저 충전해야 해요.', 'A Gemini key is free to use, with a daily limit. API Keys from Claude or OpenAI need prepaid credit first.')}</p>
     <p class="aifb-note">Claude: ${aiLink(L_.claudeGuide, bi('API Key 만드는 방법 (공식 안내)', 'How to get an API Key (official guide)'))}<br>OpenAI: ${aiLink(L_.openaiKeys, bi('API Key 페이지', 'API Keys page'))} · ${aiLink(L_.openaiGuide, bi('시작 안내 (공식)', 'Quickstart (official)'))}</p>
   </details>`;

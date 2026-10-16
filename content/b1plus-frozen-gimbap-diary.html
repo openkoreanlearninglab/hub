@@ -817,6 +817,14 @@ const COMMON_RULES = (mode, level) => `[공통 규칙]
 - "partial"이나 "off"이면 comment에 무엇이 부족한지 1~2문장으로 쓰고, modelAnswer에 ${level} 수준의 짧은 한국어 모범 답안(${mode === 'A' ? '2~3' : '3~4'}문장)을 씁니다. 가능하면 [핵심 어휘]를 활용합니다.
 - "on"이면 comment, commentEn, modelAnswer, modelAnswerEn은 모두 빈 문자열입니다.
 
+[예문(example) 쓰는 법 — 선생님 첨삭 방식]
+- 빨간색 중 tag가 조사, 활용, 문법, 시제, 연결 표현, 주어·서술어 호응인 것에는 반드시 example을 1개 씁니다. 맞춤법, 오타, 띄어쓰기, 문체(종결어미 섞임)는 example을 빈 문자열로 둡니다. 주황색은 도움이 될 때만 씁니다.
+- example은 학습자 문장을 되풀이하지 않습니다. 같은 문법 구조에, 학습자가 쉽게 아는 다른 일상 단어를 넣은 짧은 문장을 씁니다. 예: '-면' 앞의 주어 → "날씨가 좋으면 저는 산책을 해요."
+- 차이를 보여 주고 싶으면 둘 다 맞는 대조 짝을 씁니다. 예: "저는 커피를 좋아해요. 그런데 친구는 차를 좋아해요."
+- "(X)"는 그 형태가 어떤 문맥에서도 틀린 경우에만 붙입니다. 예: "빵이 먹어요. (X)", "맵어요 (X)". 시제, 종결어미, 단어 선택처럼 다른 문맥에서는 맞을 수 있는 문장에는 "(X)"를 붙이지 않고, 맞는 문장만 씁니다.
+- 고치라고 한 표현이나 구조(예: 번역투 '~ 중에 하나')를 example에 다시 쓰지 않습니다.
+- example의 문장 끝은 학습자가 쓴 종결어미에 맞춥니다.
+
 [잘한 점]
 - praise: 이 글에서 실제로 잘한 점 한 가지를 구체적으로 한 문장으로 씁니다.`;
 
@@ -826,7 +834,7 @@ const MODE_RULES = {
 - modelAnswer를 쓸 때는 modelAnswerEn에 자연스러운 영어 번역을 씁니다. explanationEn, praiseEn, commentEn은 빈 문자열입니다.
 - 문법 용어를 쓰지 않습니다. 금지: particle, marker(단독 용어로), subject, object, topic, conjugation, conjugate, stem, honorific, connective, ending(문법 용어로), irregular, collocation, modifier, adnominal, nominalizer, tense, clause, predicate.
 - 대신 한국어 형태를 그대로 부르고, 그 형태가 하는 일을 일상 영어로 풀어서 설명합니다. 예: "이/가 points at who does the action. 을/를 points at the thing the action happens to."
-- 설명은 1~2문장으로 짧게 씁니다. example에는 맞는 문장과 틀린 문장을 "(O)"/"(X)"로 짝지어 보여 줍니다.
+- 설명은 1~2문장으로 짧게 씁니다. example은 [예문 쓰는 법]을 따릅니다. 형태가 늘 틀린 경우(조사·활용)에는 "(O)"/"(X)" 짝이 가장 알기 쉽습니다.
 
 [corrections — 틀린 부분 (빨간색)]
 특히 다음을 찾아 고칩니다.
@@ -847,7 +855,8 @@ tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 - 각 한국어 설명의 자연스러운 영어 번역을 explanationEn, praiseEn, commentEn에 씁니다. modelAnswer가 있으면 modelAnswerEn에 영어 번역을 씁니다. 영어 번역에도 어려운 문법 용어를 쓰지 않습니다.
 - 고칠 대상(original)은 학습자가 쓴 그대로 인용합니다.
 - '주어, 서술어, 조사' 같은 기본 문법 용어는 써도 되지만, 어려운 언어학 용어는 쓰지 않고 풀어서 설명합니다.
-- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. 필요하면 짧은 예문을 example에 1개 씁니다.
+- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. example은 [예문 쓰는 법]을 따릅니다.
+- '피동', '의존명사', '관형형' 같은 문법 용어를 쓰면 바로 뒤에 쉬운 말로 풀어 줍니다. 예: "피동(주어가 그 일을 당하는 쪽)"을 써요.
 
 [corrections — 틀린 부분 (빨간색) — B 모드의 중심]
 이 레벨 학습자는 문장 오류가 많습니다. 문장을 바르게 완성하는 데 집중해서 다음을 모두 찾아 고칩니다.
@@ -871,7 +880,8 @@ tag는 다음 중 하나: ${FEEDBACK_CONFIG.RED_TAGS.join(', ')}
 - 설명 문장의 어휘·문법·문장 구조는 ${FEEDBACK_CONFIG.EXPLAIN_LEVEL[level] || 'B2'} 이하 수준으로 쉽고 짧게 씁니다.
 - 단, 고칠 대상(original)은 학습자가 쓴 그대로 인용하고, 고친 표현(corrected, suggested)은 레벨을 고려하지 않고 가장 자연스러운 표현으로 씁니다.
 - '주어, 서술어, 조사, 조건절, 안긴문장' 같은 기본 문법 용어는 써도 되지만, '연어'처럼 어려운 언어학 용어는 쓰지 말고 "'옷'과 '쓰다'는 함께 쓰지 않아요"처럼 풀어서 설명합니다.
-- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. 필요하면 짧은 예문을 example에 1개 씁니다.
+- 규칙만 말하지 말고, 이 문장에서 왜 문제인지를 함께 설명합니다. example은 [예문 쓰는 법]을 따릅니다.
+- '피동', '의존명사', '관형형' 같은 문법 용어를 쓰면 바로 뒤에 쉬운 말로 풀어 줍니다. 예: "피동(주어가 그 일을 당하는 쪽)"을 써요.
 - 학습자가 일부러 그렇게 썼을 수도 있는 경우에는 단정하지 말고 "~을 말하고 싶었다면 ~가 더 자연스러워요"처럼 씁니다.
 - 오타처럼 이유가 분명한 경우에는 explanation을 빈 문자열로 둡니다.
 
@@ -923,8 +933,8 @@ const FEW_SHOT = {
 학습자 글: 저는 어제 밥이 먹었어요. 한국 음식은 맵어요.
 출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"You clearly said what you ate and how it tasted.","praiseEn":"","corrections":[{"original":"밥이 먹었어요","corrected":"밥을 먹었어요","tag":"조사","explanation":"Use 을/를 here, not 이/가. 이/가 points at who does the action, but 밥 is the thing being eaten.","explanationEn":"","example":"저는 빵을 먹어요. (O) / 저는 빵이 먹어요. (X)"},{"original":"맵어요","corrected":"매워요","tag":"활용","explanation":"맵다 changes to 매워요, not 맵어요. When a word ends in ㅂ, the ㅂ turns into 우 before -어요.","explanationEn":"","example":"춥다 → 추워요 (O) / 춥어요 (X)"}],"suggestions":[]}`,
   B: `질문: 주말에 뭐 했어요?
-학습자 글: 어제 친구랑 영화를 봤어. 영화가 너무 재미있어서 또 보고 싶어요.
-출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"무엇을 했는지와 어떻게 느꼈는지를 같이 써서 좋아요.","praiseEn":"It's good that you wrote both what you did and how you felt.","corrections":[{"original":"봤어","corrected":"봤어요","tag":"문체","explanation":"반말(-어)과 해요체(-어요)를 같이 썼어요. 어느 쪽을 써도 괜찮지만 한 글에서는 하나로 맞춰 써요.","explanationEn":"You mixed casual speech (-어) and polite speech (-어요). Either one is fine, but use only one in the same piece of writing.","example":""}],"suggestions":[]}`,
+학습자 글: 어제 친구랑 영화를 봤어. 극장 문이 늦게 열었어요. 영화가 너무 재미있어서 또 보고 싶어요.
+출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"무엇을 했는지와 어떻게 느꼈는지를 같이 써서 좋아요.","praiseEn":"It's good that you wrote both what you did and how you felt.","corrections":[{"original":"봤어","corrected":"봤어요","tag":"문체","explanation":"반말(-어)과 해요체(-어요)를 같이 썼어요. 어느 쪽을 써도 괜찮지만 한 글에서는 하나로 맞춰 써요.","explanationEn":"You mixed casual speech (-어) and polite speech (-어요). Either one is fine, but use only one in the same piece of writing.","example":""},{"original":"문이 늦게 열었어요","corrected":"문이 늦게 열렸어요","tag":"주어·서술어 호응","explanation":"문은 스스로 여는 것이 아니에요. 누가 열어서 문이 열린 거예요. 그래서 피동(주어가 그 일을 당하는 쪽)인 '열리다'를 써요.","explanationEn":"A door doesn't open things. Someone opens it, so the door 'gets opened': use 열리다.","example":"바람 때문에 창문이 닫혔어요."}],"suggestions":[]}`,
   C: `질문: 판타지 소설은 독자가 사회를 바꾸도록 이끌 수 있을까?
 학습자 글: 공상과 현실의 사이는 매우 복잡하다. 이런 소설은 삶을 개선하려는 동기를 악화할까? 졸라의 소설은 광부들의 투쟁을 아름답게 보여 주는 것이다. 근데 그런 소설은 노동조합 증가와 관련이 있었다고 할 수 있다.
 출력: {"relevance":{"status":"on","comment":"","commentEn":"","modelAnswer":"","modelAnswerEn":""},"praise":"질문을 던진 뒤 구체적인 소설을 예로 들어 주장을 뒷받침했어요.","praiseEn":"","corrections":[{"original":"동기를 악화할까","corrected":"동기를 약화할까","tag":"단어 선택","explanation":"'악화(惡化)'는 상황이 나빠지는 것이고, '약화(弱化)'는 힘이 약해지는 것이에요. 동기는 약해지는 것이라서 '약화'가 맞아요.","explanationEn":"","example":"운동을 안 하면 근력이 약화된다."},{"original":"보여 주는 것이다","corrected":"보여 준다","tag":"문맥상 어색한 표현","explanation":"'-는 것이다'는 어떤 대상의 본질이나 정의를 말할 때 써요. 소설의 내용을 묘사할 때는 '-ㄴ다'로 끝내는 것이 자연스러워요.","explanationEn":"","example":""}],"suggestions":[{"original":"근데","suggested":"그러나","tag":"문어체","explanation":"'근데'는 주로 말할 때 써요. 이 글의 어조에 맞추려면 '그러나'나 '하지만'이 자연스러워요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"공상과 현실의 사이는","suggested":"공상과 현실의 관계는","tag":"정확한 어휘","explanation":"틀린 표현은 아니지만, '사이'는 거리나 공간의 느낌이 있어요. '공상'과 '현실' 같은 추상적인 개념 두 가지를 말할 때는 '관계'가 더 정확해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}},{"original":"관련이 있었다고 할 수 있다","suggested":"영향을 미쳤을 가능성이 있다","tag":"논리 연결","explanation":"틀린 표현은 아니지만, '관련이 있다'는 뜻이 모호하고 약해요. 확실하지는 않지만 그럴 가능성이 있다는 주장을 하려면 '영향을 미쳤을 가능성이 있다'가 더 분명해요.","explanationEn":"","example":"","word":{"term":"","hanja":"","meaning":""}}]}`
@@ -950,7 +960,7 @@ ${SCHEMA_LINE}`;
 function buildUserMessage(ctx) {
   const vocab = (ctx.vocab || []).map(v => `- ${v.term}: ${v.def}`).join('\n') || '없음';
   const mixed = mixedEndingSentences(ctx.learnerText);
-  const endCheck = mixed.list.length ? `\n\n[종결어미 확인 — 코드가 미리 찾은 것]\n이 글은 주로 ${ENDING_LABEL[mixed.dom]}로 끝나요. 다음 문장은 다른 종결어미로 끝나므로 반드시 corrections에 tag "문체"로 지적하고, corrected는 ${ENDING_LABEL[mixed.dom]}로 끝냅니다.\n${mixed.list.map(x => '- ' + x).join('\n')}` : '';
+  const endCheck = mixed.list.length ? `\n\n[종결어미 확인 — 코드가 미리 찾은 것]\n이 글은 주로 ${ENDING_LABEL[mixed.dom]}로 끝나요. 다음 문장은 다른 종결어미로 끝나므로 반드시 corrections에 tag "문체"로 지적하고, corrected는 ${ENDING_LABEL[mixed.dom]}로 끝냅니다.\n${mixed.list.map(x => '- ' + x).join('\n')}\n이 문장 말고도 글 전체에서 다른 오류는 평소처럼 모두 찾습니다.` : '';
   return `[학습 자료 레벨]\n${ctx.level}\n\n[본문]\n${ctx.article || '없음'}\n\n[핵심 어휘]\n${vocab}\n\n[질문]\n${ctx.question}${ctx.questionEn ? `\n(질문의 영어 번역: ${ctx.questionEn})` : ''}\n\n[학습자 글]\n${ctx.learnerText}${endCheck}`;
 }
 
@@ -1050,6 +1060,17 @@ function checkSourceClaim(item, refText) {
   return { ...item, explanation: kept };
 }
 
+// 예문 검사: 고친 표현을 그대로 되풀이하거나, 지적한 표현을 (X) 없이 다시 쓴 예문은 지움
+const NO_EXAMPLE_TAGS = ['맞춤법', '오타', '띄어쓰기', '문체'];
+function cleanExample(item, key) {
+  const ex = item.example; if (!ex) return item;
+  const bare = (t) => str(t).replace(/[\s.!?,"'“”‘’]/g, '');
+  const orig = bare(item.original);
+  const drop = NO_EXAMPLE_TAGS.includes(item.tag)
+    || bare(ex) === bare(item[key]) || bare(ex) === orig
+    || (orig.length >= 2 && bare(ex).includes(orig) && !/\(X\)/.test(ex));
+  return drop ? { ...item, example: '' } : item;
+}
 function normalizeFeedback(o, mode, learnerText, refText) {
   const C = FEEDBACK_CONFIG;
   if (!o || typeof o !== 'object' || !Array.isArray(o.corrections) || !Array.isArray(o.suggestions)) throw AppError('format');
@@ -1079,13 +1100,13 @@ function normalizeFeedback(o, mode, learnerText, refText) {
     };
   }).filter(s => s.original && s.suggested && s.original !== s.suggested);
   const text = str(learnerText);
-  const correctionsOk = corrections.map(c => trimOverlap(c, 'corrected', text)).filter(Boolean);
+  const correctionsOk = corrections.map(c => trimOverlap(c, 'corrected', text)).filter(Boolean).map(c => cleanExample(c, 'corrected'));
   const fixedText = correctionsOk.reduce((t, c) => t.replace(c.original, c.corrected), text);
   const suggestionsOk = suggestions
     .filter(s => eojeols(s.original).length <= (C.MAX_SUG_EOJEOL[mode] || 8))
     .filter(s => !isParticleOnlyChange(s.original, s.suggested))
     .map(s => trimOverlap(s, 'suggested', text, fixedText)).filter(Boolean)
-    .map(s => checkSourceClaim(s, refText));
+    .map(s => checkSourceClaim(s, refText)).map(s => cleanExample(s, 'suggested'));
   const on = status === 'on';
   return {
     mode,
