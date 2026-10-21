@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>플래시 카드 | 기본 동사</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --g50:#f9fafb; --g100:#f3f4f6; --g200:#e5e7eb; --g300:#d1d5db;
+    --g400:#9ca3af; --g500:#6b7280; --g600:#4b5563; --g700:#374151; --g800:#1f2937; --g900:#111827;
+    --ok:#047857; --no:#b91c1c;
+    --sans:'Noto Sans KR', sans-serif; --serif:'Noto Serif KR', serif; --eng:'Montserrat', 'Noto Sans KR', sans-serif;
+    --mono:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sh:0 1px 2px 0 rgb(0 0 0 / .05);
+  }
+  *,*::before,*::after{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ margin:0; background:#fff; color:#1a1a1a; font-family:var(--sans); -webkit-font-smoothing:antialiased; }
+  button{ font-family:inherit; }
+  button, a, [role="button"]{ touch-action:manipulation; }
+  ::selection{ background:var(--g100); color:#000; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .fade{ animation:fadeIn .35s ease-out both; }
+
+  .head{ text-align:center; padding:3rem 1.5rem 0; }
+  .head .brand{ font-family:var(--eng); font-size:12px; font-weight:600; color:var(--g900); letter-spacing:.01em; margin-bottom:1rem; }
+  .head h1{ font-family:var(--serif); font-weight:600; color:var(--g900); font-size:1.5rem; margin:0; letter-spacing:-.01em; }
+  .head .sub{ display:block; font-family:var(--eng); font-size:.72rem; letter-spacing:.02em; color:var(--g400); margin-top:.5rem; }
+  .lvl{ display:inline-block; font-family:var(--eng); font-size:10px; font-weight:600; letter-spacing:.08em; border:1px solid var(--g900); color:var(--g900); padding:1px 6px; margin-left:6px; vertical-align:1px; }
+
+  .wrap{ max-width:40rem; margin:0 auto; width:100%; padding:2rem 1rem 4rem; }
+  .lab{ font-family:var(--eng); font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--g400); }
+  .muted{ color:var(--g500); }
+  .small{ font-size:.78rem; line-height:1.6; }
+
+  /* ---- buttons ---- */
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.4rem; min-height:44px; padding:.6rem 1rem; background:#fff;
+        border:1px solid var(--g200); font-family:var(--eng); font-size:.8rem; font-weight:500; color:var(--g700);
+        cursor:pointer; transition:all .2s; border-radius:2px; }
+  .btn:hover{ border-color:#000; color:#000; }
+  .btn.pri{ background:#000; color:#fff; border-color:#000; }
+  .btn.pri:hover{ background:var(--g800); }
+  .btn[disabled]{ opacity:.4; cursor:default; }
+  .btn svg{ width:1rem; height:1rem; display:block; }
+  .lnk{ background:none; border:0; padding:0; font-family:var(--eng); font-size:.75rem; color:var(--g500); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .lnk:hover{ color:#000; }
+  .seg{ display:inline-flex; border:1px solid var(--g200); border-radius:2px; overflow:hidden; }
+  .seg button{ min-height:36px; padding:.35rem .8rem; background:#fff; border:0; font-family:var(--eng); font-size:11px; font-weight:700;
+               color:var(--g400); cursor:pointer; white-space:nowrap; flex-shrink:0; }
+  .seg button + button{ border-left:1px solid var(--g200); }
+  .seg button.on{ background:#111827; color:#fff; }
+
+  /* ---- intro ---- */
+  .intro{ border:1px solid var(--g100); box-shadow:var(--sh); padding:1.75rem 1.5rem; }
+  .intro h2{ font-family:var(--eng); font-size:1.1rem; font-weight:600; color:var(--g900); margin:0 0 .25rem; }
+  .intro .goal{ font-size:.85rem; color:var(--g600); line-height:1.65; margin:.25rem 0 1.25rem; }
+  .intro h3{ font-family:var(--eng); font-size:.82rem; font-weight:600; color:var(--g900); margin:1.25rem 0 .5rem; }
+  .intro ol{ margin:0; padding-left:1.2rem; font-family:var(--eng); font-size:.86rem; line-height:1.7; color:var(--g700); }
+  .intro ol li{ margin-bottom:.35rem; }
+  .intro p{ font-family:var(--eng); font-size:.84rem; line-height:1.7; color:var(--g700); margin:.35rem 0; }
+  .note{ border-left:2px solid var(--g300); padding:.5rem .8rem; background:var(--g50); font-family:var(--eng); font-size:.8rem; line-height:1.65; color:var(--g600); margin:.75rem 0; }
+  .note b{ color:var(--g900); }
+  .intro-foot{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.75rem; margin-top:1.5rem; }
+  .chk{ display:inline-flex; align-items:center; gap:.45rem; font-family:var(--eng); font-size:.78rem; color:var(--g500); cursor:pointer; }
+  .chk .box{ width:16px; height:16px; border:1px solid var(--g400); display:inline-flex; align-items:center; justify-content:center; font-size:11px; color:#fff; }
+  .chk.on .box{ background:#111827; border-color:#111827; }
+
+  /* ---- home ---- */
+  .home{ display:flex; flex-direction:column; gap:1.5rem; }
+  .modes{ display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+  .mode{ text-align:left; background:#fff; border:1px solid var(--g200); padding:1rem; cursor:pointer; border-radius:2px; transition:all .2s; }
+  .mode:hover{ border-color:var(--g400); }
+  .mode.on{ border-color:#111827; box-shadow:inset 0 0 0 1px #111827; }
+  .mode .t{ font-family:var(--eng); font-size:.9rem; font-weight:600; color:var(--g900); }
+  .mode .d{ font-family:var(--eng); font-size:.75rem; color:var(--g500); line-height:1.5; margin-top:.3rem; }
+  .boxes{ display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--g100); }
+  .bx{ padding:.7rem .3rem; text-align:center; }
+  .bx + .bx{ border-left:1px solid var(--g100); }
+  .bx .n{ font-family:var(--mono); font-size:1.1rem; color:var(--g900); }
+  .bx .k{ font-family:var(--eng); font-size:10px; font-weight:700; letter-spacing:.06em; color:var(--g500); margin-top:.15rem; }
+  .bx .i{ font-family:var(--eng); font-size:9.5px; color:var(--g400); }
+  .today{ font-family:var(--eng); font-size:.9rem; color:var(--g700); }
+  .today b{ color:var(--g900); }
+  .acts{ display:flex; flex-wrap:wrap; gap:.5rem; }
+  .acts .btn{ flex:1; min-width:12rem; }
+  .settings{ border-top:1px solid var(--g100); padding-top:1.25rem; display:flex; flex-direction:column; gap:1rem; }
+  .set{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:.5rem 1rem; }
+  .set .nm{ font-family:var(--eng); font-size:.82rem; font-weight:600; color:var(--g800); }
+  .set .ds{ font-family:var(--eng); font-size:.74rem; color:var(--g500); line-height:1.55; flex-basis:100%; }
+  .msg{ font-family:var(--eng); font-size:.75rem; color:var(--ok); }
+  .msg.err{ color:var(--no); }
+
+  /* ---- card ---- */
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.6rem; }
+  .count{ font-family:var(--mono); font-size:.75rem; color:var(--g400); }
+  .prog{ width:100%; height:.2rem; background:var(--g100); margin-bottom:1rem; }
+  .prog i{ display:block; height:100%; background:#000; transition:width .3s; }
+  .card{ border:1px solid var(--g100); box-shadow:var(--sh); padding:1.25rem; display:flex; flex-direction:column; align-items:center; gap:1rem; }
+  .media-box{ position:relative; width:100%; aspect-ratio:16/9; background:var(--g50); overflow:hidden; border-radius:2px; }
+  .media-box img, .media-box video{ width:100%; height:100%; object-fit:cover; display:block; }
+  .media-box video{ object-position:center top; }
+  .media-box.missing img, .media-box.missing video{ visibility:hidden; }
+  .media-box.missing::after{ content:attr(data-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:1rem;
+        text-align:center; font-family:var(--eng); font-size:.78rem; line-height:1.6; color:var(--g400); }
+  .media-box.thumb{ max-width:20rem; }
+  .cue{ text-align:center; font-family:var(--eng); font-size:.9rem; color:var(--g700); line-height:1.55; margin:0; }
+  .cue .s{ display:block; font-size:.76rem; color:var(--g400); margin-top:.25rem; }
+  .listen{ display:flex; flex-direction:column; align-items:center; gap:1rem; padding:2.5rem 0 1.5rem; }
+  .bigplay{ width:96px; height:96px; border-radius:50%; border:1px solid #111827; background:#fff; color:#111827; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .bigplay:hover, .bigplay.on{ background:#111827; color:#fff; }
+  .bigplay svg{ width:34px; height:34px; display:block; }
+  .row{ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; }
+
+  .sent{ width:100%; border:1px dashed var(--g200); background:#fff; padding:.9rem 1rem; cursor:pointer; text-align:center; border-radius:2px; }
+  .sent:hover{ border-color:var(--g400); }
+  .sent .ko{ font-family:var(--serif); font-size:1.5rem; line-height:1.6; color:var(--g700); margin:0; }
+  .sent .ko .hl{ font-weight:700; color:var(--g900); }
+  .sent.hid .ko, .sent.hid .ko .hl{ color:transparent; text-shadow:0 0 12px rgba(26,26,26,.55); user-select:none; -webkit-user-select:none; }
+  .sent .tip{ display:block; font-family:var(--eng); font-size:.72rem; color:var(--g400); margin-top:.35rem; }
+  .sent.shown{ border-style:solid; border-color:var(--g100); cursor:default; }
+
+  .tools{ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; }
+  .tool{ display:inline-flex; align-items:center; gap:.4rem; min-height:40px; padding:.45rem .85rem; background:#fff; border:1px solid var(--g200);
+         font-family:var(--eng); font-size:.76rem; font-weight:500; color:var(--g600); cursor:pointer; border-radius:2px; transition:all .2s; }
+  .tool:hover{ border-color:#000; color:#000; }
+  .tool.on{ background:#111827; color:#fff; border-color:#111827; }
+  .tool svg{ width:.95rem; height:.95rem; display:block; }
+  .status{ min-height:1.2em; text-align:center; font-family:var(--eng); font-size:.78rem; color:var(--g500); }
+  .status.ok{ color:var(--ok); } .status.no{ color:var(--no); }
+
+  .judge{ display:flex; gap:.5rem; width:100%; margin-top:1rem; }
+  .jbtn{ flex:1; min-height:52px; padding:.7rem .5rem; background:#fff; border:1px solid var(--g200); font-family:var(--eng); font-size:.85rem; font-weight:500;
+         cursor:pointer; color:var(--g600); border-radius:2px; transition:all .2s; }
+  .jbtn .kk{ display:block; font-size:10px; color:var(--g400); margin-top:2px; }
+  .jbtn.k:hover{ border-color:var(--ok); color:var(--ok); background:#ecfdf5; }
+  .jbtn.u:hover{ border-color:var(--no); color:var(--no); background:#fef2f2; }
+  .flipbar{ display:flex; flex-direction:column; align-items:center; gap:.75rem; margin-top:1rem; }
+
+  /* ---- done ---- */
+  .sum{ text-align:center; padding:2.5rem 1.25rem; border:1px solid var(--g100); }
+  .sum h2{ font-family:var(--eng); font-size:1.15rem; font-weight:600; color:var(--g900); margin:0 0 1rem; }
+  .sum .nums{ display:flex; justify-content:center; gap:2rem; margin-bottom:1rem; }
+  .sum .nums div{ font-family:var(--eng); font-size:.75rem; color:var(--g500); }
+  .sum .nums b{ display:block; font-family:var(--mono); font-size:1.5rem; color:var(--g900); font-weight:500; }
+  .sum .peek{ font-family:var(--eng); font-size:.82rem; color:var(--g600); margin:0 0 1.75rem; line-height:1.6; }
+  .sum .acts{ max-width:22rem; margin:0 auto; flex-direction:column; }
+
+  .hint{ margin-top:1.5rem; font-family:var(--eng); font-size:.68rem; color:var(--g400); text-align:center; line-height:1.8; }
+  kbd{ font-family:var(--mono); font-size:.65rem; background:var(--g50); border:1px solid var(--g200); border-radius:3px; padding:.05rem .3rem; color:var(--g500); }
+  @media (hover:none){ .hint{ display:none; } }
+
+  @media (max-width:1024px){
+    .media-box{ aspect-ratio:3/4; width:min(100%, calc(60vh * 3 / 4)); }
+    .media-box.thumb{ width:min(70%, calc(34vh * 3 / 4)); }
+    .head{ padding:1.75rem 1rem 0; }
+    .wrap{ padding:1.25rem .75rem 3rem; }
+    .card{ padding:1rem; }
+  }
+  @media (max-width:520px){
+    .modes{ grid-template-columns:1fr; }
+    .sent .ko{ font-size:1.2rem; }
+    .boxes .bx .i{ display:none; }
+  }
+  noscript .ns{ display:block; max-width:34rem; margin:2rem auto; padding:1rem; border:1px solid var(--g200); text-align:center; font-size:.875rem; color:var(--g500); }
+  .sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="brand">OpenKoreanLearningLab</div>
+  <h1>기본 동사</h1>
+  <span class="sub">Basic Verbs · Flash Cards <span class="lvl">A1</span></span>
+</header>
+
+<noscript><span class="ns">이 학습 자료를 보려면 자바스크립트를 켜 주세요. / Please enable JavaScript.</span></noscript>
+
+<main id="app" class="wrap"></main>
+
+<script>
+'use strict';
+(function () {
+
+  /* =========================================================================
+     콘텐츠 — 카드 데이터만 바꾸면 새 덱이 된다
+     ========================================================================= */
+  var DECK_ID = 'a1-basic-verbs';
+  var BASE = 'https://github.com/openkoreanlearninglab/hub/raw/refs/heads/main/flashcards/a1-flashcards-basic-verbs/';
+  var IMG = BASE+'images/', IMG3X4 = BASE+'images-3x4/', VID = BASE+'videos/', VID9X16 = BASE+'videos-9x16/', AUD = BASE+'audio/';
+  var CARDS = [
+    { id:'01_rest_home', verb:'쉬다', ko:'집에서 쉬어요.', hl:'쉬어요', media:{type:'image', src:IMG+'01_rest_home.jpg', src3x4:IMG3X4+'01_rest_home-3x4.jpg'}, audio:AUD+'01_rest_home.m4a' },
+    { id:'02_sleep_10', verb:'자다', ko:'10시에 자요.', hl:'자요', media:{type:'image', src:IMG+'02_sleep_10.jpg', src3x4:IMG3X4+'02_sleep_10-3x4.jpg'}, audio:AUD+'02_sleep_10.m4a' },
+    { id:'03_eat_ramen', verb:'먹다', ko:'라면을 먹어요.', hl:'먹어요', media:{type:'image', src:IMG+'03_eat_ramen.jpg', src3x4:IMG3X4+'03_eat_ramen-3x4.jpg'}, audio:AUD+'03_eat_ramen.m4a' },
+    { id:'04_drink_coffee', verb:'마시다', ko:'커피를 마셔요.', hl:'마셔요', media:{type:'image', src:IMG+'04_drink_coffee.jpg', src3x4:IMG3X4+'04_drink_coffee-3x4.jpg'}, audio:AUD+'04_drink_coffee.m4a' },
+    { id:'05_cook_home', verb:'요리하다', ko:'집에서 요리해요.', hl:'요리해요', media:{type:'image', src:IMG+'05_cook_home.jpg', src3x4:IMG3X4+'05_cook_home-3x4.jpg'}, audio:AUD+'05_cook_home.m4a' },
+    { id:'06_like_cats', verb:'좋아하다', ko:'고양이를 좋아해요.', hl:'좋아해요', media:{type:'image', src:IMG+'06_like_cats.jpg', src3x4:IMG3X4+'06_like_cats-3x4.jpg'}, audio:AUD+'06_like_cats.m4a' },
+    { id:'07_watch_drama', verb:'보다', ko:'드라마를 봐요.', hl:'봐요', media:{type:'image', src:IMG+'07_watch_drama.jpg', src3x4:IMG3X4+'07_watch_drama-3x4.jpg'}, audio:AUD+'07_watch_drama.m4a' },
+    { id:'08_read_book', verb:'읽다', ko:'책을 읽어요.', hl:'읽어요', media:{type:'image', src:IMG+'08_read_book.jpg', src3x4:IMG3X4+'08_read_book-3x4.jpg'}, audio:AUD+'08_read_book.m4a' },
+    { id:'09_listen_music', verb:'듣다', ko:'음악을 들어요.', hl:'들어요', media:{type:'image', src:IMG+'09_listen_music.jpg', src3x4:IMG3X4+'09_listen_music-3x4.jpg'}, audio:AUD+'09_listen_music.m4a' },
+    { id:'10_study_korean', verb:'공부하다', ko:'한국어를 공부해요.', hl:'공부해요', media:{type:'image', src:IMG+'10_study_korean.jpg', src3x4:IMG3X4+'10_study_korean-3x4.jpg'}, audio:AUD+'10_study_korean.m4a' },
+    { id:'11_learn_cooking', verb:'배우다', ko:'요리를 배워요.', hl:'배워요', media:{type:'image', src:IMG+'11_learn_cooking.jpg', src3x4:IMG3X4+'11_learn_cooking-3x4.jpg'}, audio:AUD+'11_learn_cooking.m4a' },
+    { id:'12_work_home', verb:'일하다', ko:'집에서 일해요.', hl:'일해요', media:{type:'image', src:IMG+'12_work_home.jpg', src3x4:IMG3X4+'12_work_home-3x4.jpg'}, audio:AUD+'12_work_home.m4a' },
+    { id:'13_exercise_gym', verb:'운동하다', ko:'헬스장에서 운동해요.', hl:'운동해요', media:{type:'image', src:IMG+'13_exercise_gym.jpg', src3x4:IMG3X4+'13_exercise_gym-3x4.jpg'}, audio:AUD+'13_exercise_gym.m4a' },
+    { id:'14_play_games', verb:'게임하다', ko:'친구하고 게임해요.', hl:'게임해요', media:{type:'image', src:IMG+'14_play_games.jpg', src3x4:IMG3X4+'14_play_games-3x4.jpg'}, audio:AUD+'14_play_games.m4a' },
+    { id:'15_buy_bag', verb:'사다', ko:'가방을 사요.', hl:'사요', media:{type:'image', src:IMG+'15_buy_bag.jpg', src3x4:IMG3X4+'15_buy_bag-3x4.jpg'}, audio:AUD+'15_buy_bag.m4a' },
+    { id:'16_meet_friend', verb:'만나다', ko:'친구를 만나요.', hl:'만나요', media:{type:'video', src:VID+'16_meet_friend.mp4', src9x16:VID9X16+'16_meet_friend-9x16.mp4'}, audio:AUD+'16_meet_friend.m4a' },
+    { id:'17_call_friend', verb:'전화하다', ko:'친구한테 전화해요.', hl:'전화해요', media:{type:'image', src:IMG+'17_call_friend.jpg', src3x4:IMG3X4+'17_call_friend-3x4.jpg'}, audio:AUD+'17_call_friend.m4a' },
+    { id:'18_talk_friend', verb:'이야기하다', ko:'친구하고 이야기해요.', hl:'이야기해요', media:{type:'image', src:IMG+'18_talk_friend.jpg', src3x4:IMG3X4+'18_talk_friend-3x4.jpg'}, audio:AUD+'18_talk_friend.m4a' },
+    { id:'19_go_work', verb:'가다', ko:'회사에 가요.', hl:'가요', media:{type:'video', src:VID+'19_go_work.mp4', src9x16:VID9X16+'19_go_work-9x16.mp4'}, audio:AUD+'19_go_work.m4a' },
+    { id:'20_come_home', verb:'오다', ko:'집에 와요.', hl:'와요', media:{type:'video', src:VID+'20_come_home.mp4', src9x16:VID9X16+'20_come_home-9x16.mp4'}, audio:AUD+'20_come_home.m4a' }
+  ];
+
+  /* Leitner 상자 4개 — 다음 복습까지 날짜 수 */
+  var INTERVALS = [1, 2, 4, 7];
+  var BOX_NAMES = ['Daily', 'Every 2 days', 'Every 4 days', 'Weekly'];
+  var REQUEUE_GAP = 3;       /* '다시 볼래요' → 몇 장 뒤에 다시 */
+  var REQUEUE_MAX = 3;       /* 한 회차에서 같은 카드를 다시 넣는 최대 횟수 */
+  var REC_MAX_MS = 7000;     /* 녹음 최대 길이 */
+  /* 앞면 'I know this →' 건너뛰기
+     'known'  = 한 번이라도 '소리가 같았어요'로 넘긴 카드(상자 2 이상)에만 보인다 — 처음 보는 카드는 꼭 뒤집어 소리를 듣게 한다 (A1 기본)
+     'always' = 모든 카드 앞면에 보인다 (처음 보는 카드도 바로 넘길 수 있음)
+     'off'    = 보이지 않는다 */
+  var SKIP_MODE = 'known';
+  var STORE_KEY = 'okll:fc:' + DECK_ID + ':v1';
+
+  /* =========================================================================
+     유틸
+     ========================================================================= */
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function boldTarget(ko, hl){
+    var s = esc(ko); if(!hl) return s;
+    var h = esc(hl), i = s.lastIndexOf(h);
+    return i<0 ? s : s.slice(0,i)+'<span class="hl">'+h+'</span>'+s.slice(i+h.length);
+  }
+  function shuffle(a){ var n=a.slice(),i,j,t; for(i=n.length-1;i>0;i--){ j=Math.floor(Math.random()*(i+1)); t=n[i];n[i]=n[j];n[j]=t; } return n; }
+  function pad(n){ return (n<10?'0':'')+n; }
+  function dayStr(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+  function today(){ return dayStr(new Date()); }
+  function addDays(n){ var d=new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()+n); return dayStr(d); }
+  function fmtDay(s){
+    if(!s) return '';
+    if(s<=today()) return 'today';
+    if(s===addDays(1)) return 'tomorrow';
+    var p=s.split('-'); var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]-1];
+    return m+' '+(+p[2]);
+  }
+  function normKo(s){ return String(s||'').replace(/[\s.,!?·~"'“”‘’()\-]/g,''); }
+
+  var ICON = {
+    play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>',
+    spk:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5L6 9H2v6h4l5 4V5z"/><path stroke-linecap="round" stroke-width="1.8" d="M15.5 8.5a5 5 0 010 7"/></svg>',
+    slow:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="8.5" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M12 7.5V12l3 2"/></svg>',
+    mic:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="9" y="3" width="6" height="11" rx="3" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg>',
+    stop:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="1"/></svg>',
+    check:'<svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+  };
+
+  /* =========================================================================
+     저장 (localStorage — 못 쓰면 조용히 메모리만 사용)
+     ========================================================================= */
+  function loadStore(){
+    try{ var raw = window.localStorage.getItem(STORE_KEY); if(raw){ var o = JSON.parse(raw); if(o && typeof o==='object') return o; } }catch(_){}
+    return null;
+  }
+  function saveStore(){
+    try{ window.localStorage.setItem(STORE_KEY, JSON.stringify({ v:1, settings:state.settings, prog:state.prog })); }catch(_){}
+  }
+
+  /* =========================================================================
+     기능 지원 여부
+     ========================================================================= */
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+  var CAN_REC = !!(window.MediaRecorder && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  var MOBILE_MQ = window.matchMedia('(max-width:1024px)');
+  function isMobile(){ return MOBILE_MQ.matches; }
+
+  /* =========================================================================
+     상태 (진실의 원천)
+     ========================================================================= */
+  var DEFAULT_SETTINGS = { mode:'see', reveal:'tap', shuffle:true, asr:false, introSeen:false };
+  var state = {
+    view:'intro',            /* intro | home | card | done */
+    settings:{}, prog:{ see:{}, hear:{} },
+    introDontShow:false, homeMsg:'', homeMsgErr:false,
+    sess:null
+  };
+  (function init(){
+    var s = loadStore() || {};
+    var st = s.settings || {}, k;
+    for(k in DEFAULT_SETTINGS){ state.settings[k] = (k in st) ? st[k] : DEFAULT_SETTINGS[k]; }
+    if(!SR) state.settings.asr = false;
+    if(s.prog && typeof s.prog==='object'){ state.prog.see = s.prog.see||{}; state.prog.hear = s.prog.hear||{}; }
+    state.view = state.settings.introSeen ? 'home' : 'intro';
+  })();
+
+  function rec(mode, id){ return state.prog[mode][id] || { b:0, due:null, n:0 }; }
+  function isDue(mode, id){ var r = rec(mode,id); return !r.due || r.due <= today(); }
+  function dueList(mode){ return CARDS.map(function(c,i){return i;}).filter(function(i){ return isDue(mode, CARDS[i].id); }); }
+  function boxCounts(mode){
+    var out = { fresh:0, b:[0,0,0,0] };
+    CARDS.forEach(function(c){ var r = state.prog[mode][c.id]; if(!r || !r.n) out.fresh++; else out.b[r.b]++; });
+    return out;
+  }
+  function nextDue(mode){
+    var min=null; CARDS.forEach(function(c){ var r=state.prog[mode][c.id]; if(r && r.due && r.due>today() && (!min || r.due<min)) min=r.due; });
+    return min;
+  }
+
+  /* =========================================================================
+     오디오 (원어민 문장 음성 1개 + 녹음 재생 1개)
+     ========================================================================= */
+  var audioEl = new Audio(); audioEl.preload = 'auto';
+  var playing = false;
+  function playNative(rate, after){
+    var c = curCard(); if(!c) return;
+    try{
+      if(audioEl.getAttribute('src') !== c.audio){ audioEl.setAttribute('src', c.audio); }
+      audioEl.playbackRate = rate || 1;
+      audioEl.currentTime = 0;
+      audioEl.onended = function(){ playing=false; refreshPlayUI(); if(after) after(); else onNativeEnded(); };
+      audioEl.onerror = function(){ playing=false; refreshPlayUI(); setStatus('Audio is not ready yet.', 'no'); };
+      var p = audioEl.play(); playing = true; refreshPlayUI();
+      if(p && p.catch){ p.catch(function(){ playing=false; refreshPlayUI(); }); }
+    }catch(_){ playing=false; }
+  }
+  function stopNative(){ try{ audioEl.pause(); audioEl.onended=null; }catch(_){} playing=false; }
+  function onNativeEnded(){
+    var s = state.sess; if(!s || !s.flipped) return;
+    if(state.settings.reveal==='auto' && s.step<2){ s.step=2; s.autoShown=true; refreshSentence(); }
+  }
+
+  /* ---- 녹음해서 비교 (브라우저 안에서만, 저장·전송 없음) ---- */
+  var recorder=null, recStream=null, recChunks=[], recTimer=null, recAudio=null, recUrl=null;
+  function stopTracks(){ try{ if(recStream){ recStream.getTracks().forEach(function(t){t.stop();}); } }catch(_){} recStream=null; }
+  function cleanupRec(){
+    clearTimeout(recTimer); recTimer=null;
+    try{ if(recorder && recorder.state!=='inactive') recorder.stop(); }catch(_){}
+    recorder=null; stopTracks();
+    try{ if(recAudio){ recAudio.pause(); } }catch(_){}
+    if(recUrl){ try{ URL.revokeObjectURL(recUrl); }catch(_){} recUrl=null; }
+    if(state.sess) state.sess.rec='idle';
+  }
+  function startRecording(){
+    var s = state.sess; if(!s) return;
+    stopNative();
+    navigator.mediaDevices.getUserMedia({ audio:true }).then(function(stream){
+      recStream = stream; recChunks = [];
+      try{ recorder = new MediaRecorder(stream); }catch(e){ stopTracks(); setStatus('Recording is not supported in this browser.', 'no'); return; }
+      recorder.ondataavailable = function(e){ if(e.data && e.data.size) recChunks.push(e.data); };
+      recorder.onstop = function(){
+        stopTracks();
+        if(!state.sess || state.sess.rec!=='recording'){ return; }
+        var blob = new Blob(recChunks, { type: recorder && recorder.mimeType || 'audio/webm' });
+        recorder = null;
+        playComparison(blob);
+      };
+      recorder.start();
+      s.rec='recording'; refreshTools(); setStatus('Recording… say the sentence, then press Stop.', '');
+      recTimer = setTimeout(function(){ stopRecording(); }, REC_MAX_MS);
+    }).catch(function(){
+      setStatus('Microphone not available. Allow microphone access (works on the website, may be blocked when opened as a local file).', 'no');
+    });
+  }
+  function stopRecording(){ clearTimeout(recTimer); recTimer=null; try{ if(recorder && recorder.state!=='inactive') recorder.stop(); }catch(_){ cleanupRec(); refreshTools(); } }
+  function playComparison(blob){
+    var s = state.sess; if(!s) return;
+    s.rec='playing'; refreshTools(); setStatus('Native speaker → you', '');
+    recUrl = URL.createObjectURL(blob);
+    playNative(1, function(){
+      if(!state.sess || state.sess.rec!=='playing') return;
+      recAudio = recAudio || new Audio();
+      recAudio.src = recUrl;
+      recAudio.onended = function(){ cleanupRec(); refreshTools(); setStatus('Did they sound the same? Your recording has been deleted.', ''); };
+      var p = recAudio.play(); if(p && p.catch){ p.catch(function(){ cleanupRec(); refreshTools(); }); }
+    });
+  }
+
+  /* ---- 발음 확인 (선택, 기본 꺼짐 — Web Speech API) ---- */
+  var recog = null;
+  function startAsr(){
+    var s = state.sess, c = curCard(); if(!s || !c || !SR) return;
+    stopNative(); cleanupRec();
+    try{ if(recog) recog.abort(); }catch(_){}
+    recog = new SR();
+    recog.lang = 'ko-KR'; recog.interimResults = false; recog.maxAlternatives = 5; recog.continuous = false;
+    var got = false;
+    recog.onresult = function(e){
+      got = true;
+      var alts = [], r = e.results && e.results[0], i;
+      if(r){ for(i=0;i<r.length;i++){ alts.push(r[i].transcript); } }
+      var full = normKo(c.ko), verb = normKo(c.hl), res = 'try';
+      alts.forEach(function(a){ var n = normKo(a); if(n===full) res='match'; else if(res!=='match' && n.indexOf(verb)>=0) res='close'; });
+      s.asr = res; refreshTools();
+      if(res==='match') setStatus('Match — it was understood as the same sentence.', 'ok');
+      else if(res==='close') setStatus('Close — the verb was right. Listen again and compare the rest.', 'ok');
+      else setStatus('Not recognized as this sentence. Listen and try again.', 'no');
+    };
+    recog.onerror = function(e){
+      got = true; s.asr='idle'; refreshTools();
+      var m = (e && e.error==='not-allowed') ? 'Microphone permission was blocked.'
+            : (e && e.error==='no-speech') ? 'No speech heard. Try again.'
+            : (e && e.error==='network') ? 'Speech check needs an internet connection.'
+            : 'Speech check is not available right now.';
+      setStatus(m, 'no');
+    };
+    recog.onend = function(){ if(!got && state.sess){ state.sess.asr='idle'; refreshTools(); setStatus('No speech heard. Try again.', 'no'); } };
+    try{ recog.start(); s.asr='listen'; refreshTools(); setStatus('Listening… say the sentence.', ''); }
+    catch(_){ s.asr='idle'; setStatus('Speech check is not available right now.', 'no'); }
+  }
+  function stopAsr(){ try{ if(recog) recog.abort(); }catch(_){} recog=null; if(state.sess) state.sess.asr='idle'; }
+
+  /* =========================================================================
+     회차(세션)
+     ========================================================================= */
+  function startSession(list){
+    var base = list.slice();
+    var q = state.settings.shuffle ? shuffle(base) : base.sort(function(a,b){return a-b;});
+    state.sess = { mode:state.settings.mode, queue:q, pos:0, flipped:false, step:0, autoShown:false,
+                   graded:{}, same:{}, again:{}, requeued:{}, peeks:0, rec:'idle', asr:'idle', total:q.length };
+    state.view = q.length ? 'card' : 'home';
+    render();
+    if(q.length) onCardShown();
+  }
+  function curCard(){ var s=state.sess; return s ? CARDS[s.queue[s.pos]] : null; }
+  function resetCardUI(){ var s=state.sess; stopNative(); cleanupRec(); stopAsr(); s.flipped=false; s.step=0; s.autoShown=false; }
+  function onCardShown(){ if(state.sess && state.sess.mode==='hear'){ setTimeout(function(){ playNative(1); }, 250); } }
+
+  function canSkip(){
+    var s = state.sess, c = curCard(); if(!s || !c || s.flipped) return false;
+    if(SKIP_MODE==='always') return true;
+    if(SKIP_MODE==='known') return rec(s.mode, c.id).b >= 1;
+    return false;
+  }
+  function skipCard(){ var s = state.sess; if(!canSkip()) return; s.skipped = (s.skipped||0) + 1; grade('same', true); }
+  function grade(kind, skip){
+    var s = state.sess, c = curCard(); if(!s || !c || (!s.flipped && !skip)) return;
+    var mode = s.mode, r = rec(mode, c.id), idx = s.queue[s.pos];
+    if(!s.graded[c.id]){
+      r = { b:r.b, due:r.due, n:r.n||0 };
+      r.b = kind==='same' ? Math.min(r.b+1, 3) : Math.max(r.b-1, 0);
+      r.due = addDays(INTERVALS[r.b]); r.n += 1;
+      state.prog[mode][c.id] = r; s.graded[c.id] = true; saveStore();
+    }
+    if(kind==='same'){ s.same[c.id]=true; delete s.again[c.id]; }
+    else{
+      s.again[c.id]=true;
+      var times = s.requeued[c.id]||0;
+      if(times < REQUEUE_MAX){ s.requeued[c.id]=times+1; s.queue.splice(Math.min(s.pos+1+REQUEUE_GAP, s.queue.length), 0, idx); }
+    }
+    resetCardUI();
+    if(s.pos+1 >= s.queue.length){ state.view='done'; render(); return; }
+    s.pos += 1; render(); onCardShown();
+  }
+  function flip(){
+    var s = state.sess; if(!s || state.view!=='card') return;
+    if(s.flipped) return;
+    stopNative(); s.flipped = true; render(); playNative(1);
+  }
+  function tapSentence(){
+    var s = state.sess; if(!s || !s.flipped || s.step>=2) return;
+    if(s.step===0){ s.step=1; refreshSentence(); playNative(1); }
+    else { s.step=2; s.peeks+=1; refreshSentence(); }
+  }
+
+  /* =========================================================================
+     뷰 (state → HTML 문자열)
+     ========================================================================= */
+  function introHTML(){
+    var asrLine = SR
+      ? 'Your browser supports it.'
+      : '<b>Your browser does not support it</b> (for example, Firefox) — the button will not appear, and you can still use “Record &amp; compare”.';
+    return '<section class="intro fade">'
+      + '<h2>How to use these cards</h2>'
+      + '<p class="goal">The goal: hear Korean and understand it right away — <b>without going through English.</b> Pictures carry the meaning; your ears do the checking.</p>'
+      + '<h3>Mode 1 · See → Say</h3>'
+      + '<ol>'
+        + '<li>Look at the picture and describe it in Korean. <b>Say it out loud</b> — not just in your head.</li>'
+        + '<li>Flip the card. The Korean audio plays.</li>'
+        + '<li><b>Compare with your ears.</b> Did your sentence sound the same? If yes, move on — you don’t need to read anything.</li>'
+        + '<li>Couldn’t catch it, or not sure? Tap the blurred sentence once to hear it again, and once more to see the text.</li>'
+      + '</ol>'
+      + '<p class="muted small">Small differences in time or place words are fine. If the verb matches, count it as the same.</p>'
+      + '<h3>Mode 2 · Listen → Picture</h3>'
+      + '<ol><li>Listen first and picture the scene in your head. Say it back if you can.</li><li>Flip to see the picture and check.</li></ol>'
+      + '<h3>Rate yourself</h3>'
+      + '<p><b>Sounded the same</b> — the card is done for today and comes back later and later (daily → every 2 days → every 4 days → weekly). '
+      + '<b>Again</b> — it comes back a few cards later, and sooner next time. Your progress is saved only in this browser.</p>'
+      + (SKIP_MODE==='known' ? '<p><b>I know this →</b> — once you have rated a card “Sounded the same”, it shows this button on the front next time, so you can skip it without flipping. New cards always need to be said out loud and checked with your ears first.</p>'
+        : SKIP_MODE==='always' ? '<p><b>I know this →</b> — already sure? Skip the card from the front without flipping. It counts as “Sounded the same”.</p>' : '')
+      + '<h3>Record &amp; compare</h3>'
+      + '<p>Record yourself and hear the native audio followed by your own voice. Your recording stays on your device and is deleted right after playing. Nothing is uploaded.</p>'
+      + '<h3>Speech check (optional · off by default)</h3>'
+      + '<div class="note">If you turn it on in Settings, <b>your voice is sent to Google (Chrome, Edge) or Apple (Safari)</b> to be turned into text, and the result is compared with the sentence. '
+      + 'This site has no server and never sees or stores your voice, but those companies process it under their own privacy policies. '
+      + 'It needs an internet connection and does not work in Firefox. ' + asrLine + '</div>'
+      + '<div class="intro-foot">'
+        + '<span class="chk'+(state.introDontShow?' on':'')+'" role="checkbox" tabindex="0" aria-checked="'+(state.introDontShow?'true':'false')+'" data-act="intro-dontshow"><span class="box">'+(state.introDontShow?'✓':'')+'</span>Don’t show this again</span>'
+        + '<button type="button" class="btn pri" data-act="intro-go">Start</button>'
+      + '</div>'
+      + '</section>';
+  }
+
+  function homeHTML(){
+    var st = state.settings, m = st.mode, due = dueList(m).length, bc = boxCounts(m), nd = nextDue(m);
+    var modeBtn = function(v, t, d){ return '<button type="button" class="mode'+(m===v?' on':'')+'" data-act="mode" data-v="'+v+'"><div class="t">'+t+'</div><div class="d">'+d+'</div></button>'; };
+    var boxes = '<div class="bx"><div class="n">'+bc.fresh+'</div><div class="k">New</div><div class="i">not seen yet</div></div>'
+      + bc.b.map(function(n,i){ return '<div class="bx"><div class="n">'+n+'</div><div class="k">Box '+(i+1)+'</div><div class="i">'+BOX_NAMES[i]+'</div></div>'; }).join('');
+    var todayLine = due
+      ? 'Today: <b>'+due+'</b> card'+(due>1?'s':'')+' to review'
+      : 'All done for today.' + (nd ? ' Next review: <b>'+fmtDay(nd)+'</b>' : '');
+    var seg = function(act, val, opts){ return '<div class="seg" role="group">'+opts.map(function(o){ return '<button type="button" data-act="'+act+'" data-v="'+o[0]+'" class="'+(String(val)===String(o[0])?'on':'')+'">'+o[1]+'</button>'; }).join('')+'</div>'; };
+    var asrSet = SR
+      ? seg('set-asr', st.asr?'on':'off', [['off','Off'],['on','On']])
+      : '<span class="muted small">Not available in this browser</span>';
+    return '<section class="home fade">'
+      + '<div><div class="lab" style="margin-bottom:.5rem">Mode</div><div class="modes">'
+        + modeBtn('see','See → Say','Look at the picture, say it out loud, then listen and compare.')
+        + modeBtn('hear','Listen → Picture','Hear the sentence first, picture it, then flip to see.')
+      + '</div></div>'
+      + '<div><div class="lab" style="margin-bottom:.5rem">Review boxes · '+(m==='see'?'See → Say':'Listen → Picture')+'</div><div class="boxes">'+boxes+'</div></div>'
+      + '<div class="today">'+todayLine+'</div>'
+      + '<div class="acts">'
+        + '<button type="button" class="btn pri" data-act="start-due"'+(due?'':' disabled')+'>Start review'+(due?' ('+due+')':'')+'</button>'
+        + '<button type="button" class="btn" data-act="start-all">Practice all '+CARDS.length+'</button>'
+      + '</div>'
+      + '<div class="settings">'
+        + '<div class="lab">Settings</div>'
+        + '<div class="set"><span class="nm">Show the sentence</span>'+seg('set-reveal', st.reveal, [['tap','When I tap'],['auto','After the audio']])
+          + '<span class="ds">“When I tap” keeps the text blurred: tap once to hear again, twice to see it. “After the audio” is easier for your first rounds.</span></div>'
+        + '<div class="set"><span class="nm">Card order</span>'+seg('set-shuffle', st.shuffle?'on':'off', [['on','Shuffle'],['off','In order']])+'</div>'
+        + '<div class="set"><span class="nm">Speech check <span class="muted" style="font-weight:400">(optional)</span></span>'+asrSet
+          + '<span class="ds">Sends your voice to Google (Chrome, Edge) or Apple (Safari) for recognition. Not available in Firefox. Off by default.</span></div>'
+        + '<div class="set"><span class="nm">Progress backup</span><div class="row" style="justify-content:flex-end">'
+          + '<button type="button" class="btn" data-act="export">Export</button>'
+          + '<button type="button" class="btn" data-act="import">Import</button>'
+          + '<input type="file" accept="application/json,.json" class="sr" id="imp" tabindex="-1" aria-hidden="true">'
+          + '</div><span class="ds">Progress is saved only in this browser. Export a file to move it to another device or browser.</span>'
+          + (state.homeMsg ? '<span class="msg'+(state.homeMsgErr?' err':'')+'">'+esc(state.homeMsg)+'</span>' : '') + '</div>'
+        + '<div><button type="button" class="lnk" data-act="show-intro">How it works</button></div>'
+      + '</div>'
+      + '</section>';
+  }
+
+  function mediaHTML(c, thumb){
+    var m = c.media, mob = isMobile(), ph = 'Picture not available yet';
+    if(m.type==='video'){
+      var src = (mob && m.src9x16) ? m.src9x16 : m.src;
+      return '<div class="media-box'+(thumb?' thumb':'')+'" data-ph="'+esc(ph)+'"><video src="'+esc(src)+'" autoplay muted loop playsinline preload="metadata"></video></div>';
+    }
+    var isrc = (mob && m.src3x4) ? m.src3x4 : m.src;
+    return '<div class="media-box'+(thumb?' thumb':'')+'" data-ph="'+esc(ph)+'"><img src="'+esc(isrc)+'" alt="picture card"></div>';
+  }
+
+  function sentenceInner(){
+    var s = state.sess, c = curCard();
+    var tip = s.step===0 ? 'Tap to hear it again' : (s.step===1 ? 'Tap again to see the text' : '');
+    return '<p class="ko" lang="ko">'+boldTarget(c.ko, c.hl)+'</p>'+(tip?'<span class="tip">'+tip+'</span>':'');
+  }
+  function toolsInner(){
+    var s = state.sess, out = '';
+    out += '<button type="button" class="tool'+(playing?' on':'')+'" data-act="replay">'+ICON.spk+' Listen</button>';
+    out += '<button type="button" class="tool" data-act="slow">'+ICON.slow+' 0.75×</button>';
+    if(CAN_REC){
+      out += s.rec==='recording'
+        ? '<button type="button" class="tool on" data-act="rec-stop">'+ICON.stop+' Stop</button>'
+        : '<button type="button" class="tool'+(s.rec==='playing'?' on':'')+'" data-act="rec"'+(s.rec==='playing'?' disabled':'')+'>'+ICON.mic+' Record &amp; compare</button>';
+    }
+    if(SR && state.settings.asr){
+      out += '<button type="button" class="tool'+(s.asr==='listen'?' on':'')+'" data-act="asr">'+ICON.check+' '+(s.asr==='listen'?'Listening…':'Check my speech')+'</button>';
+    }
+    return out;
+  }
+
+  function cardHTML(){
+    var s = state.sess, c = curCard(), see = s.mode==='see';
+    var pct = Math.round(((s.pos+1)/s.queue.length)*100);
+    var top = '<div class="topbar"><span class="lab">'+(see?'See → Say':'Listen → Picture')+'</span>'
+      + '<span class="count">'+(s.pos+1)+' / '+s.queue.length+'</span>'
+      + '<button type="button" class="lnk" data-act="home">Exit</button></div>'
+      + '<div class="prog"><i style="width:'+pct+'%"></i></div>';
+    var body;
+    if(!s.flipped){
+      if(see){
+        body = '<div class="card fade">'+mediaHTML(c,false)
+          + '<p class="cue">Describe the picture in Korean — <b>out loud</b>.<span class="s">Then flip the card and compare with your ears.</span></p></div>'
+          + flipBar();
+      }else{
+        body = '<div class="card fade"><div class="listen">'
+          + '<button type="button" class="bigplay'+(playing?' on':'')+'" data-act="replay" aria-label="Play">'+ICON.play+'</button>'
+          + '<div class="row"><button type="button" class="tool" data-act="slow">'+ICON.slow+' 0.75×</button></div>'
+          + '<p class="cue">Listen and picture the scene.<span class="s">Say it back if you can, then flip.</span></p></div></div>'
+          + flipBar();
+      }
+    }else{
+      body = '<div class="card fade">' + mediaHTML(c, see)
+        + '<div class="sent'+(s.step<2?' hid':' shown')+'" id="sent" data-act="sent" role="button" tabindex="0" aria-label="Sentence">'+sentenceInner()+'</div>'
+        + '<div class="tools" id="tools">'+toolsInner()+'</div>'
+        + '<div class="status" id="status"></div></div>'
+        + '<div class="judge">'
+          + '<button type="button" class="jbtn k" data-act="same">Sounded the same<span class="kk">1</span></button>'
+          + '<button type="button" class="jbtn u" data-act="again">Again<span class="kk">2</span></button>'
+        + '</div>';
+    }
+    return top + body + '<p class="hint"><kbd>Space</kbd> flip · <kbd>R</kbd> listen again · <kbd>T</kbd> reveal text · <kbd>M</kbd> record · <kbd>1</kbd> same'+(SKIP_MODE!=='off'?' (on the front: I know this)':'')+' · <kbd>2</kbd> again</p>';
+  }
+
+  function flipBar(){
+    return '<div class="flipbar"><button type="button" class="btn pri" data-act="flip">Flip</button>'
+      + (canSkip() ? '<button type="button" class="lnk skip" data-act="skip">I know this →</button>' : '')
+      + '</div>';
+  }
+  function doneHTML(){
+    var s = state.sess;
+    var same = Object.keys(s.same).length, again = Object.keys(s.again).length, skipped = s.skipped||0;
+    var nd = nextDue(s.mode);
+    var peek = s.peeks===0
+      ? 'You never opened the text. Your ears did all the work.'
+      : 'You opened the text <b>'+s.peeks+'</b> time'+(s.peeks>1?'s':'')+'. Fewer is better — it means your ears are catching more.';
+    return '<section class="sum fade"><h2>Round complete</h2>'
+      + '<div class="nums"><div><b>'+same+'</b>Sounded the same'+(skipped?'<br><span style="font-size:.7rem">('+skipped+' skipped as known)</span>':'')+'</div><div><b>'+again+'</b>Again</div></div>'
+      + '<p class="peek">'+peek+(nd?'<br>Next review: <b>'+fmtDay(nd)+'</b>':'')+'</p>'
+      + '<div class="acts">'
+        + (again?'<button type="button" class="btn pri" data-act="again-round">Practice the “Again” cards ('+again+')</button>':'')
+        + '<button type="button" class="btn" data-act="home">Back to start</button>'
+      + '</div></section>';
+  }
+
+  /* =========================================================================
+     렌더 (전체 + 부분)
+     ========================================================================= */
+  var root = document.getElementById('app');
+  function render(){
+    var v = state.view, h = '';
+    if(v==='intro') h = introHTML();
+    else if(v==='home') h = homeHTML();
+    else if(v==='card') h = cardHTML();
+    else if(v==='done') h = doneHTML();
+    root.innerHTML = h;
+  }
+  function refreshSentence(){
+    var el = root.querySelector('#sent'); if(!el || !state.sess) return;
+    var s = state.sess;
+    el.className = 'sent'+(s.step<2?' hid':' shown');
+    el.innerHTML = sentenceInner();
+  }
+  function refreshTools(){ var el = root.querySelector('#tools'); if(el && state.sess) el.innerHTML = toolsInner(); }
+  function refreshPlayUI(){
+    var b = root.querySelector('.bigplay'); if(b) b.classList.toggle('on', playing);
+    refreshTools();
+  }
+  function setStatus(msg, kind){ var el = root.querySelector('#status'); if(!el) return; el.textContent = msg||''; el.className = 'status'+(kind?' '+kind:''); }
+
+  /* 이미지·동영상이 아직 없을 때(404) 빈칸 대신 안내 표시 — 오류 이벤트는 버블링하지 않아 캡처로 받는다 */
+  root.addEventListener('error', function(e){
+    var t = e.target; if(!t || (t.tagName!=='IMG' && t.tagName!=='VIDEO')) return;
+    var box = t.closest('.media-box'); if(box) box.classList.add('missing');
+  }, true);
+
+  /* =========================================================================
+     액션 — #app에 이벤트 위임 1회
+     ========================================================================= */
+  function goHome(){ if(state.sess){ resetCardUI(); } state.sess=null; state.view='home'; state.homeMsg=''; render(); }
+  function exportProgress(){
+    try{
+      var data = JSON.stringify({ deck:DECK_ID, exported:new Date().toISOString(), settings:state.settings, prog:state.prog }, null, 2);
+      var blob = new Blob([data], { type:'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = DECK_ID+'-progress-'+today()+'.json';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      state.homeMsg='Progress file downloaded.'; state.homeMsgErr=false;
+    }catch(_){ state.homeMsg='Export failed in this browser.'; state.homeMsgErr=true; }
+    render();
+  }
+  function importProgress(file){
+    var fr = new FileReader();
+    fr.onload = function(){
+      try{
+        var o = JSON.parse(fr.result);
+        if(!o || o.deck!==DECK_ID || !o.prog) throw new Error('bad');
+        state.prog.see = o.prog.see||{}; state.prog.hear = o.prog.hear||{};
+        saveStore(); state.homeMsg='Progress imported.'; state.homeMsgErr=false;
+      }catch(_){ state.homeMsg='This file is not a progress file for this deck.'; state.homeMsgErr=true; }
+      render();
+    };
+    fr.onerror = function(){ state.homeMsg='Could not read the file.'; state.homeMsgErr=true; render(); };
+    fr.readAsText(file);
+  }
+
+  var ACT = {
+    'intro-dontshow': function(){ state.introDontShow = !state.introDontShow; render(); },
+    'intro-go': function(){ if(state.introDontShow){ state.settings.introSeen = true; saveStore(); } state.view='home'; render(); },
+    'show-intro': function(){ state.introDontShow = !!state.settings.introSeen; state.view='intro'; render(); },
+    mode: function(el){ state.settings.mode = el.dataset.v; saveStore(); render(); },
+    'set-reveal': function(el){ state.settings.reveal = el.dataset.v; saveStore(); render(); },
+    'set-shuffle': function(el){ state.settings.shuffle = el.dataset.v==='on'; saveStore(); render(); },
+    'set-asr': function(el){ state.settings.asr = el.dataset.v==='on' && !!SR; saveStore(); render(); },
+    export: exportProgress,
+    import: function(){ var i = root.querySelector('#imp'); if(i){ i.value=''; i.click(); } },
+    'start-due': function(){ var l = dueList(state.settings.mode); if(l.length) startSession(l); },
+    'start-all': function(){ startSession(CARDS.map(function(c,i){return i;})); },
+    'again-round': function(){
+      var s = state.sess; var ids = Object.keys(s.again);
+      var list = CARDS.map(function(c,i){return i;}).filter(function(i){ return ids.indexOf(CARDS[i].id)>=0; });
+      var graded = s.graded;
+      startSession(list); state.sess.graded = graded;   /* 같은 날 같은 카드는 상자를 한 번만 옮긴다 */
+    },
+    home: goHome,
+    flip: flip,
+    replay: function(){ cleanupRec(); stopAsr(); playNative(1); },
+    slow: function(){ cleanupRec(); stopAsr(); playNative(0.75); },
+    sent: tapSentence,
+    rec: function(){ stopAsr(); startRecording(); },
+    'rec-stop': stopRecording,
+    asr: function(){ if(state.sess && state.sess.asr==='listen'){ stopAsr(); refreshTools(); setStatus('',''); } else startAsr(); },
+    same: function(){ grade('same'); },
+    skip: skipCard,
+    again: function(){ grade('again'); }
+  };
+
+  root.addEventListener('click', function(e){
+    var t = e.target.closest('[data-act]');
+    if(!t || !root.contains(t) || t.disabled) return;
+    var a = t.dataset.act;
+    if(ACT[a]) ACT[a](t);
+  });
+  root.addEventListener('change', function(e){
+    if(e.target && e.target.id==='imp' && e.target.files && e.target.files[0]) importProgress(e.target.files[0]);
+  });
+  root.addEventListener('keydown', function(e){
+    var t = e.target;
+    if((e.key==='Enter' || e.key===' ') && t && t.getAttribute && (t.getAttribute('role')==='checkbox' || t.id==='sent')){
+      e.preventDefault(); e.stopPropagation(); var a = t.dataset.act; if(ACT[a]) ACT[a](t);
+    }
+  });
+
+  window.addEventListener('keydown', function(e){
+    var ae = document.activeElement;
+    if(ae && (['INPUT','TEXTAREA','SELECT'].indexOf(ae.tagName)>=0 || ae.isContentEditable)) return;
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    if(state.view!=='card' || !state.sess) return;
+    var s = state.sess, k = e.key;
+    if(k===' ' || k==='Enter'){ if(ae && ae.tagName==='BUTTON') return; e.preventDefault(); if(!s.flipped) flip(); }
+    else if(k==='r' || k==='R'){ ACT.replay(); }
+    else if(k==='t' || k==='T'){ if(s.flipped) tapSentence(); }
+    else if(k==='m' || k==='M'){ if(s.flipped && CAN_REC){ if(s.rec==='recording') stopRecording(); else if(s.rec==='idle') ACT.rec(); } }
+    else if(k==='1'){ if(s.flipped) grade('same'); else skipCard(); }
+    else if(k==='2'){ if(s.flipped) grade('again'); }
+  });
+
+  function onBreakpoint(){ if(state.view==='card'){ render(); } }
+  if(MOBILE_MQ.addEventListener) MOBILE_MQ.addEventListener('change', onBreakpoint);
+  else if(MOBILE_MQ.addListener) MOBILE_MQ.addListener(onBreakpoint);
+
+  render();
+})();
+</script>
+</body>
+</html>
