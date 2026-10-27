@@ -122,6 +122,9 @@
   .sent.hid .ko, .sent.hid .ko .hl{ color:transparent; text-shadow:0 0 12px rgba(26,26,26,.55); user-select:none; -webkit-user-select:none; }
   .sent .tip{ display:block; font-family:var(--eng); font-size:.72rem; color:var(--g400); margin-top:.35rem; }
   .sent.shown{ border-style:solid; border-color:var(--g100); cursor:default; }
+  .sent .mean{ display:inline-block; margin-top:.4rem; background:none; border:0; padding:.2rem .4rem; font-family:var(--eng); font-size:.72rem; color:var(--g400); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .sent .mean:hover{ color:#000; }
+  .sent .en{ display:block; margin-top:.4rem; font-family:var(--eng); font-size:.9rem; color:var(--g500); }
 
   .tools{ display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; }
   .tool{ display:inline-flex; align-items:center; gap:.4rem; min-height:40px; padding:.45rem .85rem; background:#fff; border:1px solid var(--g200);
@@ -192,26 +195,26 @@
   var BASE = 'https://github.com/openkoreanlearninglab/hub/raw/refs/heads/main/flashcards/a1-flashcards-basic-verbs/';
   var IMG = BASE+'images/', IMG3X4 = BASE+'images-3x4/', VID = BASE+'videos/', VID9X16 = BASE+'videos-9x16/', AUD = BASE+'audio/';
   var CARDS = [
-    { id:'01_rest_home', verb:'쉬다', ko:'집에서 쉬어요.', hl:'쉬어요', media:{type:'image', src:IMG+'01_rest_home.jpg', src3x4:IMG3X4+'01_rest_home-3x4.jpg'}, audio:AUD+'01_rest_home.m4a' },
-    { id:'02_sleep_10', verb:'자다', ko:'10시에 자요.', hl:'자요', media:{type:'image', src:IMG+'02_sleep_10.jpg', src3x4:IMG3X4+'02_sleep_10-3x4.jpg'}, audio:AUD+'02_sleep_10.m4a' },
-    { id:'03_eat_ramen', verb:'먹다', ko:'라면을 먹어요.', hl:'먹어요', media:{type:'image', src:IMG+'03_eat_ramen.jpg', src3x4:IMG3X4+'03_eat_ramen-3x4.jpg'}, audio:AUD+'03_eat_ramen.m4a' },
-    { id:'04_drink_coffee', verb:'마시다', ko:'커피를 마셔요.', hl:'마셔요', media:{type:'image', src:IMG+'04_drink_coffee.jpg', src3x4:IMG3X4+'04_drink_coffee-3x4.jpg'}, audio:AUD+'04_drink_coffee.m4a' },
-    { id:'05_cook_home', verb:'요리하다', ko:'집에서 요리해요.', hl:'요리해요', media:{type:'image', src:IMG+'05_cook_home.jpg', src3x4:IMG3X4+'05_cook_home-3x4.jpg'}, audio:AUD+'05_cook_home.m4a' },
-    { id:'06_like_cats', verb:'좋아하다', ko:'고양이를 좋아해요.', hl:'좋아해요', media:{type:'image', src:IMG+'06_like_cats.jpg', src3x4:IMG3X4+'06_like_cats-3x4.jpg'}, audio:AUD+'06_like_cats.m4a' },
-    { id:'07_watch_drama', verb:'보다', ko:'드라마를 봐요.', hl:'봐요', media:{type:'image', src:IMG+'07_watch_drama.jpg', src3x4:IMG3X4+'07_watch_drama-3x4.jpg'}, audio:AUD+'07_watch_drama.m4a' },
-    { id:'08_read_book', verb:'읽다', ko:'책을 읽어요.', hl:'읽어요', media:{type:'image', src:IMG+'08_read_book.jpg', src3x4:IMG3X4+'08_read_book-3x4.jpg'}, audio:AUD+'08_read_book.m4a' },
-    { id:'09_listen_music', verb:'듣다', ko:'음악을 들어요.', hl:'들어요', media:{type:'image', src:IMG+'09_listen_music.jpg', src3x4:IMG3X4+'09_listen_music-3x4.jpg'}, audio:AUD+'09_listen_music.m4a' },
-    { id:'10_study_korean', verb:'공부하다', ko:'한국어를 공부해요.', hl:'공부해요', media:{type:'image', src:IMG+'10_study_korean.jpg', src3x4:IMG3X4+'10_study_korean-3x4.jpg'}, audio:AUD+'10_study_korean.m4a' },
-    { id:'11_learn_cooking', verb:'배우다', ko:'요리를 배워요.', hl:'배워요', media:{type:'image', src:IMG+'11_learn_cooking.jpg', src3x4:IMG3X4+'11_learn_cooking-3x4.jpg'}, audio:AUD+'11_learn_cooking.m4a' },
-    { id:'12_work_home', verb:'일하다', ko:'집에서 일해요.', hl:'일해요', media:{type:'image', src:IMG+'12_work_home.jpg', src3x4:IMG3X4+'12_work_home-3x4.jpg'}, audio:AUD+'12_work_home.m4a' },
-    { id:'13_exercise_gym', verb:'운동하다', ko:'헬스장에서 운동해요.', hl:'운동해요', media:{type:'image', src:IMG+'13_exercise_gym.jpg', src3x4:IMG3X4+'13_exercise_gym-3x4.jpg'}, audio:AUD+'13_exercise_gym.m4a' },
-    { id:'14_play_games', verb:'게임하다', ko:'친구하고 게임해요.', hl:'게임해요', media:{type:'image', src:IMG+'14_play_games.jpg', src3x4:IMG3X4+'14_play_games-3x4.jpg'}, audio:AUD+'14_play_games.m4a' },
-    { id:'15_buy_bag', verb:'사다', ko:'가방을 사요.', hl:'사요', media:{type:'image', src:IMG+'15_buy_bag.jpg', src3x4:IMG3X4+'15_buy_bag-3x4.jpg'}, audio:AUD+'15_buy_bag.m4a' },
-    { id:'16_meet_friend', verb:'만나다', ko:'친구를 만나요.', hl:'만나요', media:{type:'video', src:VID+'16_meet_friend.mp4', src9x16:VID9X16+'16_meet_friend-9x16.mp4'}, audio:AUD+'16_meet_friend.m4a' },
-    { id:'17_call_friend', verb:'전화하다', ko:'친구한테 전화해요.', hl:'전화해요', media:{type:'image', src:IMG+'17_call_friend.jpg', src3x4:IMG3X4+'17_call_friend-3x4.jpg'}, audio:AUD+'17_call_friend.m4a' },
-    { id:'18_talk_friend', verb:'이야기하다', ko:'친구하고 이야기해요.', hl:'이야기해요', media:{type:'image', src:IMG+'18_talk_friend.jpg', src3x4:IMG3X4+'18_talk_friend-3x4.jpg'}, audio:AUD+'18_talk_friend.m4a' },
-    { id:'19_go_work', verb:'가다', ko:'회사에 가요.', hl:'가요', media:{type:'video', src:VID+'19_go_work.mp4', src9x16:VID9X16+'19_go_work-9x16.mp4'}, audio:AUD+'19_go_work.m4a' },
-    { id:'20_come_home', verb:'오다', ko:'집에 와요.', hl:'와요', media:{type:'video', src:VID+'20_come_home.mp4', src9x16:VID9X16+'20_come_home-9x16.mp4'}, audio:AUD+'20_come_home.m4a' }
+    { id:'01_rest_home', verb:'쉬다', ko:'집에서 쉬어요.', hl:'쉬어요', en:'I rest at home.', media:{type:'image', src:IMG+'01_rest_home.jpg', src3x4:IMG3X4+'01_rest_home-3x4.jpg'}, audio:AUD+'01_rest_home.m4a' },
+    { id:'02_sleep_10', verb:'자다', ko:'10시에 자요.', hl:'자요', en:'I go to bed at 10.', media:{type:'image', src:IMG+'02_sleep_10.jpg', src3x4:IMG3X4+'02_sleep_10-3x4.jpg'}, audio:AUD+'02_sleep_10.m4a' },
+    { id:'03_eat_ramen', verb:'먹다', ko:'라면을 먹어요.', hl:'먹어요', en:'I eat ramen.', media:{type:'image', src:IMG+'03_eat_ramen.jpg', src3x4:IMG3X4+'03_eat_ramen-3x4.jpg'}, audio:AUD+'03_eat_ramen.m4a' },
+    { id:'04_drink_coffee', verb:'마시다', ko:'커피를 마셔요.', hl:'마셔요', en:'I drink coffee.', media:{type:'image', src:IMG+'04_drink_coffee.jpg', src3x4:IMG3X4+'04_drink_coffee-3x4.jpg'}, audio:AUD+'04_drink_coffee.m4a' },
+    { id:'05_cook_home', verb:'요리하다', ko:'집에서 요리해요.', hl:'요리해요', en:'I cook at home.', media:{type:'image', src:IMG+'05_cook_home.jpg', src3x4:IMG3X4+'05_cook_home-3x4.jpg'}, audio:AUD+'05_cook_home.m4a' },
+    { id:'06_like_cats', verb:'좋아하다', ko:'고양이를 좋아해요.', hl:'좋아해요', en:'I like cats.', media:{type:'image', src:IMG+'06_like_cats.jpg', src3x4:IMG3X4+'06_like_cats-3x4.jpg'}, audio:AUD+'06_like_cats.m4a' },
+    { id:'07_watch_drama', verb:'보다', ko:'드라마를 봐요.', hl:'봐요', en:'I watch dramas.', media:{type:'image', src:IMG+'07_watch_drama.jpg', src3x4:IMG3X4+'07_watch_drama-3x4.jpg'}, audio:AUD+'07_watch_drama.m4a' },
+    { id:'08_read_book', verb:'읽다', ko:'책을 읽어요.', hl:'읽어요', en:'I read a book.', media:{type:'image', src:IMG+'08_read_book.jpg', src3x4:IMG3X4+'08_read_book-3x4.jpg'}, audio:AUD+'08_read_book.m4a' },
+    { id:'09_listen_music', verb:'듣다', ko:'음악을 들어요.', hl:'들어요', en:'I listen to music.', media:{type:'image', src:IMG+'09_listen_music.jpg', src3x4:IMG3X4+'09_listen_music-3x4.jpg'}, audio:AUD+'09_listen_music.m4a' },
+    { id:'10_study_korean', verb:'공부하다', ko:'한국어를 공부해요.', hl:'공부해요', en:'I study Korean.', media:{type:'image', src:IMG+'10_study_korean.jpg', src3x4:IMG3X4+'10_study_korean-3x4.jpg'}, audio:AUD+'10_study_korean.m4a' },
+    { id:'11_learn_cooking', verb:'배우다', ko:'요리를 배워요.', hl:'배워요', en:'I learn to cook.', media:{type:'image', src:IMG+'11_learn_cooking.jpg', src3x4:IMG3X4+'11_learn_cooking-3x4.jpg'}, audio:AUD+'11_learn_cooking.m4a' },
+    { id:'12_work_home', verb:'일하다', ko:'집에서 일해요.', hl:'일해요', en:'I work from home.', media:{type:'image', src:IMG+'12_work_home.jpg', src3x4:IMG3X4+'12_work_home-3x4.jpg'}, audio:AUD+'12_work_home.m4a' },
+    { id:'13_exercise_gym', verb:'운동하다', ko:'헬스장에서 운동해요.', hl:'운동해요', en:'I work out at the gym.', media:{type:'image', src:IMG+'13_exercise_gym.jpg', src3x4:IMG3X4+'13_exercise_gym-3x4.jpg'}, audio:AUD+'13_exercise_gym.m4a' },
+    { id:'14_play_games', verb:'게임하다', ko:'친구하고 게임해요.', hl:'게임해요', en:'I play games with a friend.', media:{type:'image', src:IMG+'14_play_games.jpg', src3x4:IMG3X4+'14_play_games-3x4.jpg'}, audio:AUD+'14_play_games.m4a' },
+    { id:'15_buy_bag', verb:'사다', ko:'가방을 사요.', hl:'사요', en:'I buy a bag.', media:{type:'image', src:IMG+'15_buy_bag.jpg', src3x4:IMG3X4+'15_buy_bag-3x4.jpg'}, audio:AUD+'15_buy_bag.m4a' },
+    { id:'16_meet_friend', verb:'만나다', ko:'친구를 만나요.', hl:'만나요', en:'I meet a friend.', media:{type:'video', src:VID+'16_meet_friend.mp4', src9x16:VID9X16+'16_meet_friend-9x16.mp4'}, audio:AUD+'16_meet_friend.m4a' },
+    { id:'17_call_friend', verb:'전화하다', ko:'친구한테 전화해요.', hl:'전화해요', en:'I call a friend.', media:{type:'image', src:IMG+'17_call_friend.jpg', src3x4:IMG3X4+'17_call_friend-3x4.jpg'}, audio:AUD+'17_call_friend.m4a' },
+    { id:'18_talk_friend', verb:'이야기하다', ko:'친구하고 이야기해요.', hl:'이야기해요', en:'I talk with a friend.', media:{type:'image', src:IMG+'18_talk_friend.jpg', src3x4:IMG3X4+'18_talk_friend-3x4.jpg'}, audio:AUD+'18_talk_friend.m4a' },
+    { id:'19_go_work', verb:'가다', ko:'회사에 가요.', hl:'가요', en:'I go to work.', media:{type:'video', src:VID+'19_go_work.mp4', src9x16:VID9X16+'19_go_work-9x16.mp4'}, audio:AUD+'19_go_work.m4a' },
+    { id:'20_come_home', verb:'오다', ko:'집에 와요.', hl:'와요', en:'I come home.', media:{type:'video', src:VID+'20_come_home.mp4', src9x16:VID9X16+'20_come_home-9x16.mp4'}, audio:AUD+'20_come_home.m4a' }
   ];
 
   /* Leitner 상자 4개 — 다음 복습까지 날짜 수 */
@@ -420,13 +423,13 @@
     var base = list.slice();
     var q = state.settings.shuffle ? shuffle(base) : base.sort(function(a,b){return a-b;});
     state.sess = { mode:state.settings.mode, queue:q, pos:0, flipped:false, step:0, autoShown:false,
-                   graded:{}, same:{}, again:{}, requeued:{}, peeks:0, rec:'idle', asr:'idle', total:q.length };
+                   graded:{}, same:{}, again:{}, requeued:{}, peeks:0, trans:false, transOpens:0, rec:'idle', asr:'idle', total:q.length };
     state.view = q.length ? 'card' : 'home';
     render();
     if(q.length) onCardShown();
   }
   function curCard(){ var s=state.sess; return s ? CARDS[s.queue[s.pos]] : null; }
-  function resetCardUI(){ var s=state.sess; stopNative(); cleanupRec(); stopAsr(); s.flipped=false; s.step=0; s.autoShown=false; }
+  function resetCardUI(){ var s=state.sess; stopNative(); cleanupRec(); stopAsr(); s.flipped=false; s.step=0; s.autoShown=false; s.trans=false; }
   function onCardShown(){ if(state.sess && state.sess.mode==='hear'){ setTimeout(function(){ playNative(1); }, 250); } }
 
   function canSkip(){
@@ -460,6 +463,10 @@
     if(s.flipped) return;
     stopNative(); s.flipped = true; render(); playNative(1);
   }
+  function showMeaning(){
+    var s = state.sess, c = curCard(); if(!s || !s.flipped || s.step<2 || !c || !c.en || s.trans) return;
+    s.trans = true; s.transOpens += 1; refreshSentence();
+  }
   function tapSentence(){
     var s = state.sess; if(!s || !s.flipped || s.step>=2) return;
     if(s.step===0){ s.step=1; refreshSentence(); playNative(1); }
@@ -482,6 +489,7 @@
         + '<li>Flip the card. The Korean audio plays.</li>'
         + '<li><b>Compare with your ears.</b> Did your sentence sound the same? If yes, move on — you don’t need to read anything.</li>'
         + '<li>Couldn’t catch it, or not sure? Tap the blurred sentence once to hear it again, and once more to see the text.</li>'
+        + '<li>Still unsure what it means? Only then, tap <b>Meaning</b> under the text to see the English. Use it as a last resort.</li>'
       + '</ol>'
       + '<p class="muted small">Small differences in time or place words are fine. If the verb matches, count it as the same.</p>'
       + '<h3>Mode 2 · Listen → Picture</h3>'
@@ -558,7 +566,12 @@
   function sentenceInner(){
     var s = state.sess, c = curCard();
     var tip = s.step===0 ? 'Tap to hear it again' : (s.step===1 ? 'Tap again to see the text' : '');
-    return '<p class="ko" lang="ko">'+boldTarget(c.ko, c.hl)+'</p>'+(tip?'<span class="tip">'+tip+'</span>':'');
+    var mean = '';
+    if(s.step>=2 && c.en){
+      mean = s.trans ? '<span class="en" lang="en">'+esc(c.en)+'</span>'
+                     : '<button type="button" class="mean" data-act="meaning">Meaning</button>';
+    }
+    return '<p class="ko" lang="ko">'+boldTarget(c.ko, c.hl)+'</p>'+(tip?'<span class="tip">'+tip+'</span>':'')+mean;
   }
   function toolsInner(){
     var s = state.sess, out = '';
@@ -605,7 +618,7 @@
           + '<button type="button" class="jbtn u" data-act="again">Again<span class="kk">2</span></button>'
         + '</div>';
     }
-    return top + body + '<p class="hint"><kbd>Space</kbd> flip · <kbd>R</kbd> listen again · <kbd>T</kbd> reveal text · <kbd>M</kbd> record · <kbd>1</kbd> same'+(SKIP_MODE!=='off'?' (on the front: I know this)':'')+' · <kbd>2</kbd> again</p>';
+    return top + body + '<p class="hint"><kbd>Space</kbd> flip · <kbd>R</kbd> listen again · <kbd>T</kbd> reveal text · <kbd>E</kbd> meaning · <kbd>M</kbd> record · <kbd>1</kbd> same'+(SKIP_MODE!=='off'?' (on the front: I know this)':'')+' · <kbd>2</kbd> again</p>';
   }
 
   function flipBar(){
@@ -620,6 +633,7 @@
     var peek = s.peeks===0
       ? 'You never opened the text. Your ears did all the work.'
       : 'You opened the text <b>'+s.peeks+'</b> time'+(s.peeks>1?'s':'')+'. Fewer is better — it means your ears are catching more.';
+    if(s.transOpens) peek += '<br>You checked the English meaning <b>'+s.transOpens+'</b> time'+(s.transOpens>1?'s':'')+'.';
     return '<section class="sum fade"><h2>Round complete</h2>'
       + '<div class="nums"><div><b>'+same+'</b>Sounded the same'+(skipped?'<br><span style="font-size:.7rem">('+skipped+' skipped as known)</span>':'')+'</div><div><b>'+again+'</b>Again</div></div>'
       + '<p class="peek">'+peek+(nd?'<br>Next review: <b>'+fmtDay(nd)+'</b>':'')+'</p>'
@@ -714,6 +728,7 @@
     replay: function(){ cleanupRec(); stopAsr(); playNative(1); },
     slow: function(){ cleanupRec(); stopAsr(); playNative(0.75); },
     sent: tapSentence,
+    meaning: showMeaning,
     rec: function(){ stopAsr(); startRecording(); },
     'rec-stop': stopRecording,
     asr: function(){ if(state.sess && state.sess.asr==='listen'){ stopAsr(); refreshTools(); setStatus('',''); } else startAsr(); },
@@ -747,6 +762,7 @@
     if(k===' ' || k==='Enter'){ if(ae && ae.tagName==='BUTTON') return; e.preventDefault(); if(!s.flipped) flip(); }
     else if(k==='r' || k==='R'){ ACT.replay(); }
     else if(k==='t' || k==='T'){ if(s.flipped) tapSentence(); }
+    else if(k==='e' || k==='E'){ showMeaning(); }
     else if(k==='m' || k==='M'){ if(s.flipped && CAN_REC){ if(s.rec==='recording') stopRecording(); else if(s.rec==='idle') ACT.rec(); } }
     else if(k==='1'){ if(s.flipped) grade('same'); else skipCard(); }
     else if(k==='2'){ if(s.flipped) grade('again'); }
