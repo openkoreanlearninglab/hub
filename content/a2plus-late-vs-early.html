@@ -1986,7 +1986,7 @@ function toolBtn(action, icon, ko, en, mode) {
         const CAP_KEY = 'okll:caption-level:v1';
         const loadCap = () => { try { const v = localStorage.getItem(CAP_KEY); return (v === 'listen' || v === 'words' || v === 'full') ? v : 'listen'; } catch (_) { return 'listen'; } };
         const saveCap = (v) => { try { localStorage.setItem(CAP_KEY, v); } catch (_) {} };
-        const learn = { autoPlayNext: false, cap: loadCap(), revealed: {}, tries: {}, videoIdx: 0, player: null, currentTime: 0, duration: 0, isPlaying: false, activeLine: null, layout: 'split', autoScroll: true, showVocab: false, rate: 1.0, trans: {}, intervalId: null, speedMenu: false, sbTrans: {}, activeVocabTerm: null };
+        const learn = { autoPlayNext: false, cap: loadCap(), revealed: {}, tries: {}, videoIdx: 0, player: null, currentTime: 0, duration: 0, isPlaying: false, activeLine: null, layout: 'split', autoScroll: true, showVocab: false, rate: 1.0, trans: {}, intervalId: null, speedMenu: false, sbTrans: {}, activeVocabTerm: null, stopAt: null, segTimer: null, rewatched: {} };
         const CORE_KEY = 'okll:vocab-core:v1';
         const loadCore = () => { try { return localStorage.getItem(CORE_KEY) === 'core'; } catch (_) { return false; } };
         const saveCore = (v) => { try { localStorage.setItem(CORE_KEY, v ? 'core' : 'all'); } catch (_) {} };
@@ -2021,7 +2021,7 @@ function toolBtn(action, icon, ko, en, mode) {
             cancelEndCard();
             if (!m) return;
             if (m.k === 'video') {
-                if (m.i !== learn.videoIdx) { stopTick(); learn.videoIdx = m.i; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; }
+                if (m.i !== learn.videoIdx) { stopTick(); learn.videoIdx = m.i; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; learn.cap = loadCap(); learn.revealed = {}; learn.tries = {}; clearSeg(); }
                 learn.autoPlayNext = true;
                 if (app.activeTab === 'video') paint(); else setTab('video');
             } else { reading.activeId = m.i; setTab('reading'); }
@@ -2043,13 +2043,17 @@ function toolBtn(action, icon, ko, en, mode) {
             if (!endCard) { el.style.display = 'none'; el.innerHTML = ''; return; }
             const n = endCard.next;
             el.style.display = 'block';
+            if (endCard.rewatch) { el.innerHTML = `<button type="button" class="ec-x" data-end="stay" aria-label="${uiT(`닫기`, `Close`)}">×</button><div class="ec-kick">${uiT(`한 번 더`, `One more time`)}</div><div class="ec-title">${uiT(`이번에는 자막을 보면서 들어 보세요`, `This time, listen with the subtitles on`)}</div><div class="ec-sub">${uiT(`잘 안 들린 말을 글자로 확인할 수 있어요.`, `You can check the words you missed.`)}</div><div class="ec-btns" style="margin-top:12px"><button type="button" class="ec-go" data-end="rewatch">${uiT(`자막 켜고 처음부터 보기`, `Watch again with subtitles`)}</button><button type="button" class="ec-stay" data-end="skip">${uiT(`다음에 할게요`, `Not now`)}</button></div>`; return; }
             el.innerHTML = n
                 ? `<button type="button" class="ec-x" data-end="stay" aria-label="${uiT(`닫기`, `Close`)}">×</button><div class="ec-kick">${uiT(`다음 자료`, `Next`)} · ${n.label}</div><div class="ec-title">${esc(n.title)}</div><div class="ec-sub" aria-live="polite">${uiT(`${endCard.t}초 뒤에 넘어가요`, `Moving on in ${endCard.t}s`)}</div><div class="ec-bar"><i style="width:${(endCard.t / END_SECS) * 100}%"></i></div><div class="ec-btns"><button type="button" class="ec-go" data-end="go">${uiT(`지금 보기`, `Go now`)}</button><button type="button" class="ec-stay" data-end="stay">${uiT(`여기 있을게요`, `Stay here`)}</button></div>`
                 : `<button type="button" class="ec-x" data-end="stay" aria-label="${uiT(`닫기`, `Close`)}">×</button><div class="ec-kick">${uiT(`다 봤어요`, `All done`)}</div><div class="ec-title">${uiT(`모든 자료를 다 봤어요`, `You have finished all the materials`)}</div><div class="ec-sub">${uiT(`이제 어휘와 퀴즈로 정리해 볼까요?`, `Now review with the vocab and the quiz.`)}</div><div class="ec-btns" style="margin-top:12px">${finishBtnsHTML()}</div>`;
         }
+        // 자막 없이 끝까지 봤으면 먼저 '자막 켜고 한 번 더'를 권함 (저장된 자막 설정은 바꾸지 않음)
         function showEndCard() {
-            if (matSeq().length < 2 || app.activeTab !== 'video') return;
+            if (app.activeTab !== 'video') return;
             cancelEndCard();
+            if (isYT() && learn.layout !== 'script' && learn.cap !== 'full' && !learn.rewatched[learn.videoIdx]) { endCard = { rewatch: true, next: null, t: 0, timer: null }; renderEndCard(); return; }
+            if (matSeq().length < 2) return;
             endCard = { next: matNext(), t: END_SECS, timer: null };
             if (endCard.next) endCard.timer = setInterval(() => {
                 if (!endCard) return;
@@ -2060,6 +2064,7 @@ function toolBtn(action, icon, ko, en, mode) {
             }, 1000);
             renderEndCard();
         }
+        function rewatchWithSubs() { learn.rewatched[learn.videoIdx] = true; cancelEndCard(); learn.revealed = {}; learn.tries = {}; setCap('full', true); if (learn.player) { clearSeg(); learn.player.seekTo(0, true); learn.player.playVideo(); } }
         function cancelEndCard() { if (endCard && endCard.timer) clearInterval(endCard.timer); endCard = null; renderEndCard(); }
 
         function setTab(tab) { cancelEndCard(); if (app.activeTab === 'video' && tab !== 'video') stopTick(); app.activeTab = tab; app.headerExpanded = (tab !== 'video'); closeVocabPopup(); if (tab !== 'video') { learn.player = null; learn.isPlaying = false; learn.activeLine = null; } buildApp(); window.scrollTo({ top: 0, behavior: 'auto' }); }
@@ -2159,7 +2164,7 @@ function toolBtn(action, icon, ko, en, mode) {
             const transBlock = showT ? (scr ? `<div class="mt-3 pt-3 border-t border-dashed border-gray-100 animate-fade-in"><p class="text-xs sm:text-sm font-serif text-gray-500 text-left leading-relaxed">${esc(line.eng)}</p></div>` : `<p class="text-xs sm:text-sm font-serif text-gray-500 text-left mt-2 animate-fade-in pl-3 border-l border-gray-200">${esc(line.eng)}</p>`) : '';
             const tail = scr ? `<svg class="absolute bottom-[-1px] ${isLeft ? '-left-[7px]' : '-right-[7px]'} w-[8px] h-[8px] z-10" viewBox="0 0 8 8" fill="none"><path d="${isLeft ? 'M8 0 C 8 4 4 8 0 8 L 8 8 V 0 Z' : 'M0 0 C 0 4 4 8 8 8 L 0 8 V 0 Z'}" fill="white"/><path d="${isLeft ? 'M0 8 C 4 8 8 4 8 0' : 'M8 8 C 4 8 0 4 0 0'}" stroke="${isActive ? 'black' : 'transparent'}" stroke-width="1" fill="none"/><path d="${isLeft ? 'M8 0 V8' : 'M0 0 V8'}" stroke="white" stroke-width="2"/></svg>` : '';
             const speaker = `<div class="flex items-center gap-2 mb-2 ${scr ? (isLeft ? 'ml-1' : 'mr-1') : 'justify-start'}"><span class="text-xs sm:text-sm md:text-base font-bold font-ui uppercase tracking-widest text-gray-400">${esc(line.speaker)}</span>${(!scr) ? `<span class="w-1.5 h-1.5 bg-black rounded-full animate-pulse ${isActive ? 'block' : 'hidden'}"></span>` : ''}</div>`;
-            return `<div id="sl-${line.id}" class="${wrapCls}">${speaker}<div class="${bubbleCls}" data-line-seek="${line.time[0]}" data-line-id="${line.id}"${hid ? ' title="' + uiT(`누르면 이 줄을 다시 듣고, 한 번 더 누르면 글자가 보여요`, `Tap to replay this line, tap again to see the text`) + '"' : ''}><p class="${pCls} ${capCls}" ${hid ? 'aria-label="' + uiT(`가려진 대사`, `Hidden line`) + '"' : ''}>${renderTextWithVocab(line.kor)}</p>${transBlock}<div class="${ctrl}">${isYT() ? `<button type="button" data-line-play="${line.id}" class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400 shrink-0">${svgIcon('playSolid', 'w-2 h-2 ml-0.5', { fill: 'currentColor' })}</button>` : ''}${hid ? `<span class="text-[10px] font-ui tracking-wide text-gray-400">${learn.tries[line.id] ? uiT(`한 번 더 누르면 글자가 보여요`, `Tap again to see the text`) : uiT(`누르면 이 줄을 다시 들어요`, `Tap to replay this line`)}</span>` : transBtn('line-trans-' + line.id, showT)}</div>${tail}</div></div>`;
+            return `<div id="sl-${line.id}" class="${wrapCls}">${speaker}<div class="${bubbleCls}" data-line-seek="${line.time[0]}" data-line-id="${line.id}"${hid ? ' title="' + uiT(`누르면 이 줄을 다시 듣고, 한 번 더 누르면 글자가 보여요`, `Tap to replay this line, tap again to see the text`) + '"' : ''}><p class="${pCls} ${capCls}" ${hid ? 'aria-label="' + uiT(`가려진 대사`, `Hidden line`) + '"' : ''}>${renderTextWithVocab(line.kor)}</p>${transBlock}<div class="${ctrl}">${isYT() ? `<button type="button" data-line-play="${line.id}" title="${uiT(`이 문장만 듣기`, `Play this line only`)}" aria-label="${uiT(`이 문장만 듣기`, `Play this line only`)}" class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400 shrink-0">${svgIcon('playSolid', 'w-2 h-2 ml-0.5', { fill: 'currentColor' })}</button>` : ''}${hid ? `<span class="text-[10px] font-ui tracking-wide text-gray-400">${learn.tries[line.id] ? uiT(`한 번 더 누르면 글자가 보여요`, `Tap again to see the text`) : uiT(`누르면 이 줄을 다시 들어요`, `Tap to replay this line`)}</span>` : transBtn('line-trans-' + line.id, showT)}</div>${tail}</div></div>`;
         }
         function capSegHTML() {
             if (!isYT()) return '';
@@ -2177,7 +2182,7 @@ function toolBtn(action, icon, ko, en, mode) {
             return scr ? `<div class="w-full mx-auto max-w-4xl lg:max-w-5xl flex items-center">${inner}</div>` : inner;
         }
         function refreshScriptHead() { const h = qs('#script-head', viewRoot()); if (h) h.innerHTML = scriptHeadHTML(); }
-        function setCap(v) { learn.cap = v; saveCap(v); const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); rebuildToolbar(); }
+        function setCap(v, keep) { learn.cap = v; if (!keep) saveCap(v); const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); rebuildToolbar(); }
         function scriptListHTML() { return curVideo().script.map(lineHTML).join('') + nextInlineHTML() + '<div class="h-32 print:hidden"></div>'; }
         function toolbarHTML() {
             const modes = [{ id: 'split', kor: '동영상 & 스크립트', eng: 'Video & Transcript' }, { id: 'video', kor: '동영상만 보기', eng: 'Watch Video' }, { id: 'script', kor: '스크립트만 보기', eng: 'Read Transcript' }];
@@ -2209,11 +2214,26 @@ function toolBtn(action, icon, ko, en, mode) {
         function afterVideoPaint() { createPlayer(); }
         function createPlayer() {
             if (!isYT()) { const s = qs('#video-loading'); if (s) s.style.display = 'none'; learn.player = null; learn.isPlaying = false; return; } // 인스타: 정적 임베드, YT API 미사용
-            let made = false; const make = () => { if (made || !(window.YT && window.YT.Player)) return; made = true; new window.YT.Player('youtube-player', { videoId: curVideo().videoId, width: '100%', height: '100%', playerVars: { autoplay: 0, controls: 1, rel: 0, disablekb: 1 }, events: { onPlaybackRateChange: (e) => { if (typeof e.data === 'number') learn.rate = e.data; }, onReady: (e) => { learn.player = e.target; if (learn.autoPlayNext) { learn.autoPlayNext = false; try { e.target.playVideo(); } catch (_) {} } learn.duration = e.target.getDuration() || 0; const s = qs('#video-loading'); if (s) s.style.display = 'none'; if (learn.player.setPlaybackRate) learn.player.setPlaybackRate(learn.rate); updateSeekUI(); }, onStateChange: (e) => { if (e.data === window.YT.PlayerState.ENDED) showEndCard(); else if (e.data === window.YT.PlayerState.PLAYING && endCard) cancelEndCard(); if (e.data === window.YT.PlayerState.PLAYING) { startTick(); learn.isPlaying = true; updatePlayBtn(); } else { stopTick(); if (e.data === window.YT.PlayerState.PAUSED || e.data === window.YT.PlayerState.ENDED) { learn.isPlaying = false; updatePlayBtn(); } } } } }); };
+            let made = false; const make = () => { if (made || !(window.YT && window.YT.Player)) return; made = true; new window.YT.Player('youtube-player', { videoId: curVideo().videoId, width: '100%', height: '100%', playerVars: { autoplay: 0, controls: 1, rel: 0, disablekb: 1 }, events: { onPlaybackRateChange: (e) => { if (typeof e.data === 'number') learn.rate = e.data; }, onReady: (e) => { learn.player = e.target; if (learn.autoPlayNext) { learn.autoPlayNext = false; try { e.target.playVideo(); } catch (_) {} } learn.duration = e.target.getDuration() || 0; const s = qs('#video-loading'); if (s) s.style.display = 'none'; if (learn.player.setPlaybackRate) learn.player.setPlaybackRate(learn.rate); updateSeekUI(); }, onStateChange: (e) => { if (e.data === window.YT.PlayerState.ENDED) showEndCard(); else if (e.data === window.YT.PlayerState.PLAYING && endCard) cancelEndCard(); if (e.data === window.YT.PlayerState.PLAYING) { startTick(); learn.isPlaying = true; updatePlayBtn(); } else { stopTick(); if (e.data === window.YT.PlayerState.PAUSED || e.data === window.YT.PlayerState.ENDED) { clearSeg(); learn.isPlaying = false; updatePlayBtn(); } } } } }); };
             if (window.YT && window.YT.Player) make();
             else { if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) { const t = document.createElement('script'); t.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(t); } const prev = window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady = () => { if (typeof prev === 'function') try { prev(); } catch (_) {} if (app.activeTab === 'video') make(); }; const poll = setInterval(() => { if (window.YT && window.YT.Player) { clearInterval(poll); if (app.activeTab === 'video' && !learn.player) make(); } }, 150); setTimeout(() => clearInterval(poll), 10000); }
         }
         function startTick() { stopTick(); learn.intervalId = setInterval(() => { const p = learn.player; if (p && p.getCurrentTime) { learn.currentTime = p.getCurrentTime(); updateSeekUI(); const cl = curVideo().script.find(l => learn.currentTime >= l.time[0] && learn.currentTime < l.time[1]); if (cl && cl.id !== learn.activeLine) setActiveLine(cl.id); } }, 200); }
+        // 한 문장만 재생: 문장 끝에서 멈춤 (50ms 간격으로 확인, 탐색이 끝나기 전 옛 시각은 무시)
+        function clearSeg() { learn.stopAt = null; if (learn.segTimer) { clearInterval(learn.segTimer); learn.segTimer = null; } }
+        function playLineOnly(line) {
+            const p = learn.player; if (!p || !line) return;
+            clearSeg(); cancelEndCard();
+            const start = line.time[0], end = line.time[1]; let started = false;
+            learn.stopAt = end; p.seekTo(start, true); p.playVideo();
+            learn.segTimer = setInterval(() => {
+                const pl = learn.player; if (!pl || !pl.getCurrentTime || learn.stopAt == null) { clearSeg(); return; }
+                const t = pl.getCurrentTime();
+                if (!started) { if (t >= start - 0.3 && t < end) started = true; return; }
+                if (t > end + 1 || t < start - 0.5) { clearSeg(); return; }   // 사용자가 다른 곳으로 옮김
+                if (t >= end - 0.08) { pl.pauseVideo(); clearSeg(); }
+            }, 50);
+        }
         function stopTick() { if (learn.intervalId) { clearInterval(learn.intervalId); learn.intervalId = null; } }
         function updateSeekUI() { const root = viewRoot(); if (!root) return; const fill = qs('#seek-fill', root), tt = qs('#time-text', root), seek = qs('#seek', root); const pct = learn.duration ? (learn.currentTime / learn.duration) * 100 : 0; if (fill) fill.style.width = pct + '%'; if (tt) tt.textContent = `${fmt(learn.currentTime)} / ${fmt(learn.duration)}`; if (seek) { seek.max = learn.duration || 100; seek.value = learn.currentTime; } }
         function updatePlayBtn() { const root = viewRoot(); if (!root) return; const b = qs('#play-btn', root); if (b) b.innerHTML = learn.isPlaying ? svgIcon('pause', 'w-2.5 h-2.5', { fill: 'currentColor' }) : svgIcon('playSolid', 'w-2.5 h-2.5 ml-0.5', { fill: 'currentColor' }); }
@@ -2473,10 +2493,10 @@ function toolBtn(action, icon, ko, en, mode) {
         // ---------- 이벤트 위임 ----------
         appEl.addEventListener('click', (e) => {
             const coreBtn = e.target.closest('[data-action="vocab-core-all"], [data-action="vocab-core-only"]'); if (coreBtn) { vocCore.only = coreBtn.dataset.action === 'vocab-core-only'; saveCore(vocCore.only); if (typeof vocabState !== 'undefined') vocabState.itemTrans = {}; paint(); return; }
-            const ecb = e.target.closest('[data-end]'); if (ecb) { if (ecb.dataset.end === 'go' && endCard) matGo(endCard.next); else cancelEndCard(); return; }
+            const ecb = e.target.closest('[data-end]'); if (ecb) { const d = ecb.dataset.end; if (d === 'rewatch') rewatchWithSubs(); else if (d === 'skip') { learn.rewatched[learn.videoIdx] = true; showEndCard(); } else if (d === 'go' && endCard) matGo(endCard.next); else cancelEndCard(); return; }
             if (e.target.closest('[data-mat-next]')) { matGo(matNext()); return; }
             if (endCard && endCard.timer && !e.target.closest('#end-card')) cancelEndCard();
-            const vdo = e.target.closest('[data-video-open]'); if (vdo) { const vi = +vdo.dataset.videoOpen; if (vi !== learn.videoIdx) { stopTick(); learn.videoIdx = vi; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.revealed = {}; learn.tries = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; } setTab('video'); return; }
+            const vdo = e.target.closest('[data-video-open]'); if (vdo) { const vi = +vdo.dataset.videoOpen; if (vi !== learn.videoIdx) { stopTick(); learn.videoIdx = vi; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.revealed = {}; learn.tries = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; learn.cap = loadCap(); learn.revealed = {}; learn.tries = {}; clearSeg(); } setTab('video'); return; }
             const tabBtn = e.target.closest('[data-tab]'); if (tabBtn) { setTab(tabBtn.dataset.tab); return; }
             if (e.target.closest('[data-action="toggle-header"]')) { app.headerExpanded = !app.headerExpanded; buildApp(); return; }
             if (e.target.closest('[data-action="print-open"]')) { pwOpenModal(); return; }
@@ -2494,15 +2514,15 @@ function toolBtn(action, icon, ko, en, mode) {
                 const pt = e.target.closest('[data-pane-toggle]'); if (pt) { const vi = +pt.dataset.paneVideo; let vOn = learn.layout !== 'script', sOn = learn.layout !== 'video'; if (pt.dataset.paneToggle === 'video') vOn = !vOn; else sOn = !sOn; if (!vOn && !sOn) { vOn = true; sOn = true; } const nl = (vOn && sOn) ? 'split' : (vOn ? 'video' : 'script'); if (vi !== learn.videoIdx) { stopTick(); learn.videoIdx = vi; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.revealed = {}; learn.tries = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; learn.layout = nl; paint(); return; } learn.layout = nl; const sl2 = qs('#script-list', viewRoot()); if (sl2) sl2.innerHTML = scriptListHTML(); updatePanes(); rebuildToolbar(); return; }
                 const lay = e.target.closest('[data-layout]'); if (lay) { learn.layout = lay.dataset.layout; const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); updatePanes(); rebuildToolbar(); return; }
                 const rate = e.target.closest('[data-rate]'); if (rate) { learn.rate = parseFloat(rate.dataset.rate); learn.speedMenu = false; if (learn.player && learn.player.setPlaybackRate) learn.player.setPlaybackRate(learn.rate); rebuildToolbar(); return; }
-                const lp = e.target.closest('[data-line-play]'); if (lp) { e.stopPropagation(); const id = lp.dataset.linePlay; const line = curVideo().script.find(l => l.id === id); if (learn.activeLine === id && learn.isPlaying) { if (learn.player) learn.player.pauseVideo(); } else if (learn.player) { learn.player.seekTo(line.time[0], true); learn.player.playVideo(); } return; }
+                const lp = e.target.closest('[data-line-play]'); if (lp) { e.stopPropagation(); const id = lp.dataset.linePlay; const line = curVideo().script.find(l => l.id === id); if (learn.activeLine === id && learn.isPlaying) { if (learn.player) { clearSeg(); learn.player.pauseVideo(); } } else playLineOnly(line); return; }
                 const lt = e.target.closest('[data-action^="line-trans-"]'); if (lt) { e.stopPropagation(); const id = lt.dataset.action.replace('line-trans-', ''); learn.trans[id] = !learn.trans[id]; replaceLine(id); return; }
                 const capBtn = e.target.closest('[data-cap]'); if (capBtn) { setCap(capBtn.dataset.cap); return; }
                 const capAct = e.target.closest('[data-cap-action]'); if (capAct) { learn.revealed = {}; learn.tries = {}; setCap(learn.cap); return; }
                 const seekLine = e.target.closest('[data-line-seek]'); if (seekLine) { const lid = seekLine.dataset.lineId;
                     if (lid && learn.cap !== 'full' && learn.layout !== 'script' && !learn.revealed[lid]) {
                         if (learn.tries[lid]) { learn.revealed[lid] = true; const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); refreshScriptHead(); return; }
-                        learn.tries[lid] = 1; replaceLine(lid);
-                    } if (learn.player) { learn.player.seekTo(parseFloat(seekLine.dataset.lineSeek), true); learn.player.playVideo(); } return; }
+                        learn.tries[lid] = 1; replaceLine(lid); playLineOnly(curVideo().script.find(l => l.id === lid)); return;
+                    } if (learn.player) { clearSeg(); learn.player.seekTo(parseFloat(seekLine.dataset.lineSeek), true); learn.player.playVideo(); } return; }
                 const sb = e.target.closest('[data-sb-idx]'), sbBtn = e.target.closest('[data-action^="sb-trans-"]'); if (sb && sbBtn) { const i = +sb.dataset.sbIdx; learn.sbTrans[i] = !learn.sbTrans[i]; sb.outerHTML = sidebarVocabHTML(VOCAB_DATA[i], i); return; }
                 const a = e.target.closest('[data-action]'); if (a) { const act = a.dataset.action; if (act === 'rewind') { if (learn.player) { const n = Math.max(0, learn.currentTime - 1.5); learn.player.seekTo(n, true); learn.currentTime = n; updateSeekUI(); } } else if (act === 'forward') { if (learn.player) { const n = Math.min(learn.duration, learn.currentTime + 1.5); learn.player.seekTo(n, true); learn.currentTime = n; updateSeekUI(); } } else if (act === 'play') { if (learn.player) { if (learn.isPlaying) learn.player.pauseVideo(); else learn.player.playVideo(); } } else if (act === 'speed-menu') { learn.speedMenu = !learn.speedMenu; rebuildToolbar(); } else if (act === 'autoscroll') { learn.autoScroll = !learn.autoScroll; rebuildToolbar(); } else if (act === 'learn-vocab') { learn.showVocab = !learn.showVocab; updatePanes(); rebuildToolbar(); } }
                 return;
