@@ -334,6 +334,42 @@ button, a, [role="button"], input[type=range] { touch-action: manipulation; }
 /* 스크립트 칸 머리 */
 .script-head{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;min-height:44px;padding:6px 2rem;background:#fff;border-bottom:1px solid #f3f4f6}
 .script-head .cap-seg{flex-shrink:0}
+.dict-in{font:inherit;letter-spacing:inherit;color:#111;background:#f9fafb;border:0;border-bottom:2px solid #9ca3af;border-radius:0;padding:0 .15em;margin:0 .08em;outline:none;line-height:1.35;vertical-align:baseline;min-width:2.2em}
+.dict-in:focus{border-color:#111;background:#fff}
+.dict-in.bad{border-color:#dc2626;background:#fef2f2}
+.dict-line{display:block}.dict-line .dict-in{display:block;margin:0;max-width:100%}
+.dict-ans{border-bottom:2px solid;padding:0 .1em}
+.dict-ans.ok{border-color:#16a34a;color:#15803d}
+.dict-ans.reveal{border-color:#9ca3af;color:#4b5563}
+.dict-mine{font-size:.6em;color:#9ca3af;text-decoration:line-through;margin-left:.3em}
+.dict-full{display:block;margin-top:.5em;font-size:.75em;line-height:1.7;color:#374151}
+.dict-full .dict-tag{font-family:'Noto Sans KR',sans-serif;font-size:10px;font-weight:700;letter-spacing:.1em;color:#9ca3af;margin-right:.5em}
+mark.dict-miss{background:#fee2e2;color:#991b1b;padding:0 .05em}
+.dict-btn{font-size:11px;font-weight:700;padding:4px 10px;background:#111;color:#fff;white-space:nowrap}
+.dict-btn:hover{background:#374151}
+.dict-link{font-size:11px;font-weight:700;color:#6b7280;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.dict-stat{font-size:11px;color:#6b7280;white-space:nowrap}
+.dict-stat.all{color:#15803d;font-weight:700}
+.home-start{display:flex;justify-content:center;gap:8px;margin-top:20px;width:100%;max-width:32rem}
+.home-start .hs-item{position:relative;flex:1}
+.home-start .hs-btn{width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 12px;border:1px solid #e5e7eb;background:#fff;color:#111827;font-size:13px;font-weight:700;transition:border-color .15s,background .15s}
+.home-start .hs-btn:hover,.home-start .hs-btn:focus-visible{border-color:#111;background:#fafafa;outline:none}
+.home-start .hs-btn .lk-en{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#9ca3af}
+.home-start .hs-pop{display:none;position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);width:min(280px,80vw);z-index:30;background:#fff;border:1px solid #111;padding:12px 14px;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.home-start .hs-pop p{font-size:12px;line-height:1.65;color:#374151;margin:0;word-break:keep-all}
+.home-start .hs-pop p.lk-en{color:#9ca3af;margin-top:6px;font-size:11px}
+@media (hover:hover){.home-start .hs-item:hover .hs-pop,.home-start .hs-btn:focus-visible + .hs-pop{display:block}}
+#vocab-pane.vp-fixed{top:var(--vp-top,92px);height:calc(100vh - var(--vp-top,92px))}
+.md-group{display:flex;align-items:stretch;gap:6px;flex-shrink:0}
+.md-unit{display:flex;align-items:stretch;border:1px solid #e5e7eb;transition:border-color .15s}
+.md-unit.on{border-color:#111}
+.md-main{padding:5px 10px;font-size:11px;font-weight:700;letter-spacing:.04em;color:#9ca3af;white-space:nowrap}
+.md-main:hover{color:#111}
+.md-unit.on .md-main{color:#111}
+.md-opts{display:flex;border-left:1px solid #e5e7eb}
+.md-opts button{padding:5px 9px;font-size:11px;font-weight:700;letter-spacing:.04em;color:#9ca3af;white-space:nowrap}
+.md-opts button:hover{color:#111}
+.md-opts button[aria-pressed="true"]{background:#111;color:#fff}
 .script-head .sh-label{white-space:nowrap;font-size:10px;font-weight:700;letter-spacing:.12em;color:#9ca3af}
 .script-head .sh-hint{font-size:11px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .script-head .sh-rehide{font-size:10px;font-weight:700;color:#6b7280;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
@@ -787,6 +823,9 @@ button, a, [role="button"], input[type=range] { touch-action: manipulation; }
             { term: "약속한 시간까지 오다", mainDef: "\"to come by the agreed time\" (the script's definition of 시간을 지키다).", variants: ["약속한 시간까지 오다"],
               subDefs: [ { subTerm: "-ㄴ/은 as in 약속한", subDef: "turns a verb into a describing word for the next noun (past): 약속한 시간 = the time you agreed on." }, { subTerm: "-까지 as in 시간까지", subDef: "by, until." } ],
               examples: [ { kor: "다섯 시까지 오세요.", eng: "Please come by five." } ] },
+            { term: "늦어도", mainDef: "even if (you're) late ⸺ 30분 늦어도 = even if you're 30 minutes late.", variants: ["늦어도"],
+              subDefs: [ { subTerm: "늦다 as in 늦어도", subDef: "to be late." }, { subTerm: "-아/어도 as in 늦어도", subDef: "even if, even though ⸺ the second part still happens: 늦어도 친구는 집에 안 가요 = even if you're late, your friend won't go home." } ],
+              examples: [ { kor: "비가 와도 저는 산책해요.", eng: "Even if it rains, I take a walk." } ] },
             { term: "기다리는 사람", mainDef: "the person who is waiting.", variants: ["기다리는 사람"],
               subDefs: [ { subTerm: "-는 as in 기다리는", subDef: "turns a verb into a describing word for the next noun." } ],
               examples: [ { kor: "버스를 기다리는 사람이 많아요.", eng: "There are many people waiting for the bus." } ] },
@@ -1993,6 +2032,7 @@ function toolBtn(action, icon, ko, en, mode) {
         const HAS_CORE = () => (VOCAB_DATA).some(w => w && w.core);
         const vocCore = { only: false };   // 어휘·표현 탭 [전체 | 핵심]
         const vocabExpand = {};
+        const dict = { on: false, scope: null, ans: {}, res: {}, shown: {} };   // 받아쓰기 (스크립트만 보기에서만, 저장 안 함)
         const quizState = { attempts: {}, q: {}, opts: {} };
         const discussState = {};
         const appEl = document.getElementById('app');
@@ -2052,7 +2092,7 @@ function toolBtn(action, icon, ko, en, mode) {
         function showEndCard() {
             if (app.activeTab !== 'video') return;
             cancelEndCard();
-            if (isYT() && learn.layout !== 'script' && learn.cap !== 'full' && !learn.rewatched[learn.videoIdx]) { endCard = { rewatch: true, next: null, t: 0, timer: null }; renderEndCard(); return; }
+            if (isYT() && learn.layout !== 'script' && !dict.on && learn.cap !== 'full' && !learn.rewatched[learn.videoIdx]) { endCard = { rewatch: true, next: null, t: 0, timer: null }; renderEndCard(); return; }
             if (matSeq().length < 2) return;
             endCard = { next: matNext(), t: END_SECS, timer: null };
             if (endCard.next) endCard.timer = setInterval(() => {
@@ -2072,7 +2112,7 @@ function toolBtn(action, icon, ko, en, mode) {
         function shellHTML() {
             const isVideo = app.activeTab === 'video';
             const navBtns = NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" class="flex flex-col items-center leading-tight text-sm font-medium transition-colors font-sans relative ${app.activeTab === m.id ? 'text-black' : 'text-gray-500 hover:text-gray-600'}"><span>${esc(m.label)}</span>${m.en ? `<span class="lk-en mt-0.5 text-[9px] font-sans font-semibold uppercase tracking-wider text-gray-400">${esc(m.en)}</span>` : ''}${app.activeTab === m.id ? '<div class="absolute -bottom-6 left-0 w-full h-0.5 bg-black"></div>' : ''}</button>`).join('');
-            const header = `<nav class="sticky top-0 z-50 bg-white border-b border-gray-100 hidden lg:flex items-center justify-between px-8 overflow-hidden transition-all duration-500 ease-in-out print:hidden ${app.headerExpanded ? 'h-16 opacity-100' : 'h-0 opacity-0 border-none'}"><div class="flex items-center cursor-pointer text-left" data-tab="home"><span class="text-lg font-bold font-sans tracking-tighter text-black whitespace-nowrap">OpenKoreanLearningLab</span></div><div class="flex items-center justify-end gap-8 pr-12 flex-1">${navBtns}${langCtrlHTML(false)}<button type="button" data-action="print-open" aria-label="학습지 인쇄" class="text-gray-500 hover:text-black print:hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></div></nav><button type="button" data-action="toggle-header" aria-label="상단 메뉴 펼치기/접기" class="fixed top-0 right-0 z-[60] hidden lg:flex items-center justify-center w-10 h-16 bg-white hover:bg-gray-50 transition-colors print:hidden ${app.headerExpanded ? 'border-b border-gray-100' : 'border-transparent'}">${svgIcon('menu', 'w-5 h-5 text-black')}</button>`;
+            const header = `<nav class="sticky top-0 z-50 bg-white border-b border-gray-100 hidden lg:flex items-center justify-between px-8 overflow-hidden transition-all duration-500 ease-in-out print:hidden ${app.headerExpanded ? 'h-16 opacity-100' : 'h-0 opacity-0 border-none'}"><div class="flex items-center cursor-pointer text-left" data-tab="home"><span class="text-lg font-bold font-sans tracking-tighter text-black whitespace-nowrap">OpenKoreanLearningLab</span></div><div class="flex items-center justify-end gap-8 pr-12 flex-1">${navBtns}${langCtrlHTML(false)}<button type="button" data-action="print-open" aria-label="학습지 인쇄" class="text-gray-500 hover:text-black print:hidden"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></div></nav><button type="button" data-action="toggle-header" aria-label="상단 메뉴 펼치기/접기" class="fixed top-0 right-0 z-[60] hidden lg:flex items-center justify-center w-10 ${app.activeTab === 'video' && !app.headerExpanded ? 'h-12' : 'h-16'} bg-white hover:bg-gray-50 transition-colors print:hidden ${app.headerExpanded ? 'border-b border-gray-100' : 'border-transparent'}">${svgIcon('menu', 'w-5 h-5 text-black')}</button>`;
             const mobileTop = `<div class="lg:hidden h-14 border-b border-gray-100 flex items-center justify-between px-4 sticky top-0 bg-white z-40 print:hidden"><span class="lk-lang-spacer"></span><span class="text-lg font-bold font-sans tracking-tighter">OpenKoreanLearningLab</span>${langCtrlHTML(true)}</div>`;
             const mobileNav = `<nav class="lg:hidden fixed bottom-0 w-full bg-white border-t border-gray-100 flex justify-around p-3 z-50 print:hidden">${NAV_ITEMS.map(m => `<button type="button" data-tab="${m.id}" aria-label="${m.label}" class="p-2 ${app.activeTab === m.id ? 'text-black' : 'text-gray-300'}">${svgIcon(m.icon, 'w-6 h-6')}</button>`).join('')}<button type="button" data-action="print-open" aria-label="학습지 인쇄" class="p-2 text-gray-500"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-6 h-6"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button></nav>`;
             return `${header}${mobileTop}<main id="view-root" class="flex-1 relative flex flex-col ${isVideo ? 'overflow-x-hidden lg:overflow-hidden lg:h-full' : ''}"></main>${mobileNav}`;
@@ -2108,6 +2148,12 @@ function toolBtn(action, icon, ko, en, mode) {
             for (let k = start; k < n; k += 2) rows.push(`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">${cards.slice(k, k + 2).join('')}</div>`);
             return `<div class="w-full max-w-3xl flex flex-col gap-4">${rows.join('')}</div>`;
         }
+        // 시작 페이지: 플레이어 아래 [동영상 보기 | 받아쓰기] + 호버 시 사용법 (휴대폰은 호버 없음 → 누르면 바로 이동)
+        function homeStartBtnsHTML() {
+            if (!isYT()) return '';
+            const b = (attr, ko, en, helpKo, helpEn) => `<div class="hs-item"><button type="button" ${attr} class="hs-btn"><span>${ko}</span><span class="lk-en">${en}</span></button><div class="hs-pop" role="tooltip"><p>${helpKo}</p><p class="lk-en">${helpEn}</p></div></div>`;
+            return `<div class="home-start">${b('data-tab="video"', '동영상 보기', 'Watch Video', '동영상과 스크립트를 함께 봐요. 자막은 듣기·단어·전체 중에서 골라요. 대사를 누르면 다시 듣고, 한 번 더 누르면 보여요.', 'Watch the video with the transcript. Choose Listen, Vocab or Full for the captions. Tap a line to replay it, tap again to see it.')}${b('data-home-dict="1"', '받아쓰기', 'Dictation', '스크립트의 빈칸을 듣고 채워요. 핵심 어휘·모든 어휘·문장 전체 중에서 골라요. 재생(▶)을 클릭해서 한 문장씩 듣고, Enter로 확인해요.', 'Listen and fill in the blanks in the transcript. Choose Key words, All vocab or Whole line. Click play (▶) to hear one line at a time, and press Enter to check.')}</div>`;
+        }
         function homeHTML() {
             const lvl = app.userLevel;
             const cards = HOME_CARDS.map(c => `<div data-tab="${c.target}" class="group p-8 md:p-10 flex flex-col items-center text-center transition-colors hover:bg-gray-50 cursor-pointer"><h2 class="font-serif-kr text-xl mb-4 text-gray-900 mt-4">${esc(c.title)}</h2><div class="mb-8 space-y-2"><p class="font-sans-kr text-xs text-gray-500 leading-relaxed">${c.korDesc}</p><p class="lk-en font-eng-header text-[9px] text-gray-500 leading-relaxed group-hover:text-gray-500 transition-colors">${c.engDesc}</p></div><span class="lk-en font-eng-header text-[10px] tracking-widest border-b border-transparent group-hover:border-gray-900 pb-0.5 transition-all uppercase text-gray-800">${esc(c.subtitle)}</span></div>`).join('');
@@ -2116,7 +2162,7 @@ function toolBtn(action, icon, ko, en, mode) {
                     <div class="flex flex-wrap items-center justify-center gap-3 mb-6">${homeTagsHTML()}${levelBadgeHTML(lvl)}</div>
                     <h1 class="font-serif text-3xl md:text-5xl lg:text-6xl text-black leading-tight mb-4 font-bold">약속 시간: 늦게 와요 vs 일찍 와요</h1>
                     <p class="font-serif text-gray-500 text-sm md:text-base italic mb-8 max-w-2xl leading-relaxed">Appointment Time: Arriving Late vs. Arriving Early</p>
-                    ${VIDEOS.length > 1 ? videoCardsGridHTML() : `<div data-tab="video" class="group relative w-full max-w-lg aspect-video cursor-pointer overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 bg-black">${homeThumbHTML()}<div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">${svgIcon('playSolid', 'w-6 h-6 text-black ml-1', { fill: 'currentColor' })}</div></div><div class="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><div class="bg-black px-5 py-2 flex items-center gap-2.5"><span class="text-white text-xs font-bold font-sans tracking-widest">동영상 보기</span><div class="w-px h-2.5 bg-gray-500"></div><span class="lk-en text-gray-300 text-[10px] font-eng-header tracking-widest uppercase mt-px">Watch Video</span></div></div></div>`}
+                    ${VIDEOS.length > 1 ? videoCardsGridHTML() : `<div data-tab="video" class="group relative w-full max-w-lg aspect-video cursor-pointer overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 bg-black">${homeThumbHTML()}<div class="absolute inset-0 flex items-center justify-center"><div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">${svgIcon('playSolid', 'w-6 h-6 text-black ml-1', { fill: 'currentColor' })}</div></div><div class="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><div class="bg-black px-5 py-2 flex items-center gap-2.5"><span class="text-white text-xs font-bold font-sans tracking-widest">동영상 보기</span><div class="w-px h-2.5 bg-gray-500"></div><span class="lk-en text-gray-300 text-[10px] font-eng-header tracking-widest uppercase mt-px">Watch Video</span></div></div></div>${homeStartBtnsHTML()}`}
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-0 w-full pt-0 max-w-5xl">${cards}</div>
             </div>`;
@@ -2154,17 +2200,17 @@ function toolBtn(action, icon, ko, en, mode) {
         function fmt(s) { if (isNaN(s)) return '00:00'; const d = new Date(s * 1000); return `${String(d.getUTCMinutes()).padStart(2, '0')}:${String(d.getUTCSeconds()).padStart(2, '0')}`; }
         function videoPaneClass() { const scr = learn.layout === 'script', vid = learn.layout === 'video'; const base = 'bg-black overflow-hidden relative transition-all duration-300 print:hidden'; if (scr) return base + ' hidden'; if (vid) return base + ' flex-1 w-full h-full'; return base + (learn.showVocab ? ' w-full aspect-video shrink-0 z-20 shadow-md lg:shadow-none lg:h-full lg:aspect-auto lg:w-[58%] xl:flex-1' : ' w-full aspect-video shrink-0 z-20 shadow-md lg:shadow-none lg:h-full lg:aspect-auto lg:w-[58%] xl:w-7/12'); }
         function scriptPaneClass() { const scr = learn.layout === 'script', vid = learn.layout === 'video'; const base = 'flex-1 flex flex-col min-h-0 bg-white border-l border-gray-200 transition-all duration-300'; if (vid) return base + ' hidden'; if (scr) return base + ' w-full h-full'; return base + (learn.showVocab ? ' w-full lg:w-[42%] lg:h-full lg:flex-none xl:w-4/12' : ' w-full lg:w-[42%] lg:h-full lg:flex-none xl:w-5/12'); }
-        function vocabPaneClass() { const scr = learn.layout === 'script'; return `w-80 flex-col bg-white border-l border-gray-200 animate-fade-in ${scr ? 'fixed right-0 top-[114px] h-[calc(100vh-114px)]' : 'h-full'} ${learn.showVocab ? 'flex' : 'hidden'}`; }
+        function vocabPaneClass() { const scr = learn.layout === 'script'; return `w-80 flex-col bg-white border-l border-gray-200 animate-fade-in ${scr ? 'fixed right-0 vp-fixed' : 'h-full'} ${learn.showVocab ? 'flex' : 'hidden'}`; }
         function lineHTML(line) {
-            const isActive = learn.activeLine === line.id, isLeft = (line.speaker === leftSpeaker()), scr = learn.layout === 'script', hid = learn.cap !== 'full' && !scr && !learn.revealed[line.id], capCls = hid ? ('cap-hid' + (learn.cap === 'words' ? ' cap-words' : '')) : '', showT = !hid && !!learn.trans[line.id];
+            const isActive = learn.activeLine === line.id, isLeft = (line.speaker === leftSpeaker()), scr = learn.layout === 'script', hid = learn.cap !== 'full' && !dict.on && !learn.revealed[line.id], capCls = hid ? ('cap-hid' + (learn.cap === 'words' ? ' cap-words' : '')) : '', showT = !hid && !!learn.trans[line.id], dl = dict.on && isYT();   // [받아쓰기]
             const wrapCls = scr ? `w-full transition-all duration-500 flex flex-col mb-8 ${isLeft ? 'items-start' : 'items-end'}` : `w-full transition-all duration-500 mb-8 ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-90'}`;
             const bubbleCls = scr ? `relative px-6 py-5 max-w-[90%] md:max-w-[80%] bg-white border rounded-2xl ${isLeft ? 'rounded-bl-none' : 'rounded-br-none'} hover:shadow-md transition-all duration-300 cursor-pointer group ${isActive ? 'ring-1 ring-black border-black' : 'border-transparent'}` : 'cursor-pointer group';
             const pCls = `text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-serif leading-[1.8] tracking-wide text-left ${(!scr && isActive) ? 'text-black' : (scr ? 'text-gray-800' : 'text-[#1a1a1a]')}`;
-            const ctrl = scr ? `flex items-center mt-4 gap-3 ${isLeft ? 'justify-start' : 'justify-end'}` : 'flex items-center gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity justify-start';
+            const ctrl = scr ? `flex items-center mt-4 gap-3 ${isLeft ? 'justify-start' : 'justify-end'}` : (dict.on && isYT() ? 'flex items-center gap-3 mt-2 justify-start' : 'flex items-center gap-3 mt-2 opacity-0 group-hover:opacity-100 transition-opacity justify-start');
             const transBlock = showT ? (scr ? `<div class="mt-3 pt-3 border-t border-dashed border-gray-100 animate-fade-in"><p class="text-xs sm:text-sm font-serif text-gray-500 text-left leading-relaxed">${esc(line.eng)}</p></div>` : `<p class="text-xs sm:text-sm font-serif text-gray-500 text-left mt-2 animate-fade-in pl-3 border-l border-gray-200">${esc(line.eng)}</p>`) : '';
             const tail = scr ? `<svg class="absolute bottom-[-1px] ${isLeft ? '-left-[7px]' : '-right-[7px]'} w-[8px] h-[8px] z-10" viewBox="0 0 8 8" fill="none"><path d="${isLeft ? 'M8 0 C 8 4 4 8 0 8 L 8 8 V 0 Z' : 'M0 0 C 0 4 4 8 8 8 L 0 8 V 0 Z'}" fill="white"/><path d="${isLeft ? 'M0 8 C 4 8 8 4 8 0' : 'M8 8 C 4 8 0 4 0 0'}" stroke="${isActive ? 'black' : 'transparent'}" stroke-width="1" fill="none"/><path d="${isLeft ? 'M8 0 V8' : 'M0 0 V8'}" stroke="white" stroke-width="2"/></svg>` : '';
             const speaker = `<div class="flex items-center gap-2 mb-2 ${scr ? (isLeft ? 'ml-1' : 'mr-1') : 'justify-start'}"><span class="text-xs sm:text-sm md:text-base font-bold font-ui uppercase tracking-widest text-gray-400">${esc(line.speaker)}</span>${(!scr) ? `<span class="w-1.5 h-1.5 bg-black rounded-full animate-pulse ${isActive ? 'block' : 'hidden'}"></span>` : ''}</div>`;
-            return `<div id="sl-${line.id}" class="${wrapCls}">${speaker}<div class="${bubbleCls}" data-line-seek="${line.time[0]}" data-line-id="${line.id}"${hid ? ' title="' + uiT(`누르면 이 줄을 다시 듣고, 한 번 더 누르면 글자가 보여요`, `Tap to replay this line, tap again to see the text`) + '"' : ''}><p class="${pCls} ${capCls}" ${hid ? 'aria-label="' + uiT(`가려진 대사`, `Hidden line`) + '"' : ''}>${renderTextWithVocab(line.kor)}</p>${transBlock}<div class="${ctrl}">${isYT() ? `<button type="button" data-line-play="${line.id}" title="${uiT(`이 문장만 듣기`, `Play this line only`)}" aria-label="${uiT(`이 문장만 듣기`, `Play this line only`)}" class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400 shrink-0">${svgIcon('playSolid', 'w-2 h-2 ml-0.5', { fill: 'currentColor' })}</button>` : ''}${hid ? `<span class="text-[10px] font-ui tracking-wide text-gray-400">${learn.tries[line.id] ? uiT(`한 번 더 누르면 글자가 보여요`, `Tap again to see the text`) : uiT(`누르면 이 줄을 다시 들어요`, `Tap to replay this line`)}</span>` : transBtn('line-trans-' + line.id, showT)}</div>${tail}</div></div>`;
+            return `<div id="sl-${line.id}" class="${wrapCls}">${speaker}<div class="${bubbleCls}" data-line-seek="${line.time[0]}" data-line-id="${line.id}"${hid ? ' title="' + uiT(`누르면 이 대사를 다시 듣고, 한 번 더 누르면 글자가 보여요`, `Tap to replay this line, tap again to see the text`) + '"' : ''}><p class="${pCls} ${capCls}" ${hid ? 'aria-label="' + uiT(`가려진 대사`, `Hidden line`) + '"' : ''}>${dl ? dictTextHTML(line) : renderTextWithVocab(line.kor)}</p>${transBlock}<div class="${ctrl}">${isYT() ? `<button type="button" data-line-play="${line.id}" title="${uiT(`이 문장만 듣기`, `Play this line only`)}" aria-label="${uiT(`이 문장만 듣기`, `Play this line only`)}" class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:border-black hover:text-white transition-all text-gray-400 shrink-0">${svgIcon('playSolid', 'w-2 h-2 ml-0.5', { fill: 'currentColor' })}</button>` : ''}${dl ? dictCtrlHTML(line) : ''}${hid ? `<span class="text-[10px] font-ui tracking-wide text-gray-400">${learn.tries[line.id] ? uiT(`한 번 더 누르면 글자가 보여요`, `Tap again to see the text`) : uiT(`누르면 이 대사를 다시 들어요`, `Tap to replay this line`)}</span>` : transBtn('line-trans-' + line.id, showT)}</div>${tail}</div></div>`;
         }
         function capSegHTML() {
             if (!isYT()) return '';
@@ -2172,20 +2218,90 @@ function toolBtn(action, icon, ko, en, mode) {
             return `<div class="cap-seg flex border border-gray-200" role="group" aria-label="${uiT(`자막 단계 (S 키로 바꾸기)`, `Caption level (press S)`)}">${lv.map(l => `<button type="button" data-cap="${l.id}" title="${l.h} · ${uiT(`S 키`, `S key`)}" aria-pressed="${learn.cap === l.id}">${l.t}</button>`).join('')}</div>`;
         }
         // 스크립트 칸 머리(고정): 자막 단계 · 안내 · 다시 가리기 · 자동 스크롤
+        // 스크립트 머리: [자막 · 듣기 단어 전체] [받아쓰기] — 누른 쪽만 선택지가 펼쳐짐
+        function modeHeadHTML() {
+            const scr = learn.layout === 'script', dOn = dict.on && isYT(), sc = dictScope();
+            const capOpts = !dOn ? capSegHTML().replace('cap-seg flex border border-gray-200', 'md-opts') : '';
+            const dOpts = (HAS_CORE() ? [{ id: 'core', t: uiT(`핵심 어휘`, `Key words`) }] : []).concat([{ id: 'all', t: uiT(`모든 어휘`, `All vocab`) }, { id: 'line', t: uiT(`문장 전체`, `Whole line`) }]);
+            const dictOpts = dOn ? `<div class="md-opts" role="group" aria-label="${uiT(`받아쓰기 범위`, `Dictation scope`)}">${dOpts.map(o => `<button type="button" data-dict-scope="${o.id}" aria-pressed="${sc === o.id}">${o.t}</button>`).join('')}</div>` : '';
+            const unit = (id, on, label, opts) => `<div class="md-unit${on ? ' on' : ''}"><button type="button" class="md-main" data-md="${id}" aria-pressed="${on}">${label}</button>${opts}</div>`;
+            const hint = dOn
+                ? (scr ? `<span class="sh-hint hidden md:inline">${uiT(`재생(▶)을 클릭해서 한 문장씩 듣고 써 보세요 · Enter로 확인`, `Click play (▶) to hear one line at a time and write it · Press Enter to check`)}</span>` : '')
+                : ((learn.cap !== 'full') ? `<span class="sh-hint hidden md:inline">${uiT(`대사를 누르면 다시 듣고, 한 번 더 누르면 보여요`, `Tap a line to replay it, tap again to see it`)}</span>` : '');
+            return `<div class="md-group">${unit('cap', !dOn, uiT(`자막`, `Captions`), capOpts)}${unit('dict', dOn, uiT(`받아쓰기`, `Dictation`), dictOpts)}</div>${hint}`;
+        }
         function scriptHeadHTML() {
             const scr = learn.layout === 'script';
             const n = Object.keys(learn.revealed).length;
             const auto = isYT() ? `<button type="button" data-action="autoscroll" class="flex items-center gap-2 text-[10px] font-bold font-ui uppercase tracking-widest transition-colors whitespace-nowrap ${learn.autoScroll ? 'text-black' : 'text-gray-300 hover:text-gray-500'}"><span class="w-2 h-2 rounded-full ${learn.autoScroll ? 'bg-black' : 'border border-gray-300'}"></span>${uiT(`자동 스크롤`, `Auto Scroll`)}</button>` : '';
-            const cap = (!scr && isYT()) ? `<span class="sh-label">${uiT(`자막`, `Captions`)}</span>${capSegHTML()}${learn.cap !== 'full' ? '<span class="sh-hint hidden md:inline">' + uiT(`줄을 누르면 다시 듣고, 한 번 더 누르면 보여요`, `Tap a line to replay it, tap again to see it`) + '</span>' : ''}` : '';
-            const rehide = (!scr && learn.cap !== 'full' && n) ? `<button type="button" data-cap-action="rehide" class="sh-rehide">${uiT(`다시 가리기`, `Hide again`)} (${n})</button>` : '';
-            const inner = `${cap}<div class="flex items-center gap-4 shrink-0" style="margin-left:auto">${rehide}${auto}</div>`;
+            const cap = isYT() ? modeHeadHTML() : '';
+            const rehide = (!dict.on && learn.cap !== 'full' && n) ? `<button type="button" data-cap-action="rehide" class="sh-rehide">${uiT(`다시 가리기`, `Hide again`)} (${n})</button>` : '';
+            const reset = (dict.on && (Object.keys(dict.res).length || Object.keys(dict.shown).length)) ? `<button type="button" class="sh-rehide" data-dict-reset="1">${uiT(`처음부터 다시`, `Start over`)}</button>` : '';   // [받아쓰기]
+            const inner = `${cap}<div class="flex items-center gap-4 shrink-0" style="margin-left:auto">${rehide}${reset}${auto}</div>`;
             return scr ? `<div class="w-full mx-auto max-w-4xl lg:max-w-5xl flex items-center">${inner}</div>` : inner;
         }
         function refreshScriptHead() { const h = qs('#script-head', viewRoot()); if (h) h.innerHTML = scriptHeadHTML(); }
         function setCap(v, keep) { learn.cap = v; if (!keep) saveCap(v); const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); rebuildToolbar(); }
+        // ---------- 받아쓰기 ----------
+        const dictScope = () => dict.scope || (HAS_CORE() ? 'core' : 'all');
+        const dictPlain = (line) => String(line.kor).split(BR_MARK).join(' ');
+        const dictNorm = (v) => String(v || '').replace(/[\s.,!?…~"'“”‘’<>()\[\]\-·:;]/g, '');
+        function dictBlanks(line) {
+            const text = dictPlain(line), scope = dictScope();
+            if (scope === 'line') return [{ k: 'L', start: 0, end: text.length, answer: text }];
+            const m = [];
+            ALL_VOCAB_TERMS.forEach(({ term, idx }) => { let i = 0; while ((i = text.indexOf(term, i)) !== -1) { const end = i + term.length; if (!m.some(x => (i >= x.start && i < x.end) || (end > x.start && end <= x.end) || (i <= x.start && end >= x.end))) m.push({ start: i, end, idx }); i += 1; } });
+            return m.filter(x => scope === 'all' || (VOCAB_DATA[x.idx] && VOCAB_DATA[x.idx].core)).sort((a, b) => a.start - b.start).map((x, j) => ({ k: String(j), start: x.start, end: x.end, answer: text.substring(x.start, x.end) }));
+        }
+        // 음절 단위 최장 공통 부분열: 맞은 음절 수와 정답 쪽에서 빠진 음절 위치
+        function dictLCS(a, b) {
+            const A = [...a], B = [...b], dp = Array.from({ length: A.length + 1 }, () => new Array(B.length + 1).fill(0));
+            for (let i = A.length - 1; i >= 0; i--) for (let j = B.length - 1; j >= 0; j--) dp[i][j] = A[i] === B[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+            const hit = new Set(); let i = 0, j = 0;
+            while (i < A.length && j < B.length) { if (A[i] === B[j]) { hit.add(j); i++; j++; } else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++; }
+            return { n: dp[0][0], hit };
+        }
+        function dictMarked(answer, typed) {   // 정답 문장에서 못 쓴 음절에 표시 (공백·문장부호는 표시 안 함)
+            const core = dictNorm(answer), { hit } = dictLCS(dictNorm(typed), core); let ci = 0, out = '';
+            for (const ch of [...answer]) { if (dictNorm(ch) === '') { out += esc(ch); continue; } out += hit.has(ci) ? esc(ch) : `<mark class="dict-miss">${esc(ch)}</mark>`; ci++; }
+            return out;
+        }
+        function dictInputHTML(line, b) {
+            const key = line.id + '|' + b.k, res = dict.res[key], typed = dict.ans[key] || '', wide = b.k === 'L';
+            if (res === 'ok') return `<span class="dict-ans ok">${esc(b.answer)}</span>`;
+            if (dict.shown[line.id]) return wide ? `<span class="dict-ans reveal">${esc(typed) || '…'}</span>` : `<span class="dict-ans reveal">${esc(b.answer)}</span>${typed ? `<span class="dict-mine">${esc(typed)}</span>` : ''}`;
+            const w = ` style="width:${(Math.max(2, [...b.answer].length) * 1.05 + 0.6).toFixed(1)}em"`;
+            return `<input type="text" class="dict-in${res === 'bad' ? ' bad' : ''}" data-dict="${key}" value="${esc(typed)}"${w} lang="ko" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="${uiT(`받아쓰기 빈칸`, `Dictation blank`)}">`;
+        }
+        function dictTextHTML(line) {
+            const bl = dictBlanks(line); if (!bl.length) return renderTextWithVocab(line.kor);
+            const text = dictPlain(line);
+            if (bl[0].k === 'L') { const b = bl[0], key = line.id + '|L'; const full = (dict.shown[line.id] && dict.res[key] !== 'ok') ? `<span class="dict-full"><span class="dict-tag">${uiT(`정답`, `ANSWER`)}</span>${dictMarked(b.answer, dict.ans[key])}</span>` : ''; return `<span class="dict-line">${dictInputHTML(line, b)}${full}</span>`; }
+            let out = '', last = 0; bl.forEach(b => { out += esc(text.substring(last, b.start)) + dictInputHTML(line, b); last = b.end; }); return out + esc(text.substring(last));
+        }
+        function dictCtrlHTML(line) {
+            const bl = dictBlanks(line); if (!bl.length) return '';
+            const keys = bl.map(b => line.id + '|' + b.k), ok = keys.filter(k => dict.res[k] === 'ok').length, tried = keys.some(k => dict.res[k]);
+            let stat = '';
+            if (ok === keys.length) stat = `<span class="dict-stat all">${uiT(`다 맞았어요`, `All correct`)}</span>`;
+            else if (tried && bl[0].k === 'L') { const b = bl[0], r = dictLCS(dictNorm(dict.ans[keys[0]]), dictNorm(b.answer)); stat = `<span class="dict-stat">${uiT(`${r.n}/${[...dictNorm(b.answer)].length} 음절 맞음`, `${r.n}/${[...dictNorm(b.answer)].length} syllables right`)}</span>`; }
+            else if (tried) stat = `<span class="dict-stat">${uiT(`${ok}/${keys.length} 맞음`, `${ok}/${keys.length} right`)}</span>`;
+            const done = ok === keys.length || dict.shown[line.id];
+            return `${done ? '' : `<button type="button" class="dict-btn" data-dict-check="${line.id}">${uiT(`확인`, `Check`)}</button><button type="button" class="dict-link" data-dict-show="${line.id}">${uiT(`정답 보기`, `Show answer`)}</button>`}${stat}`;
+        }
+        function dictRefresh() { const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); refreshScriptHead(); }
+        function dictCheck(id) {
+            const line = curVideo().script.find(l => l.id === id); if (!line) return;
+            dictBlanks(line).forEach(b => { const key = id + '|' + b.k; if (dict.res[key] === 'ok') return; const v = dict.ans[key] || ''; dict.res[key] = !dictNorm(v) ? 'bad' : (dictNorm(v) === dictNorm(b.answer) ? 'ok' : 'bad'); });
+            replaceLine(id); refreshScriptHead();
+            const nb = qs(`#sl-${id} .dict-in.bad`, viewRoot()); if (nb) nb.focus();
+        }
         function scriptListHTML() { return curVideo().script.map(lineHTML).join('') + nextInlineHTML() + '<div class="h-32 print:hidden"></div>'; }
         function toolbarHTML() {
             const modes = [{ id: 'split', kor: '동영상 & 스크립트', eng: 'Video & Transcript' }, { id: 'video', kor: '동영상만 보기', eng: 'Watch Video' }, { id: 'script', kor: '스크립트만 보기', eng: 'Read Transcript' }];
+            const _vOn1 = learn.layout !== 'script', _sOn1 = learn.layout !== 'video';
+            const paneBtn = (id, on, kor, eng) => `<button type="button" data-pane-toggle="${id}" data-pane-video="0" aria-pressed="${on}" class="flex flex-col items-center justify-center px-3 py-1 rounded-sm border transition-all ${on ? 'bg-black text-white border-black' : 'bg-white text-gray-400 border-gray-200 hover:text-black hover:border-gray-400'}"><span class="text-[11px] md:text-xs font-bold font-sans">${kor}</span><span class="lk-en text-[8px] md:text-[9px] font-eng-header uppercase tracking-widest mt-0.5 opacity-80">${eng}</span></button>`;
+            const paneBtns = paneBtn('video', _vOn1, '동영상', 'Video') + paneBtn('script', _sOn1, '스크립트', 'Transcript');
             const modeBtns = modes.map(m => { let vis = 'hidden'; if (m.id === 'split') vis = 'flex'; else if (m.id === 'video') vis = 'hidden md:flex'; else vis = 'hidden sm:flex'; const act = learn.layout === m.id; return `<button type="button" data-layout="${m.id}" class="flex-col items-center justify-center px-3 py-1.5 transition-all rounded-sm ${vis} ${act ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-gray-50'}"><span class="text-[11px] md:text-xs font-bold font-sans">${m.kor}</span><span class="lk-en text-[8px] md:text-[9px] font-eng-header uppercase tracking-widest mt-0.5 opacity-80">${m.eng}</span></button>`; }).join('');
             const speedMenu = learn.speedMenu ? `<div class="absolute top-full right-0 mt-2 bg-white border border-gray-200 shadow-xl p-1 z-50 w-20 animate-fade-in">${[0.5, 0.75, 1.0, 1.25, 1.5, 2.0].map(s => `<button type="button" data-rate="${s}" class="w-full text-center py-1.5 text-[10px] font-bold font-ui hover:bg-gray-50 ${learn.rate === s ? 'text-black' : 'text-gray-400'}">${s.toFixed(s % 0.5 ? 2 : 1)}x</button>`).join('')}</div>` : '';
             // 다중 동영상: 동영상 자료 N 박스(상단=선택, 하단=동영상/스크립트 표시 토글). EN 설정 시 영어 표기
@@ -2193,7 +2309,7 @@ function toolBtn(action, icon, ko, en, mode) {
             const partBoxes = VIDEOS.length > 1 ? VIDEOS.map((v, i) => { const act = i === learn.videoIdx; return `<div class="flex flex-col border rounded-sm overflow-hidden shrink-0 ${act ? 'border-black' : 'border-gray-200'}"><button type="button" data-video-idx="${i}" class="px-4 py-1.5 text-xs whitespace-nowrap font-bold font-sans leading-none transition-colors ${act ? 'bg-black text-white' : 'bg-white text-gray-500 hover:text-black'}">${secLang() ? 'Video ' + (i + 1) : '동영상<span class="hidden sm:inline"> 자료</span> ' + (i + 1)}</button><div class="flex border-t ${act ? 'border-black' : 'border-gray-200'}"><button type="button" data-pane-toggle="video" data-pane-video="${i}" class="flex-1 px-3 py-1 text-[9px] whitespace-nowrap font-bold leading-none transition-colors ${act && _vOn ? 'text-black bg-gray-100' : 'text-gray-300 hover:text-gray-600'}">${secLang() ? 'Video' : '동영상'}</button><button type="button" data-pane-toggle="script" data-pane-video="${i}" class="flex-1 px-3 py-1 text-[9px] whitespace-nowrap font-bold leading-none border-l transition-colors ${act ? 'border-gray-300' : 'border-gray-100'} ${act && _sOn ? 'text-black bg-gray-100' : 'text-gray-300 hover:text-gray-600'}">${secLang() ? 'Transcript' : '스크립트'}</button></div></div>`; }).join('<span class="mat-chev" aria-hidden="true">›</span>') : '';
             const _headSeek = learn.layout === 'script';
             const syncUI = isYT() ? `${_headSeek ? `<div class="flex items-center gap-4 flex-1 max-w-xl justify-end"><div class="flex flex-col flex-1 gap-1 w-full"><div class="relative group h-2 flex items-center"><div class="absolute inset-0 flex items-center"><div class="w-full h-[1px] bg-gray-200"></div><div id="seek-fill" class="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-black" style="width:0%"></div></div><input id="seek" type="range" min="0" max="100" value="0" class="absolute inset-0 w-full opacity-0 cursor-pointer"/></div><span id="time-text" class="text-[10px] font-mono text-gray-400 text-right leading-none">00:00 / 00:00</span></div><div class="flex items-center gap-3 shrink-0"><button type="button" data-action="rewind" class="text-gray-400 hover:text-black transition-colors">${svgIcon('rewind', 'w-4 h-4')}</button><button type="button" id="play-btn" data-action="play" class="w-6 h-6 border border-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-all">${svgIcon('playSolid', 'w-2.5 h-2.5 ml-0.5', { fill: 'currentColor' })}</button><button type="button" data-action="forward" class="text-gray-400 hover:text-black transition-colors">${svgIcon('forward', 'w-4 h-4')}</button></div></div><div class="h-4 w-px bg-gray-200 hidden sm:block"></div>` : ''}<div class="relative shrink-0 hidden ${_headSeek ? 'sm:flex' : ''}"><button type="button" data-action="speed-menu" class="flex items-center gap-1.5 text-xs font-bold font-ui uppercase tracking-wider text-gray-500 hover:text-black">${learn.rate.toFixed(learn.rate % 0.5 ? 2 : 1)}x</button>${speedMenu}</div>` : `<span class="hidden md:inline text-[10px] font-ui text-gray-300 tracking-wide">${curProvider() === 'instagram' ? '인스타그램 릴' : '외부 동영상'} · 자동 동기화 미지원<span class="lk-en"> / ${curProvider() === 'instagram' ? 'Instagram Reel' : 'External video'} · no auto-sync</span></span>`;
-            return `<div class="sticky top-0 z-40 h-16 flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200 shadow-sm pr-14 print:hidden">${VIDEOS.length > 1 ? `<div class="flex items-stretch gap-2 shrink-0 flex-wrap">${partBoxes}${matReadingBoxesHTML()}</div>` : `<div class="flex items-stretch gap-2 shrink-0"><div class="flex items-center gap-1 shrink-0">${modeBtns}</div>${matReadingBoxesHTML()}</div>`}<div class="flex items-center gap-4 flex-1 justify-end min-w-0">${curVideo().title ? `<span class="tb-title hidden md:block min-w-0 text-sm font-serif font-bold text-gray-900" title="${esc(curVideo().title)}">${esc(curVideo().title)}</span>` : ''}${syncUI}<button type="button" data-action="learn-vocab" class="hidden xl:flex items-center gap-2 px-3 py-1.5 border transition-all text-[10px] font-bold font-ui uppercase tracking-widest ${learn.showVocab ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-500 hover:border-black hover:text-black'}">${secLang() ? 'Vocab' : '어휘'}</button></div></div>`;
+            return `<div class="sticky top-0 z-40 h-12 flex items-center justify-between px-6 py-1 bg-white border-b border-gray-200 shadow-sm pr-14 print:hidden">${VIDEOS.length > 1 ? `<div class="flex items-stretch gap-2 shrink-0 flex-wrap">${partBoxes}${matReadingBoxesHTML()}</div>` : `<div class="flex items-stretch gap-2 shrink-0"><div class="flex items-center gap-1 shrink-0" role="group" aria-label="${uiT(`보이는 화면`, `What to show`)}">${paneBtns}</div>${matReadingBoxesHTML()}</div>`}<div class="flex items-center gap-4 flex-1 justify-end min-w-0">${curVideo().title ? `<span class="tb-title hidden md:block min-w-0 text-sm font-serif font-bold text-gray-900" title="${esc(curVideo().title)}">${esc(curVideo().title)}</span>` : ''}${syncUI}<button type="button" data-action="learn-vocab" class="hidden xl:flex items-center gap-2 px-3 py-1.5 border transition-all text-[10px] font-bold font-ui uppercase tracking-widest ${learn.showVocab ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-500 hover:border-black hover:text-black'}">${secLang() ? 'Vocab' : '어휘'}</button></div></div>`;
         }
         function sidebarVocabHTML(word, idx) {
             const t = (word.translations && word.translations.en) || {}; const showT = !!learn.sbTrans[idx]; const active = learn.activeVocabTerm === word.term;
@@ -2237,7 +2353,8 @@ function toolBtn(action, icon, ko, en, mode) {
         function stopTick() { if (learn.intervalId) { clearInterval(learn.intervalId); learn.intervalId = null; } }
         function updateSeekUI() { const root = viewRoot(); if (!root) return; const fill = qs('#seek-fill', root), tt = qs('#time-text', root), seek = qs('#seek', root); const pct = learn.duration ? (learn.currentTime / learn.duration) * 100 : 0; if (fill) fill.style.width = pct + '%'; if (tt) tt.textContent = `${fmt(learn.currentTime)} / ${fmt(learn.duration)}`; if (seek) { seek.max = learn.duration || 100; seek.value = learn.currentTime; } }
         function updatePlayBtn() { const root = viewRoot(); if (!root) return; const b = qs('#play-btn', root); if (b) b.innerHTML = learn.isPlaying ? svgIcon('pause', 'w-2.5 h-2.5', { fill: 'currentColor' }) : svgIcon('playSolid', 'w-2.5 h-2.5 ml-0.5', { fill: 'currentColor' }); }
-        function replaceLine(id) { const el = qs('#sl-' + id, viewRoot()); if (el) { const line = curVideo().script.find(l => l.id === id); if (line) el.outerHTML = lineHTML(line); } }
+        function replaceLine(id) { const ae = document.activeElement, fk = (ae && ae.matches && ae.matches('.dict-in')) ? ae.dataset.dict : null, fs = fk ? ae.selectionStart : 0; replaceLineRaw(id); if (fk) { const n = qs(`[data-dict="${fk}"]`, viewRoot()); if (n) { n.focus(); try { n.setSelectionRange(fs, fs); } catch (_) {} } } }
+        function replaceLineRaw(id) { const el = qs('#sl-' + id, viewRoot()); if (el) { const line = curVideo().script.find(l => l.id === id); if (line) el.outerHTML = lineHTML(line); } }
         function setActiveLine(id) { const old = learn.activeLine; learn.activeLine = id; if (old) replaceLine(old); replaceLine(id); if (learn.autoScroll) { const el = qs('#sl-' + id, viewRoot()); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
         function updatePanes() { const root = viewRoot(); if (!root) return; const vp = qs('#video-pane', root), sp = qs('#script-pane', root), vop = qs('#vocab-pane', root); if (vp) vp.className = videoPaneClass(); if (sp) sp.className = scriptPaneClass(); if (vop) vop.className = vocabPaneClass(); const sl = qs('#script-list', root); if (sl) sl.className = (learn.layout === 'script' ? 'w-full mx-auto p-4 sm:p-8 min-h-full bg-white shadow-sm my-8 max-w-4xl lg:max-w-5xl' : 'p-8 space-y-8'); }
         function rebuildToolbar() { refreshScriptHead(); const root = viewRoot(); if (!root) return; const tb = root.querySelector('div.animate-fade-in > div'); if (tb) tb.outerHTML = toolbarHTML(); }
@@ -2493,6 +2610,7 @@ function toolBtn(action, icon, ko, en, mode) {
         // ---------- 이벤트 위임 ----------
         appEl.addEventListener('click', (e) => {
             const coreBtn = e.target.closest('[data-action="vocab-core-all"], [data-action="vocab-core-only"]'); if (coreBtn) { vocCore.only = coreBtn.dataset.action === 'vocab-core-only'; saveCore(vocCore.only); if (typeof vocabState !== 'undefined') vocabState.itemTrans = {}; paint(); return; }
+            const hd = e.target.closest('[data-home-dict]'); if (hd) { dict.on = true; dict.scope = null; dict.ans = {}; dict.res = {}; dict.shown = {}; learn.layout = 'script'; setTab('video'); return; }   // [받아쓰기]
             const ecb = e.target.closest('[data-end]'); if (ecb) { const d = ecb.dataset.end; if (d === 'rewatch') rewatchWithSubs(); else if (d === 'skip') { learn.rewatched[learn.videoIdx] = true; showEndCard(); } else if (d === 'go' && endCard) matGo(endCard.next); else cancelEndCard(); return; }
             if (e.target.closest('[data-mat-next]')) { matGo(matNext()); return; }
             if (endCard && endCard.timer && !e.target.closest('#end-card')) cancelEndCard();
@@ -2511,15 +2629,22 @@ function toolBtn(action, icon, ko, en, mode) {
                 const vsel = e.target.closest('[data-video-idx]');
                 if (vsel) { const vi = +vsel.dataset.videoIdx; if (vi !== learn.videoIdx) { stopTick(); learn.videoIdx = vi; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.revealed = {}; learn.tries = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; paint(); } return; }
                 const vspan = e.target.closest('[data-vocab-idx]'); if (vspan) { e.stopPropagation(); const w = VOCAB_DATA[+vspan.dataset.vocabIdx]; const r = vspan.getBoundingClientRect(); if (popupEl && popupEl.dataset.fixed && popupEl.dataset.idx == String(VOCAB_DATA.indexOf(w))) closeVocabPopup(); else showVocabPopup(w, r.left + r.width / 2, r.bottom, true); return; }
-                const pt = e.target.closest('[data-pane-toggle]'); if (pt) { const vi = +pt.dataset.paneVideo; let vOn = learn.layout !== 'script', sOn = learn.layout !== 'video'; if (pt.dataset.paneToggle === 'video') vOn = !vOn; else sOn = !sOn; if (!vOn && !sOn) { vOn = true; sOn = true; } const nl = (vOn && sOn) ? 'split' : (vOn ? 'video' : 'script'); if (vi !== learn.videoIdx) { stopTick(); learn.videoIdx = vi; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.revealed = {}; learn.tries = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; learn.layout = nl; paint(); return; } learn.layout = nl; const sl2 = qs('#script-list', viewRoot()); if (sl2) sl2.innerHTML = scriptListHTML(); updatePanes(); rebuildToolbar(); return; }
+                const pt = e.target.closest('[data-pane-toggle]'); if (pt) { const vi = +pt.dataset.paneVideo; let vOn = learn.layout !== 'script', sOn = learn.layout !== 'video'; if (pt.dataset.paneToggle === 'video') vOn = !vOn; else sOn = !sOn; if (!vOn && !sOn) { if (vi === learn.videoIdx) return; vOn = true; sOn = true; } const nl = (vOn && sOn) ? 'split' : (vOn ? 'video' : 'script'); if (vi !== learn.videoIdx) { stopTick(); learn.videoIdx = vi; learn.player = null; learn.isPlaying = false; learn.activeLine = null; learn.trans = {}; learn.revealed = {}; learn.tries = {}; learn.currentTime = 0; learn.duration = 0; learn.speedMenu = false; learn.layout = nl; paint(); return; } learn.layout = nl; const sl2 = qs('#script-list', viewRoot()); if (sl2) sl2.innerHTML = scriptListHTML(); updatePanes(); rebuildToolbar(); return; }
                 const lay = e.target.closest('[data-layout]'); if (lay) { learn.layout = lay.dataset.layout; const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); updatePanes(); rebuildToolbar(); return; }
                 const rate = e.target.closest('[data-rate]'); if (rate) { learn.rate = parseFloat(rate.dataset.rate); learn.speedMenu = false; if (learn.player && learn.player.setPlaybackRate) learn.player.setPlaybackRate(learn.rate); rebuildToolbar(); return; }
+                if (e.target.closest('.dict-in')) { e.stopPropagation(); return; }
+                const mdb = e.target.closest('[data-md]'); if (mdb) { const want = mdb.dataset.md === 'dict'; if (dict.on !== want) { dict.on = want; dictRefresh(); } return; }
+                const dsc = e.target.closest('[data-dict-scope]'); if (dsc) { dict.scope = dsc.dataset.dictScope; dict.ans = {}; dict.res = {}; dict.shown = {}; dictRefresh(); return; }
+                if (e.target.closest('[data-dict-reset]')) { dict.ans = {}; dict.res = {}; dict.shown = {}; dictRefresh(); return; }
+                const dck = e.target.closest('[data-dict-check]'); if (dck) { e.stopPropagation(); dictCheck(dck.dataset.dictCheck); return; }
+                const dsh = e.target.closest('[data-dict-show]'); if (dsh) { e.stopPropagation(); dict.shown[dsh.dataset.dictShow] = true; replaceLine(dsh.dataset.dictShow); refreshScriptHead(); return; }
                 const lp = e.target.closest('[data-line-play]'); if (lp) { e.stopPropagation(); const id = lp.dataset.linePlay; const line = curVideo().script.find(l => l.id === id); if (learn.activeLine === id && learn.isPlaying) { if (learn.player) { clearSeg(); learn.player.pauseVideo(); } } else playLineOnly(line); return; }
                 const lt = e.target.closest('[data-action^="line-trans-"]'); if (lt) { e.stopPropagation(); const id = lt.dataset.action.replace('line-trans-', ''); learn.trans[id] = !learn.trans[id]; replaceLine(id); return; }
                 const capBtn = e.target.closest('[data-cap]'); if (capBtn) { setCap(capBtn.dataset.cap); return; }
                 const capAct = e.target.closest('[data-cap-action]'); if (capAct) { learn.revealed = {}; learn.tries = {}; setCap(learn.cap); return; }
                 const seekLine = e.target.closest('[data-line-seek]'); if (seekLine) { const lid = seekLine.dataset.lineId;
-                    if (lid && learn.cap !== 'full' && learn.layout !== 'script' && !learn.revealed[lid]) {
+                    if (dict.on && isYT()) { playLineOnly(curVideo().script.find(l => l.id === lid)); return; }
+                    if (lid && learn.cap !== 'full' && !learn.revealed[lid]) {
                         if (learn.tries[lid]) { learn.revealed[lid] = true; const sl = qs('#script-list', viewRoot()); if (sl) sl.innerHTML = scriptListHTML(); refreshScriptHead(); return; }
                         learn.tries[lid] = 1; replaceLine(lid); playLineOnly(curVideo().script.find(l => l.id === lid)); return;
                     } if (learn.player) { clearSeg(); learn.player.seekTo(parseFloat(seekLine.dataset.lineSeek), true); learn.player.playVideo(); } return; }
@@ -2568,7 +2693,9 @@ function toolBtn(action, icon, ko, en, mode) {
         });
         appEl.addEventListener('change', (e) => { aiHandleChange(e.target); });
 
+        appEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229 && e.target.matches && e.target.matches('.dict-in')) { e.preventDefault(); dict.ans[e.target.dataset.dict] = e.target.value; dictCheck(e.target.dataset.dict.split('|')[0]); } });
         appEl.addEventListener('input', (e) => {
+            if (e.target.matches && e.target.matches('.dict-in')) { dict.ans[e.target.dataset.dict] = e.target.value; return; }
             if (aiHandleInput(e.target)) return;
             if (e.target.id === 'seek') { const t = parseFloat(e.target.value); if (learn.player && learn.player.seekTo) learn.player.seekTo(t, true); learn.currentTime = t; updateSeekUI(); return; }
             const tab = app.activeTab;
