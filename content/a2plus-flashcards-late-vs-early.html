@@ -218,7 +218,7 @@
     { id:'14_not_my_fault', verb:"잘못", ko:"그건 제 잘못이 아니에요!", hl:"제 잘못이 아니에요", en:"That's not my fault!", media:{type:'video', src:VID+'14_not_my_fault.mp4', src9x16:VID9X16+'14_not_my_fault-9x16.mp4', sound:true}, back:{img:IMG+'14_not_my_fault_back.jpg', img3x4:IMG3X4+'14_not_my_fault_back-3x4.jpg'}, cue:"Yuna says he is late again. <b>Answer for Woody — out loud.</b>", audio:AUD+'14_not_my_fault.m4a' },
     { id:'15_walk_10min', verb:"걸어서 N분이에요", ko:"집에서 역까지 걸어서 10분이에요.", hl:"걸어서 10분이에요", en:"It's a 10-minute walk from my house to the station.", media:{type:'image', src:IMG+'15_walk_10min.jpg', src3x4:IMG3X4+'15_walk_10min-3x4.jpg'}, audio:AUD+'15_walk_10min.m4a' },
     { id:'16_reserve_ahead', verb:"미리", ko:"미리 식당을 예약해요.", hl:"미리", en:"I book the restaurant in advance.", media:{type:'image', src:IMG+'16_reserve_ahead.jpg', src3x4:IMG3X4+'16_reserve_ahead-3x4.jpg'}, audio:AUD+'16_reserve_ahead.m4a' },
-    { id:'17_coffee_bill', verb:"커피값이 나오다", ko:"커피값이 많이 나왔어요.", hl:"커피값이 많이 나왔어요", en:"The coffee came to a lot of money.", media:{type:'image', src:IMG+'17_coffee_bill.jpg', src3x4:IMG3X4+'17_coffee_bill-3x4.jpg'}, audio:AUD+'17_coffee_bill.m4a' },
+    { id:'17_coffee_bill', verb:"커피값이 나오다", ko:"커피값이 많이 나왔어요.", hl:"커피값이 많이 나왔어요", en:"The coffee bill came to quite a lot.", media:{type:'image', src:IMG+'17_coffee_bill.jpg', src3x4:IMG3X4+'17_coffee_bill-3x4.jpg'}, audio:AUD+'17_coffee_bill.m4a' },
     { id:'18_on_time', verb:"시간을 지키다", ko:"저는 시간을 잘 지켜요.", hl:"시간을 잘 지켜요", en:"I'm good at being on time.", media:{type:'image', src:IMG+'18_on_time.jpg', src3x4:IMG3X4+'18_on_time-3x4.jpg'}, audio:AUD+'18_on_time.m4a' },
     { id:'19_precious', verb:"소중하다", ko:"시간은 소중해요.", hl:"소중해요", en:"Time is precious.", media:{type:'image', src:IMG+'19_precious.jpg', src3x4:IMG3X4+'19_precious-3x4.jpg'}, audio:AUD+'19_precious.m4a' },
     { id:'20_habit', verb:"습관", ko:"늦는 건 제 습관이에요.", hl:"습관", en:"Being late is my habit.", media:{type:'image', src:IMG+'20_habit.jpg', src3x4:IMG3X4+'20_habit-3x4.jpg'}, audio:AUD+'20_habit.m4a' }
@@ -637,8 +637,8 @@
         + '<div class="tools" id="tools">'+toolsInner()+'</div>'
         + '<div class="status" id="status"></div></div>'
         + '<div class="judge">'
-          + '<button type="button" class="jbtn k" data-act="same">Sounded the same<span class="kk">1</span></button>'
-          + '<button type="button" class="jbtn u" data-act="again">Again<span class="kk">2</span></button>'
+          + '<button type="button" class="jbtn k" data-act="same">Sounded the same</button>'
+          + '<button type="button" class="jbtn u" data-act="again">Again</button>'
         + '</div>';
     }
     return top + body + '<p class="hint"><kbd>Space</kbd> flip · <kbd>R</kbd> listen again · <kbd>T</kbd> reveal text · <kbd>E</kbd> meaning · <kbd>M</kbd> record · <kbd>1</kbd> same'+(SKIP_MODE!=='off'?' (on the front: I know this)':'')+' · <kbd>2</kbd> again</p>';
